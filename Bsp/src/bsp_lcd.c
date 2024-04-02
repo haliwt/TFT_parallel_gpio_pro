@@ -161,25 +161,25 @@ void LCD_GPIO_Reset(void)
 void LCD_Write_Cmd(uint8_t cmd)
 {
 
-	LCD_CS_SetHigh();
-	LCD_CS_SetLow(); 
+	TFT_CS_GPIO_Port->BSRR |= TFT_CS_Pin ;//LCD_CS_SetHigh();
+	TFT_CS_GPIO_Port ->BSRR |=(uint32_t)TFT_CS_Pin << 16 ;//LCD_CS_SetLow(); 
   
-	LCD_RD_SetHigh();
+	TFT_RD_GPIO_Port->BSRR |= TFT_RD_Pin ;//LCD_RD_SetHigh();
 	
-	TFT_DCX_DATA();
+	TFT_DCX_GPIO_Port->BSRR |= TFT_DCX_Pin ;//TFT_DCX_DATA();
 	
-    LCD_RD_SetHigh();
-    TFT_DCX_CMD();//D/CX =0
+    TFT_RD_GPIO_Port ->BSRR |= TFT_RD_Pin;//LCD_RD_SetHigh();
+    TFT_DCX_GPIO_Port ->BSRR|=(uint32_t)TFT_DCX_Pin << 16;   //TFT_DCX_CMD();//D/CX =0
  
 
     TFT_Parallel_WriteByte(cmd);
 
 
-    LCD_WR_SetLow() ;
+    TFT_WR_GPIO_Port ->BSRR |=(uint32_t)TFT_WR_Pin<<16;//LCD_WR_SetLow() ;
 
-	LCD_WR_SetHigh() ;
+	TFT_WR_GPIO_Port ->BSRR |= TFT_WR_Pin ;//LCD_WR_SetHigh() ;
 
-    LCD_CS_SetHigh();
+    TFT_CS_GPIO_Port ->BSRR |= TFT_CS_Pin ;//LCD_CS_SetHigh();
 
 
 
@@ -188,26 +188,21 @@ void LCD_Write_Cmd(uint8_t cmd)
 void LCD_Write_Data(uint8_t data)
 {
 	
-
 	LCD_CS_SetHigh(); //To write data to TFT is high level
-		LCD_CS_SetLow();
-	
-		LCD_RD_SetHigh();
-		TFT_DCX_CMD();//D/CX =0
-	
-		TFT_DCX_DATA();
-		
-	
-		TFT_Parallel_WriteByte(data);
-	
-		LCD_WR_SetLow() ;
-		 LCD_WR_SetHigh() ;
-		 LCD_CS_SetHigh();
+	LCD_CS_SetLow();
+
+	LCD_RD_SetHigh();
+	TFT_DCX_CMD();//D/CX =0
+
+	TFT_DCX_DATA();
+
+
+	TFT_Parallel_WriteByte(data);
+
+	LCD_WR_SetLow() ;
+	LCD_WR_SetHigh() ;
+	LCD_CS_SetHigh();
 		 
-
-	
-
-	
 }
 
 void LCD_Write_16bit_Data(uint16_t data)
