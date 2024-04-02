@@ -5,29 +5,29 @@
 
 
 #if 1
-#define SET_D0_H   HAL_GPIO_WritePin(TFT_DB0_GPIO_Port,TFT_DB0_Pin,GPIO_PIN_SET)
-#define SET_D0_L   HAL_GPIO_WritePin(TFT_DB0_GPIO_Port,TFT_DB0_Pin,GPIO_PIN_RESET)
+#define SET_D0_H()   do{TFT_DB0_GPIO_Port->BSRR |= TFT_DB0_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB0_GPIO_Port,TFT_DB0_Pin,GPIO_PIN_SET)
+#define SET_D0_L()   do{TFT_DB0_GPIO_Port->BSRR |= (uint32_t)TFT_DB0_Pin << 16;}while(0)//HAL_GPIO_WritePin(TFT_DB0_GPIO_Port,TFT_DB0_Pin,GPIO_PIN_RESET)
 
-#define SET_D1_H   HAL_GPIO_WritePin(TFT_DB1_GPIO_Port,TFT_DB1_Pin,GPIO_PIN_SET)
-#define SET_D1_L   HAL_GPIO_WritePin(TFT_DB1_GPIO_Port,TFT_DB1_Pin,GPIO_PIN_RESET)
+#define SET_D1_H()   do{TFT_DB1_GPIO_Port->BSRR |= TFT_DB1_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB1_GPIO_Port,TFT_DB1_Pin,GPIO_PIN_SET)
+#define SET_D1_L()   do{TFT_DB1_GPIO_Port->BSRR |= (uint32_t)TFT_DB1_Pin << 16;}while(0)//HAL_GPIO_WritePin(TFT_DB1_GPIO_Port,TFT_DB1_Pin,GPIO_PIN_RESET)
 
-#define SET_D2_H   HAL_GPIO_WritePin(TFT_DB2_GPIO_Port,TFT_DB2_Pin,GPIO_PIN_SET)
-#define SET_D2_L   HAL_GPIO_WritePin(TFT_DB2_GPIO_Port,TFT_DB2_Pin,GPIO_PIN_RESET)
+#define SET_D2_H()   do{TFT_DB2_GPIO_Port->BSRR |= TFT_DB2_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB2_GPIO_Port,TFT_DB2_Pin,GPIO_PIN_SET)
+#define SET_D2_L()   do{TFT_DB2_GPIO_Port->BSRR |= (uint32_t)TFT_DB2_Pin << 16;}while(0)//HAL_GPIO_WritePin(TFT_DB2_GPIO_Port,TFT_DB2_Pin,GPIO_PIN_RESET)
 
-#define SET_D3_H   HAL_GPIO_WritePin(TFT_DB3_GPIO_Port,TFT_DB3_Pin,GPIO_PIN_SET)
-#define SET_D3_L   HAL_GPIO_WritePin(TFT_DB3_GPIO_Port,TFT_DB3_Pin,GPIO_PIN_RESET)
+#define SET_D3_H()   do{TFT_DB3_GPIO_Port->BSRR |= TFT_DB3_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB3_GPIO_Port,TFT_DB3_Pin,GPIO_PIN_SET)
+#define SET_D3_L()   do{TFT_DB3_GPIO_Port->BSRR |= (uint32_t)TFT_DB3_Pin << 16;}while(0)// HAL_GPIO_WritePin(TFT_DB3_GPIO_Port,TFT_DB3_Pin,GPIO_PIN_RESET)
 
-#define SET_D4_H   HAL_GPIO_WritePin(TFT_DB4_GPIO_Port,TFT_DB4_Pin,GPIO_PIN_SET)
-#define SET_D4_L   HAL_GPIO_WritePin(TFT_DB4_GPIO_Port,TFT_DB4_Pin,GPIO_PIN_RESET)
+#define SET_D4_H()   do{TFT_DB4_GPIO_Port->BSRR |= TFT_DB4_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB4_GPIO_Port,TFT_DB4_Pin,GPIO_PIN_SET)
+#define SET_D4_L()   do{TFT_DB4_GPIO_Port->BSRR |= (uint32_t)TFT_DB4_Pin << 16;}while(0)///HAL_GPIO_WritePin(TFT_DB4_GPIO_Port,TFT_DB4_Pin,GPIO_PIN_RESET)
 
-#define SET_D5_H   HAL_GPIO_WritePin(TFT_DB5_GPIO_Port,TFT_DB5_Pin,GPIO_PIN_SET)
-#define SET_D5_L   HAL_GPIO_WritePin(TFT_DB5_GPIO_Port,TFT_DB5_Pin,GPIO_PIN_RESET)
+#define SET_D5_H()   do{TFT_DB5_GPIO_Port->BSRR |= TFT_DB5_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB5_GPIO_Port,TFT_DB5_Pin,GPIO_PIN_SET)
+#define SET_D5_L()   do{TFT_DB5_GPIO_Port->BSRR |= (uint32_t)TFT_DB5_Pin << 16;}while(0)//HAL_GPIO_WritePin(TFT_DB5_GPIO_Port,TFT_DB5_Pin,GPIO_PIN_RESET)
 
-#define SET_D6_H   HAL_GPIO_WritePin(TFT_DB6_GPIO_Port,TFT_DB6_Pin,GPIO_PIN_SET)
-#define SET_D6_L   HAL_GPIO_WritePin(TFT_DB6_GPIO_Port,TFT_DB6_Pin,GPIO_PIN_RESET)
+#define SET_D6_H()   do{TFT_DB6_GPIO_Port->BSRR |= TFT_DB6_Pin;}while(0)//HAL_GPIO_WritePin(TFT_DB6_GPIO_Port,TFT_DB6_Pin,GPIO_PIN_SET)
+#define SET_D6_L()   do{TFT_DB6_GPIO_Port->BSRR |= (uint32_t)TFT_DB6_Pin << 16;}while(0)///HAL_GPIO_WritePin(TFT_DB6_GPIO_Port,TFT_DB6_Pin,GPIO_PIN_RESET)
 
-#define SET_D7_H   HAL_GPIO_WritePin(TFT_DB7_GPIO_Port,TFT_DB7_Pin,GPIO_PIN_SET)
-#define SET_D7_L   HAL_GPIO_WritePin(TFT_DB7_GPIO_Port,TFT_DB7_Pin,GPIO_PIN_RESET)
+#define SET_D7_H()   do{TFT_DB7_GPIO_Port->BSRR |= TFT_DB7_Pin;}while(0)///HAL_GPIO_WritePin(TFT_DB7_GPIO_Port,TFT_DB7_Pin,GPIO_PIN_SET)
+#define SET_D7_L()   do{TFT_DB7_GPIO_Port->BSRR |= (uint32_t)TFT_DB7_Pin << 16;}while(0)//HAL_GPIO_WritePin(TFT_DB7_GPIO_Port,TFT_DB7_Pin,GPIO_PIN_RESET)
 /************************************************************************/
 #endif 
 
@@ -168,7 +168,6 @@ void LCD_Write_Cmd(uint8_t cmd)
 	
 	TFT_DCX_GPIO_Port->BSRR |= TFT_DCX_Pin ;//TFT_DCX_DATA();
 	
-    TFT_RD_GPIO_Port ->BSRR |= TFT_RD_Pin;//LCD_RD_SetHigh();
     TFT_DCX_GPIO_Port ->BSRR|=(uint32_t)TFT_DCX_Pin << 16;   //TFT_DCX_CMD();//D/CX =0
  
 
@@ -188,20 +187,22 @@ void LCD_Write_Cmd(uint8_t cmd)
 void LCD_Write_Data(uint8_t data)
 {
 	
-	LCD_CS_SetHigh(); //To write data to TFT is high level
-	LCD_CS_SetLow();
+	TFT_CS_GPIO_Port->BSRR |= TFT_CS_Pin ;//LCD_CS_SetHigh(); //To write data to TFT is high level
+	TFT_CS_GPIO_Port ->BSRR |=(uint32_t)TFT_CS_Pin << 16 ;//LCD_CS_SetLow();
 
-	LCD_RD_SetHigh();
-	TFT_DCX_CMD();//D/CX =0
+	TFT_RD_GPIO_Port->BSRR |= TFT_RD_Pin ;//LCD_RD_SetHigh();
+	TFT_DCX_GPIO_Port ->BSRR|=(uint32_t)TFT_DCX_Pin << 16;//TFT_DCX_CMD();//D/CX =0
 
-	TFT_DCX_DATA();
+	TFT_DCX_GPIO_Port->BSRR |= TFT_DCX_Pin ;//TFT_DCX_DATA();
 
 
 	TFT_Parallel_WriteByte(data);
 
-	LCD_WR_SetLow() ;
-	LCD_WR_SetHigh() ;
-	LCD_CS_SetHigh();
+    TFT_WR_GPIO_Port ->BSRR |=(uint32_t)TFT_WR_Pin<<16;//LCD_WR_SetLow() ;
+
+	TFT_WR_GPIO_Port ->BSRR |= TFT_WR_Pin ;//LCD_WR_SetHigh() ;
+
+	TFT_CS_GPIO_Port ->BSRR |= TFT_CS_Pin ;//LCD_CS_SetHigh();
 		 
 }
 
@@ -603,22 +604,53 @@ void TFT_LCD_Init(void)
 static void St7789v_Send_Byte(uint8_t chData)
 {
 
-  
- 
-	(chData>>0 & 0x01) ?	SET_D0_H:SET_D0_L;
-	(chData>>1 & 0x01) ?	SET_D1_H:SET_D1_L;
+    if((chData>>0 & 0x01)){
+	 	SET_D0_H();
+	}
+	else
+	    SET_D0_L();
 	
-	(chData>>2 & 0x01) ?	SET_D2_H:SET_D2_L;
-
-	(chData>>3 & 0x01) ?	SET_D3_H:SET_D3_L;
-
-	(chData>>4 & 0x01) ?	SET_D4_H:SET_D4_L;
+	if((chData>>1 & 0x01)){
+		SET_D1_H();
+	}
+	else
+		SET_D1_L();
 	
-	(chData>>5 & 0x01) ?	SET_D5_H:SET_D5_L;
+	if(chData>>2 & 0x01){	
+		SET_D2_H();
+	}
+	else 
+	   SET_D2_L();
 
-	(chData>>6 & 0x01) ?	SET_D6_H:SET_D6_L;
+	if(chData>>3 & 0x01){ 	
+		SET_D3_H();
+	}
+	else
+	   SET_D3_L();
+
+	if(chData>>4 & 0x01){
+		SET_D4_H();
+	}
+	else
+	  SET_D4_L();
 	
-	(chData>>7 & 0x01) ?	SET_D7_H:SET_D7_L;
+    if(chData>>5 & 0x01){
+		SET_D5_H();
+    }
+	else
+	  SET_D5_L();
+
+	if(chData>>6 & 0x01){
+		SET_D6_H();
+	}
+	else
+	   SET_D6_L();
+	
+	if(chData>>7 & 0x01){
+		SET_D7_H();
+	}
+	else
+	   SET_D7_L();
 	
 }
 
