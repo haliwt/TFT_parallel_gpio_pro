@@ -60,81 +60,7 @@ static void St7789v_Send_Byte(uint8_t chData);
 static void TFT_Parallel_WriteByte(uint8_t txdata)
 {
  
-   #if 0
-   uint8_t db7,db6,db5,db4,db3,db2,db1,db0;
-
-  //parallel gpio IF TFT screening parallel GPIO
- 
-
-  db7= txdata >> 7;
-  db6= txdata >> 6;
-  db5= txdata >> 5;
-  db4= txdata >> 4;
-  db3= txdata >> 3;
-  db2= txdata >> 2;
-  db1= txdata >> 1;
-  db0= txdata >> 0;
-  
-  if(db7 & 0x01){
-  	 LCD_DB7_SetHigh() ; 
-  }
-  else{
-    LCD_DB7_SetLow() ;
-  }
-
- 
-  
-  if(db6 & 0x01){
-  	 LCD_DB6_SetHigh() ; 
-  }
-  else{
-    LCD_DB6_SetLow() ;
-  }
-
-  if(db5 & 0x01){
-  	 LCD_DB5_SetHigh() ; 
-  }
-  else{
-    LCD_DB5_SetLow() ;
-  }
-
-  if(db4 & 0x01){
-  	 LCD_DB4_SetHigh() ; 
-  }
-  else{
-    LCD_DB4_SetLow() ;
-  }
-
-  if(db3 & 0x01){
-  	 LCD_DB3_SetHigh() ; 
-  }
-  else{
-    LCD_DB3_SetLow() ;
-  }
-
-  if(db2 & 0x01){
-  	 LCD_DB2_SetHigh() ; 
-  }
-  else{
-    LCD_DB2_SetLow() ;
-  }
-
-
-   if(db1 & 0x01){
-  	 LCD_DB1_SetHigh() ; 
-  }
-  else{
-    LCD_DB1_SetLow() ;
-  }
-
-  if(db0 & 0x01){
-  	 LCD_DB0_SetHigh() ; 
-  }
-  else{
-    LCD_DB0_SetLow() ;
-  }
-  
-  #endif    
+   
    St7789v_Send_Byte(txdata);
 
     
@@ -603,8 +529,7 @@ void TFT_LCD_Init(void)
 
 static void St7789v_Send_Byte(uint8_t chData)
 {
-
-    if((chData>>0 & 0x01)){
+   if((chData>>0 & 0x01)){
 	 	SET_D0_H();
 	}
 	else

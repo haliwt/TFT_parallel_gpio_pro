@@ -628,7 +628,7 @@ void Json_Parse_Command_Fun(void)
 	    if(ptc_error_state() ==0){
 			
 		 buzzer_sound()	;
-		// Ptc_On();
+		 Ptc_On();
 	     LED_PTC_ICON_ON();
          MqttData_Publish_SetPtc(0x01);
 	  	 HAL_Delay(50);//350ms

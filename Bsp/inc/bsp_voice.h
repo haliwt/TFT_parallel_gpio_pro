@@ -4,8 +4,8 @@
 
 #define  RX_BUF_SIZE  10
 
-#define VOICE_SOUND_OUTPUT()       HAL_GPIO_WritePin(VOICE_BROAD_GPIO_Port ,VOICE_BROAD_Pin,GPIO_PIN_RESET) 
-#define VOICE_SOUND_DISABLE()      HAL_GPIO_WritePin(VOICE_BROAD_GPIO_Port ,VOICE_BROAD_Pin,GPIO_PIN_SET) 
+//#define VOICE_SOUND_OUTPUT()       HAL_GPIO_WritePin(VOICE_BROAD_GPIO_Port ,VOICE_BROAD_Pin,GPIO_PIN_RESET) 
+//#define VOICE_SOUND_DISABLE()      HAL_GPIO_WritePin(VOICE_BROAD_GPIO_Port ,VOICE_BROAD_Pin,GPIO_PIN_SET) 
 
 
 extern uint8_t voice_inputBuf[1];
@@ -71,10 +71,10 @@ void Voice_Decoder_Handler(void);
 
 
 
-void Voice_GPIO_Dir_Output_Init(void);
+//void Voice_GPIO_Dir_Output_Init(void);
 
 
-void Voice_GPIO_Dir_Iniput_Init(void);
+//void Voice_GPIO_Dir_Iniput_Init(void);
 
 
 void Voice_Warning_Sound_Ptc(void);

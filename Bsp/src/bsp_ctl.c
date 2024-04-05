@@ -334,14 +334,14 @@ void Device_Action_Publish_Handler(void)
  
 	  if(ptc_state()== 1){
 
-	     //Ptc_On();
+	     Ptc_On();
 		 LED_PTC_ICON_ON();
 	     MqttData_Publish_SetPtc(0x01);  
 		 HAL_Delay(30);//350
 
 	  }
 	  else{
-	  ///  Ptc_Off();
+	    Ptc_Off();
 		LED_PTC_ICON_OFF();
 	    MqttData_Publish_SetPtc(0); 
 		HAL_Delay(30);//350
@@ -415,13 +415,13 @@ void Device_Action_No_Wifi_Handler(void)
 
   if(ptc_state()== 1){
 
-      //Ptc_On();
+     Ptc_On();
 	 LED_PTC_ICON_ON();
    
 
   }
   else{
-   /// Ptc_Off();
+    Ptc_Off();
 	LED_PTC_ICON_OFF();
    
 
@@ -480,13 +480,13 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
   if(ptc_state()== 1){
 
-    //  Ptc_On();
+     Ptc_On();
 	 LED_PTC_ICON_ON();
    
 
   }
   else{
-    //Ptc_Off();
+    Ptc_Off();
 	LED_PTC_ICON_OFF();
    
 

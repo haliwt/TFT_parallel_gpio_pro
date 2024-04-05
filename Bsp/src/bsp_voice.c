@@ -146,7 +146,7 @@ void Voice_Decoder_Handler(void)
    static uint8_t voice_cmd_flag;
 
   if(v_t.rx_voice_cmd_enable ==1 && v_t.gTimer_voice_time < 15){
-  	   Voice_GPIO_Dir_Iniput_Init();
+  	   //Voice_GPIO_Dir_Iniput_Init();
 	   v_t.rx_enable_voice_output=0xff;
 		
 		voice_cmd_flag=1;
@@ -190,7 +190,7 @@ void Voice_Decoder_Handler(void)
        v_t.rx_voice_cmd_enable =0;
 	   v_t.recoder_cmd_counter++;
 
-	   Voice_GPIO_Dir_Output_Init();
+	   //Voice_GPIO_Dir_Output_Init();
 	}
 
 	
@@ -202,7 +202,7 @@ void Voice_Decoder_Handler(void)
 	    switch(v_t.rx_enable_voice_output){
 
 		 case 1:
-		   Voice_GPIO_Dir_Iniput_Init();
+		   //Voice_GPIO_Dir_Iniput_Init();
 
 
 		 break;
@@ -213,7 +213,7 @@ void Voice_Decoder_Handler(void)
 		 
 	       if(v_t.gTimer_voice_sound_input_time< 10){
 		   	
-			 Voice_GPIO_Dir_Output_Init();
+			 //Voice_GPIO_Dir_Output_Init();
 
             }
 		    else{
@@ -229,12 +229,12 @@ void Voice_Decoder_Handler(void)
 		 case 3:
     	
 		    v_t.gTimer_voice_sound_input_time=0;
-			Voice_GPIO_Dir_Iniput_Init();
+			//Voice_GPIO_Dir_Iniput_Init();
 
 		 break;
 
 		 case 0xff:
-			Voice_GPIO_Dir_Iniput_Init();
+			//Voice_GPIO_Dir_Iniput_Init();
 
 		 break;
 
@@ -330,13 +330,12 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	if(v_t.voice_soun_output_enable ==1){
      if(ptc_state()==1 ){
-      // buzzer_sound();
+   
 	 }
 	 else{
-		
-		//buzzer_sound();
+	
 		gctl_t.ptc_flag =1;
-		//Ptc_On();
+		Ptc_On();
 	    LED_PTC_ICON_ON();
 
 	 }
@@ -350,13 +349,13 @@ static void voice_cmd_fun(uint8_t cmd)
 		if(v_t.voice_soun_output_enable ==1){
 		 if(ptc_state() == 0){
           
-          //  buzzer_sound();
+       
 
 		 }
 		 else{
-			//buzzer_sound();
+		
 			gctl_t.ptc_flag =0;
-			//Ptc_Off();
+			Ptc_Off();
 		    LED_PTC_ICON_OFF();
 		 }
 		}
@@ -452,7 +451,7 @@ static void  voice_set_temperature_value(uint8_t value)
 
         }
 		else{
-           VOICE_SOUND_DISABLE();
+           //VOICE_SOUND_DISABLE();
    
 		}
 
@@ -489,7 +488,7 @@ static void voice_set_timer_timing_value(uint8_t time)
 	TFT_Disp_Voice_Set_TimerTime_Init();
     }
 	else{
-       VOICE_SOUND_DISABLE();
+      // VOICE_SOUND_DISABLE();
 
 	}
 

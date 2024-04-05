@@ -168,8 +168,9 @@ typedef struct{
 
   	//timer timing function
   	uint8_t gTimer_pro_feed_dog;
-
-	uint8_t gTimer_pro_temp_delay ;
+    uint8_t gTimer_pro_temp_delay ;
+    //key
+	uint8_t add_or_dec_is_cofirm_key_flag;
 	
 	
 

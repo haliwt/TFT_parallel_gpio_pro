@@ -117,22 +117,11 @@ void Error_Handler(void);
 #define RX_WIFI_GPIO_Port GPIOA
 #define WIFI_EN_Pin GPIO_PIN_4
 #define WIFI_EN_GPIO_Port GPIOA
-#define LED_KEY_TIM_Pin GPIO_PIN_5
-#define LED_KEY_TIM_GPIO_Port GPIOA
-#define LED_POWER_Pin GPIO_PIN_6
-#define LED_POWER_GPIO_Port GPIOA
-#define PLASMA_CTL_Pin GPIO_PIN_7
-#define PLASMA_CTL_GPIO_Port GPIOA
-#define RELAY_CTL_Pin GPIO_PIN_0
-#define RELAY_CTL_GPIO_Port GPIOB
-#define BEEP_PWM_Pin GPIO_PIN_1
-#define BEEP_PWM_GPIO_Port GPIOB
-#define LED_PTC_Pin GPIO_PIN_2
-#define LED_PTC_GPIO_Port GPIOB
-#define LED_RAT_Pin GPIO_PIN_10
-#define LED_RAT_GPIO_Port GPIOB
 
-//
+
+
+
+//key of funtion 
 #define KEY_POWER_Pin GPIO_PIN_11
 #define KEY_POWER_GPIO_Port GPIOB
 #define KEY_POWER_EXTI_IRQn EXTI4_15_IRQn
@@ -145,26 +134,71 @@ void Error_Handler(void);
 #define KEY_DEC_Pin GPIO_PIN_14
 #define KEY_DEC_GPIO_Port GPIOB
 #define KEY_DEC_EXTI_IRQn EXTI4_15_IRQn
-#define ULTRA_PWM_Pin GPIO_PIN_8
-#define ULTRA_PWM_GPIO_Port GPIOA
+
+//key of led function
+
+#define LED_KEY_TIM_Pin GPIO_PIN_5
+#define LED_KEY_TIM_GPIO_Port GPIOA
+
+#define LED_POWER_Pin GPIO_PIN_6
+#define LED_POWER_GPIO_Port GPIOA
+
+
+
+// voice control gpio
 #define VOICE_TX_Pin GPIO_PIN_9
 #define VOICE_TX_GPIO_Port GPIOA
-#define VOICE_BROAD_Pin GPIO_PIN_6
-#define VOICE_BROAD_GPIO_Port GPIOC
-#define VOICE_MUTE_Pin GPIO_PIN_7
-#define VOICE_MUTE_GPIO_Port GPIOC
+
+
+
 #define VOICE_RX_Pin GPIO_PIN_10
 #define VOICE_RX_GPIO_Port GPIOA
+// voice mute 
+#define VOICE_MUTE_Pin 					GPIO_PIN_7
+#define VOICE_MUTE_GPIO_Port 			GPIOC
+
+#define VOICE_BROAD_Pin GPIO_PIN_6
+#define VOICE_BROAD_GPIO_Port GPIOC
+
+
+//MANI BOBARD MAIN FUNCTION 
 #define FAN_CTL_1_Pin GPIO_PIN_11
 #define FAN_CTL_1_GPIO_Port GPIOA
+
 #define FAN_CTL_2_Pin GPIO_PIN_12
 #define FAN_CTL_2_GPIO_Port GPIOA
-#define TEMP_SENSOR_Pin GPIO_PIN_15
-#define TEMP_SENSOR_GPIO_Port GPIOA
-#define LED_KILL_Pin GPIO_PIN_0
-#define LED_KILL_GPIO_Port GPIOD
-#define LED_WIFI_Pin GPIO_PIN_1
-#define LED_WIFI_GPIO_Port GPIOD
+
+#define TEMP_SENSOR_Pin 						GPIO_PIN_15
+#define TEMP_SENSOR_GPIO_Port 					GPIOA
+
+#define ULTRA_PWM_Pin GPIO_PIN_8
+#define ULTRA_PWM_GPIO_Port GPIOA
+
+#define PLASMA_CTL_Pin 				GPIO_PIN_7
+#define PLASMA_CTL_GPIO_Port 		GPIOA
+
+#define RELAY_CTL_Pin 				GPIO_PIN_0
+#define RELAY_CTL_GPIO_Port 		GPIOB
+
+#define BEEP_PWM_Pin 				GPIO_PIN_1
+#define BEEP_PWM_GPIO_Port 			GPIOB
+
+
+
+//led of board gpio
+
+#define LED_KILL_Pin 				GPIO_PIN_0
+#define LED_KILL_GPIO_Port 			GPIOD
+
+#define LED_WIFI_Pin 				GPIO_PIN_1
+#define LED_WIFI_GPIO_Port 			GPIOD
+
+#define LED_PTC_Pin 				GPIO_PIN_2
+#define LED_PTC_GPIO_Port 			GPIOB
+
+#define LED_RAT_Pin 				GPIO_PIN_10
+#define LED_RAT_GPIO_Port 			GPIOB
+
 
 
 /* USER CODE BEGIN Private defines */

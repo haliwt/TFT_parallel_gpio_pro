@@ -52,11 +52,11 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
    /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, TFT_DCX_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOC, TFT_DCX_Pin|VOICE_MUTE_Pin, GPIO_PIN_SET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin|VOICE_BROAD_Pin
-                          |VOICE_MUTE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOC, TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin,GPIO_PIN_RESET);//input GPIO VOICE_BROAD_Pin
+                      
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, TFT_DB6_Pin|TFT_DB7_Pin, GPIO_PIN_RESET);
@@ -79,8 +79,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin|VOICE_BROAD_Pin
-                          |VOICE_MUTE_Pin;
+  GPIO_InitStruct.Pin = TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin|VOICE_MUTE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -131,6 +130,14 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
+
+   /*Configure GPIO pins : PCPin */
+  GPIO_InitStruct.Pin = VOICE_BROAD_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT ;//GPIO_MODE_OUTPUT_PP;
+  GPIO_InitStruct.Pull = GPIO_NOPULL;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
+
   /*Configure GPIO pins : PBPin PBPin */
   GPIO_InitStruct.Pin = TFT_WR_Pin|TFT_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
@@ -138,17 +145,7 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
-  /**/
- // __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB6);
 
-  /**/
-//  __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB7);
-
-  /**/
- // __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB8);
-
-  /**/
-  //__HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB9);
 
   /* EXTI interrupt init*/
   HAL_NVIC_SetPriority(EXTI4_15_IRQn, 1, 0);
