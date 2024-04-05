@@ -271,7 +271,7 @@ static void TFT_Pocess_Command_Handler(void)
     case pro_set_temperature:
 
 
-	 //  Temperature_Ptc_Pro_Handler();
+	  Temperature_Ptc_Pro_Handler();
 		
     
       pro_t.run_process_step=pro_disp_wifi_led;
