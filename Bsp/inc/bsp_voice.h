@@ -36,14 +36,17 @@ typedef struct{
     
 	uint8_t voice_ctl_flag;
 	uint8_t RxBuf[RX_BUF_SIZE];
-	uint8_t rx_voice_data_enable;
-	uint8_t rxCounter;
+
+
 	uint8_t voice_to_buzzer_flag ;
-	uint8_t voice_soun_output_enable;
-	uint8_t rx_voice_cmd_enable;
-	uint8_t voice_cmd_power_off_flag;
-	uint8_t recoder_cmd_counter;
-	uint8_t rx_enable_voice_output ;
+	
+	uint8_t voice_wakeword_enable;
+
+	uint8_t voice_power_on_cmd;
+	uint8_t voice_wakeword_counter;
+	uint8_t voice_decoder_flag;
+	
+
 	uint8_t transOngoingFlag;
 	
 
@@ -57,8 +60,8 @@ typedef struct{
    
 	uint8_t RxStatus;
 	uint8_t voice_input_timer_flag;
-	uint8_t gTimer_voice_time;
-	uint8_t gTimer_voice_sound_input_time;
+	uint8_t gTimer_voice_time_counter_start;
+
 
 	
 }voice_sound_t;
