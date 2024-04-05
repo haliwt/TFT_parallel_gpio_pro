@@ -4,9 +4,10 @@
 
 #define  RX_BUF_SIZE  10
 
-//#define VOICE_SOUND_OUTPUT()       HAL_GPIO_WritePin(VOICE_BROAD_GPIO_Port ,VOICE_BROAD_Pin,GPIO_PIN_RESET) 
-//#define VOICE_SOUND_DISABLE()      HAL_GPIO_WritePin(VOICE_BROAD_GPIO_Port ,VOICE_BROAD_Pin,GPIO_PIN_SET) 
 
+
+#define VOICE_OUTPUT_SOUND_ENABLE()    do{VOICE_MUTE_GPIO_Port->BSRR |= VOICE_MUTE_Pin;}while(0)
+#define VOICE_OUTPUT_SOUND_DISABLE()   do{VOICE_MUTE_GPIO_Port->BSRR |= (uint32_t)VOICE_MUTE_Pin << 16;}while(0)
 
 extern uint8_t voice_inputBuf[1];
 
