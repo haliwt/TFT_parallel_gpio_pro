@@ -20,13 +20,9 @@ void TimeTimer_Pro_Handler(void)
 	break;
 
 	case timer_time: //01 ->timer_time 
-		if(gctl_t.gTimer_ctl_set_timer_time_senconds >59  || v_t.voice_input_timer_flag==2){
+		if(gctl_t.gTimer_ctl_set_timer_time_senconds >59 ){
 
-			if(v_t.voice_input_timer_flag==2){
-                  v_t.voice_input_timer_flag++;
-	              TFT_Disp_Voice_Set_TimerTime_Init();
-			}
-            else{
+  		
 			gctl_t.gTimer_ctl_set_timer_time_senconds =0;
 
 			gctl_t.gSet_timer_minutes --;
@@ -45,7 +41,7 @@ void TimeTimer_Pro_Handler(void)
 
 			}
 			TFT_Disp_Set_TimerTime(0);
-			}
+			
 		}
 		//TFT_Disp_Set_TimerTime(0);
 		TFT_DonnotDisp_Works_Time();
@@ -61,22 +57,6 @@ void TimeTimer_Pro_Handler(void)
             	  pro_t.gTimer_pro_mode_long_key =0;
 		
 
-        if(v_t.voice_input_timer_flag ==1){
-			v_t.voice_input_timer_flag++;
-			pro_t.timer_mode_flag = timer_time;
-			pro_t.mode_key_run_item_step =0xff;
-			gctl_t.gTimer_ctl_set_timer_time_senconds =0;
-			gctl_t.timer_time_define_flag = 1;
-			gctl_t.gSet_timer_minutes =0;
-			gctl_t.mode_key_long_time_flag=0;
-			gctl_t.gSet_timer_hours = v_t.voice_set_timer_timing_value ;
-
-			TFT_Only_Disp_Set_Timer_Blink();
-			HAL_Delay(100);
-			TFT_Disp_Onley_Set_TimerTime_Value();
-		
-		}
-        else{
 
 			if(gctl_t.gSet_timer_hours >0 ){
 
@@ -107,8 +87,7 @@ void TimeTimer_Pro_Handler(void)
                
 		}
 
-		
-		}
+	
 
 		TFT_DonnotDisp_Works_Time();
 

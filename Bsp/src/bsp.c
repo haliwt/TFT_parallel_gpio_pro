@@ -152,15 +152,7 @@ void TFT_Process_Handler(void)
       
 
 	}
-	
-
-
-      
-
-
-	
-
-    gctl_t.ptc_warning=0;
+	gctl_t.ptc_warning=0;
 	gctl_t.fan_warning =0;
 	wifi_t.repeat_login_tencent_cloud_init_ref=0;
 	

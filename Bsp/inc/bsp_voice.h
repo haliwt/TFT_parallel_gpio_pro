@@ -59,7 +59,7 @@ typedef struct{
 	
    
 	uint8_t RxStatus;
-	uint8_t voice_input_timer_flag;
+	
 	uint8_t gTimer_voice_time_counter_start;
 
 

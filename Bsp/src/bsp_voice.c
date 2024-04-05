@@ -145,8 +145,8 @@ void Voice_Decoder_Handler(void)
 
   static uint8_t voice_cmd_flag;
 
-  if(v_t.voice_decoder_flag == 1){
-  	  v_t.voice_decoder_flag=0;
+//  if(v_t.voice_decoder_flag == 1){
+//  	  v_t.voice_decoder_flag=0;
 
   if(v_t.voice_wakeword_enable ==1 && v_t.gTimer_voice_time_counter_start < 16){
 	   voice_cmd_flag=1;
@@ -166,13 +166,9 @@ void Voice_Decoder_Handler(void)
 	
    if(result > 9 && result < 31){ //set temperature value 
 		   
-            voice_set_temperature_value(result);
-			
-		
-
-	}
-
-	if(result > 30 && result <55){ //set timer timing value 
+           voice_set_temperature_value(result);
+   }
+   else if(result > 30 && result <55){ //set timer timing value 
 	
 
 		voice_set_timer_timing_value(result);
@@ -184,7 +180,7 @@ void Voice_Decoder_Handler(void)
 	
    
 	}
-  }
+//  }
   
   if(v_t.gTimer_voice_time_counter_start > 15 && voice_cmd_flag==1){
 	   voice_cmd_flag++;
@@ -211,43 +207,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	
 	switch(cmd){
 
-	case voice_power_on:
-	  
-	   	if(pro_t.gPower_On == power_on){
-			
-        
-	
-            
-        }
-		else{
-         
-	
-		    pro_t.gPower_On = power_on;   
-            pro_t.long_key_flag =0;
-            pro_t.run_process_step=0;
 
-			gctl_t.ptc_warning =0;
-		    gctl_t.fan_warning =0;
-			
-		}
-		
-	break;
-
-	case voice_power_off:
-		if(pro_t.gPower_On == power_off){
-			
-			
-
-		}
-		else{
-		
-		    pro_t.power_off_flag=1;
-			pro_t.gPower_On = power_off; 
-		
-		
-			
-		}
-	break;
 
 	case voice_link_wifi:
 		
@@ -413,10 +373,25 @@ static void voice_set_timer_timing_value(uint8_t time)
     v_t.voice_set_timer_timing_value = time - 30;
     
 	gctl_t.gSet_timer_hours = v_t.voice_set_timer_timing_value ;
-	v_t.voice_input_timer_flag =1;
+
 
 	pro_t.mode_key_run_item_step = mode_key_timer_time;
-	pro_t.timer_mode_flag=timer_set_time; //set timer mode enable
+	pro_t.timer_mode_flag=timer_time; //pro_t.timer_mode_flag=timer_set_time; //set timer mode enable
+	if(gctl_t.gSet_timer_hours >0 ){
+
+				pro_t.timer_mode_flag = timer_time;
+				pro_t.mode_key_run_item_step =0xff;
+				gctl_t.gTimer_ctl_set_timer_time_senconds =0;
+				gctl_t.timer_time_define_flag = 1;
+				gctl_t.gSet_timer_minutes =0;
+				gctl_t.mode_key_long_time_flag=0;
+				TFT_Only_Disp_Set_Timer_Blink();
+				HAL_Delay(100);
+				TFT_Disp_Set_TimerTime(0);
+				//TFT_Disp_Onley_Set_TimerTime_Value();
+				
+
+	}
 	//to switch works or timer item flag  dis chines words
 	 gctl_t.timer_timing_words_changed_flag ++;
 	 gctl_t.timing_words_changed_flag++;
