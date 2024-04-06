@@ -528,7 +528,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 void Device_NoAction_Power_Off(void)
 {
 	
-	//Ptc_Off();
+	Ptc_Off();
 	LED_PTC_ICON_OFF();
 	
 	Plasma_Off();
@@ -550,7 +550,7 @@ void Device_NoAction_Power_Off(void)
 *****************************************************************************/
 void Device_stop_Action_Fun(void)
 {
-   // Ptc_Off();
+    Ptc_Off();
 	Plasma_Off();
     Ultrasonic_Pwm_Stop();
 }

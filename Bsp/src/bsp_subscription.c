@@ -649,7 +649,7 @@ void Json_Parse_Command_Fun(void)
 	  case PTC_OFF_ITEM:
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 		 buzzer_sound()	;
-		// Ptc_Off();
+		 Ptc_Off();
 	     LED_PTC_ICON_OFF();
 		 
          MqttData_Publish_SetPtc(0);
