@@ -230,7 +230,7 @@ static void vTaskStart(void *pvParameters)
 
                  if(dec_flag ==1){
                      add_flag ++;
-                     Buzzer_KeySound();
+                    buzzer_sound();
 
                   }
                  
@@ -243,7 +243,7 @@ static void vTaskStart(void *pvParameters)
 
                   if(add_flag ==1){
                      add_flag ++;
-                     Buzzer_KeySound();
+                     buzzer_sound();
 
                   }
 				
@@ -275,7 +275,7 @@ static void vTaskStart(void *pvParameters)
               }
                 
               //mainboard_process_handler();
-              bsp_Idle();
+            
               TFT_Process_Handler();
          
             }

@@ -90,14 +90,15 @@ void Key_Speical_Mode_Fun_Handler(void)
 		if(pro_t.mode_key_pressed_flag >  40 && KEY_MODE_VALUE() == KEY_DOWN){
 			pro_t.mode_key_pressed_flag =150;
 			pro_t.mode_key_select_label =0;
-            Buzzer_KeySound();
+             buzzer_sound();
 		    pro_t.gTimer_pro_mode_long_key=0;
 		    pro_t.key_mode_long_time_over_flag=1;
 			Mode_Long_Key_Fun();
 
 		   
        }
-       else if(KEY_MODE_VALUE() ==KEY_UP && pro_t.mode_key_pressed_flag > 0 && pro_t.mode_key_pressed_flag < 40){
+    }
+    else if(KEY_MODE_VALUE() ==KEY_UP && pro_t.mode_key_pressed_flag > 0 && pro_t.mode_key_pressed_flag < 40){
        
 		pro_t.mode_key_pressed_flag =0;
 	   
@@ -115,13 +116,11 @@ void Key_Speical_Mode_Fun_Handler(void)
 
 		pro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
 		gctl_t.gTimer_ctl_select_led =0;
+        buzzer_sound();
 	   	
 	   }
 		
-		
-	}
-
-	Mode_Key_Config_Fun_Handler();
+		Mode_Key_Config_Fun_Handler();
 }
 
 /******************************************************************************

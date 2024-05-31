@@ -41,6 +41,7 @@ void bsp_Init(void)
 {
 
    TimerTiming_Init();
+   Buzzer_Sound_Fun_Init();
    pro_t.mode_key_run_item_step=0xff;
   // Buzzer_Sound_Fun_Init();
 
@@ -63,6 +64,7 @@ void bsp_Idle(void)
 	 
 	
 	    Update_DHT11_Value();
+        
 	    TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
         TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
         TFT_Display_Handler();
