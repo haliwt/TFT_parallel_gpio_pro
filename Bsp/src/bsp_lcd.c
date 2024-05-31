@@ -315,96 +315,119 @@ void DISP_WINDOWS(void)
  * Return Ref: NO
  * 
 ***********************************************************************************/
-#if 0
+#if 1
 void TFT_LCD_Init(void)
 {
-  //HW_Reset();                
-//HAL_Delay(120);  TFT factory of paramerent              
-LCD_GPIO_Reset();
+  /* 关闭睡眠模式 */
+	LCD_GPIO_Reset();
+	HAL_Delay(120);
 
-LCD_Write_Cmd(0x11);     
+	//TFT_BACKLIGHT_ON();
+    LCD_Write_Cmd(0x11);
+	HAL_Delay(120);              
+ 
+    
+    	
+    LCD_Write_Cmd(0x36);//修改此处，可以改变屏幕的显示方向，横屏，竖屏等
+    //LCD_Write_Data(0x00);  //竖屏
+  //  LCD_Write_Data(0x60); //横屏
+    LCD_Write_Data(0xA0); //横屏
 
-HAL_Delay(120);                
+ 
+    LCD_Write_Cmd(0xa0);
+    /* RGB 5-6-5-bit格式  */
+    LCD_Write_Cmd(0x3A);
+    LCD_Write_Data(0x65);//0x063
+     LCD_Clear(BLACK);
+    /* porch 设置 */
+    LCD_Write_Cmd(0xB2);
+    LCD_Write_Data(0x0C);//< Back porch in normal mode
+    LCD_Write_Data(0x0C);//< Front porch in normal mode
+    LCD_Write_Data(0x00);//< Disable separate porch control
+    LCD_Write_Data(0x33);//< Back and front porch in idle mode
+    LCD_Write_Data(0x33);//< Back and front porch in partial mode
 
-LCD_Write_Cmd(0xB2);     
-LCD_Write_Data(0x0C);   
-LCD_Write_Data(0x0C);   
-LCD_Write_Data(0x00);   
-LCD_Write_Data(0x33);   
-LCD_Write_Data( 0x33);  
-
-LCD_Write_Cmd(0x35);     
-LCD_Write_Data(0x00);  
-
+#if 0
 LCD_Write_Cmd(0x36);     
-LCD_Write_Data(0x00);   
+ LCD_Write_Data( 0x00);   
 
-LCD_Write_Cmd( 0x3A);     
-LCD_Write_Data(0x06);     
+ LCD_Write_Cmd(0x3A);     
+ LCD_Write_Data(0x06);   
 
-LCD_Write_Cmd(0xB7);     
-LCD_Write_Data( 0x75);   
+ LCD_Write_Cmd(0xB2);     
+ LCD_Write_Data(0x0C);   
+ LCD_Write_Data(0x0C);   
+ LCD_Write_Data(0x00);   
+ LCD_Write_Data(0x33);   
+ LCD_Write_Data(0x33);  
 
-LCD_Write_Cmd(0xBB);     
-LCD_Write_Data(0x36);   
+#endif 
 
-LCD_Write_Cmd(0xC0);     
-LCD_Write_Data( 0x2C);   
+ LCD_Write_Cmd(0xB7);     
+ LCD_Write_Data(0x06);   
 
-LCD_Write_Cmd(0xC2);     
-LCD_Write_Data(0x01);   
+ LCD_Write_Cmd(0xBB);     
+ LCD_Write_Data(0x30);   
 
-LCD_Write_Cmd(0xC3);     
-LCD_Write_Data(0x13);   
+ LCD_Write_Cmd(0xC0);     
+ LCD_Write_Data(0x2C);   
 
-LCD_Write_Cmd(0xC4);     
-LCD_Write_Data(0x20);    
+ LCD_Write_Cmd(0xC2);     
+ LCD_Write_Data(0x01);   
 
-LCD_Write_Cmd(0xC6);     
-LCD_Write_Data(0x0F);   
+ LCD_Write_Cmd(0xC3);     
+ LCD_Write_Data(0x0F);   
 
-LCD_Write_Cmd(0xD0);     
-LCD_Write_Data( 0xA4);   
-LCD_Write_Data( 0xA1);   
+ LCD_Write_Cmd(0xC6);     
+ LCD_Write_Data(0x0F);   
 
-LCD_Write_Cmd( 0xD6);     
-LCD_Write_Data( 0xA1); 
+ LCD_Write_Cmd(0xD0);     
+ LCD_Write_Data(0xA7);   
 
-LCD_Write_Cmd(0xE0);
-LCD_Write_Data(0xD0);
-LCD_Write_Data(0x0B);
-LCD_Write_Data(0x17);
-LCD_Write_Data(0x14);
-LCD_Write_Data(0x14);
-LCD_Write_Data(0x3D);
-LCD_Write_Data(0x39);
-LCD_Write_Data(0x43);
-LCD_Write_Data(0x48);
-LCD_Write_Data(0x07);
-LCD_Write_Data(0x10);
-LCD_Write_Data(0x0E);
-LCD_Write_Data(0x16);
-LCD_Write_Data(0x18);
+ LCD_Write_Cmd(0xD0);     
+ LCD_Write_Data(0xA4);   
+ LCD_Write_Data(0xA1);   
 
-LCD_Write_Cmd(0xE1);
-LCD_Write_Data(0xD0);
+ LCD_Write_Cmd(0xD6);     
+LCD_Write_Data(0xA1);   
+
+ LCD_Write_Cmd(0xE0);
+ LCD_Write_Data(0xF0);
+ LCD_Write_Data(0x02);
+ LCD_Write_Data(0x07);
+ LCD_Write_Data(0x05);
 LCD_Write_Data(0x06);
-LCD_Write_Data(0x10);
-LCD_Write_Data(0x08);
-LCD_Write_Data(0x09);
-LCD_Write_Data(0x05);
-LCD_Write_Data(0x39);
-LCD_Write_Data(0x54);
-LCD_Write_Data(0x48);
-LCD_Write_Data(0x3F);
-LCD_Write_Data(0x1C);
-LCD_Write_Data(0x1B);
-LCD_Write_Data(0x1E);
-LCD_Write_Data(0x22);
+ LCD_Write_Data(0x14);
+ LCD_Write_Data(0x2F);
+ LCD_Write_Data(0x54);
+ LCD_Write_Data(0x46);
+ LCD_Write_Data(0x38);
+ LCD_Write_Data(0x13);
+ LCD_Write_Data(0x11);
+ LCD_Write_Data(0x2E);
+ LCD_Write_Data(0x35);
 
-LCD_Write_Cmd( 0x29);     
+ LCD_Write_Cmd(0xE1);
+ LCD_Write_Data(0xF0);
+ LCD_Write_Data(0x08);
+ LCD_Write_Data(0x0C);
+ LCD_Write_Data(0x0C);
+ LCD_Write_Data(0x09);
+ LCD_Write_Data(0x05);
+ LCD_Write_Data(0x2F);
+ LCD_Write_Data(0x43);
+ LCD_Write_Data(0x46);
+ LCD_Write_Data(0x36);
+ LCD_Write_Data(0x10);
+ LCD_Write_Data(0x12);
+ LCD_Write_Data(0x2C);
+ LCD_Write_Data(0x32);
 
-LCD_Write_Cmd(0x2C); 
+ LCD_Write_Cmd(0x21);     
+
+ LCD_Write_Cmd(0x29);    
+
+ LCD_Write_Cmd(0x2C);  
 
 
 
@@ -513,13 +536,16 @@ void TFT_LCD_Init(void)
 
 	
     /* 显示开 */
-	//LCD_Write_Cmd(0x21); // Display Inversion On
-	LCD_Write_Cmd(0x20); // Display Inversion Off
+	LCD_Write_Cmd(0x21); // Display Inversion On
+	//LCD_Write_Cmd(0x20); // Display Inversion Off
     LCD_Write_Cmd(0x29); // display on 
     //LCD_Write_Cmd(0x28);  // display off ---WT.EDIT  
 
+     LCD_Write_Cmd(0x2C);  
+
     /* 设置背景色 */
     LCD_Clear(BLACK);
+   // LCD_Clear(WHITE);
 	
 
     /*打开显示*/

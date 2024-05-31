@@ -5,7 +5,7 @@
 
 typedef enum TIMING_T{
 
-   works_time,
+   works_time=0x01,
    timer_time,
    timer_set_time,
    timing_success ,
@@ -14,10 +14,29 @@ typedef enum TIMING_T{
 }timing_t;
 
 
+
+
+void TimerTiming_Init(void);
+
 void TimeTimer_Pro_Handler(void);
+
+void Display_Precise_Works_Time(void);
+
+void Power_Off_Retain_Beijing_Time(void);
+
+
+void Key_Works_Timer_Timing_Handler(uint8_t(*worktiming_handler)(void));
+
+
+void Dis_pWorks_Timer_Timing_Handler(uint8_t(*disp_worktimer_handler)(void));
+
 
 
 #endif 
+
+
+
+
 
 
 

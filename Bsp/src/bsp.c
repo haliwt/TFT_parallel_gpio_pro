@@ -40,6 +40,7 @@ static uint8_t confirm_key_data;
 void bsp_Init(void)
 {
 
+   TimerTiming_Init();
    pro_t.mode_key_run_item_step=0xff;
   // Buzzer_Sound_Fun_Init();
 
@@ -70,8 +71,9 @@ void bsp_Idle(void)
 	}
 	
 	/* --- 喂狗 */
-    if(pro_t.gTimer_pro_feed_dog > 3){ //16s
-	pro_t.gTimer_pro_feed_dog = 0;	
+    if(pro_t.gTimer_pro_feed_dog > 2){ //16s
+	pro_t.gTimer_pro_feed_dog = 0;
+    TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
 	iwdg_feed();
 
     }
@@ -221,7 +223,7 @@ static void TFT_Pocess_Command_Handler(void)
          
 		    Update_DHT11_Value();
 		
-            if(pro_t.mode_key_run_item_step != mode_key_temp){
+            if(pro_t.mode_key_run_item_step != mode_key_set_temp){
 			   TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
             }
 			TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
@@ -435,8 +437,8 @@ static void Key_Interrup_Handler(void)
         case add_key_id:
 		 	
 		 	if(ADD_KEY_VALUE()==KEY_DOWN){
-			    HAL_Delay(10);
-			if(ADD_KEY_VALUE()==KEY_DOWN)
+//			    HAL_Delay(10);
+//			if(ADD_KEY_VALUE()==KEY_DOWN)
 			      ADD_Key_Fun();//DEC_Key_Fun();
 			  
 
@@ -447,8 +449,8 @@ static void Key_Interrup_Handler(void)
 
 		case dec_key_id:
            if(DEC_KEY_VALUE()==KEY_DOWN){
-			 HAL_Delay(10);
-			if(DEC_KEY_VALUE()==KEY_DOWN)
+//			 HAL_Delay(10);
+//			if(DEC_KEY_VALUE()==KEY_DOWN)
 			    DEC_Key_Fun();//ADD_Key_Fun();
 			 }
 

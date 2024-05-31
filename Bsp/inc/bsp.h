@@ -73,11 +73,12 @@ typedef enum set_temp{
 }set_temp_item;
 
 typedef enum{
-  mode_key_temp,
-  mode_key_select ,
-  mode_key_confirm,
-  mode_key_timer_time,
-  
+
+    mode_key_set_temp,
+    mode_key_select ,
+    mode_key_confirm,
+    mode_key_set_timer_value,
+
 
 }mode_key_state;
 
@@ -89,6 +90,10 @@ typedef enum _ptc_warning{
 
 
 }waning_t;
+
+
+
+
 
 typedef enum{
 
@@ -135,9 +140,13 @@ typedef struct{
   
    //time
    uint8_t mode_key_select_label ;
+   uint8_t disp_works_timer_timing_mode_item;
    
 
    //wifi info
+
+   uint8_t (*key_works_timer_timing_state)(void);
+   uint8_t (*disp_works_timer_timing_state)(void);
   
  
    //modke key
@@ -171,11 +180,15 @@ typedef struct{
     uint8_t gTimer_pro_temp_delay ;
     //key
 	uint8_t add_or_dec_is_cofirm_key_flag;
+    uint8_t mode_key_run_proc_item ;
+   
+  
 	
 	
 
   //timing by interrupt
   uint8_t gTimer_wifi_connect_counter;
+//  uint8_t key_works_timer_timing_state ;
 
   uint8_t gTimer_pro_fan;
 	uint8_t gTimer_usart_error;
@@ -197,10 +210,16 @@ typedef struct{
   uint8_t gTimer_pro_confir_delay;
   uint8_t gTimer_pro_action_publis;
   uint8_t gTimer_pro_mode_long_key;
+  uint8_t gTimer_pro_set_long_key_tims;
   
 	
 
 }PRO_T;
+
+
+
+
+
 
 
 extern PRO_T pro_t;

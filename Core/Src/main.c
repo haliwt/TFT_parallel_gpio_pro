@@ -98,6 +98,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
+  bsp_Init();
   delay_init(64); 
   bsp_ctl_init();
   Wifi_Init();

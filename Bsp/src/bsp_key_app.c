@@ -204,7 +204,7 @@ void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 {
 	  if(power_on_state() ==power_on){
 	   if(gctl_t.fan_warning ==0 && ptc_error_state() ==0){
-	  	  pro_t.mode_key_run_item_step = mode_key_timer_time;
+	  	  pro_t.mode_key_run_item_step = mode_key_set_timer_value;
 		  pro_t.timer_mode_flag=timer_set_time; //set timer mode enable,
 		  gctl_t.timer_timing_words_changed_flag ++;
 		  gctl_t.timing_words_changed_flag++;
@@ -242,11 +242,11 @@ void ADD_Key_Fun(void)
 
 		case 0xff:
             if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label==0){
-			   pro_t.mode_key_run_item_step=mode_key_temp;
+			   pro_t.mode_key_run_item_step=mode_key_set_temp;
 
             }
 
-		case mode_key_temp: //set temperature value add number
+		case mode_key_set_temp: //set temperature value add number
 			//pro_t.buzzer_sound_flag = 1;
 			if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
 			Buzzer_KeySound();
@@ -263,7 +263,7 @@ void ADD_Key_Fun(void)
 			}
 		break;
 
-		case mode_key_timer_time:
+		case mode_key_set_timer_value:
             pro_t.buzzer_sound_flag = 1;
 		    pro_t.gTimer_pro_mode_long_key=0;
 			gctl_t.mode_key_long_time_flag++;
@@ -333,10 +333,10 @@ void DEC_Key_Fun(void)
 
 		   case 0xff:
             if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
-		 	 pro_t.mode_key_run_item_step= mode_key_temp;
+		 	 pro_t.mode_key_run_item_step= mode_key_set_temp;
             }
 
-		   case mode_key_temp:  //default tempearture value 
+		   case mode_key_set_temp:  //default tempearture value 
 	        // pro_t.buzzer_sound_flag = 1;
 	        if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
 	        Buzzer_KeySound();
@@ -352,7 +352,7 @@ void DEC_Key_Fun(void)
 	        }
 			break;
 
-			case mode_key_timer_time: //timer timing set "decrease -down"
+			case mode_key_set_timer_value: //timer timing set "decrease -down"
 			   
 			    pro_t.buzzer_sound_flag = 1;
 	            gctl_t.mode_key_long_time_flag++;

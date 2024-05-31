@@ -1069,5 +1069,103 @@ static void smartphone_app_timer_power_on_handler(void)
 
 
 
+/*******************************************************************************
+**
+*Function Name:void Subscribe_Rx_IntHandler(void)
+*Function: interrupt USART2 receive data fun
+*Input Ref: +TCMQTTCONN:OK
+*Return Ref:NO
+*
+********************************************************************************/
+void Wifi_Rx_Link_Net_InputInfo_Handler(void)
+{
+    
+          strcpy((char *)wifi_t.data, (const char *)wifi_t.wifi_data);
+          wifi_t.data_size = wifi_t.wifi_uart_counter;
+
+
+		   if(wifi_t.soft_ap_config_flag==1){
+
+               if(strstr((const char*)wifi_t.data,"+TCSAP:WIFI_CONNECT_SUCCESS")){
+              		wifi_t.soft_ap_config_success=1;
+					
+//                    wifi_t.auto_link_login_tencent_cloud_flag=0;
+//			        
+//					wifi_t.gTimer_auto_detected_net_state_times=0;
+//					wifi_t.repeat_login_tencent_cloud_init_ref=0; //init hardware 
+//					wifi_t.esp8266_login_cloud_success=1;
+//					wifi_t.linking_tencent_cloud_doing=0; //release this flag.
+//					wifi_t.soft_ap_config_flag=0;
+               	}
+
+			
+            else{
+				  if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
+
+				     wifi_t.repeat_login_tencent_cloud_init_ref=0;
+	                 wifi_t.esp8266_login_cloud_success=1;
+				     wifi_t.auto_link_login_tencent_cloud_flag=0;
+				  //link to tencent cloud is success .
+	              wifi_t.linking_tencent_cloud_doing=0; //release this flag. usart
+				
+				  wifi_t.soft_ap_config_flag=0;
+				  wifi_t.gTimer_auto_detected_net_state_times=0;
+				  
+			  }
+
+				  
+		   		if(strstr((char*)wifi_t.wifi_temp_data,"+CME ERROR:208")){
+						
+					   
+						   wifi_t.esp8266_login_cloud_success =0;
+						   wifi_t.rx_error_codes_flag= 1;
+						   wifi_t.rx_setup_hardware_counter=0;
+						   wifi_t.gTimer_auto_detected_net_state_times=0;
+						   wifi_t.gTimer_wifi_rx_error = 0;
+						   wifi_t.get_rx_beijing_time_enable=0;
+					   
+		   
+				 }
+           
+           }
+		  }
+		  else{
+
+		     if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
+			 	
+                 
+				  wifi_t.esp8266_login_cloud_success=1;
+			      wifi_t.repeat_login_tencent_cloud_init_ref=0;
+				
+	              wifi_t.linking_tencent_cloud_doing=0;
+				  wifi_t.auto_link_login_tencent_cloud_flag=0;
+		
+				  wifi_t.soft_ap_config_flag=0;
+				  wifi_t.gTimer_auto_detected_net_state_times=0;
+			  }
+
+			  if(strstr((char*)wifi_t.wifi_temp_data,"+CME ERROR:208")){
+				
+			
+				wifi_t.esp8266_login_cloud_success =0;
+				wifi_t.rx_error_codes_flag= 1;
+				wifi_t.rx_setup_hardware_counter=0;
+				wifi_t.gTimer_auto_detected_net_state_times=0;
+				wifi_t.gTimer_wifi_rx_error = 0;
+				wifi_t.get_rx_beijing_time_enable=0;
+			
+
+			  }
+
+			 
+
+
+		  }
+       
+         wifi_t.wifi_uart_counter=0;
+         
+        
+            
+}
 
 	

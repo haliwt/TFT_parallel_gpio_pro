@@ -43,12 +43,15 @@ typedef struct _bsp_ctl{
 	uint8_t fan_warning;
 	uint8_t time_out_flag;
 	uint8_t memory_confimr_key_done;
+    uint8_t mode_long_key_flag;
    
     //time
    uint8_t disp_works_hours;
    uint8_t timer_time_define_flag;
    uint8_t timer_timing_words_changed_flag;
    uint8_t timing_words_changed_flag;
+   uint8_t beijing_time_flag;
+   
 
    
  

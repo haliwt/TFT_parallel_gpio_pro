@@ -82,5 +82,8 @@ void Wifi_Rx_Beijing_Time_Handler(void);
 
 void Json_Parse_Command_Fun(void);
 
+void Wifi_Rx_Link_Net_InputInfo_Handler(void);
+
+
 #endif 
 
