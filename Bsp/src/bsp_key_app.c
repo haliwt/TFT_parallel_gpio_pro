@@ -250,7 +250,7 @@ void ADD_Key_Fun(void)
 		case mode_key_set_temp: //set temperature value add number
 			//pro_t.buzzer_sound_flag = 1;
 			if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
-			Buzzer_KeySound();
+			//Buzzer_KeySound();
 			gctl_t.gSet_temperature_value ++;
 			if( gctl_t.gSet_temperature_value < 20)gctl_t.gSet_temperature_value=20;
 			
@@ -265,7 +265,7 @@ void ADD_Key_Fun(void)
 		break;
 
 		case mode_key_set_timer_value:
-            pro_t.buzzer_sound_flag = 1;
+            //pro_t.buzzer_sound_flag = 1;
 		    pro_t.gTimer_pro_mode_long_key=0;
 			gctl_t.mode_key_long_time_flag++;
 			
@@ -289,7 +289,7 @@ void ADD_Key_Fun(void)
 
 		case mode_key_select:
 			
-			pro_t.buzzer_sound_flag = 1;
+		//	pro_t.buzzer_sound_flag = 1;
 			pro_t.mode_key_run_item_step = mode_key_confirm;
 			
 		
@@ -340,7 +340,7 @@ void DEC_Key_Fun(void)
 		   case mode_key_set_temp:  //default tempearture value 
 	        // pro_t.buzzer_sound_flag = 1;
 	        if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
-	        Buzzer_KeySound();
+	      //  Buzzer_KeySound();
 			 gctl_t.gSet_temperature_value--;
 			if( gctl_t.gSet_temperature_value<20)  gctl_t.gSet_temperature_value=40;
 	        if( gctl_t.gSet_temperature_value >40) gctl_t.gSet_temperature_value=40;
@@ -355,7 +355,7 @@ void DEC_Key_Fun(void)
 
 			case mode_key_set_timer_value: //timer timing set "decrease -down"
 			   
-			    pro_t.buzzer_sound_flag = 1;
+			  //  pro_t.buzzer_sound_flag = 1;
 	            gctl_t.mode_key_long_time_flag++;
 			
 				gctl_t.gSet_timer_minutes=0;
@@ -375,7 +375,7 @@ void DEC_Key_Fun(void)
 
 			 case mode_key_select:
 			 
-			 	pro_t.buzzer_sound_flag = 1;
+			 //	pro_t.buzzer_sound_flag = 1;
 	
 				pro_t.mode_key_run_item_step = mode_key_confirm;
 				

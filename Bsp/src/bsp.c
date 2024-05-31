@@ -104,19 +104,16 @@ void TFT_Process_Handler(void)
 {
 	
    static uint8_t fan_continuce_flag;
-	if(pro_t.buzzer_sound_flag ==1 && pro_t.power_on_first==1){
+	if(pro_t.buzzer_sound_flag ==1){
 		pro_t.buzzer_sound_flag=0;
 		Buzzer_KeySound();
 	}
 	
-	Key_Speical_Power_Fun_Handler();
 
 	switch(pro_t.gPower_On){
 	
 	case power_on:
 		
-	    Key_Speical_Mode_Fun_Handler();
-    	Key_Interrup_Handler();
 	    TFT_Pocess_Command_Handler();
 	
 	break;
