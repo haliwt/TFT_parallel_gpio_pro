@@ -50,8 +50,9 @@ extern uint32_t  K1;
 
 typedef enum
 {
-  KEY_UP   = 1,
   KEY_DOWN = 0,
+  KEY_UP   = 1,
+  
 
 }KEYState_TypeDef;
 

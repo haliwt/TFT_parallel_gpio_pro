@@ -275,6 +275,7 @@ static void vTaskStart(void *pvParameters)
               }
                 
               //mainboard_process_handler();
+              bsp_Idle();
               TFT_Process_Handler();
          
             }
@@ -323,7 +324,7 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
    case KEY_POWER_Pin:
 
-    if(KEY_POWER_VALUE()==1){
+    if(KEY_POWER_VALUE()==KEY_DOWN){
 
         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
         POWER_KEY_0,      /* 设置目标任务事件标志位bit0  */
@@ -340,7 +341,7 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
    break;
 
    case KEY_MODE_Pin:
-      if(KEY_MODE_VALUE() == 1){
+      if(KEY_MODE_VALUE() == KEY_DOWN){
         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
                MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
