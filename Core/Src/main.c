@@ -18,6 +18,7 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "cmsis_os.h"
 #include "adc.h"
 #include "iwdg.h"
 #include "tim.h"
@@ -52,6 +53,7 @@ uint8_t keyvalue;
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
+void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -67,6 +69,7 @@ void SystemClock_Config(void);
   */
 int main(void)
 {
+
   /* USER CODE BEGIN 1 */
 
 
@@ -91,7 +94,7 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_ADC1_Init();
-  MX_IWDG_Init();
+ // MX_IWDG_Init();
   MX_TIM1_Init();
   MX_TIM17_Init();
   MX_USART1_UART_Init();
@@ -112,7 +115,16 @@ int main(void)
   
   HAL_UART_Receive_IT(&huart1,voice_inputBuf,1);//HAL_UART_Receive_IT(&huart1,voice_inputBuf,8);
   pro_t.buzzer_sound_flag=1;
+  freeRTOS_Handler();
   /* USER CODE END 2 */
+
+  /* Call init function for freertos objects (in cmsis_os2.c) */
+ // MX_FREERTOS_Init();
+
+  /* Start scheduler */
+ // osKernelStart();
+
+  /* We should never get here as control is now taken by the scheduler */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -122,12 +134,13 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 	
-
+  #if 0
 	bsp_Idle();
    	Voice_Decoder_Handler();
 	TFT_Process_Handler();
     WIFI_Process_Handler();
 	USART_Cmd_Error_Handler();
+   #endif 
   }
   /* USER CODE END 3 */
 }

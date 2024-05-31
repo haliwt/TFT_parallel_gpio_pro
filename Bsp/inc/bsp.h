@@ -48,6 +48,9 @@
 //voice 
 #include "bsp_voice.h"
 
+//
+#include "bsp_freertos.h"
+
 
 
 

@@ -11,13 +11,14 @@
 ******************************************************************************/
 void Key_Speical_Power_Fun_Handler(void)
 {
-	static uint8_t  power_on_off ;
-	//be pressed long time key of function that link tencent cloud funtion 
-    static uint8_t delay_pw,pw_flag;
-	 if(ptc_error_state()==0 && fan_error_state()==0){
-	 if(pro_t.key_power_be_pressed_flag==1){
-         if(POWER_KEY_VALUE() ==KEY_DOWN && pro_t.gTimer_pro_power_key_adjust > 2 &&  pro_t.gPower_On == power_on){
-            pro_t.key_power_be_pressed_flag =0;
+	static uint8_t power_on_off;
+
+	
+      if(KEY_POWER_VALUE() ==KEY_DOWN && pro_t.key_power_be_pressed_flag < 60   &&  pro_t.gPower_On == power_on){
+            pro_t.key_power_be_pressed_flag++;
+
+            if(pro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == 1){
+               pro_t.key_power_be_pressed_flag = 100;
 			pro_t.gTimer_pro_wifi_led =0;
             pro_t.wifi_led_fast_blink_flag=1;
 			
@@ -34,13 +35,13 @@ void Key_Speical_Power_Fun_Handler(void)
         }
 
 	 }
-	 }
-	//sort time key of fun
-		if(POWER_KEY_VALUE() ==KEY_UP && pro_t.key_power_be_pressed_flag ==1){
-               HAL_Delay(10);
-		  if(POWER_KEY_VALUE() ==KEY_UP){
-         
-            power_on_off = power_on_off ^ 0x01;
+	 else if(KEY_POWER_VALUE() ==KEY_UP && pro_t.key_power_be_pressed_flag > 0 && pro_t.key_power_be_pressed_flag < 40){
+             
+            pro_t.key_power_be_pressed_flag=0;
+
+
+        
+           power_on_off = power_on_off ^ 0x01;
 			  pro_t.key_power_be_pressed_flag=0;
 		  if(power_on_off==1){
 		
@@ -65,9 +66,9 @@ void Key_Speical_Power_Fun_Handler(void)
 		
 			  
 			 }
-		  }
-	}
+		}
 }
+
 /******************************************************************************
 	*
 	*Function Name:static void Key_Speical_Mode_Fun_Handler(void)
@@ -79,12 +80,15 @@ void Key_Speical_Power_Fun_Handler(void)
 void Key_Speical_Mode_Fun_Handler(void)
 {
  //modke _key_long_time
-	if(pro_t.mode_key_pressed_flag ==1){
+
 
 		//mode key be pressed long times
-		if(MODE_KEY_VALUE() ==KEY_DOWN && pro_t.gTimer_pro_mode_key_adjust > 1){
-			
-			pro_t.mode_key_pressed_flag =0;
+	if(KEY_MODE_VALUE() ==KEY_DOWN && pro_t.mode_key_pressed_flag < 100){
+
+
+        pro_t.mode_key_pressed_flag ++;
+		if(pro_t.mode_key_pressed_flag >  40 && KEY_MODE_VALUE() == KEY_DOWN){
+			pro_t.mode_key_pressed_flag =150;
 			pro_t.mode_key_select_label =0;
             Buzzer_KeySound();
 		    pro_t.gTimer_pro_mode_long_key=0;
@@ -92,11 +96,9 @@ void Key_Speical_Mode_Fun_Handler(void)
 			Mode_Long_Key_Fun();
 
 		   
-		}
-       //select mode key 
-       if(MODE_KEY_VALUE() ==KEY_UP && pro_t.mode_key_pressed_flag ==1){
-			HAL_Delay(10);
-	   	 if(MODE_KEY_VALUE() ==KEY_UP){
+       }
+       else if(KEY_MODE_VALUE() ==KEY_UP && pro_t.mode_key_pressed_flag > 0 && pro_t.mode_key_pressed_flag < 40){
+       
 		pro_t.mode_key_pressed_flag =0;
 	   
 		
@@ -113,7 +115,7 @@ void Key_Speical_Mode_Fun_Handler(void)
 
 		pro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
 		gctl_t.gTimer_ctl_select_led =0;
-	   	 }
+	   	
 	   }
 		
 		

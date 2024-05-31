@@ -1,6 +1,8 @@
 #include "interrupt_manager.h"
 #include "bsp.h"
 
+uint8_t voice_rx_buff[10];
+
 uint8_t voice_inputBuf[1];
 
 
@@ -113,7 +115,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     	switch(state_uart1)
 		{
 		case 0:  //#0
-			if(voice_inputBuf[0]==0xA5){  //hex :4D - "M" -fixed mainboard
+		    voice_rx_buff[0]=voice_inputBuf[0];
+			if(voice_rx_buff[0]==0xA5){  //hex :4D - "M" -fixed mainboard
 				state_uart1=1; //=1
               
 			}
@@ -124,7 +127,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			}
 			break;
 		case 1: //#1
-			if(voice_inputBuf[0]==0xFA) //hex : 41 -'A'  -fixed master
+		     voice_rx_buff[1]=voice_inputBuf[0];
+			if(voice_rx_buff[1]==0xFA) //hex : 41 -'A'  -fixed master
 			{
 				state_uart1=2; 
 			}
@@ -133,7 +137,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 			break;
 
 	   case 2:
-	      if(voice_inputBuf[0]==0) //hex : 41 -'A'	-fixed master
+           voice_rx_buff[2]=voice_inputBuf[0];
+	      if(voice_rx_buff[2]==0) //hex : 41 -'A'	-fixed master
 		   {
 			   state_uart1=3; 
 		   }
@@ -145,7 +150,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	   break;
 
 	   case 3:
-	      if(voice_inputBuf[0]==0x81) //hex : 41 -'A'	-fixed master
+
+           voice_rx_buff[3]=voice_inputBuf[0];
+	      if(voice_rx_buff[3]==0x81) //hex : 41 -'A'	-fixed master
 		   {
 			  
 			   state_uart1=4; 
@@ -159,24 +166,26 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 	   case 4:
 
-	    if(voice_inputBuf[0]==0x01){
+        voice_rx_buff[4]=voice_inputBuf[0];
+
+	    if(voice_rx_buff[4]==0x01){
 		 	 
 			 v_t.voice_wakeword_enable=1;
-			 v_t.RxBuf[0]= voice_inputBuf[0];
+			 v_t.RxBuf[0]= voice_rx_buff[4];
 			 v_t.gTimer_voice_time_counter_start =0;
 		      state_uart1=0;
 		    
 		 }
 		 else if(v_t.voice_wakeword_enable==1){
 		  
-	      if(voice_inputBuf[0] >0 && voice_inputBuf[0] < 0x40) //指令Command 
-		  {
-              v_t.RxBuf[0]=voice_inputBuf[0]; //voice data4 + data6
-			 
-			   state_uart1=5;
+    	      if(voice_rx_buff[4] >0 && voice_rx_buff[4] < 0x40) //指令Command 
+    		  {
+                  v_t.RxBuf[0]=voice_rx_buff[4]; //voice data4 + data6
+    			 
+    			   state_uart1=5;
 
 
-		  }
+    		  }
 	      }
 		  else{
 
@@ -190,8 +199,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  break;
 
 	   case 5:
-	    
-	   if(voice_inputBuf[0]==0x00) //hex : 41 -'A' -fixed master
+	     voice_rx_buff[5]=voice_inputBuf[0];
+	   if(voice_rx_buff[5]==0x00) //hex : 41 -'A' -fixed master
 		{
 		  state_uart1=6; 
 		}
@@ -202,13 +211,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	   break;
 
 	   case 6:
+         voice_rx_buff[6]=voice_inputBuf[0];
        if(v_t.voice_wakeword_enable ==1){
 
 		 
-	      if(voice_inputBuf[0] >0x21 && voice_inputBuf[0] < 0x60) //hex : 41 -'A'	-fixed master
+	      if(voice_rx_buff[6] >0x21 && voice_rx_buff[6] < 0x60) //hex : 41 -'A'	-fixed master
 		  {
 
-			   v_t.RxBuf[1]=voice_inputBuf[0];
+			   v_t.RxBuf[1]=voice_rx_buff[6];
 			   v_t.gTimer_voice_time_counter_start =0;
 			   v_t.voice_power_on_cmd = 1;
 			   state_uart1=0; 
@@ -224,8 +234,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	   break;
 
 	   case 7:
-	   	 
-	     if(voice_inputBuf[0]==0xFB) //hex : 41 -'A'	-fixed master
+	   	  voice_rx_buff[7]=voice_inputBuf[0];
+	     if(voice_rx_buff[7]==0xFB) //hex : 41 -'A'	-fixed master
 		  {
             
              
@@ -243,7 +253,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
      break;
 
 	  case 8:
-	      if(voice_inputBuf[0]==0xFB) //hex : 41 -'A'	-fixed master
+         voice_rx_buff[8]=voice_inputBuf[0];
+	      if(voice_rx_buff[8]==0xFB) //hex : 41 -'A'	-fixed master
 		   {
 			state_uart1=0; 
 
@@ -252,7 +263,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		break;
 		  
 	  case 9:
-	      if(voice_inputBuf[0]==0xFB) //hex : 41 -'A'	-fixed master
+           voice_rx_buff[9]=voice_inputBuf[0];
+	      if(voice_rx_buff[9]==0xFB) //hex : 41 -'A'	-fixed master
 		   {
 			
 			state_uart1=0; 
@@ -265,6 +277,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  }
 	 
 	  
+    //  __HAL_UART_CLEAR_NEFLAG(&huart1);
+    //  __HAL_UART_CLEAR_FEFLAG(&huart1);
+      __HAL_UART_CLEAR_OREFLAG(&huart1);
+    //  __HAL_UART_CLEAR_TXFECF(&huart1);
 
 
     HAL_UART_Receive_IT(&huart1,voice_inputBuf,1);//UART receive data interrupt 1 byte
@@ -274,12 +290,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 }
 
   
- 
-
-//	__HAL_UART_CLEAR_NEFLAG(&huart1);
-//	__HAL_UART_CLEAR_FEFLAG(&huart1);
-//	__HAL_UART_CLEAR_OREFLAG(&huart1);
-//	__HAL_UART_CLEAR_TXFECF(&huart1);
 
 /*******************************************************************************
 	*
@@ -314,7 +324,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		tm2++;
 
 
-	
+    
+
+	 //main process timer
 	 pro_t.gTimer_pro_temp_delay++;
 	
 
@@ -323,7 +335,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
      pro_t.gTimer_pro_display_dht11_value++;
 	
 	 pro_t.gTimer_pro_fan++;  //fan continuce counter 60s
-	 /*******************************************/
+	
 	  pro_t.gTimer_pro_time_split_symbol++;
 	  pro_t.gTimer_pro_wifi_led++;
 
@@ -341,7 +353,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  pro_t.gTimer_pro_action_publis++;
 	 
 
-	  //gctl_t 
+	  
+	   //cotrol timer
+    
 	   gctl_t.gTimer_ctl_set_timer_time_senconds++;
 	   gctl_t.gTimer_ctl_ptc_adc_times++;
 	   gctl_t.gTimer_ctl_fan_adc_times ++;

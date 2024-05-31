@@ -3,14 +3,14 @@
 #include "main.h"
 
 
-#define INTERRUPT_KEY                1
+#define INTERRUPT_KEY                0
 #define NORMAL_KEY                   0
 #define NORMAL_KEY_2                 0
 #define NORMAL_KEY_3                 0
 
-#define POWER_KEY_VALUE()            HAL_GPIO_ReadPin(KEY_POWER_GPIO_Port,KEY_POWER_Pin)
+#define KEY_POWER_VALUE()            HAL_GPIO_ReadPin(KEY_POWER_GPIO_Port,KEY_POWER_Pin)
 
-#define MODE_KEY_VALUE()             HAL_GPIO_ReadPin(KEY_MODE_GPIO_Port,KEY_MODE_Pin)
+#define KEY_MODE_VALUE()             HAL_GPIO_ReadPin(KEY_MODE_GPIO_Port,KEY_MODE_Pin)
 
 
 #define DEC_KEY_VALUE()              HAL_GPIO_ReadPin(KEY_DEC_GPIO_Port,KEY_DEC_Pin)
@@ -52,8 +52,7 @@ typedef enum
 {
   KEY_UP   = 1,
   KEY_DOWN = 0,
-  KEY_POWER_LONG_DOWN=0x81,
-  KEY_MODE_LONG_DOWN=0x82
+
 }KEYState_TypeDef;
 
 

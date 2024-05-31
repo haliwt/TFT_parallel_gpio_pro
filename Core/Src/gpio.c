@@ -51,12 +51,9 @@ void MX_GPIO_Init(void)
   __HAL_RCC_GPIOB_CLK_ENABLE();
   __HAL_RCC_GPIOD_CLK_ENABLE();
 
-   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, TFT_DCX_Pin|VOICE_MUTE_Pin, GPIO_PIN_SET);
-
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOC, TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin,GPIO_PIN_RESET);//input GPIO VOICE_BROAD_Pin
-                      
+  HAL_GPIO_WritePin(GPIOC, TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin|VOICE_BROAD_Pin
+                          |VOICE_MUTE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOF, TFT_DB6_Pin|TFT_DB7_Pin, GPIO_PIN_RESET);
@@ -66,19 +63,17 @@ void MX_GPIO_Init(void)
                           |FAN_CTL_1_Pin|FAN_CTL_2_Pin|TEMP_SENSOR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|TFT_WR_Pin|TFT_CS_Pin|TFT_BACKLIGHT_Pin|TFT_DB0_Pin|TFT_DB1_Pin
+  HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|LED_PTC_Pin|LED_RAT_Pin|TFT_WR_Pin
+                          |TFT_CS_Pin|TFT_BACKLIGHT_Pin|TFT_DB0_Pin|TFT_DB1_Pin
                           |TFT_DB2_Pin|TFT_DB3_Pin, GPIO_PIN_RESET);
 
-   HAL_GPIO_WritePin(GPIOB,TFT_WR_Pin|TFT_CS_Pin|TFT_BACKLIGHT_Pin|LED_PTC_Pin|LED_RAT_Pin,GPIO_PIN_SET);
-
   /*Configure GPIO pin Output Level */
-  //HAL_GPIO_WritePin(GPIOD, |LED_KILL_Pin|LED_WIFI_Pin, GPIO_PIN_RESET);
-
-  HAL_GPIO_WritePin(GPIOD, TFT_RESET_Pin|TFT_RD_Pin|LED_KILL_Pin|LED_WIFI_Pin, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOD, LED_KILL_Pin|LED_WIFI_Pin|TFT_RESET_Pin|TFT_RD_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
-  GPIO_InitStruct.Pin = TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin|VOICE_MUTE_Pin;
+  GPIO_InitStruct.Pin = TFT_DB4_Pin|TFT_DB5_Pin|TFT_DCX_Pin|VOICE_BROAD_Pin
+                          |VOICE_MUTE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -88,7 +83,7 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = TFT_DB6_Pin|TFT_DB7_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(GPIOF, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PAPin PAPin PAPin PAPin
@@ -119,7 +114,7 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Pin = TEMP_SENSOR_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM;
   HAL_GPIO_Init(TEMP_SENSOR_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PDPin PDPin PDPin PDPin */
@@ -129,25 +124,27 @@ void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(GPIOD, &GPIO_InitStruct);
 
-
-   /*Configure GPIO pins : PCPin */
-  GPIO_InitStruct.Pin = VOICE_BROAD_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_INPUT ;//GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOC, &GPIO_InitStruct);
-
   /*Configure GPIO pins : PBPin PBPin */
   GPIO_InitStruct.Pin = TFT_WR_Pin|TFT_CS_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
 
+  /**/
+  __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB6);
 
+  /**/
+  __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB7);
+
+  /**/
+  __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB8);
+
+  /**/
+  __HAL_SYSCFG_FASTMODEPLUS_ENABLE(SYSCFG_FASTMODEPLUS_PB9);
 
   /* EXTI interrupt init*/
-  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 1, 0);
+  HAL_NVIC_SetPriority(EXTI4_15_IRQn, 3, 0);
   HAL_NVIC_EnableIRQ(EXTI4_15_IRQn);
 
 }
