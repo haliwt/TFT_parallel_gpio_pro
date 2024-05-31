@@ -20,6 +20,8 @@
 #define RUN_MODE_5          (1 << 5)
 #define RUN_DEC_6           (1 << 6)
 #define RUN_ADD_7           (1 << 7)
+#define VOICE_BIT_8         (1 << 8)
+#define RUN_VOICE_9          (1<<9)
 
 /*
 **********************************************************************************************************
@@ -147,6 +149,15 @@ static void vTaskMsgPro(void *pvParameters)
               
                 
             }
+           else if((ulValue & VOICE_BIT_8) != 0){
+              
+               xTaskNotify(xHandleTaskStart, /* 目标任务 */
+                                       RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
+                                       eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+               
+              
+            }
 
       
 
@@ -160,9 +171,18 @@ static void vTaskMsgPro(void *pvParameters)
         //MainBoard_Self_Inspection_PowerOn_Fun();
         
          //WIFI_Process_Handler();
-            Voice_Decoder_Handler();
+
+            if(v_t.sound_rx_data_success_flag == 1 ){
+              v_t.sound_rx_data_success_flag=0;
+
+              Voice_Decoder_Handler();
+
+            }
+           
+           
             WIFI_Process_Handler();
 	        USART_Cmd_Error_Handler();
+             
 
              
          }
@@ -248,6 +268,11 @@ static void vTaskStart(void *pvParameters)
                   }
 				
             }
+            else if((ulValue & RUN_VOICE_9 ) != 0)   /* 接收到消息，检测那个位被按下 */
+			{
+			    v_t.sound_rx_data_success_flag = 1;
+                  
+            }
             
 
             
@@ -274,7 +299,7 @@ static void vTaskStart(void *pvParameters)
 
               }
                 
-              //mainboard_process_handler();
+          
             
               TFT_Process_Handler();
          
@@ -388,59 +413,214 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
 }
 
-#if 0
-static void power_long_short_key_fun(void)
+
+/********************************************************************************
+	**
+	*Function Name:void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+	*Function :UART callback function  for UART interrupt for receive data
+	*Input Ref: structure UART_HandleTypeDef pointer
+	*Return Ref:NO
+	*
+*******************************************************************************/
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
+    static uint8_t state=0,state_uart1,voice_cmd_time = 0xff,voice_wakewor_int=0xff;
+    uint32_t temp ;
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    //wifi usart2
+    if(huart->Instance==USART2)
+    {
+           
+            if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
 
-    static uint8_t sound_flag;
-    if(KEY_POWER_VALUE() == KEY_DOWN && gkey_t.power_key_long_counter < 60){
+			wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
+			wifi_t.wifi_uart_counter++;
+
+			if(*wifi_t.usart2_dataBuf==0X0A) // 0x0A = "\n"
+			{
+				//wifi_t.usart2_rx_flag = 1;
+				Wifi_Rx_Link_Net_InputInfo_Handler();
+				wifi_t.wifi_uart_counter=0;
+			}
+
+	      } 
+		  else{
+
+		         if(wifi_t.get_rx_beijing_time_enable==1){
+					wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
+					wifi_t.wifi_uart_counter++;
+				}
+				else if(wifi_t.get_rx_auto_repeat_net_enable ==1){
+
+					wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
+					wifi_t.wifi_uart_counter++;
+
+					if(*wifi_t.usart2_dataBuf==0X0A) // 0x0A = "\n"
+					{
+						
+						Wifi_Rx_Auto_Link_Net_Handler();
+						wifi_t.wifi_uart_counter=0;
+					}
 
 
-        gkey_t.power_key_long_counter++;
-        if( gkey_t.power_key_long_counter > 40   && KEY_POWER_VALUE() == 1){
-             gkey_t.power_key_long_counter = 200;
+				}
+				else{
+					Subscribe_Rx_Interrupt_Handler();
 
-             gkey_t.wifi_link_net_flag = 1;
+				}
+	      }
+     
+	      
+	  HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
+	  
+//	__HAL_UART_CLEAR_NEFLAG(&huart2);
+//	__HAL_UART_CLEAR_FEFLAG(&huart2);
+//	__HAL_UART_CLEAR_OREFLAG(&huart2);
+//	__HAL_UART_CLEAR_TXFECF(&huart2);
+     
+	}
 
-             	//WIFI CONNCETOR process
-			 gkey_t.wifi_led_fast_blink_flag=1;
-			 //WIFI CONNCETOR process
-			wifi_t.esp8266_login_cloud_success =0;
-			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
-			wifi_t.wifi_config_net_lable= wifi_set_restor;
-			wifi_t.power_on_login_tencent_cloud_flag=0;
-			wifi_t.link_tencent_step_counter=0;
-			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
-         
-            Buzzer_KeySound();
+ //voice sound by USART1
+  if(huart->Instance==USART1){
 
-        }
+    	switch(state_uart1)
+		{
+		case 0:  //#0
+		    v_t.voice_rxBuf[0]=voice_inputBuf[0];
+			if(v_t.voice_rxBuf[0]==0xA5){  //hex :4D - "M" -fixed mainboard
+				state_uart1=1; //=1
+              
+			}
+			
+			break;
+		case 1: //#1
+		     v_t.voice_rxBuf[1]=voice_inputBuf[0];
+			if(v_t.voice_rxBuf[1]==0xFA) //hex : 41 -'A'  -fixed master
+			{
+				state_uart1=2; 
+			}
+			else
+				state_uart1=0; 
+			break;
 
-    }
-    else if(KEY_POWER_VALUE() == KEY_UP && gkey_t.power_key_long_counter >0 && gkey_t.power_key_long_counter<40){ //short key of function
+	   case 2:
+           v_t.voice_rxBuf[2]=voice_inputBuf[0];
+	      if(v_t.voice_rxBuf[2]==0) //hex : 41 -'A'	-fixed master
+		   {
+			   state_uart1=3; 
+		   }
+		   else{
+			  state_uart1=0; 
+		   }
 
-        gkey_t.power_key_long_counter=0;
-        sound_flag=1;
-        if(sound_flag ==1){
-           sound_flag++;
-           if(gkey_t.key_power==power_off){
-              gkey_t.key_power=power_on;
-            }
-           else{
-              gkey_t.key_power=power_off;
 
-           }
-           Buzzer_KeySound();
-       
-      
+	   break;
 
-        }
-    }
+	   case 3:
+
+           v_t.voice_rxBuf[3]=voice_inputBuf[0];
+	      if(v_t.voice_rxBuf[3]==0x81) //hex : 41 -'A'	-fixed master
+		   {
+			  
+			   state_uart1=4; 
+		   }
+		   else{
+			  state_uart1=0; 
+			 }
+
+
+	   break;
+
+	   case 4:
+
+        v_t.voice_rxBuf[4]=voice_inputBuf[0];
+
+	    if(v_t.voice_rxBuf[4]==0x01){
+		 	 
+			 v_t.voice_wakeword_enable=1;
+			 v_t.gTimer_voice_time_counter_start =0;
+		      state_uart1=5;
+		    
+		 }
+		 else if(v_t.voice_wakeword_enable==1){
+		  
+    	      state_uart1=5;
+
+
+    	 }
+		  else{
+
+		   state_uart1=0; 
+		
+         }
+		 
+
+	  break;
+
+	   case 5:
+	     v_t.voice_rxBuf[5]=voice_inputBuf[0];
+	   if(v_t.voice_rxBuf[5]==0x00) //hex : 41 -'A' -fixed master
+		{
+		  state_uart1=6; 
+		}
+		else
+			state_uart1=0; 
+	   
+
+	   break;
+
+	   case 6:
+         v_t.voice_rxBuf[6]=voice_inputBuf[0];
+		 state_uart1=7; 
+	   break;
+
+	   case 7:
+	   	 v_t.voice_rxBuf[7]=voice_inputBuf[0];
+	     if(v_t.voice_rxBuf[7]==0xFB){ //hex : 41 -'A'	-fixed master
+		  
+            v_t.sound_rx_data_success_flag=1;
    
+            
+           xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
+                   VOICE_BIT_8,      /* 设置目标任务事件标志位bit0  */
+                   eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+                   &xHigherPriorityTaskWoken);
+            
+                   /* Èç¹ûxHigherPriorityTaskWoken = pdTRUE£¬ÄÇÃ´ÍË³öÖÐ¶ÏºóÇÐµ½µ±Ç°×î¸ßÓÅÏÈ¼¶ÈÎÎñÖ´ÐÐ */
+             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+            
+			state_uart1=0; 
+
+		  }
+		  else{
+
+			  state_uart1=0; 
+
+		  }
+		  
+	   
+		 
+     break;
+
+	  
+		  
+	 
+
+	 
+	  }
+	 
+	  
+    //  __HAL_UART_CLEAR_NEFLAG(&huart1);
+    //  __HAL_UART_CLEAR_FEFLAG(&huart1);
+      __HAL_UART_CLEAR_OREFLAG(&huart1);
+    //  __HAL_UART_CLEAR_TXFECF(&huart1);
+
+
+    HAL_UART_Receive_IT(&huart1,voice_inputBuf,1);//UART receive data interrupt 1 byte
+
+	}
+	
 }
-
-
-#endif 
 
 
 

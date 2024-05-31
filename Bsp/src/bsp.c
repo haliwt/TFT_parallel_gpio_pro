@@ -403,7 +403,7 @@ static void Power_Off_Fun(void)
 	gctl_t.fan_warning=0;
 
 	//
-	v_t.voice_power_on_cmd = 0;
+	
 
 	if(wifi_link_net_state()==0){
 		 gctl_t.disp_works_hours =0;

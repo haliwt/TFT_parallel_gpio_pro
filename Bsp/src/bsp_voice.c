@@ -196,12 +196,16 @@ void Rx_Voice_Data_Handler(void(*rx_voice_handler)(uint8_t data))
 void Voice_Decoder_Handler(void)
 {
 
-  while(v_t.voice_power_on_cmd){
+ 
+       
+        
+         v_t.voice_data[0]  = v_t.voice_rxBuf[4];
+         v_t.voice_data[1]  = v_t.voice_rxBuf[6];
 
-	  	v_t.voice_power_on_cmd=0;
+
 			
-		 if(v_t.gTimer_voice_time_counter_start< 15){
-	       key= v_t.RxBuf[0] + v_t.RxBuf[1]; //key= data4+ data6 = ; //A5 FA 00 81 01 00 21 FB 
+		// if(v_t.gTimer_voice_time_counter_start< 15){
+	       key= v_t.voice_data[0] + v_t.voice_data[1]; //key= data4+ data6 = ; //A5 FA 00 81 01 00 21 FB 
 	    
 	
 			result = BinarySearch_Voice_Data(voice_sound_data,key);
@@ -231,9 +235,9 @@ void Voice_Decoder_Handler(void)
 		 }
 
 	   
-		}
+
 	   
-	 }
+
 
 }
 
