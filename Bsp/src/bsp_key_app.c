@@ -1,6 +1,10 @@
 #include "bsp.h"
 
 
+uint8_t ptc_fun_led_init_flg , plasma_fun_led_init_flag, rat_fun_led_init_flag;
+
+
+
 /******************************************************************************
 	*
 	*Function Name:static void Key_Speical_Power_Fun_Handler(void)
@@ -402,7 +406,7 @@ void DEC_Key_Fun(void)
        
 }
 
-/*****************************************************************************
+  /*****************************************************************************
  * 
  * Function Name: void Mode_Key_Select_Fun(void)
  * Function:   This function is used to select the working mode of the device.
@@ -412,16 +416,42 @@ void DEC_Key_Fun(void)
 *****************************************************************************/
 void Mode_Key_Select_Fun(void)
 {
-  
-   
    switch(gctl_t.select_main_fun_numbers){
 
       case ptc_fun:
+
+		
+		ptc_fun_led_init_flg++;
+		if(ptc_state()== 1){
+
+
+		LED_PTC_ICON_OFF();//LED_PTC_ICON_ON();
+
+		}
+		else{
+
+		LED_PTC_ICON_ON();//LED_PTC_ICON_OFF();
+
+
+		}
+
+		if(wifi_link_net_state()==1){
+
+		LED_WIFI_ICON_ON();
+		}
+		else{
+
+		LED_WIFI_ICON_OFF();
+
+		}
+
+   	      
+   
         
 
   led_blik: if(plasma_state() == 1){
                    // Plasma_On();
-			LED_KILL_ICON_ON();
+				LED_KILL_ICON_ON();
 			}
 			else{
 			//  Plasma_Off();
@@ -451,7 +481,7 @@ void Mode_Key_Select_Fun(void)
 		  }
 		  else{
 		  	gctl_t.gTimer_ctl_select_led=0;
-			if(pro_t.mode_key_run_item_step==mode_key_select)
+			if(pro_t.mode_key_run_proc_item==mode_key_select)
 			   goto led_blik;
 			
 
@@ -464,8 +494,33 @@ void Mode_Key_Select_Fun(void)
 
 	  case plasma_fun:
 	  	//KILL ICON LED
-	  	
-     led_blik2:   if(ptc_state()== 1){
+
+		 plasma_fun_led_init_flag ++;
+
+		 if(plasma_state() == 1){
+                   // Plasma_On();
+			LED_KILL_ICON_OFF();//LED_KILL_ICON_ON();
+		}
+		else{
+			//  Plasma_Off();
+		   LED_KILL_ICON_ON();//LED_KILL_ICON_OFF();
+
+		}
+
+		
+	 if(wifi_link_net_state()==1){
+
+	 LED_WIFI_ICON_ON();
+	 }
+	 else{
+
+	 LED_WIFI_ICON_OFF();
+
+	 }
+
+
+		
+	 led_blik2:   if(ptc_state()== 1){
 
 	
 		LED_PTC_ICON_ON();
@@ -501,7 +556,7 @@ void Mode_Key_Select_Fun(void)
 			 }
 			 else{
 			 	gctl_t.gTimer_ctl_select_led=0;
-				if(pro_t.mode_key_run_item_step==mode_key_select)
+				if(pro_t.mode_key_run_proc_item==mode_key_select)
 				goto led_blik2;
 
 			 }
@@ -513,6 +568,30 @@ void Mode_Key_Select_Fun(void)
 	  case rat_fun:
 
 	  //ULTRSONIC ICO LED
+	  rat_fun_led_init_flag++;
+
+	  if(ultrasonic_state()==1){
+
+	
+		LED_RAT_ICON_OFF();//LED_RAT_ICON_ON();
+
+		}
+		else{
+			
+			LED_RAT_ICON_ON();//LED_RAT_ICON_OFF();
+
+		}
+
+		
+      if(wifi_link_net_state()==1){
+
+		LED_WIFI_ICON_ON();
+	  }
+	  else{
+
+		LED_WIFI_ICON_OFF();
+
+	  }
 	 
 
 	led_blink3:   if(ptc_state()== 1){
@@ -541,13 +620,13 @@ void Mode_Key_Select_Fun(void)
 
 	if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
 			LED_RAT_ICON_ON(); 
-	   	}
-		else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){	
+	 }
+	 else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){	
 		   LED_RAT_ICON_OFF();
-		}
-		else{
+	  }
+	  else{
 		   gctl_t.gTimer_ctl_select_led=0;
-		   if(pro_t.mode_key_run_item_step==mode_key_select)
+		   if(pro_t.mode_key_run_proc_item==mode_key_select)
 		   goto led_blink3;
 
 		}
@@ -558,6 +637,10 @@ void Mode_Key_Select_Fun(void)
 	  	
 
    }
+
+}
+   
+  
 
 }
 
@@ -639,4 +722,56 @@ void Mode_Key_Confirm_Fun(void)
    
 }
 
+
+/******************************************************************************
+	*
+	*Function Name:static void ModeKey_Select_Default_LedOnOff(void)
+	*Funcion: display of TFT lcd 
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
+void ModeKey_Select_Default_LedOnOff(void)
+{
+    if(ptc_fun_led_init_flg > 0){
+	    ptc_fun_led_init_flg=0;
+		if(ptc_state()== 1){
+
+
+		    LED_PTC_ICON_ON();
+
+		}
+		else{
+
+		   LED_PTC_ICON_OFF();
+		}
+
+	}
+
+	if(plasma_fun_led_init_flag > 0){
+		plasma_fun_led_init_flag =0;
+		if(plasma_state() == 1){
+                  
+			LED_KILL_ICON_ON();
+		}
+		else{
+			//  Plasma_Off();
+		   LED_KILL_ICON_OFF();
+
+		}
+	}
+
+	if(rat_fun_led_init_flag > 0){
+		rat_fun_led_init_flag =0;
+		 if(ultrasonic_state()==1){
+			LED_RAT_ICON_ON();
+
+		}
+		else{
+    	LED_RAT_ICON_OFF();
+
+		}	
+	}
+
+}
 

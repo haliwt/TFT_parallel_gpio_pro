@@ -1143,7 +1143,7 @@ typedef struct xSTATIC_TCB
 	#if ( configUSE_NEWLIB_REENTRANT == 1 )
 		struct	_reent	xDummy17;
 	#endif
-	#if ( configUSE_TASK_NOTIFICATIONS == 1 )
+	#if (configUSE_TASK_NOTIFICATIONS == 1 )
 		uint32_t 		ulDummy18;
 		uint8_t 		ucDummy19;
 	#endif

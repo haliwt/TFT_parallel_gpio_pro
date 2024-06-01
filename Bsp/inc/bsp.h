@@ -120,12 +120,14 @@ typedef enum{
   pro_set_temperature,
   pro_disp_wifi_led,
   pro_mode_key_fun,
-  pro_wifi_init
+  pro_wifi_publish_init,
+  pro_wifi_subscriber_init
   
 
 
 
 }process_run_state;
+
 
 
 typedef enum{
@@ -232,7 +234,9 @@ typedef struct{
   uint8_t gTimer_pro_display_dht11_temp; //at once display dht11 value
 	uint8_t gTimer_pro_display_dht11_hum;
   uint8_t gTimer_pro_wifi_dht11_temp_hum;
-  
+  uint8_t gTimer_pro_action_publis_main_fun ;
+  uint8_t gTimer_pro_pub_set_timer ;
+   
 	
 
 }PRO_T;
