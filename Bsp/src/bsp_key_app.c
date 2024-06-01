@@ -107,7 +107,7 @@ void Key_Speical_Mode_Fun_Handler(void)
        
 		pro_t.mode_key_pressed_flag =0;
 	   
-		
+		pro_t.mode_key_run_proc_item = mode_key_select; //shield this is WIFI_LED blink. 
 		pro_t.mode_key_run_item_step = mode_key_select;
 	    pro_t.mode_key_select_label =mode_key_select;
 	     gctl_t.select_main_fun_numbers++; // 0,1,2
@@ -150,6 +150,7 @@ void Mode_Key_Config_Fun_Handler(void)
 				
              }
 			 else{
+                 pro_t.mode_key_run_proc_item = 0xff; //don't WIFI LED BLINK
                 gctl_t.memory_confimr_key_done = 0;
                 pro_t.mode_key_run_item_step = 0xff; //
                 pro_t.mode_key_select_label =0;
@@ -169,6 +170,8 @@ void Mode_Key_Config_Fun_Handler(void)
 		   case mode_key_confirm: //03//as "+" and "-" key  confirm ation
 			    Device_Action_Led_OnOff_Handler();
                 Mode_Key_Confirm_Fun();
+
+                pro_t.mode_key_run_proc_item = 0xff;
 		    
 				if(confirm_data==0){
 					confirm_data++;
