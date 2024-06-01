@@ -642,7 +642,7 @@ void Mode_Key_Select_Fun(void)
    
   
 
-}
+
 
 /**************************************************************************
  * 
@@ -654,7 +654,7 @@ void Mode_Key_Select_Fun(void)
 **************************************************************************/
 void Mode_Key_Confirm_Fun(void)
 {
-   switch(gctl_t.select_main_fun_numbers){
+    switch(gctl_t.select_main_fun_numbers){
 
       case ptc_fun:
            if(gctl_t.memory_confimr_key_done ==1){
@@ -662,12 +662,15 @@ void Mode_Key_Confirm_Fun(void)
 				LED_PTC_ICON_ON(); 
 			    Ptc_On();
 				gctl_t.ptc_flag = 1;
+				pro_t.add_or_dec_is_cofirm_key_flag =0;
 				
 		    }
 			else{
+				pro_t.add_or_dec_is_cofirm_key_flag =1;
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();
 				gctl_t.ptc_flag = 0;
+				 
 				
             }
 
