@@ -584,8 +584,9 @@ static void Key_Interrup_Handler(void)
 *********************************************************************************************************/
 void Wifi_Fast_Led_Blink(void)
 {
-   if(pro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
-wifi_led: if(pro_t.gTimer_pro_wifi_led < 166){//2'46s
+
+  if(pro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
+        wifi_led: if(pro_t.gTimer_pro_wifi_led < 166){//2'46s
 
 	if( pro_t.gTimer_pro_wifi_fast_led < 80 ){ //50ms
 

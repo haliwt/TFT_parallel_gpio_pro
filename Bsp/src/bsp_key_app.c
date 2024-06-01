@@ -32,6 +32,7 @@ void Key_Speical_Power_Fun_Handler(void)
 			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
 			wifi_t.wifi_config_net_lable= wifi_set_restor;
 			wifi_t.gTimer_login_tencent_times=0;
+            pro_t.wifi_led_fast_blink_flag=1;
 			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
 			buzzer_sound();
 			
@@ -420,6 +421,14 @@ void Mode_Key_Select_Fun(void)
 
       case ptc_fun:
 
+         if(wifi_link_net_state() == 1){
+               LED_WIFI_ICON_ON();
+
+         }
+         else{
+             LED_WIFI_ICON_OFF();
+         }
+
 		
 		ptc_fun_led_init_flg++;
 		if(ptc_state()== 1){
@@ -495,6 +504,14 @@ void Mode_Key_Select_Fun(void)
 	  case plasma_fun:
 	  	//KILL ICON LED
 
+         if(wifi_link_net_state() == 1){
+               LED_WIFI_ICON_ON();
+
+         }
+         else{
+             LED_WIFI_ICON_OFF();
+         }
+
 		 plasma_fun_led_init_flag ++;
 
 		 if(plasma_state() == 1){
@@ -566,6 +583,14 @@ void Mode_Key_Select_Fun(void)
 	  break;
 
 	  case rat_fun:
+
+       if(wifi_link_net_state() == 1){
+               LED_WIFI_ICON_ON();
+
+         }
+         else{
+             LED_WIFI_ICON_OFF();
+         }
 
 	  //ULTRSONIC ICO LED
 	  rat_fun_led_init_flag++;

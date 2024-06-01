@@ -141,6 +141,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	  wifi_t.gTimer_linking_tencent_duration++;
 	  wifi_t.gTimer_power_first_link_tencent ++;
 	  wifi_t.gTimer_main_pro_times++;
+     
 
 	  //voice sound 
 	  v_t.gTimer_voice_time_counter_start++;
