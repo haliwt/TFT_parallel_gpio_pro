@@ -199,9 +199,7 @@ void Voice_Decoder_Handler(void)
  
        
         
-         v_t.voice_data[0]  = v_t.voice_rxBuf[4];
-         v_t.voice_data[1]  = v_t.voice_rxBuf[6];
-
+       
 
 			
 		// if(v_t.gTimer_voice_time_counter_start< 15){
@@ -930,12 +928,13 @@ static void voice_send_power_on_cmd(void)
 	
 
 	transferSize=8;
-	if(transferSize)
-	{
-		while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-		v_t.transOngoingFlag=1;
-		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-	}
+    HAL_UART_Transmit(&huart1,outputBuf,transferSize,0xffff);
+//	if(transferSize)
+//	{
+//		while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
+//		v_t.transOngoingFlag=1;
+//		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+//	}
 
 
 
@@ -978,12 +977,13 @@ static void voice_send_power_off_cmd(void)
 	//for(i=3;i<6;i++) crc ^= outputBuf[i];
 	//outputBuf[i]=crc;
 	transferSize=8;
-	if(transferSize)
-	{
-		while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-		v_t.transOngoingFlag=1;
-		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-	}
+    HAL_UART_Transmit(&huart1,outputBuf,transferSize,0xffff);
+//	if(transferSize)
+//	{
+//		while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
+//		v_t.transOngoingFlag=1;
+//		HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+//	}
 
 }
 
@@ -1002,12 +1002,13 @@ static void voice_send_turn_on_power_on_cmd(void)
 		
 	
 		transferSize=8;
-		if(transferSize)
-		{
-			while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-			v_t.transOngoingFlag=1;
-			HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-		}
+        HAL_UART_Transmit(&huart1,outputBuf,transferSize,0xffff);
+//		if(transferSize)
+//		{
+//			while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
+//			v_t.transOngoingFlag=1;
+//			HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+//		}
 
 
 
@@ -1028,13 +1029,15 @@ static void voice_send_function_cmd(uint8_t cmd1,uint8_t cmd2)
    
 
    transferSize=8;
-   if(transferSize)
-   {
-	   while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
-	   v_t.transOngoingFlag=1;
-	   HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
-   }
-	
+
+   HAL_UART_Transmit(&huart1,outputBuf,transferSize,0xffff);
+//   if(transferSize)
+//   {
+//	   while(v_t.transOngoingFlag); //UART interrupt transmit flag ,disable one more send data.
+//	   v_t.transOngoingFlag=1;
+//	   HAL_UART_Transmit_IT(&huart1,outputBuf,transferSize);
+//   }
+//	
 
 
 

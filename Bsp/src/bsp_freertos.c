@@ -154,6 +154,7 @@ static void vTaskMsgPro(void *pvParameters)
                xTaskNotify(xHandleTaskStart, /* 目标任务 */
                                        RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
                                        eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+                    
 
                
               
@@ -172,12 +173,7 @@ static void vTaskMsgPro(void *pvParameters)
         
          //WIFI_Process_Handler();
 
-            if(v_t.sound_rx_data_success_flag == 1 ){
-              v_t.sound_rx_data_success_flag=0;
-
-              Voice_Decoder_Handler();
-
-            }
+            
            
            
             WIFI_Process_Handler();
@@ -297,9 +293,17 @@ static void vTaskStart(void *pvParameters)
                 // mode_long_short_key_fun();
                 Key_Speical_Mode_Fun_Handler();
 
+                 
+
               }
+              if(v_t.sound_rx_data_success_flag == 1 ){
+              v_t.sound_rx_data_success_flag=0;
+
+              Voice_Decoder_Handler();
+
+                }
                 
-          
+            
             
               TFT_Process_Handler();
          
@@ -486,6 +490,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     	switch(state_uart1)
 		{
 		case 0:  //#0
+		    VOICE_OUTPUT_SOUND_ENABLE();
 		    v_t.voice_rxBuf[0]=voice_inputBuf[0];
 			if(v_t.voice_rxBuf[0]==0xA5){  //hex :4D - "M" -fixed mainboard
 				state_uart1=1; //=1
@@ -534,17 +539,45 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	   case 4:
 
         v_t.voice_rxBuf[4]=voice_inputBuf[0];
-
+         VOICE_OUTPUT_SOUND_ENABLE();
 	    if(v_t.voice_rxBuf[4]==0x01){
 		 	 
 			 v_t.voice_wakeword_enable=1;
 			 v_t.gTimer_voice_time_counter_start =0;
+             v_t.voice_data[0]=  v_t.voice_rxBuf[4];
 		      state_uart1=5;
 		    
 		 }
 		 else if(v_t.voice_wakeword_enable==1){
+            if(  v_t.voice_rxBuf[4] >0 &&   v_t.voice_rxBuf[4] < 0x40) //hex : 41 -'A'	-fixed master
+		   {
+
+                v_t.voice_data[0]=  v_t.voice_rxBuf[4]; //voice data4 + data6
+			   if( v_t.voice_data[0]==0x02){
+			   	//power On command
+				  if(pro_t.gPower_On == power_off)
+				  	pro_t.gPower_On = power_on;
+
+				   pro_t.long_key_flag =0;
+		            pro_t.run_process_step=0;
+
+					gctl_t.ptc_warning =0;
+				    gctl_t.fan_warning =0;
+				  VOICE_OUTPUT_SOUND_ENABLE();
+				  
+
+               }
+			  
+			  
+			   state_uart1=5;
+			   
+
+			 
+		   }
+		   else
+			  state_uart1=0; 
 		  
-    	      state_uart1=5;
+    	     
 
 
     	 }
@@ -571,6 +604,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 	   case 6:
          v_t.voice_rxBuf[6]=voice_inputBuf[0];
+         v_t.voice_data[1]=v_t.voice_rxBuf[6];
 		 state_uart1=7; 
 	   break;
 
@@ -578,7 +612,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	   	 v_t.voice_rxBuf[7]=voice_inputBuf[0];
 	     if(v_t.voice_rxBuf[7]==0xFB){ //hex : 41 -'A'	-fixed master
 		  
-            v_t.sound_rx_data_success_flag=1;
+           state_uart1=0; 
    
             
            xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
@@ -589,7 +623,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
                    /* Èç¹ûxHigherPriorityTaskWoken = pdTRUE£¬ÄÇÃ´ÍË³öÖÐ¶ÏºóÇÐµ½µ±Ç°×î¸ßÓÅÏÈ¼¶ÈÎÎñÖ´ÐÐ */
              portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
             
-			state_uart1=0; 
+			
 
 		  }
 		  else{

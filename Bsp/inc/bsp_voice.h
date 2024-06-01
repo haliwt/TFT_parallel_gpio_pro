@@ -6,8 +6,8 @@
 
 
 
-#define VOICE_OUTPUT_SOUND_ENABLE()       do{MUTE_GPIO_Port->BSRR |= MUTE_Pin;}while(0)
-#define VOICE_OUTPUT_SOUND_DISABLE()      do{MUTE_GPIO_Port->BSRR |= (uint32_t)MUTE_Pin<<16;}while(0)
+#define VOICE_OUTPUT_SOUND_ENABLE()       do{VOICE_MUTE_GPIO_Port->BSRR |= VOICE_MUTE_Pin;}while(0)
+#define VOICE_OUTPUT_SOUND_DISABLE()      do{VOICE_MUTE_GPIO_Port->BSRR |= (uint32_t)VOICE_MUTE_Pin<<16;}while(0)
 
 
 extern uint8_t voice_inputBuf[1];
