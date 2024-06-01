@@ -177,7 +177,7 @@ typedef struct{
      uint8_t set_temperature_value_flag;
 
    //warning
-    uint8_t spi_error_flag;
+   
    //error 
      uint8_t lcd_over_width_flag;
      uint8_t lcd_over_height_flag ;

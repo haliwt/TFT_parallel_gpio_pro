@@ -206,7 +206,7 @@ void Error_Handler(void)
   __disable_irq();
   while (1)
   {
-  	pro_t.spi_error_flag = 0xff;
+  	
   }
   /* USER CODE END Error_Handler_Debug */
 }

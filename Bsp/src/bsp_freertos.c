@@ -154,7 +154,7 @@ static void vTaskMsgPro(void *pvParameters)
              //  xTaskNotify(xHandleTaskStart, /* 目标任务 */
                              ///          RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
                               ///         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-                    v_t.sound_rx_data_success_flag = 1;
+                  v_t.sound_rx_data_success_flag = 1;
 
                
               
@@ -170,19 +170,11 @@ static void vTaskMsgPro(void *pvParameters)
 
        
         //MainBoard_Self_Inspection_PowerOn_Fun();
-        
-         //WIFI_Process_Handler();
-
-            
-           if(v_t.sound_rx_data_success_flag == 1 ){
+        if(v_t.sound_rx_data_success_flag == 1 ){
                  v_t.sound_rx_data_success_flag=0;
-                //  DISABLE_INT();
-
                   Voice_Decoder_Handler();
-                //  ENABLE_INT();
-           
-
-              }
+              
+           }
                 
            
             WIFI_Process_Handler();
@@ -292,27 +284,23 @@ static void vTaskStart(void *pvParameters)
 
         }
 
-              //// power_long_short_key_fun();
-              Key_Speical_Power_Fun_Handler();
+         //// power_long_short_key_fun();
+         Key_Speical_Power_Fun_Handler();
               
-               
-               
-              if(pro_t.gPower_On==power_on){
+         if(pro_t.gPower_On==power_on){
                  bsp_Idle();
                 // mode_long_short_key_fun();
                 Key_Speical_Mode_Fun_Handler();
 
                  
 
-              }
-              
-            
-            
-              TFT_Process_Handler();
-         
-            }
-
          }
+              
+         TFT_Process_Handler();
+         
+         }
+
+      }
   }
 
 				
@@ -542,7 +530,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	   case 4:
 
         v_t.voice_rxBuf[4]=voice_inputBuf[0];
-         VOICE_OUTPUT_SOUND_ENABLE();
+      
 	    if(v_t.voice_rxBuf[4]==0x01){
 		 	 
 			 v_t.voice_wakeword_enable=1;
@@ -555,22 +543,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
             if(  v_t.voice_rxBuf[4] >0 &&   v_t.voice_rxBuf[4] < 0x40) //hex : 41 -'A'	-fixed master
 		   {
 
-                v_t.voice_data[0]=  v_t.voice_rxBuf[4]; //voice data4 + data6
-			   if( v_t.voice_data[0]==0x02){
-			   	//power On command
-				  if(pro_t.gPower_On == power_off)
-				  	pro_t.gPower_On = power_on;
-
-				   pro_t.long_key_flag =0;
-		            pro_t.run_process_step=0;
-
-					gctl_t.ptc_warning =0;
-				    gctl_t.fan_warning =0;
-				  VOICE_OUTPUT_SOUND_ENABLE();
-				  
-
-               }
-			  
+               v_t.voice_data[0]=  v_t.voice_rxBuf[4]; //voice data4 + data6
+			 
 			  
 			   state_uart1=5;
 			   
