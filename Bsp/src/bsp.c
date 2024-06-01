@@ -42,6 +42,7 @@ void bsp_Init(void)
 
    TimerTiming_Init();
    Buzzer_Sound_Fun_Init();
+   pro_t.disp_works_timer_timing_mode_item = works_time;
    pro_t.mode_key_run_item_step=0xff;
   // Buzzer_Sound_Fun_Init();
 
@@ -186,55 +187,103 @@ void TFT_Process_Handler(void)
 ******************************************************************************/
 static void TFT_Pocess_Command_Handler(void)
 {
-   static uint8_t ptc_first_on ,ptc_on_flag;;
-	if(power_on_state() == power_on){
+  if(power_on_state() == power_on){
   
     switch(pro_t.run_process_step){
 
 
 	 case 0:
-	 	ptc_on_flag =1;
-		pro_t.gKey_value =0XFF;
-		TFT_Display_WorksTime();
+	  
+	    if(wifi_link_net_state() ==1){
+		    
+		    TFT_Display_WorksTime_Voice();
+	    }
+		else{
+           TFT_Display_PowerOn_WorksTime_Init();
+		}
+	    
 		Power_On_Fun();
 	    Fan_Run();
 		Device_Action_No_Wifi_Power_On_Handler();
 
-		TFT_BACKLIGHT_ON();
+		//TFT_BACKLIGHT_ON();
+
+
 		pro_t.run_process_step=pro_disp_dht11_value;
 		pro_t.gTimer_pro_ptc_delay_time=0;
-		pro_t.gTimer_pro_display_dht11_value=30; //at once display dht11 value
+	    pro_t.gTimer_pro_update_dht11_data=30;
+		pro_t.gTimer_pro_display_dht11_temp=30; //at once display dht11 value
+		pro_t.gTimer_pro_display_dht11_hum=40;
 		gctl_t.gTimer_ctl_dma_state =0;
-        pro_t.add_or_dec_is_cofirm_key_flag =0; //key set example "ptc,kill,driver rat" function. don't compart tempartur value
-		//test item 
-		//gctl_t.ptc_warning=1;
-		//gctl_t.fan_warning = 1;
+		pro_t.gTimer_pro_action_publis=0;
+		wifi_t.gTimer_get_beijing_time=0;
+		wifi_t.receive_beijing_time=0;
+		wifi_t.three_times_link_beijing=0;
+		wifi_t.get_rx_beijing_time_enable=0;
+		
+
+       
 		
 	 break;
 
 	 case pro_disp_dht11_value: //1 //display works time + "temperature value " + "humidity value"
 
 	   Wifi_Fast_Led_Blink();
-	
 
-	   if(pro_t.gTimer_pro_display_dht11_value > 28 &&  pro_t.wifi_led_fast_blink_flag==0){
-	   	   pro_t.gTimer_pro_display_dht11_value=0;
-         
+	  
+	   if(pro_t.gTimer_pro_update_dht11_data > 8){
+
+		   pro_t.gTimer_pro_update_dht11_data= 0;
+
 		    Update_DHT11_Value();
-		
-            if(pro_t.mode_key_run_item_step != mode_key_set_temp){
-			   TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
-            }
-			TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+
 
 	   }
-       if(pro_t.gTimer_pro_action_publis > 4 && wifi_link_net_state()==1){
-	   	  pro_t.gTimer_pro_action_publis=0;
-	       Device_Action_Publish_Handler();
 
-       }
+	   if(pro_t.gTimer_pro_display_dht11_temp > 10 &&  pro_t.wifi_led_fast_blink_flag==0){
+	   	   pro_t.gTimer_pro_display_dht11_temp=0;
+
+	        
+         
+		    if( gctl_t.gSet_temperature_value_item != set_temp_value_item){
+			  // TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+			   TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+			  
+            }
+			
+	        if(v_t.voice_set_temperature_value_flag==2){
+				v_t.voice_set_temperature_value_flag++;
+
+               TFT_Disp_Voice_Temp_Value(0,gctl_t.dht11_temp_value);
+
+
+			}
+			
+
+	   }
+
+	   if(pro_t.gTimer_pro_display_dht11_hum > 16 &&  pro_t.wifi_led_fast_blink_flag==0 ){
+
+		   pro_t.gTimer_pro_display_dht11_hum=0;
+
+           TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
 	   
-	   pro_t.run_process_step=pro_run_main_fun;
+		  // TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+		}
+
+	 
+
+
+	   if(pro_t.gTimer_pro_wifi_dht11_temp_hum > 38 && wifi_link_net_state() ==1){
+		   pro_t.gTimer_pro_wifi_dht11_temp_hum=0;
+
+			Update_Dht11_Totencent_Value();
+
+	   }
+
+	   Display_Precise_Works_Time();
+
+	 pro_t.run_process_step=pro_run_main_fun;
 	   
 	case pro_run_main_fun: //02
 	
@@ -242,6 +291,7 @@ static void TFT_Pocess_Command_Handler(void)
 	  Wifi_Fast_Led_Blink();
 
 	   Fan_Pro_Handler();
+	  Display_Precise_Works_Time();
 	   pro_t.run_process_step=pro_disp_works_time;
 	 break;
 
@@ -258,24 +308,19 @@ static void TFT_Pocess_Command_Handler(void)
 
     case pro_set_temperature:
 
-
-	  Temperature_Ptc_Pro_Handler();
+       Wifi_Fast_Led_Blink();
+	   Temperature_Ptc_Pro_Handler();
 		
-    
+        Display_Precise_Works_Time();
       pro_t.run_process_step=pro_disp_wifi_led;
 
 	break;
 
 	case pro_disp_wifi_led: //4
+	      Wifi_Fast_Led_Blink();
 	
 		  if(wifi_link_net_state() ==0){
-		  
-			if(pro_t.mode_key_select_label ==1){
-
-				LED_WIFI_ICON_OFF();
-
-            }
-            else{
+	
              switch(pro_t.wifi_led_fast_blink_flag){
 
 			 case 1:
@@ -284,7 +329,10 @@ static void TFT_Pocess_Command_Handler(void)
 			 	pro_t.run_process_step=1;
              break;
 
-             case 0:
+             case 0: //slowly of blink led 
+
+			    if(pro_t.mode_key_run_proc_item != mode_key_select){
+                
 				if(pro_t.gTimer_pro_wifi_led > 1 && pro_t.gTimer_pro_wifi_led < 3){
 					
 					LED_WIFI_ICON_ON();
@@ -294,10 +342,12 @@ static void TFT_Pocess_Command_Handler(void)
 					pro_t.gTimer_pro_wifi_led=0;
 					LED_WIFI_ICON_OFF();
 				}
-				
+			    }
+
+				ModeKey_Select_Default_LedOnOff();
 			 break;
 
-             }
+             
 
             }
 			
@@ -306,19 +356,77 @@ static void TFT_Pocess_Command_Handler(void)
 		else{
 
 		  LED_WIFI_ICON_ON();
+		  ModeKey_Select_Default_LedOnOff();
 
 		}
-		  
-	  pro_t.run_process_step=pro_wifi_init;
+
+	  if(wifi_link_net_state()==1){
+
+		  if(pro_t.gTimer_pro_action_publis_main_fun > 3 ){
+		    	pro_t.gTimer_pro_action_publis_main_fun=0;
+		
+		      	Device_Action_Publish_Handler();
+		  }
+        }
+
+	   Display_Precise_Works_Time();
+	  pro_t.run_process_step=pro_wifi_publish_init;
 	 break; 
 		  
       // handler of wifi 
-	  case pro_wifi_init: //7
-	   
-      Wifi_Pro_Runing_Init();
+	  case pro_wifi_publish_init: //7
+		Wifi_Fast_Led_Blink();
+	   if(wifi_t.linking_tencent_cloud_doing ==0){
+	   if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.power_on_thefirst_times==0){
+             wifi_t.power_on_thefirst_times++;
+		     pro_t.gTimer_pro_action_publis=0;
+		     MqttData_Publish_SetOpen(0x01);
+		     HAL_Delay(350);
+
+		}
+		if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.power_on_thefirst_times==1 &&  pro_t.gTimer_pro_action_publis >2){
+             wifi_t.power_on_thefirst_times++;
+		     pro_t.gTimer_pro_action_publis=0;
+		    MqttData_Publish_Update_Data();
+		     HAL_Delay(350);
+
+		}
+	   	}
+	    Display_Precise_Works_Time();
+	     pro_t.run_process_step=pro_wifi_subscriber_init;
+
+	 break;
+
+	  case pro_wifi_subscriber_init:
+		Wifi_Fast_Led_Blink();
+	   if(wifi_t.linking_tencent_cloud_doing ==0){
+	   if(wifi_link_net_state()==1 && wifi_t.power_on_thefirst_times==2 && pro_t.gTimer_pro_pub_set_timer > 4){
+	   	 
+	   	 pro_t.gTimer_pro_pub_set_timer=0;
+		 wifi_t.power_on_thefirst_times++;
+
+	     Subscriber_Data_FromCloud_Handler();
+	     HAL_Delay(350);
+
+	   }
+	   if(wifi_t.power_on_thefirst_times==3){
+	     	wifi_t.power_on_thefirst_times++;
+		  	wifi_t.linking_tencent_cloud_doing=0;
+			wifi_t.has_been_login_flag = 1;
+			
+			
+			wifi_t.runCommand_order_lable = wifi_tencent_publish_init_data;//wifi_tencent_subscription_data;
+			wifi_t.gTimer_auto_detected_net_state_times=0;
+			wifi_t.gTimer_get_beijing_time =0;
+       }
+	   }
+
+	    Display_Precise_Works_Time();
 		pro_t.run_process_step=pro_disp_dht11_value;
 
 	  break;
+
+	  
 
 
     default:

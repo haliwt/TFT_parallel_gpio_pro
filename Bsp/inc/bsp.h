@@ -227,6 +227,11 @@ typedef struct{
   uint8_t gTimer_pro_action_publis;
   uint8_t gTimer_pro_mode_long_key;
   uint8_t gTimer_pro_set_long_key_tims;
+
+  uint8_t gTimer_pro_update_dht11_data;
+  uint8_t gTimer_pro_display_dht11_temp; //at once display dht11 value
+	uint8_t gTimer_pro_display_dht11_hum;
+  uint8_t gTimer_pro_wifi_dht11_temp_hum;
   
 	
 
