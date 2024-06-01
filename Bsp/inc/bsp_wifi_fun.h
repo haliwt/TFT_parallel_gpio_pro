@@ -131,6 +131,8 @@ typedef struct _WIFI_FUN{
 	uint8_t set_beijing_time_flag;
 	uint8_t beijing_time_flag ;
 
+    uint8_t link_net_tencent_data_flag;
+
 	//auto link net
 	uint8_t rx_error_codes_flag;
 	uint8_t power_on_thefirst_times;
@@ -157,6 +159,7 @@ typedef struct _WIFI_FUN{
 	
     uint16_t gTimer_get_beijing_time;
 	uint16_t gTimer_auto_detected_net_state_times;
+  
 	
 
 	uint32_t randomName[1];

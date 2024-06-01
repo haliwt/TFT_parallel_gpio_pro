@@ -15,7 +15,7 @@ void Fan_Run(void);
  
 void Fan_Stop(void);
 
-void Fan_Pro_Handler(void);
+void RunMain_And_Interval_Handler(void);
 
 void Display_Fan_Notworking_Words(uint8_t disp);
 

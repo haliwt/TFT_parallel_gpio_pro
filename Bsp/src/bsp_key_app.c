@@ -18,13 +18,13 @@ void Key_Speical_Power_Fun_Handler(void)
 	static uint8_t power_on_off;
 
 	
-      if(KEY_POWER_VALUE() ==KEY_DOWN && pro_t.key_power_be_pressed_flag < 60   &&  pro_t.gPower_On == power_on){
-            pro_t.key_power_be_pressed_flag++;
+      if(KEY_POWER_VALUE() ==KEY_DOWN && gpro_t.key_power_be_pressed_flag < 60   &&  gpro_t.gPower_On == power_on){
+            gpro_t.key_power_be_pressed_flag++;
 
-            if(pro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == 1){
-               pro_t.key_power_be_pressed_flag = 100;
-			pro_t.gTimer_pro_wifi_led =0;
-            pro_t.wifi_led_fast_blink_flag=1;
+            if(gpro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == 1){
+               gpro_t.key_power_be_pressed_flag = 100;
+			gpro_t.gTimer_pro_wifi_led =0;
+            gpro_t.wifi_led_fast_blink_flag=1;
 			
 			//WIFI CONNCETOR process
 			wifi_t.link_tencent_step_counter=0;
@@ -32,7 +32,7 @@ void Key_Speical_Power_Fun_Handler(void)
 			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
 			wifi_t.wifi_config_net_lable= wifi_set_restor;
 			wifi_t.gTimer_login_tencent_times=0;
-            pro_t.wifi_led_fast_blink_flag=1;
+            gpro_t.wifi_led_fast_blink_flag=1;
 			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
 			buzzer_sound();
 			
@@ -40,34 +40,34 @@ void Key_Speical_Power_Fun_Handler(void)
         }
 
 	 }
-	 else if(KEY_POWER_VALUE() ==KEY_UP && pro_t.key_power_be_pressed_flag > 0 && pro_t.key_power_be_pressed_flag < 40){
+	 else if(KEY_POWER_VALUE() ==KEY_UP && gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 40){
              
-            pro_t.key_power_be_pressed_flag=0;
+            gpro_t.key_power_be_pressed_flag=0;
 
 
         
            power_on_off = power_on_off ^ 0x01;
-			  pro_t.key_power_be_pressed_flag=0;
+			  gpro_t.key_power_be_pressed_flag=0;
 		  if(power_on_off==1){
 		
 		  
 
 			buzzer_sound();	
-			pro_t.gPower_On = power_on;   
-            pro_t.long_key_flag =0;
-            pro_t.run_process_step=0;
+			gpro_t.gPower_On = power_on;   
+            gpro_t.long_key_flag =0;
+            gpro_t.run_process_step=0;
 		   
 
 		
 			
 		  }
 		  else {
-			 //pro_t.gKey_value = power_key_id;
+			 //gpro_t.gKey_value = power_key_id;
 			 buzzer_sound();
-			 pro_t.power_off_flag=1;
-			 pro_t.long_key_flag =0;
-			pro_t.run_process_step=0xff;
-			pro_t.gPower_On = power_off;   
+			 gpro_t.power_off_flag=1;
+			 gpro_t.long_key_flag =0;
+			gpro_t.run_process_step=0xff;
+			gpro_t.gPower_On = power_off;   
 		
 			  
 			 }
@@ -88,28 +88,28 @@ void Key_Speical_Mode_Fun_Handler(void)
 
 
 		//mode key be pressed long times
-	if(KEY_MODE_VALUE() ==KEY_DOWN && pro_t.mode_key_pressed_flag < 100){
+	if(KEY_MODE_VALUE() ==KEY_DOWN && gpro_t.mode_key_pressed_flag < 100){
 
 
-        pro_t.mode_key_pressed_flag ++;
-		if(pro_t.mode_key_pressed_flag >  40 && KEY_MODE_VALUE() == KEY_DOWN){
-			pro_t.mode_key_pressed_flag =150;
-			pro_t.mode_key_select_label =0;
+        gpro_t.mode_key_pressed_flag ++;
+		if(gpro_t.mode_key_pressed_flag >  40 && KEY_MODE_VALUE() == KEY_DOWN){
+			gpro_t.mode_key_pressed_flag =150;
+			gpro_t.mode_key_select_label =0;
              buzzer_sound();
-		    pro_t.gTimer_pro_mode_long_key=0;
-		    pro_t.key_mode_long_time_over_flag=1;
+		 
+		    gpro_t.key_mode_long_time_over_flag=1;
 			Mode_Long_Key_Fun();
 
 		   
        }
     }
-    else if(KEY_MODE_VALUE() ==KEY_UP && pro_t.mode_key_pressed_flag > 0 && pro_t.mode_key_pressed_flag < 40){
+    else if(KEY_MODE_VALUE() ==KEY_UP && gpro_t.mode_key_pressed_flag > 0 && gpro_t.mode_key_pressed_flag < 40){
        
-		pro_t.mode_key_pressed_flag =0;
+		gpro_t.mode_key_pressed_flag =0;
 	   
-		pro_t.mode_key_run_proc_item = mode_key_select; //shield this is WIFI_LED blink. 
-		pro_t.mode_key_run_item_step = mode_key_select;
-	    pro_t.mode_key_select_label =mode_key_select;
+		gpro_t.mode_key_run_proc_item = mode_key_select; //shield this is WIFI_LED blink. 
+		gpro_t.mode_key_run_item_step = mode_key_select;
+	    gpro_t.mode_key_select_label =mode_key_select;
 	     gctl_t.select_main_fun_numbers++; // 0,1,2
 		 if(gctl_t.select_main_fun_numbers > 3){
 			  gctl_t.select_main_fun_numbers = 1;
@@ -117,9 +117,9 @@ void Key_Speical_Mode_Fun_Handler(void)
 		
 		gctl_t.memory_confimr_key_done = 1;
         
-		pro_t.buzzer_sound_flag =1;
+		gpro_t.buzzer_sound_flag =1;
 
-		pro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
+		gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
 		gctl_t.gTimer_ctl_select_led =0;
         buzzer_sound();
 	   	
@@ -139,27 +139,27 @@ void Key_Speical_Mode_Fun_Handler(void)
 void Mode_Key_Config_Fun_Handler(void)
 {
   static uint8_t confirm_data;
-  switch(pro_t.mode_key_run_item_step){
+  switch(gpro_t.mode_key_run_item_step){
 
 
              case mode_key_select: //02
 
-		     if(pro_t.gTimer_pro_mode_key_be_select < 4){ //exit of rule
+		     if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //exit of rule
 
 				Mode_Key_Select_Fun();
 				
              }
 			 else{
-                 pro_t.mode_key_run_proc_item = 0xff; //don't WIFI LED BLINK
+                 gpro_t.mode_key_run_proc_item = 0xff; //don't WIFI LED BLINK
                 gctl_t.memory_confimr_key_done = 0;
-                pro_t.mode_key_run_item_step = 0xff; //
-                pro_t.mode_key_select_label =0;
-                pro_t.key_mode_long_time_over_flag =0;//pro_t.mode_key_select_label
+                gpro_t.mode_key_run_item_step = 0xff; //
+                gpro_t.mode_key_select_label =0;
+                gpro_t.key_mode_long_time_over_flag =0;//gpro_t.mode_key_select_label
 			    gctl_t.select_main_fun_numbers--; //return back the first confirm item 
 				if(gctl_t.select_main_fun_numbers == 0){
 					gctl_t.select_main_fun_numbers = 5;
 				}
-				pro_t.add_or_dec_is_cofirm_key_flag =0;
+				gpro_t.add_or_dec_is_cofirm_key_flag =0;
                 Device_Action_Led_OnOff_Handler();
 			 }
              
@@ -171,21 +171,9 @@ void Mode_Key_Config_Fun_Handler(void)
 			    Device_Action_Led_OnOff_Handler();
                 Mode_Key_Confirm_Fun();
 
-                pro_t.mode_key_run_proc_item = 0xff;
+                gpro_t.mode_key_run_proc_item = 0xff;
 		    
-				if(confirm_data==0){
-					confirm_data++;
-					pro_t.gTimer_pro_confir_delay=0;
-
-				}
-
-				if(confirm_data==1 && pro_t.gTimer_pro_confir_delay>1){
-					confirm_data=0;
-					pro_t.gTimer_pro_confir_delay=0;
-				 	pro_t.mode_key_select_label=0;
-				   pro_t.mode_key_run_item_step = 0xff;
-                       pro_t.add_or_dec_is_cofirm_key_flag =1;
-				}
+				
 			
 
 			break;
@@ -213,11 +201,11 @@ void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 {
 	  if(power_on_state() ==power_on){
 	   if(gctl_t.fan_warning ==0 && ptc_error_state() ==0){
-	  	  pro_t.mode_key_run_item_step = mode_key_set_timer_value;
-		  pro_t.timer_mode_flag=timer_set_time; //set timer mode enable,
+	  	  gpro_t.mode_key_run_item_step = mode_key_set_timer_value;
+		  gpro_t.timer_mode_flag=timer_set_time; //set timer mode enable,
 		  gctl_t.timer_timing_words_changed_flag ++;
 		  gctl_t.timing_words_changed_flag++;
-		  pro_t.gTimer_pro_mode_long_key=0;
+	
 		 
 
 
@@ -247,24 +235,24 @@ void ADD_Key_Fun(void)
 
 
 
-		switch(pro_t.mode_key_run_item_step){
+		switch(gpro_t.mode_key_run_item_step){
 
 		case 0xff:
-            if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label==0){
-			   pro_t.mode_key_run_item_step=mode_key_set_temp;
+            if(gpro_t.key_mode_long_time_over_flag ==0 && gpro_t.mode_key_select_label==0){
+			   gpro_t.mode_key_run_item_step=mode_key_set_temp;
 
             }
 
 		case mode_key_set_temp: //set temperature value add number
-			//pro_t.buzzer_sound_flag = 1;
-			if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
+			//gpro_t.buzzer_sound_flag = 1;
+			if(gpro_t.key_mode_long_time_over_flag ==0 && gpro_t.mode_key_select_label ==0){
 			//Buzzer_KeySound();
 			gctl_t.gSet_temperature_value ++;
 			if( gctl_t.gSet_temperature_value < 20)gctl_t.gSet_temperature_value=20;
 			
             if(gctl_t.gSet_temperature_value > 40) gctl_t.gSet_temperature_value= 20;
 
-             pro_t.gTimer_pro_set_tem_value_blink =0;
+             gpro_t.gTimer_pro_set_tem_value_blink =0;
 			 gctl_t.gSet_temperature_value_item = set_temp_value_item;
         
 			disp_temp_value =1;
@@ -273,20 +261,20 @@ void ADD_Key_Fun(void)
 		break;
 
 		case mode_key_set_timer_value:
-            //pro_t.buzzer_sound_flag = 1;
-		    pro_t.gTimer_pro_mode_long_key=0;
+            //gpro_t.buzzer_sound_flag = 1;
+	
 			gctl_t.mode_key_long_time_flag++;
 			
 			gctl_t.gSet_timer_minutes=0;
-			gctl_t.gSet_timer_hours ++ ;//disp_t.disp_timer_time_hours++ ;//pro_t.dispTime_minutes = pro_t.dispTime_minutes + 60;
-			if(gctl_t.gSet_timer_hours  > 24){ //if(pro_t.dispTime_minutes > 59){
+			gctl_t.gSet_timer_hours ++ ;//disp_t.disp_timer_time_hours++ ;//gpro_t.dispTime_minutes = gpro_t.dispTime_minutes + 60;
+			if(gctl_t.gSet_timer_hours  > 24){ //if(gpro_t.dispTime_minutes > 59){
 
-			gctl_t.gSet_timer_hours =0;//pro_t.dispTime_hours =0;
+			gctl_t.gSet_timer_hours =0;//gpro_t.dispTime_hours =0;
 
 
 			}
 
-		   pro_t.gTimer_pro_mode_long_key=0 ; //long key for mode timing
+		
 			timer_timing_flag=1;
 		 
 			
@@ -297,8 +285,8 @@ void ADD_Key_Fun(void)
 
 		case mode_key_select:
 			
-		//	pro_t.buzzer_sound_flag = 1;
-			pro_t.mode_key_run_item_step = mode_key_confirm;
+		//	gpro_t.buzzer_sound_flag = 1;
+			gpro_t.mode_key_run_item_step = mode_key_confirm;
 			
 		
         break; 
@@ -338,22 +326,22 @@ void DEC_Key_Fun(void)
 	if(power_on_state() ==power_on){
 	   	if(gctl_t.ptc_warning ==0 && ptc_error_state() ==0 ){
 	   	
-	     switch(pro_t.mode_key_run_item_step ){
+	     switch(gpro_t.mode_key_run_item_step ){
 
 		   case 0xff:
-            if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
-		 	 pro_t.mode_key_run_item_step= mode_key_set_temp;
+            if(gpro_t.key_mode_long_time_over_flag ==0 && gpro_t.mode_key_select_label ==0){
+		 	 gpro_t.mode_key_run_item_step= mode_key_set_temp;
             }
 
 		   case mode_key_set_temp:  //default tempearture value 
-	        // pro_t.buzzer_sound_flag = 1;
-	        if(pro_t.key_mode_long_time_over_flag ==0 && pro_t.mode_key_select_label ==0){
+	        // gpro_t.buzzer_sound_flag = 1;
+	        if(gpro_t.key_mode_long_time_over_flag ==0 && gpro_t.mode_key_select_label ==0){
 	      //  Buzzer_KeySound();
 			 gctl_t.gSet_temperature_value--;
 			if( gctl_t.gSet_temperature_value<20)  gctl_t.gSet_temperature_value=40;
 	        if( gctl_t.gSet_temperature_value >40) gctl_t.gSet_temperature_value=40;
    
-			 pro_t.gTimer_pro_set_tem_value_blink =0;
+			 gpro_t.gTimer_pro_set_tem_value_blink =0;
 			 gctl_t.gSet_temperature_value_item = set_temp_value_item;
              disp_temp_value =1;
 	        
@@ -363,19 +351,18 @@ void DEC_Key_Fun(void)
 
 			case mode_key_set_timer_value: //timer timing set "decrease -down"
 			   
-			  //  pro_t.buzzer_sound_flag = 1;
+			  //  gpro_t.buzzer_sound_flag = 1;
 	            gctl_t.mode_key_long_time_flag++;
 			
 				gctl_t.gSet_timer_minutes=0;
-				gctl_t.gSet_timer_hours --;//disp_t.disp_timer_time_hours -- ;//pro_t.dispTime_minutes = pro_t.dispTime_minutes - 1;
-				if(gctl_t.gSet_timer_hours  < 0){//if(pro_t.dispTime_minutes < 0){
+				gctl_t.gSet_timer_hours --;//disp_t.disp_timer_time_hours -- ;//gpro_t.dispTime_minutes = gpro_t.dispTime_minutes - 1;
+				if(gctl_t.gSet_timer_hours  < 0){//if(gpro_t.dispTime_minutes < 0){
 
-				    gctl_t.gSet_timer_hours  =24;//pro_t.dispTime_hours --;
+				    gctl_t.gSet_timer_hours  =24;//gpro_t.dispTime_hours --;
 					
 					
 				}
 		
-		     pro_t.gTimer_pro_mode_long_key=0 ; //long key for mode timing
 		     timer_timing_flag=1;
 			 	
 			//TFT_Disp_Set_TimerTime(0);
@@ -383,9 +370,9 @@ void DEC_Key_Fun(void)
 
 			 case mode_key_select:
 			 
-			 //	pro_t.buzzer_sound_flag = 1;
+			 //	gpro_t.buzzer_sound_flag = 1;
 	
-				pro_t.mode_key_run_item_step = mode_key_confirm;
+				gpro_t.mode_key_run_item_step = mode_key_confirm;
 				
 
 			   
@@ -493,7 +480,7 @@ void Mode_Key_Select_Fun(void)
 		  }
 		  else{
 		  	gctl_t.gTimer_ctl_select_led=0;
-			if(pro_t.mode_key_run_proc_item==mode_key_select)
+			if(gpro_t.mode_key_run_proc_item==mode_key_select)
 			   goto led_blik;
 			
 
@@ -576,7 +563,7 @@ void Mode_Key_Select_Fun(void)
 			 }
 			 else{
 			 	gctl_t.gTimer_ctl_select_led=0;
-				if(pro_t.mode_key_run_proc_item==mode_key_select)
+				if(gpro_t.mode_key_run_proc_item==mode_key_select)
 				goto led_blik2;
 
 			 }
@@ -654,7 +641,7 @@ void Mode_Key_Select_Fun(void)
 	  }
 	  else{
 		   gctl_t.gTimer_ctl_select_led=0;
-		   if(pro_t.mode_key_run_proc_item==mode_key_select)
+		   if(gpro_t.mode_key_run_proc_item==mode_key_select)
 		   goto led_blink3;
 
 		}
@@ -690,11 +677,11 @@ void Mode_Key_Confirm_Fun(void)
 				LED_PTC_ICON_ON(); 
 			    Ptc_On();
 				gctl_t.ptc_flag = 1;
-				pro_t.add_or_dec_is_cofirm_key_flag =0;
+				gpro_t.add_or_dec_is_cofirm_key_flag =0;
 				
 		    }
 			else{
-				pro_t.add_or_dec_is_cofirm_key_flag =1;
+				gpro_t.add_or_dec_is_cofirm_key_flag =1;
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();
 				gctl_t.ptc_flag = 0;

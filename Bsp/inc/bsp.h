@@ -121,7 +121,9 @@ typedef enum{
   pro_disp_wifi_led,
   pro_mode_key_fun,
   pro_wifi_publish_init,
-  pro_wifi_subscriber_init
+  pro_wifi_subscriber_init,
+  pro_check_time_out,
+  pro_interval_ten_minutes
   
 
 
@@ -193,61 +195,60 @@ typedef struct{
 	uint8_t v_usart2_rx_numbers;
 	uint8_t v_usart2_rx_flag;
 
-  	//timer timing function
-  	uint8_t gTimer_pro_feed_dog;
-    uint8_t gTimer_pro_temp_delay ;
+  
     //key
 	uint8_t add_or_dec_is_cofirm_key_flag;
     uint8_t mode_key_run_proc_item ;
+    uint8_t interval_stop_run_flag ;
    
   
 	
-	
-
-  //timing by interrupt
-  uint8_t gTimer_wifi_connect_counter;
-//  uint8_t key_works_timer_timing_state ;
-
-  uint8_t gTimer_pro_fan;
+	 //main process timer 
+    uint8_t gTimer_pro_fan;
 	uint8_t gTimer_usart_error;
 
 	uint8_t gTime_pro_run_voice_time;
-	uint8_t gTimer_pro_display_dht11_value;
+
 	uint8_t gTimer_pro_time_split_symbol;
 	uint8_t gTimer_pro_wifi_led;
 	uint8_t gTimer_pro_wifi_fast_led;
 	//uint8_t gTimer_pro_long_key_timer_flag;
-  uint8_t gTimer_pro_timer_mode_times;
+
   uint8_t gTimer_pro_mode_key_be_select;
   uint8_t gTimer_pro_set_tem_value_blink;
+  
 
-  uint8_t gTimer_pro_detect_key_ms ;
-  uint8_t gTimer_pro_mode_key_adjust;
-  uint8_t gTimer_pro_power_key_adjust;
-  uint8_t  gTimer_pro_ptc_delay_time;
-  uint8_t gTimer_pro_confir_delay;
-  uint8_t gTimer_pro_action_publis;
-  uint8_t gTimer_pro_mode_long_key;
+
+
+ 
+  
+ 
+
   uint8_t gTimer_pro_set_long_key_tims;
 
   uint8_t gTimer_pro_update_dht11_data;
-  uint8_t gTimer_pro_display_dht11_temp; //at once display dht11 value
-	uint8_t gTimer_pro_display_dht11_hum;
+  
+
   uint8_t gTimer_pro_wifi_dht11_temp_hum;
-  uint8_t gTimer_pro_action_publis_main_fun ;
-  uint8_t gTimer_pro_pub_set_timer ;
+  
+ 
+
+  uint8_t gTimer_run_total;
+
+  //timer timing function
+  uint8_t gTimer_pro_feed_dog;
+  uint8_t gTimer_pro_temp_delay ;
+    //timing by interrupt
+  uint8_t gTimer_wifi_connect_counter;
+  uint8_t gTimer_run_time_out;
+ 
    
 	
 
 }PRO_T;
 
 
-
-
-
-
-
-extern PRO_T pro_t;
+extern PRO_T gpro_t;
 
 
 void bsp_Init(void);

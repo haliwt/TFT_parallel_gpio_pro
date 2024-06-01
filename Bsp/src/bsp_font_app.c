@@ -48,7 +48,7 @@ void TFT_Disp_Numbers_Pic_413(uint16_t x,uint16_t y,uint8_t bc,uint8_t num)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -58,7 +58,7 @@ void TFT_Disp_Numbers_Pic_413(uint16_t x,uint16_t y,uint8_t bc,uint8_t num)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -109,7 +109,7 @@ void TFT_MainDisp_Numbers_Pic_354(uint16_t x,uint16_t y,uint8_t bc,uint8_t num)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -119,7 +119,7 @@ void TFT_MainDisp_Numbers_Pic_354(uint16_t x,uint16_t y,uint8_t bc,uint8_t num)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -225,7 +225,7 @@ void TFT_Disp_Chinese_Timer_23_23(uint16_t x,uint16_t y,uint8_t num)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -235,7 +235,7 @@ void TFT_Disp_Chinese_Timer_23_23(uint16_t x,uint16_t y,uint8_t num)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -284,7 +284,7 @@ void TFT_Disp_Chinese_BeiJing_Time_23_23(uint16_t x,uint16_t y,uint8_t num)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -294,7 +294,7 @@ void TFT_Disp_Chinese_BeiJing_Time_23_23(uint16_t x,uint16_t y,uint8_t num)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -343,7 +343,7 @@ void TFT_Disp_Chinese_WorkTime_23_23(uint16_t x,uint16_t y,uint8_t num)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -353,7 +353,7 @@ void TFT_Disp_Chinese_WorkTime_23_23(uint16_t x,uint16_t y,uint8_t num)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -400,7 +400,7 @@ void TFT_Disp_Temp_Symbol_24_24(uint16_t x,uint16_t y)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -410,7 +410,7 @@ void TFT_Disp_Temp_Symbol_24_24(uint16_t x,uint16_t y)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -448,7 +448,7 @@ void TFT_Disp_Temp_Symbol_16_15(uint16_t x,uint16_t y)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -458,7 +458,7 @@ void TFT_Disp_Temp_Symbol_16_15(uint16_t x,uint16_t y)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -506,7 +506,7 @@ void TFT_Disp_Humidity_Symbol_24_24(uint16_t x,uint16_t y)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -516,7 +516,7 @@ void TFT_Disp_Humidity_Symbol_24_24(uint16_t x,uint16_t y)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -554,7 +554,7 @@ void TFT_Disp_Humidity_Symbol_16_16(uint16_t x,uint16_t y)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -564,7 +564,7 @@ void TFT_Disp_Humidity_Symbol_16_16(uint16_t x,uint16_t y)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -624,7 +624,7 @@ void TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(uint16_t x,uint16_t y,uint8_t sel
 				x++;//水平扫描
 	
 				if(x >= LCD_Width){
-						pro_t.lcd_over_width_flag =1;
+						gpro_t.lcd_over_width_flag =1;
 						return; /* 超区域了 */
 	
 				}
@@ -634,7 +634,7 @@ void TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(uint16_t x,uint16_t y,uint8_t sel
 					y++;
 					
 					if(y >= LCD_Height){
-					pro_t.lcd_over_height_flag=1;
+					gpro_t.lcd_over_height_flag=1;
 					return; 	/* 超区域了 */
 	
 					 }
@@ -698,7 +698,7 @@ void TFT_Disp_Pic_Warnign_Words(uint16_t x,uint16_t y,uint8_t sel,uint8_t num)
 	x++;//水平扫描
 
 	if(x >= LCD_Width){
-	pro_t.lcd_over_width_flag =1;
+	gpro_t.lcd_over_width_flag =1;
 	return; /* 超区域了 */
 
 	}
@@ -708,7 +708,7 @@ void TFT_Disp_Pic_Warnign_Words(uint16_t x,uint16_t y,uint8_t sel,uint8_t num)
 		y++;
 
 		if(y >= LCD_Height){
-		pro_t.lcd_over_height_flag=1;
+		gpro_t.lcd_over_height_flag=1;
 		return; 	/* 超区域了 */
 
 		}
@@ -762,7 +762,7 @@ void TFT_Disp_Time_Split_Symbol(uint16_t x,uint16_t y,uint8_t dat)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -772,7 +772,7 @@ void TFT_Disp_Time_Split_Symbol(uint16_t x,uint16_t y,uint8_t dat)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -819,7 +819,7 @@ void TFT_Disp_Chinese_Temp_36_18(uint16_t x,uint16_t y)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -829,7 +829,7 @@ void TFT_Disp_Chinese_Temp_36_18(uint16_t x,uint16_t y)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -876,7 +876,7 @@ void TFT_Disp_Chinese_Humidity_39_18(uint16_t x,uint16_t y,uint8_t num)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -886,7 +886,7 @@ void TFT_Disp_Chinese_Humidity_39_18(uint16_t x,uint16_t y,uint8_t num)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }
@@ -926,7 +926,7 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
 			x++;//水平扫描
 
 			if(x >= LCD_Width){
-                    pro_t.lcd_over_width_flag =1;
+                    gpro_t.lcd_over_width_flag =1;
 					return;	/* 超区域了 */
 
 			}
@@ -936,7 +936,7 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
 				y++;
 				
 			    if(y >= LCD_Height){
-				pro_t.lcd_over_height_flag=1;
+				gpro_t.lcd_over_height_flag=1;
 				return;		/* 超区域了 */
 
 			     }

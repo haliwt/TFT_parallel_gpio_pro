@@ -167,15 +167,15 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
  
     
-   if(!pro_t.gTimer_pro_detect_key_ms) return ;
+   if(!gpro_t.gTimer_pro_detect_key_ms) return ;
 
-	pro_t.gTimer_pro_detect_key_ms=0;
+	gpro_t.gTimer_pro_detect_key_ms=0;
 	switch(GPIO_Pin){
 
 	case KEY_POWER_Pin:
          if(POWER_KEY_VALUE()==KEY_DOWN ){
-		     pro_t.key_power_be_pressed_flag =1;
-			 pro_t.gTimer_pro_power_key_adjust=0;
+		     gpro_t.key_power_be_pressed_flag =1;
+			
 
          }
 	
@@ -184,10 +184,10 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
 	case KEY_MODE_Pin:
 
-      if(pro_t.gPower_On == power_on && ptc_error_state()==0 && fan_error_state()==0){   
+      if(gpro_t.gPower_On == power_on && ptc_error_state()==0 && fan_error_state()==0){   
 
-  	  pro_t.mode_key_pressed_flag =1;
-      pro_t.gTimer_pro_mode_key_adjust =0;
+  	  gpro_t.mode_key_pressed_flag =1;
+    
 
 	//counter starts after 4 seconds ,cancel this function
      }
@@ -196,9 +196,9 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 	break;
 
 	case KEY_DEC_Pin:
-	if(pro_t.gPower_On == power_on && ptc_error_state()==0 && fan_error_state()==0 && DEC_KEY_VALUE()==KEY_DOWN){  
-	//pro_t.buzzer_sound_flag = 1;
-     pro_t.gKey_value = dec_key_id;
+	if(gpro_t.gPower_On == power_on && ptc_error_state()==0 && fan_error_state()==0 && DEC_KEY_VALUE()==KEY_DOWN){  
+	//gpro_t.buzzer_sound_flag = 1;
+     gpro_t.gKey_value = dec_key_id;
 	//DEC_Key_Fun();
 	}
 
@@ -206,9 +206,9 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
 
 	case KEY_ADD_Pin:
-	if(pro_t.gPower_On == power_on && ptc_error_state()==0 && fan_error_state()==0 && ADD_KEY_VALUE()==KEY_DOWN){  
-	 // pro_t.buzzer_sound_flag = 1;
-      pro_t.gKey_value = add_key_id;
+	if(gpro_t.gPower_On == power_on && ptc_error_state()==0 && fan_error_state()==0 && ADD_KEY_VALUE()==KEY_DOWN){  
+	 // gpro_t.buzzer_sound_flag = 1;
+      gpro_t.gKey_value = add_key_id;
 	//ADD_Key_Fun();
 	 }
 
@@ -233,34 +233,34 @@ uint8_t ReadKey(void)
 {
 
     uint8_t value0;
-	if(!pro_t.gTimer_pro_detect_key_ms) return value0;
+	if(!gpro_t.gTimer_pro_detect_key_ms) return value0;
 
-	 pro_t.gTimer_pro_detect_key_ms=0;
+	 gpro_t.gTimer_pro_detect_key_ms=0;
 
 
-	if(HAL_GPIO_ReadPin(KEY_POWER_GPIO_Port,KEY_POWER_Pin) == KEY_DOWN && pro_t.long_key_flag ==0){ //KEY1 =POWER_KEY ,KEY2 = MODES
+	if(HAL_GPIO_ReadPin(KEY_POWER_GPIO_Port,KEY_POWER_Pin) == KEY_DOWN && gpro_t.long_key_flag ==0){ //KEY1 =POWER_KEY ,KEY2 = MODES
 			cnt = 0;
-			pro_t.long_key_flag =0;
+			gpro_t.long_key_flag =0;
 			K1++;
-			if(K1 > 1990000 && pro_t.gPower_On ==power_on){
+			if(K1 > 1990000 && gpro_t.gPower_On ==power_on){
 	               K1= 0;
 			
-				  pro_t.long_key_flag =1;
+				  gpro_t.long_key_flag =1;
 				 // gctl_t.gKey_value = wifi_fun_on;
 	              return   KEY_POWER_LONG_DOWN;
 	              
 			}
 	}
-	else if(HAL_GPIO_ReadPin(KEY_MODE_GPIO_Port,KEY_MODE_Pin)==KEY_DOWN  && pro_t.long_key_flag ==0 && power_on_state() == power_on){
+	else if(HAL_GPIO_ReadPin(KEY_MODE_GPIO_Port,KEY_MODE_Pin)==KEY_DOWN  && gpro_t.long_key_flag ==0 && power_on_state() == power_on){
 	  		cnt = 0;
 			K2++;   //Confirm_key press
 		
-			pro_t.long_key_flag =0;
+			gpro_t.long_key_flag =0;
 			if(K2 > 1990000 && power_on_state() ==power_on){
 	              K2=0;
 				  cnt = 0;
 				 
-				  pro_t.long_key_flag =1;
+				  gpro_t.long_key_flag =1;
 				  
 				  return KEY_MODE_LONG_DOWN;
 	            }
@@ -279,7 +279,7 @@ uint8_t ReadKey(void)
 	//be detected of key release .
     else if(POWER_KEY_VALUE()==KEY_UP && MODE_KEY_VALUE()==KEY_UP \
 
-      && DEC_KEY_VALUE()==KEY_UP && ADD_KEY_VALUE()==KEY_UP && pro_t.long_key_flag ==0){ //oneself key 
+      && DEC_KEY_VALUE()==KEY_UP && ADD_KEY_VALUE()==KEY_UP && gpro_t.long_key_flag ==0){ //oneself key 
 		cnt++;
 		if(cnt<50){ //按键松开消抖,一定要大于短按键次数 > 20
 		    return 0; 
@@ -389,9 +389,9 @@ KEYState_TypeDef POWER_KEY_StateRead(void)
                 K1=0;
 				
 				//SendData_Set_Wifi(0x01);
-				pro_t.long_key_flag =1;
-				pro_t.wifi_led_fast_blink_flag=0;
-				 pro_t.gTimer_pro_wifi_led =0;
+				gpro_t.long_key_flag =1;
+				gpro_t.wifi_led_fast_blink_flag=0;
+				 gpro_t.gTimer_pro_wifi_led =0;
 				//gctl_t.wifi_flag =0;
 				return KEY_POWER_LONG_DOWN;
 			}
@@ -401,13 +401,13 @@ KEYState_TypeDef POWER_KEY_StateRead(void)
 	  };      
        /* 按键扫描完毕，确定按键被按下，返回按键被按下状态 */
 	 
-	  if(K1 > 900000 && power_on_state() == power_on && pro_t.long_key_flag ==0){
+	  if(K1 > 900000 && power_on_state() == power_on && gpro_t.long_key_flag ==0){
 	  	 K1 =0;
 		//  SendData_Set_Wifi(0x01);
-		  pro_t.long_key_flag =1;
-		  pro_t.wifi_led_fast_blink_flag=0;
+		  gpro_t.long_key_flag =1;
+		  gpro_t.wifi_led_fast_blink_flag=0;
 		// gctl_t.wifi_flag =0;
-		 pro_t.gTimer_pro_wifi_led =0;
+		 gpro_t.gTimer_pro_wifi_led =0;
 		 return KEY_POWER_LONG_DOWN;
 
 
@@ -450,7 +450,7 @@ KEYState_TypeDef MODE_KEY_StateRead(void)
 
 		    if(K2 > 900000){
                 K2=0;
-				pro_t.long_key_flag =1;
+				gpro_t.long_key_flag =1;
 			    
 				return KEY_MODE_LONG_DOWN;
 

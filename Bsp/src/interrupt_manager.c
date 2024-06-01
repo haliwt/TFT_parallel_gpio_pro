@@ -66,13 +66,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     tm0++;  //1ms
     tm1++;
    
-    pro_t.gTimer_pro_wifi_fast_led++;
+    gpro_t.gTimer_pro_wifi_fast_led++;
 
 	if(tm1 > 9){
 		tm1=0;
 		gctl_t.gTimer_ctl_select_led++;
-	    pro_t.gTimer_pro_detect_key_ms =1;
-	}
+     }  
 	
 	
 	if(tm0>999){ //1000 *1ms = 1000ms = 1s
@@ -83,41 +82,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     
 
 	 //main process timer
-	 pro_t.gTimer_pro_temp_delay++;
 	
-
-	 pro_t.gTimer_pro_feed_dog++;
-	
-     pro_t.gTimer_pro_display_dht11_value++;
-	
-	 pro_t.gTimer_pro_fan++;  //fan continuce counter 60s
-	
-	  pro_t.gTimer_pro_time_split_symbol++;
-	  pro_t.gTimer_pro_wifi_led++;
-
-	  pro_t.gTimer_pro_timer_mode_times++;
-	  pro_t.gTimer_pro_mode_key_be_select++;
-	  pro_t.gTimer_pro_set_tem_value_blink++;
-	 
-
-	  pro_t.gTimer_pro_mode_key_adjust ++;
-	  pro_t.gTimer_pro_power_key_adjust++;
-	  pro_t.gTimer_pro_ptc_delay_time++;
-	   pro_t.gTimer_pro_confir_delay++;
-	
-	  pro_t.gTimer_pro_mode_long_key++;
-	  pro_t.gTimer_pro_action_publis++;
-
-	    pro_t.gTimer_pro_update_dht11_data ++;
-		pro_t.gTimer_pro_display_dht11_temp ++; //at once display dht11 value
-		pro_t.gTimer_pro_display_dht11_hum ++;
-	    pro_t.gTimer_pro_wifi_dht11_temp_hum++;
-
-        pro_t.gTimer_pro_action_publis_main_fun ++;
-        pro_t.gTimer_pro_pub_set_timer ++;
-
-	  
-	   //cotrol timer
+	    //be used to timer 
+	   gpro_t.gTimer_pro_wifi_dht11_temp_hum++;
+       gpro_t.gTimer_pro_update_dht11_data ++;
+       gpro_t.gTimer_pro_set_tem_value_blink++;
+       gpro_t.gTimer_pro_mode_key_be_select++;
+       gpro_t.gTimer_pro_wifi_led++;
+       gpro_t.gTimer_pro_time_split_symbol++;  //diplay timer ":"
+       gpro_t.gTimer_pro_fan++;  //fan continuce counter 60s
+       gpro_t.gTimer_pro_feed_dog++;
+       gpro_t.gTimer_pro_temp_delay++;
+   
+        //cotrol timer
     
 	   gctl_t.gTimer_ctl_set_timer_time_senconds++;
 	   gctl_t.gTimer_ctl_ptc_adc_times++;
@@ -126,7 +103,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	   gctl_t.gTimer_ctl_warning_time++;
 	   gctl_t.gTimer_ctl_usart1_error++; 
 	   gctl_t.gTimer_ctl_usart2_error++; 
-	   gctl_t.gTimer_ctl_dma_state++ ;
+	  
 	
 	  //wifi counter 
 	 
@@ -152,7 +129,9 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	  if(tm2 > 59){//1 minute
           tm2 =0;
-		  gctl_t.gTimer_ctl_total_continue_time++;
+        
+		   gpro_t.gTimer_run_total++;
+           gpro_t.gTimer_run_time_out++;
 	  }
 	 
 	  

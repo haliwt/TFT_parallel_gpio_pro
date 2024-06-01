@@ -224,15 +224,15 @@ static void vTaskStart(void *pvParameters)
 			{
 				//printf("接收到K2按键按下消息, ulNotifiedValue = 0x%08x\r\n", ulValue);
 				//printf("receive notice key1_bit0 \n");
-				 pro_t.key_power_be_pressed_flag =1;
+				 gpro_t.key_power_be_pressed_flag =1;
             }
             else if((ulValue & RUN_MODE_5 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
 
-                 if(pro_t.gPower_On==power_on){
+                 if(gpro_t.gPower_On==power_on){
                 
 
-                  pro_t.mode_key_pressed_flag =1;
+                  gpro_t.mode_key_pressed_flag =1;
 
                
               
@@ -287,7 +287,7 @@ static void vTaskStart(void *pvParameters)
          //// power_long_short_key_fun();
          Key_Speical_Power_Fun_Handler();
               
-         if(pro_t.gPower_On==power_on){
+         if(gpro_t.gPower_On==power_on){
                  bsp_Idle();
                 // mode_long_short_key_fun();
                 Key_Speical_Mode_Fun_Handler();

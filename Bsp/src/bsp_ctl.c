@@ -97,7 +97,7 @@ void bsp_ctl_init(void)
 ***********************************************************/
 static uint8_t power_default_fun(void)
 {
-      if(pro_t.gPower_On ==power_on) return 1;
+      if(gpro_t.gPower_On ==power_on) return 1;
 	  else return 0;
 
 }

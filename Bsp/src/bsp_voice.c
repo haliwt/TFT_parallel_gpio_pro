@@ -254,15 +254,15 @@ static void voice_cmd_fun(uint8_t cmd)
 	switch(cmd){
 
     case voice_power_on:
-      if(pro_t.gPower_On == power_on){
+      if(gpro_t.gPower_On == power_on){
           voice_send_has_been_power_on_cmd();
 
 	  }
 	  else{
-	  	  pro_t.gPower_On = power_on;
+	  	  gpro_t.gPower_On = power_on;
 		   
 
-		  pro_t.run_process_step=0;
+		  gpro_t.run_process_step=0;
 		  voice_send_power_on_cmd();
 		  LED_Mode_Key_On();
 			LED_Power_Key_On();
@@ -277,9 +277,9 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_power_off:
 
-	if(pro_t.gPower_On == power_on){
-		pro_t.gPower_On = power_off;
-		pro_t.power_off_flag = 1;
+	if(gpro_t.gPower_On == power_on){
+		gpro_t.gPower_On = power_off;
+		gpro_t.power_off_flag = 1;
 		
 		 voice_send_power_off_cmd();
 		  TFT_BACKLIGHT_OFF();
@@ -299,14 +299,14 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_link_wifi:
 
-	  if(pro_t.gPower_On == power_on){
+	  if(gpro_t.gPower_On == power_on){
 		voice_send_function_cmd(0x04,0xA6);
 		
 		if(wifi_link_net_state()==0){
 		    
 		    wifi_t.link_tencent_step_counter=0;
 			wifi_t.esp8266_login_cloud_success =0;
-			pro_t.wifi_led_fast_blink_flag=1 ;
+			gpro_t.wifi_led_fast_blink_flag=1 ;
 			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
 			wifi_t.wifi_config_net_lable= wifi_set_restor;
 			wifi_t.gTimer_login_tencent_times=0;
@@ -330,7 +330,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		
 	case voice_open_ptc:
 
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 
 	 voice_send_function_cmd(0x05,0xA7);
 
@@ -339,10 +339,10 @@ static void voice_cmd_fun(uint8_t cmd)
    
 		gctl_t.ptc_flag =1;
 		Ptc_On();
-	    //pro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
+	    //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
 	    LED_PTC_ICON_ON();
-		 pro_t.gTimer_pro_temp_delay= 70;
-		 pro_t.add_or_dec_is_cofirm_key_flag =0;
+		 gpro_t.gTimer_pro_temp_delay= 70;
+		 gpro_t.add_or_dec_is_cofirm_key_flag =0;
 
 	 }
 	 }
@@ -357,7 +357,7 @@ static void voice_cmd_fun(uint8_t cmd)
     break;
 
 	case voice_open_ptc_2 :
-	if(pro_t.gPower_On == power_on){
+	if(gpro_t.gPower_On == power_on){
 	
 		voice_send_function_cmd(0x06,0xA8);
 	
@@ -366,10 +366,10 @@ static void voice_cmd_fun(uint8_t cmd)
 	  
 		   gctl_t.ptc_flag =1;
 		   Ptc_On();
-		   //pro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
+		   //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
 		   LED_PTC_ICON_ON();
-		    pro_t.gTimer_pro_temp_delay= 70;
-			pro_t.add_or_dec_is_cofirm_key_flag =0;
+		    gpro_t.gTimer_pro_temp_delay= 70;
+			gpro_t.add_or_dec_is_cofirm_key_flag =0;
 	
 		}
 		}
@@ -386,7 +386,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_close_ptc:
 
-	    if(pro_t.gPower_On == power_on){
+	    if(gpro_t.gPower_On == power_on){
 
 		voice_send_function_cmd(0x07,0xA9);
 	
@@ -394,7 +394,7 @@ static void voice_cmd_fun(uint8_t cmd)
             //buzzer_sound();
 			gctl_t.ptc_flag =0;
 			Ptc_Off();
-			pro_t.add_or_dec_is_cofirm_key_flag=1; 
+			gpro_t.add_or_dec_is_cofirm_key_flag=1; 
 		    LED_PTC_ICON_OFF();
 		 }
 	    }
@@ -409,7 +409,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_close_ptc_2:
 
-	    if(pro_t.gPower_On == power_on){
+	    if(gpro_t.gPower_On == power_on){
 
 		voice_send_function_cmd(0x08,0xAA);
 	
@@ -417,7 +417,7 @@ static void voice_cmd_fun(uint8_t cmd)
             //buzzer_sound();
 			gctl_t.ptc_flag =0;
 			Ptc_Off();
-			pro_t.add_or_dec_is_cofirm_key_flag=1;
+			gpro_t.add_or_dec_is_cofirm_key_flag=1;
 		    LED_PTC_ICON_OFF();
 		 }
 	    }
@@ -431,7 +431,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	break;
 
 	case voice_open_plasma:
-	     if(pro_t.gPower_On == power_on){
+	     if(gpro_t.gPower_On == power_on){
 		 voice_send_function_cmd(0x09,0xAB);
 		 if(plasma_state()==1){
 			//buzzer_sound();//SendData_Buzzer();
@@ -456,7 +456,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	break;
 
 	case voice_open_plasma_2:
-	     if(pro_t.gPower_On == power_on){
+	     if(gpro_t.gPower_On == power_on){
 		 voice_send_function_cmd(0x0A,0xAC);
 		 if(plasma_state()==1){
 			//buzzer_sound();//SendData_Buzzer();
@@ -481,7 +481,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	break;
    case voice_close_plasma:
   
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 	 voice_send_function_cmd(0x0B,0xAD);
 
 	 if(plasma_state()==0){
@@ -507,7 +507,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_close_plasma_2:
   
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 	 voice_send_function_cmd(0x0C,0xAE);
 
 	 if(plasma_state()==0){
@@ -533,7 +533,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_open_rat:
 
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 		 voice_send_function_cmd(0x0D,0xAF);
 
 		 if(ultrasonic_state() ==1){
@@ -558,7 +558,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_open_rat_2:
 
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 		 voice_send_function_cmd(0x0E,0xB0);
 
 		 if(ultrasonic_state() ==1){
@@ -582,7 +582,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	break;
 	case voice_close_rat:
 
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 	 	voice_send_function_cmd(0x0F,0xB1);
 		if(ultrasonic_state() ==0){
 		//	buzzer_sound();//SendData_Buzzer();
@@ -607,7 +607,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	case voice_close_rat_2:
 
-	 if(pro_t.gPower_On == power_on){
+	 if(gpro_t.gPower_On == power_on){
 	 	voice_send_function_cmd(0x10,0xB2);
 		if(ultrasonic_state() ==0){
 		//	buzzer_sound();//SendData_Buzzer();
@@ -644,11 +644,11 @@ static void voice_cmd_fun(uint8_t cmd)
 *************************************************************************************/
 static void  voice_set_temperature_value(uint8_t value)
 {
-       if(pro_t.gPower_On == power_on){
+       if(gpro_t.gPower_On == power_on){
 
 	        value = 4+value;
 			send_tx_set_temp_data(value);
-		//	pro_t.buzzer_sound_flag =1;
+		//	gpro_t.buzzer_sound_flag =1;
 			gctl_t.gSet_temperature_value = value;
 		
 			gctl_t.gSet_temperature_value_item=set_temp_value_item;
@@ -656,7 +656,7 @@ static void  voice_set_temperature_value(uint8_t value)
 		//	
 	       TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
 
-		   pro_t.gTimer_pro_set_tem_value_blink=0;
+		   gpro_t.gTimer_pro_set_tem_value_blink=0;
 
 		   if(gctl_t.gSet_temperature_value >= gctl_t.dht11_temp_value){
 
@@ -664,7 +664,7 @@ static void  voice_set_temperature_value(uint8_t value)
 					gctl_t.ptc_flag =1;
 					Ptc_On();
 					LED_PTC_ICON_ON();
-					pro_t.add_or_dec_is_cofirm_key_flag=0;
+					gpro_t.add_or_dec_is_cofirm_key_flag=0;
 		    	}
 
 			}
@@ -673,7 +673,7 @@ static void  voice_set_temperature_value(uint8_t value)
                     gctl_t.ptc_flag = 0;
 			   		Ptc_Off();
 			   		LED_PTC_ICON_OFF();
-					pro_t.add_or_dec_is_cofirm_key_flag=1;
+					gpro_t.add_or_dec_is_cofirm_key_flag=1;
 				}
 			}
        }
@@ -698,15 +698,15 @@ static void voice_set_timer_timing_value(uint8_t set_hours)
 {
      uint8_t set_value;
  
-       if(pro_t.gPower_On == power_on){
+       if(gpro_t.gPower_On == power_on){
 
 	   set_value = set_hours - 36;
 	   
 	   send_tx_set_timer_value(set_value);
    
-		pro_t.mode_key_pressed_flag =0;
+		gpro_t.mode_key_pressed_flag =0;
 	//	Buzzer_KeySound();
-		pro_t.gTimer_pro_mode_key_be_select = 0; 
+		gpro_t.gTimer_pro_mode_key_be_select = 0; 
 
 	    
 	    if(set_value == 3)set_value=2;
@@ -718,7 +718,7 @@ static void voice_set_timer_timing_value(uint8_t set_hours)
 		gctl_t.gSet_timer_hours = set_value ;
 
         gctl_t.gTimer_ctl_set_timer_time_senconds =0;
-		pro_t.disp_works_timer_timing_mode_item=timer_time;
+		gpro_t.disp_works_timer_timing_mode_item=timer_time;
 	
 		TFT_Disp_Voice_Set_TimerTime_Init();
 		
@@ -733,13 +733,13 @@ static void voice_set_timer_timing_value(uint8_t set_hours)
 
 static void voice_cancel_timer_timing(void)
 {
- 	if(pro_t.gPower_On == power_on){
+ 	if(gpro_t.gPower_On == power_on){
 
 	     voice_send_function_cmd(0x3F,0xE1);
 
-		 if(pro_t.disp_works_timer_timing_state()==timer_time){
+		 if(gpro_t.disp_works_timer_timing_state()==timer_time){
 	  
-		     pro_t.disp_works_timer_timing_mode_item= works_time;
+		     gpro_t.disp_works_timer_timing_mode_item= works_time;
 		
 			TFT_Display_WorksTime_Voice();
 	   	}

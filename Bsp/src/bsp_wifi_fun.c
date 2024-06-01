@@ -102,7 +102,7 @@ void Wifi_Pro_Runing_Init(void)
 	   
       if(wifi_link_net_state() ==1 && update_step==4 &&  wifi_t.gTimer_main_pro_times > 0){
 	  	  update_step++;
-	       pro_t.run_process_step=pro_disp_dht11_value;
+	       gpro_t.run_process_step=pro_disp_dht11_value;
 	       wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data;
       }
       }

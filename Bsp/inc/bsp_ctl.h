@@ -41,7 +41,7 @@ typedef struct _bsp_ctl{
 
 	uint8_t ptc_warning;
 	uint8_t fan_warning;
-	uint8_t time_out_flag;
+	
 	uint8_t memory_confimr_key_done;
     uint8_t mode_long_key_flag;
    
@@ -72,13 +72,13 @@ typedef struct _bsp_ctl{
    uint8_t gTimer_ctl_disp_works_time_second;
    uint8_t gTimer_ctl_set_timer_time_senconds;
    uint8_t gTimer_ctl_select_led;
-   uint8_t gTimer_ctl_total_continue_time;
+ 
    uint8_t gTimer_ctl_ptc_adc_times;
    uint8_t gTimer_ctl_fan_adc_times ;
    uint8_t gTimer_ctl_warning_time;
    uint8_t gTimer_ctl_usart1_error ;
    uint8_t gTimer_ctl_usart2_error; 
-   uint8_t gTimer_ctl_dma_state;
+
 
 
 }bsp_ctl;

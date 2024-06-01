@@ -598,8 +598,8 @@ void Json_Parse_Command_Fun(void)
 
             wifi_t.esp8266_login_cloud_success=1;
 			
-			pro_t.power_off_flag=1;
-			pro_t.gPower_On = power_off; //WT.EDIT 2024.02.20
+			gpro_t.power_off_flag=1;
+			gpro_t.gPower_On = power_off; //WT.EDIT 2024.02.20
             
 		
 	    wifi_t.gTimer_auto_detected_net_state_times=0; //don't need check wifi if has or not
@@ -609,9 +609,9 @@ void Json_Parse_Command_Fun(void)
 
 	  case OPEN_ON_ITEM:
       	buzzer_sound();
-		pro_t.gPower_On = power_on;   
-        pro_t.long_key_flag =0;
-        pro_t.run_process_step=0;
+		gpro_t.gPower_On = power_on;   
+        gpro_t.long_key_flag =0;
+        gpro_t.run_process_step=0;
 		wifi_t.esp8266_login_cloud_success=1;
 		MqttData_Publish_SetOpen(1);  
 		HAL_Delay(50);//300
@@ -743,14 +743,14 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetState(2); //timer model  = 2
 			HAL_Delay(50);
             //do someting
-			if(pro_t.timer_mode_flag == timer_time){
+			if(gpro_t.timer_mode_flag == timer_time){
 				gctl_t.timer_timing_words_changed_flag++;
 				TFT_Disp_Set_TimerTime(0);
 			}
 			else{
      
-				pro_t.timer_mode_flag=timer_set_time;
-				pro_t.gTimer_pro_mode_key_be_select =4;
+				gpro_t.timer_mode_flag=timer_set_time;
+				gpro_t.gTimer_pro_mode_key_be_select =4;
 			}
 			
 			
@@ -768,7 +768,7 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetState(1); //beijing timing = 1
 			HAL_Delay(50);
 			//do something
-			 pro_t.timer_mode_flag=works_time;//0
+			 gpro_t.timer_mode_flag=works_time;//0
 			 gctl_t.timing_words_changed_flag++;
 			 TFT_Display_WorksTime();
           
@@ -792,8 +792,8 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
 			HAL_Delay(50);//350
 			gctl_t.gSet_temperature_value_item =1;
-			pro_t.gTimer_pro_temp_delay= 100;
-			pro_t.gTimer_pro_mode_key_be_select = 0;
+			gpro_t.gTimer_pro_temp_delay= 100;
+			gpro_t.gTimer_pro_mode_key_be_select = 0;
 			TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
 		}
       wifi_t.response_wifi_signal_label = 0xff;
@@ -1045,9 +1045,9 @@ static void smartphone_app_timer_power_on_handler(void)
 		buzzer_sound();
 
 		Device_Action_Publish_Handler();
-		pro_t.gPower_On = power_on;   
-		pro_t.long_key_flag =0;
-		pro_t.run_process_step=0;
+		gpro_t.gPower_On = power_on;   
+		gpro_t.long_key_flag =0;
+		gpro_t.run_process_step=0;
 		wifi_t.smartphone_app_power_on_flag=1;
 
         MqttData_Publis_App_PowerOn_Ref(0x01,gctl_t.plasma_flag,gctl_t.ptc_flag,gctl_t.ultrasonic_flag);
