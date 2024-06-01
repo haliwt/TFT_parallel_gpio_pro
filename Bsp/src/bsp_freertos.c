@@ -176,8 +176,11 @@ static void vTaskMsgPro(void *pvParameters)
             
            if(v_t.sound_rx_data_success_flag == 1 ){
                  v_t.sound_rx_data_success_flag=0;
+                //  DISABLE_INT();
 
                   Voice_Decoder_Handler();
+                //  ENABLE_INT();
+           
 
               }
                 
@@ -284,7 +287,7 @@ static void vTaskStart(void *pvParameters)
               
         if(power_sound_flag==0){
           power_sound_flag++;
-
+          VOICE_OUTPUT_SOUND_ENABLE();
           buzzer_sound();
 
         }
@@ -490,7 +493,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     	switch(state_uart1)
 		{
 		case 0:  //#0
-		    VOICE_OUTPUT_SOUND_ENABLE();
+		  
 		    v_t.voice_rxBuf[0]=voice_inputBuf[0];
 			if(v_t.voice_rxBuf[0]==0xA5){  //hex :4D - "M" -fixed mainboard
 				state_uart1=1; //=1

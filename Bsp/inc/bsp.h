@@ -57,9 +57,22 @@
 /* ���� BSP �汾�� */
 #define __STM33G030C8T6_BSP_VERSION		"0.1"
 
-/* ����ȫ���жϵĺ� */
-#define ENABLE_INT()	__set_PRIMASK(0)	/* ʹ��ȫ���ж� */
-#define DISABLE_INT()	__set_PRIMASK(1)	/* ��ֹȫ���ж� */
+
+
+#define  USE_FreeRTOS      1
+
+#if USE_FreeRTOS == 1
+    #include "FreeRTOS.h"
+	#include "task.h"
+
+	#define DISABLE_INT()    taskENTER_CRITICAL()
+	#define ENABLE_INT()     taskEXIT_CRITICAL()
+#else
+	/* ¿ª¹ØÈ«¾ÖÖÐ¶ÏµÄºê */
+	#define ENABLE_INT()	__set_PRIMASK(0)	/* Enable global interrupt  */
+	#define DISABLE_INT()	__set_PRIMASK(1)	/* ½ûÖ¹È«¾ÖÖÐ¶Ï */
+#endif
+
 
 
 
