@@ -132,14 +132,20 @@ void Error_Handler(void);
 #define LED_KILL_Pin                        GPIO_PIN_0
 #define LED_KILL_GPIO_Port                  GPIOD
 
-#define LED_WIFI_Pin                        GPIO_PIN_1
-#define LED_WIFI_GPIO_Port                  GPIOD
+//wifi of led 
+
+#define LED_WIFI_Pin                        GPIO_PIN_10// GPIO_PIN_1
+#define LED_WIFI_GPIO_Port                  GPIOB  //  GPIOD
 
 #define LED_PTC_Pin                         GPIO_PIN_2
 #define LED_PTC_GPIO_Port                   GPIOB
 
-#define LED_RAT_Pin                         GPIO_PIN_10
-#define LED_RAT_GPIO_Port                   GPIOB
+//#define LED_RAT_Pin                         GPIO_PIN_10
+//#define LED_RAT_GPIO_Port                   GPIOB
+
+#define LED_RAT_Pin                         GPIO_PIN_1  //GPIO_PIN_10
+#define LED_RAT_GPIO_Port                   GPIOD  //GPIOB
+
 
 //LED OF KEY 
 #define LED_KEY_TIM_Pin                     GPIO_PIN_5

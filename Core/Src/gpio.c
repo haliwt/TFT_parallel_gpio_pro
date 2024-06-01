@@ -63,12 +63,12 @@ void MX_GPIO_Init(void)
                           |FAN_CTL_1_Pin|FAN_CTL_2_Pin|TEMP_SENSOR_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|LED_PTC_Pin|LED_RAT_Pin|TFT_WR_Pin
+  HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|LED_PTC_Pin|TFT_WR_Pin|LED_WIFI_Pin
                           |TFT_CS_Pin|TFT_BACKLIGHT_Pin|TFT_DB0_Pin|TFT_DB1_Pin
                           |TFT_DB2_Pin|TFT_DB3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LED_KILL_Pin|LED_WIFI_Pin|TFT_RESET_Pin|TFT_RD_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, LED_KILL_Pin|TFT_RESET_Pin|TFT_RD_Pin|LED_RAT_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
@@ -97,7 +97,7 @@ void MX_GPIO_Init(void)
 
   /*Configure GPIO pins : PBPin PBPin PBPin PBPin
                            PBPin PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = RELAY_CTL_Pin|LED_PTC_Pin|LED_RAT_Pin|TFT_BACKLIGHT_Pin
+  GPIO_InitStruct.Pin = RELAY_CTL_Pin|LED_PTC_Pin|TFT_BACKLIGHT_Pin|LED_WIFI_Pin
                           |TFT_DB0_Pin|TFT_DB1_Pin|TFT_DB2_Pin|TFT_DB3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -118,7 +118,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_Init(TEMP_SENSOR_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : PDPin PDPin PDPin PDPin */
-  GPIO_InitStruct.Pin = LED_KILL_Pin|LED_WIFI_Pin|TFT_RESET_Pin|TFT_RD_Pin;
+  GPIO_InitStruct.Pin = LED_KILL_Pin|TFT_RESET_Pin|TFT_RD_Pin|LED_RAT_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
