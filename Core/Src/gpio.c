@@ -59,16 +59,22 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOF, TFT_DB6_Pin|TFT_DB7_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, WIFI_EN_Pin|LED_KEY_TIM_Pin|LED_POWER_Pin|PLASMA_CTL_Pin
+  HAL_GPIO_WritePin(GPIOA, WIFI_EN_Pin|LED_POWER_Pin|PLASMA_CTL_Pin
                           |FAN_CTL_1_Pin|FAN_CTL_2_Pin|TEMP_SENSOR_Pin, GPIO_PIN_RESET);
 
+  HAL_GPIO_WritePin(GPIOA,LED_KEY_TIM_Pin,GPIO_PIN_SET);                  
+
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|LED_PTC_Pin|TFT_WR_Pin|LED_WIFI_Pin
+  HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|TFT_WR_Pin
                           |TFT_CS_Pin|TFT_BACKLIGHT_Pin|TFT_DB0_Pin|TFT_DB1_Pin
                           |TFT_DB2_Pin|TFT_DB3_Pin, GPIO_PIN_RESET);
 
+  HAL_GPIO_WritePin(GPIOB,LED_WIFI_Pin|LED_PTC_Pin,GPIO_PIN_SET);
+
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOD, LED_KILL_Pin|TFT_RESET_Pin|TFT_RD_Pin|LED_RAT_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOD, TFT_RESET_Pin|TFT_RD_Pin, GPIO_PIN_RESET);
+
+  HAL_GPIO_WritePin(GPIOD,LED_KILL_Pin|LED_RAT_Pin,GPIO_PIN_SET);
 
   /*Configure GPIO pins : PCPin PCPin PCPin PCPin
                            PCPin */
