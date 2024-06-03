@@ -469,7 +469,8 @@ void Device_Action_No_Wifi_Handler(void)
 void Device_Action_No_Wifi_Power_On_Handler(void)
 {
 
-   
+
+   static uint8_t ptc_init=0xff,plasma_init=0xff,ult_init=0xff;
    Fan_Run();
 
    if(wifi_link_net_state() == 1){
@@ -477,47 +478,83 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
    }
    
+  if(ptc_init != ptc_state()){
 
-  if(ptc_state()== 1){
+      ptc_init = ptc_state();
+  if(ptc_state()== 1 &&  gctl_t.cmd_open_ptc_flag !=2){
 
      Ptc_On();
 	 LED_PTC_ICON_ON();
+
+     if(wifi_link_net_state()==1){
+          MqttData_Publish_SetPtc(1);
+          HAL_Delay(200);
+         }
+    
    
 
   }
   else{
-    Ptc_Off();
-	LED_PTC_ICON_OFF();
    
+        Ptc_Off();
+    	LED_PTC_ICON_OFF();
+
+        if(wifi_link_net_state()==1){
+          MqttData_Publish_SetPtc(0);
+          HAL_Delay(200);
+        }
+
+   }
+   }
 
 
-  }
-
-
+   if(plasma_init != plasma_state()){
+    plasma_init = plasma_state();
    if(plasma_state() == 1){
        Plasma_On();
 	   LED_KILL_ICON_ON();
+       if(wifi_link_net_state()==1){
+          MqttData_Publish_SetPlasma(1);
+          HAL_Delay(200);
+         }
       
    }
    else{
       Plasma_Off();
 	  LED_KILL_ICON_OFF();
+      if(wifi_link_net_state()==1){
+          MqttData_Publish_SetPlasma(0);
+          HAL_Delay(200);
+        }
      
 
    }
+   }
+
+
+   if(ult_init != ultrasonic_state()){
 
    if(ultrasonic_state()==1){
 
       Ultrasonic_Pwm_Output();
 	  LED_RAT_ICON_ON();
+      if(wifi_link_net_state()==1){
+          MqttData_Publish_SetUltrasonic(1);
+          HAL_Delay(200);
+       }
      
    }
    else{
 
 	  Ultrasonic_Pwm_Stop();
 	  LED_RAT_ICON_OFF();
+      if(wifi_link_net_state()==1){
+          MqttData_Publish_SetUltrasonic(0);
+          HAL_Delay(200);
+       }
      
 
+   }
    }
 
 

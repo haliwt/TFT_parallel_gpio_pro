@@ -174,8 +174,8 @@ void Temperature_Ptc_Pro_Handler(void)
 				else if(times_counter==1){
 					if(dht11_temp_value() <38){
 
-                     if(wifi_t.smartphone_app_power_on_flag==0 || gctl_t.cmd_open_ptc_flag ==1){
-
+                     if(wifi_t.smartphone_app_power_on_flag==0){
+                         if(gctl_t.cmd_open_ptc_flag !=2){
                           gctl_t.ptc_flag = 1;
     					  Ptc_On();
     				      LED_PTC_ICON_ON();
@@ -183,6 +183,7 @@ void Temperature_Ptc_Pro_Handler(void)
     	                      MqttData_Publish_SetPtc(1);
     	                      HAL_Delay(200);
     	                  }
+                         }
                      }
 
 
@@ -190,7 +191,9 @@ void Temperature_Ptc_Pro_Handler(void)
 			}
             else if(gpro_t.add_or_dec_is_cofirm_key_flag ==0){
                
-                if(wifi_t.smartphone_app_power_on_flag==0 || gctl_t.cmd_open_ptc_flag ==1){
+                if(wifi_t.smartphone_app_power_on_flag==0){
+
+                    if(gctl_t.cmd_open_ptc_flag !=2){
 					 gctl_t.ptc_flag = 1;//run_t.gDry = 1;
 			         Ptc_On();
 				      LED_PTC_ICON_ON();
@@ -198,6 +201,8 @@ void Temperature_Ptc_Pro_Handler(void)
 	                      MqttData_Publish_SetPtc(1);
 	                      HAL_Delay(200);
 	                  }
+
+                        }
 
                  }
                  
@@ -220,8 +225,6 @@ void Temperature_Ptc_Pro_Handler(void)
     		  
     		  if(set_temp_value() < dht11_temp_value()){//envirment temperature
     	  
-
-                 
                     gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
     			    Ptc_Off();
     		        LED_PTC_ICON_OFF();
@@ -230,22 +233,24 @@ void Temperature_Ptc_Pro_Handler(void)
                       MqttData_Publish_SetPtc(0);
                       HAL_Delay(200);
                    }
-                     
 
+                  
                 }
     			else if(set_temp_value()> dht11_temp_value()){
     	  
-                    if(wifi_t.smartphone_app_power_on_flag==0 || gctl_t.cmd_open_ptc_flag ==1){
+                    if(wifi_t.smartphone_app_power_on_flag==0){
 
-                     gctl_t.ptc_flag = 1;//run_t.gDry = 1;
-    		         Ptc_On();
-    			     LED_PTC_ICON_ON();
+                     if( gctl_t.cmd_open_ptc_flag !=2){//ptc closed)
+                         gctl_t.ptc_flag = 1;//run_t.gDry = 1;
+        		         Ptc_On();
+        			     LED_PTC_ICON_ON();
 
-                     if(wifi_link_net_state()==1){
-                      MqttData_Publish_SetPtc(1);
-                      HAL_Delay(200);
-                     }
-    			    
+                         if(wifi_link_net_state()==1){
+                          MqttData_Publish_SetPtc(1);
+                          HAL_Delay(200);
+                         }
+        			    
+                        }
                     }
                    
 

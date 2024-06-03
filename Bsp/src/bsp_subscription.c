@@ -628,16 +628,14 @@ void Json_Parse_Command_Fun(void)
 	    if(ptc_error_state() ==0){
 			
 		 buzzer_sound()	;
+         gctl_t.cmd_open_ptc_flag =1;//ptc open
 		 Ptc_On();
 	     LED_PTC_ICON_ON();
          MqttData_Publish_SetPtc(0x01);
-	  	 HAL_Delay(50);//350ms
+	  	 HAL_Delay(100);//350ms
 	     gctl_t.ptc_flag=1;
 		
-		 
-		
-		
-	     }
+		}
 		
           
 		 wifi_t.gTimer_auto_detected_net_state_times=0;//don't need check wifi if has or not
@@ -649,11 +647,12 @@ void Json_Parse_Command_Fun(void)
 	  case PTC_OFF_ITEM:
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 		 buzzer_sound()	;
+         gctl_t.cmd_open_ptc_flag =2;//ptc closed
 		 Ptc_Off();
 	     LED_PTC_ICON_OFF();
 		 
          MqttData_Publish_SetPtc(0);
-		 HAL_Delay(50);
+		 HAL_Delay(100);
 	     gctl_t.ptc_flag=0;
 
 		wifi_t.response_wifi_signal_label = 0xff;
@@ -672,7 +671,7 @@ void Json_Parse_Command_Fun(void)
 	        LED_KILL_ICON_OFF();
 			
             MqttData_Publish_SetPlasma(0);
-			HAL_Delay(50);
+			HAL_Delay(100);
            gctl_t.plasma_flag=0;
 		   wifi_t.gTimer_auto_detected_net_state_times=0;
 		   	wifi_t.linking_tencent_cloud_doing =0;

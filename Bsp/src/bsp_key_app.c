@@ -682,6 +682,7 @@ void Mode_Key_Confirm_Fun(void)
 		    }
 			else{
 				gpro_t.add_or_dec_is_cofirm_key_flag =1;
+                gctl_t.cmd_open_ptc_flag =2;
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();
 				gctl_t.ptc_flag = 0;
