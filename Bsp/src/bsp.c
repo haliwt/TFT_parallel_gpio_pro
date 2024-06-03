@@ -104,7 +104,7 @@ void bsp_Idle(void)
 void TFT_Process_Handler(void)
 {
 	
-   static uint8_t fan_continuce_flag;
+   static uint8_t fan_continuce_flag,power_off_flag;
 	if(gpro_t.buzzer_sound_flag ==1){
 		gpro_t.buzzer_sound_flag=0;
 		Buzzer_KeySound();
@@ -128,6 +128,14 @@ void TFT_Process_Handler(void)
 		gpro_t.gTimer_pro_fan =0;
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
+
+        //wifi ref 
+        wifi_t.link_net_tencent_data_flag=1;
+
+        //display ptc temperature value 
+        gctl_t.gSet_temperature_value_item = disp_ptc_temp_value_item;
+        
+       
     
 		//LCD_Clear(BLACK);
 		TFT_BACKLIGHT_OFF();
@@ -137,14 +145,32 @@ void TFT_Process_Handler(void)
 		
 		
 	}
-	if(wifi_link_net_state() ==1   && gctl_t.beijing_time_flag == 1 && wifi_t.gTimer_main_pro_times > 50){
-		wifi_t.gTimer_main_pro_times=0;	
-        
-        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
-        TFT_DonnotDisp_Works_Time();
+
+    if(wifi_link_net_state() ==1 && power_off_flag==0 ){
+		wifi_t.gTimer_wifi_pub_power_off=0;
+        wifi_t.link_net_tencent_data_flag=1;
+		power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
+		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+	     
+		 
+		  
+	}
+	if(wifi_link_net_state() ==1   && gctl_t.beijing_time_flag == 1 && wifi_t.gTimer_wifi_pub_power_off > 50){
+		
+        wifi_t.gTimer_wifi_pub_power_off =0;
+        TFT_DonnotDisp_Works_Time();
 		
     }
+
+    if(wifi_link_net_state() ==1  && wifi_t.gTimer_wifi_sub_power_off > 4 && power_off_flag==1){
+		power_off_flag++;
+		wifi_t.gTimer_wifi_sub_power_off=0;
+        Subscriber_Data_FromCloud_Handler();
+	  
+	
+    }
+   
 
 	if(fan_continuce_flag ==1){
 
@@ -167,7 +193,7 @@ void TFT_Process_Handler(void)
 
 	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
 	
-	Power_Off_Retain_Beijing_Time();
+	//Power_Off_Retain_Beijing_Time();
 	
 	Breath_Led();
 	

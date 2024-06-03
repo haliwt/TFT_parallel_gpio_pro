@@ -51,7 +51,7 @@ void Ptc_OnOff_Handler(void)
 void Temperature_Ptc_Pro_Handler(void)
 {
   
-   static uint8_t error_flag,error_ptc,error_fan;
+   static uint8_t times_counter,error_flag,error_ptc,error_fan;
    switch(gctl_t.ptc_warning){
 
 		  case ptc_no_warning:
@@ -59,7 +59,7 @@ void Temperature_Ptc_Pro_Handler(void)
 		   if(gctl_t.gTimer_ctl_ptc_adc_times > 2 ){
               gctl_t.gTimer_ctl_ptc_adc_times =0;
 
-			 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10); //Modify :2023.09.03 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10);
+			 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,20); //Modify :2023.09.03 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10);
 	        
 
 		   }
@@ -153,38 +153,60 @@ void Temperature_Ptc_Pro_Handler(void)
    //set up 
    if(ptc_error_state() == 0){
 
-	    switch(gctl_t.gSet_temperature_value_item){
+	   switch(gctl_t.gSet_temperature_value_item){
 
-           case disp_ptc_temp_value_item:
+         case disp_ptc_temp_value_item:
 
-		  	if(gpro_t.gTimer_pro_temp_delay > 66  && ptc_error_state()==0){ //WT.EDIT 2023.07.27 over 40 degree shut of ptc off
+		  	if(gpro_t.gTimer_pro_temp_delay > 12  && ptc_error_state()==0){ //WT.EDIT 2023.07.27 over 40 degree shut of ptc off
                 gpro_t.gTimer_pro_temp_delay=0;
+                	
+				if(dht11_temp_value() >39 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){//envirment temperature
+                    times_counter=1;
+					gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
+					Ptc_Off();
 
-             if(dht11_temp_value() >39 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){//envirment temperature
+					LED_PTC_ICON_OFF();
+					if(wifi_link_net_state()==1){
+					MqttData_Publish_SetPtc(0);
+					HAL_Delay(200);
+					}
+				}
+				else if(times_counter==1){
+					if(dht11_temp_value() <38){
+
+                     if(wifi_t.smartphone_app_power_on_flag==0){
+
+                          gctl_t.ptc_flag = 1;
+    					  Ptc_On();
+    				      LED_PTC_ICON_ON();
+    	                 if(wifi_link_net_state()==1){
+    	                      MqttData_Publish_SetPtc(1);
+    	                      HAL_Delay(200);
+    	                  }
+                     }
+
+
+				  	}
+			}
+            else if(gpro_t.add_or_dec_is_cofirm_key_flag ==0){
                
-                gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
-			    Ptc_Off();
-			    HAL_Delay(50);
-		        LED_PTC_ICON_OFF();
-				
-              
+                if(wifi_t.smartphone_app_power_on_flag==0){
+					 gctl_t.ptc_flag = 1;//run_t.gDry = 1;
+			         Ptc_On();
+				      LED_PTC_ICON_ON();
+	                 if(wifi_link_net_state()==1){
+	                      MqttData_Publish_SetPtc(1);
+	                      HAL_Delay(200);
+	                  }
+
+                 }
+                 
+    			    
                 
-           
-               }
-               else if(dht11_temp_value() <39 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){
-               
-				 gctl_t.ptc_flag = 1;//run_t.gDry = 1;
-		         Ptc_On();
-			     HAL_Delay(50);
-			     LED_PTC_ICON_ON();
-                
-                }
+             }
+          }
 
-              }
-		   
-
-
-		   break;
+         break;
 
 
 		   case dsip_set_ptc_temp_value_item:
@@ -198,7 +220,9 @@ void Temperature_Ptc_Pro_Handler(void)
     		  
     		  if(set_temp_value() < dht11_temp_value()){//envirment temperature
     	  
-    				gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
+
+                 
+                    gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
     			    Ptc_Off();
     		        LED_PTC_ICON_OFF();
                           
@@ -211,20 +235,23 @@ void Temperature_Ptc_Pro_Handler(void)
                 }
     			else if(set_temp_value()> dht11_temp_value()){
     	  
-    		         gctl_t.ptc_flag = 1;//run_t.gDry = 1;
+                    if(wifi_t.smartphone_app_power_on_flag==0){
+
+                     gctl_t.ptc_flag = 1;//run_t.gDry = 1;
     		         Ptc_On();
     			     LED_PTC_ICON_ON();
 
                      if(wifi_link_net_state()==1){
                       MqttData_Publish_SetPtc(1);
                       HAL_Delay(200);
-                   }
+                     }
     			    
-                }
+                    }
+                   
 
                 }
 				 
-	    
+            }
 
 
 		   break;
@@ -253,12 +280,13 @@ void Temperature_Ptc_Pro_Handler(void)
 
 		   }
 
-
+       
 		   break;
-	}
+            
 
-   }
+        }
 
+    }
 }
 /***********************************************************************************************
 	*
