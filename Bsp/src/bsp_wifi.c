@@ -7,8 +7,8 @@ uint8_t step_flag;
 uint8_t beijing_step;
 uint8_t auto_det_flag;
 
+uint8_t counter, power_on_det_net;
 
-static void MainBoard_Self_Inspection_PowerOn_Fun(void);
 static void RunWifi_Command_Handler(void);
 static void auto_repeat_link_netware_fun(void);
 static void auto_repeat_init_link_net(void);
@@ -24,7 +24,7 @@ static void auto_repeat_tencnet_net(void);
 ********************************************************************************/
 void WIFI_Process_Handler(void)
 {
-  	MainBoard_Self_Inspection_PowerOn_Fun();
+  	//
     RunWifi_Command_Handler();
     if(wifi_t.get_rx_beijing_time_enable==0){
      Tencent_Cloud_Rx_Handler();
@@ -39,9 +39,12 @@ void WIFI_Process_Handler(void)
 	*Return Ref: NO
 	*
 **********************************************************************/
-static void MainBoard_Self_Inspection_PowerOn_Fun(void)
+void MainBoard_Self_Inspection_PowerOn_Fun(void)
 {
-   static uint8_t counter, power_on_det_net;
+  // static uint8_t counter, power_on_det_net;
+
+
+   
 	if(counter < 2 && wifi_link_net_state()==0 && wifi_t.rx_error_codes_flag==0){
 		
 
@@ -52,12 +55,12 @@ static void MainBoard_Self_Inspection_PowerOn_Fun(void)
 
 		if(counter ==0){
 			counter++;
-          wifi_t.gTimer_wifi_pub_power_off =0;
+          wifi_t.gTimer_auto_detected_net=0;
        }
        
     }
 
-	if(wifi_t.gTimer_wifi_pub_power_off > 12  && wifi_link_net_state()==0 && counter==1){
+	if(wifi_t.gTimer_auto_detected_net > 200  && wifi_link_net_state()==0 && counter==1){
 		counter++;
 		
 

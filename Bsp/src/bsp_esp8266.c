@@ -51,7 +51,7 @@ void InitWifiModule_Hardware(void)
 	   at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
 
 	}
-	if(wifi_t.gTimer_power_first_link_tencent > 1 &&  wifi_t.power_on_login_tencent_cloud_flag==1 ){
+	if(wifi_t.gTimer_power_first_link_tencent > 4 &&  wifi_t.power_on_login_tencent_cloud_flag==1 ){
 	   wifi_t.gTimer_power_first_link_tencent=0;
 	    wifi_t.power_on_login_tencent_cloud_flag=2;
 	   
@@ -63,19 +63,20 @@ void InitWifiModule_Hardware(void)
 void SmartPhone_TryToLink_TencentCloud(void)
 {
     
-  if(wifi_t.power_on_login_tencent_cloud_flag==2){
+  if(wifi_t.power_on_login_tencent_cloud_flag==2 && wifi_t.gTimer_power_first_link_tencent >5){
    	wifi_t.power_on_login_tencent_cloud_flag++;
 	wifi_t.linking_tencent_cloud_doing =1; //enable usart2 receive wifi  data
     wifi_t.wifi_uart_counter=0;
 	wifi_t.soft_ap_config_flag =0;
    }
-	if(wifi_t.power_on_login_tencent_cloud_flag==3){
-		wifi_t.power_on_login_tencent_cloud_flag++;
+	if(wifi_t.power_on_login_tencent_cloud_flag==3 ){
+		
 		
        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
 	   wifi_t.gTimer_power_first_link_tencent=0;
+       wifi_t.power_on_login_tencent_cloud_flag++;
 	}
-	if(wifi_t.gTimer_power_first_link_tencent >3 &&  wifi_t.power_on_login_tencent_cloud_flag==4){
+	if(wifi_t.gTimer_power_first_link_tencent >10 &&  wifi_t.power_on_login_tencent_cloud_flag==4){
 		wifi_t.gTimer_power_first_link_tencent=0;
 		wifi_t.power_on_login_tencent_cloud_flag++;
 		wifi_t.first_power_on_link_net ++;

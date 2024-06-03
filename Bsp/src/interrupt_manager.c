@@ -100,18 +100,19 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         gctl_t.gTimer_ctl_fan_adc_times ++;
         gctl_t.gTimer_ctl_warning_time++;
         gctl_t.gTimer_maian_run_fun++;     //run main board of function .
-       // gctl_t.gTimer_ctl_usart1_error++; 
-	  //  gctl_t.gTimer_ctl_usart2_error++; 
+       gctl_t.gTimer_ctl_usart1_error++; 
+	   gctl_t.gTimer_ctl_usart2_error++; 
         
 	  
 	
 	  //wifi counter 
 	 
 	     	//wifi
+	    wifi_t.gTimer_auto_detected_net++;
 		wifi_t.gTimer_wifi_pub_power_off++;
 		wifi_t.gTimer_power_first_link_tencent++;
 		wifi_t.power_on_login_tencent_cloud_flag++;
-		wifi_t.gTimer_power_first_link_tencent++;
+	
         wifi_t.gTimer_linking_tencent_duration++;
 
         wifi_t.gTimer_login_tencent_times ++;

@@ -176,7 +176,7 @@ static void vTaskMsgPro(void *pvParameters)
               
            }
                 
-           
+            MainBoard_Self_Inspection_PowerOn_Fun();
             WIFI_Process_Handler();
 	        USART_Cmd_Error_Handler();
              
@@ -617,7 +617,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
     //  __HAL_UART_CLEAR_NEFLAG(&huart1);
     //  __HAL_UART_CLEAR_FEFLAG(&huart1);
-      __HAL_UART_CLEAR_OREFLAG(&huart1);
+     // __HAL_UART_CLEAR_OREFLAG(&huart1);
     //  __HAL_UART_CLEAR_TXFECF(&huart1);
 
 

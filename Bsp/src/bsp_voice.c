@@ -450,12 +450,12 @@ static void voice_cmd_fun(uint8_t cmd)
 	     if(gpro_t.gPower_On == power_on){
 		 voice_send_function_cmd(0x09,0xAB);
 		 if(plasma_state()==1){
-			//buzzer_sound();//SendData_Buzzer();
+	
 			
 		}
 		else{
 
-    		// buzzer_sound();//SendData_Buzzer();
+    	
     		 gctl_t.plasma_flag=1;
     		 Plasma_On();
     		 LED_KILL_ICON_ON() ;
@@ -479,12 +479,12 @@ static void voice_cmd_fun(uint8_t cmd)
 	     if(gpro_t.gPower_On == power_on){
 		 voice_send_function_cmd(0x0A,0xAC);
 		 if(plasma_state()==1){
-			//buzzer_sound();//SendData_Buzzer();
+		
 			
 		}
 		else{
 
-    		// buzzer_sound();//SendData_Buzzer();
+    	
     		 gctl_t.plasma_flag=1;
     		 Plasma_On();
     		 LED_KILL_ICON_ON() ;

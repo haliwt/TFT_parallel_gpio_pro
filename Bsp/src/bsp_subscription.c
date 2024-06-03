@@ -1041,25 +1041,29 @@ static void smartphone_app_timer_power_on_handler(void)
    
 
 	if(app_step==1){
-	
+	    app_step=0;
 		buzzer_sound();
 
-		Device_Action_Publish_Handler();
-		gpro_t.gPower_On = power_on;   
-
+		//Device_Action_Publish_Handler();
+		gpro_t.gPower_On = power_on;  
+    
+        gpro_t.set_timer_timing_success=0;
 		gpro_t.run_process_step=0;
 		wifi_t.smartphone_app_power_on_flag=1;
         gpro_t.power_off_flag = 1;
 
-        MqttData_Publis_App_PowerOn_Ref(0x01,gctl_t.plasma_flag,gctl_t.ptc_flag,gctl_t.ultrasonic_flag);
+       // MqttData_Publis_App_PowerOn_Ref(0x01,gctl_t.plasma_flag,gctl_t.ptc_flag,gctl_t.ultrasonic_flag);
 		
-		HAL_Delay(300);//
+		//HAL_Delay(300);//
+
+         MqttData_Publish_Update_Data();
+		 HAL_Delay(350);
 
 	
 	
 
        
-		app_step=0;
+		
 
 	}
 
