@@ -52,17 +52,12 @@ typedef enum{
 }wifi_link_step;
 
 
+void Auto_InitWifiModule_Hardware(void);
+void Auto_SmartPhone_TryToLink_TencentCloud(void);
+
 
 
 void InitWifiModule_Hardware(void);
-
-
-
-
-
-
-void Wifi_Link_SmartConfig_Handler(void);
-
 void SmartPhone_LinkTencent_Cloud(void);
 
 uint8_t at_send_data(uint8_t *pdata, uint16_t len);

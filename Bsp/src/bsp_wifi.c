@@ -49,8 +49,8 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
 		
 
 		
-	  InitWifiModule_Hardware();//InitWifiModule();
-      SmartPhone_TryToLink_TencentCloud();
+	  Auto_InitWifiModule_Hardware();//InitWifiModule();
+      Auto_SmartPhone_TryToLink_TencentCloud();
 		
 
 		if(counter ==0){
@@ -62,31 +62,35 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
 
 	if(wifi_t.gTimer_auto_detected_net > 8  && wifi_link_net_state()==0 && counter==1){
 		counter++;
-		
+       wifi_t.runCommand_order_lable=wifi_auto_to_link_cloud ;//0
 
+  
    }
 
    if(wifi_link_net_state()==1    && power_on_det_net ==0){
              power_on_det_net++;
              counter++;
 
-            MqttData_Publish_SetOpen(0);  
-    		HAL_Delay(350);//300
-
-           MqttData_Publish_PowerOff_Ref();
-           HAL_Delay(350);
+           wifi_t.power_on_login_tencent_cloud_flag =0;
            wifi_t.link_net_tencent_data_flag=1;
-           wifi_t.runCommand_order_lable=wifi_publish_update_tencent_cloud_data;//0
-         
+          // gpro_t.power_off_flag =1;
+        
+          if(gpro_t.gPower_On == power_off) {
+		     MqttData_Publish_PowerOff_Ref();
+                HAL_Delay(350);
 
-   }
-   else if(wifi_link_net_state()==0 && counter==2){
-
-       wifi_t.runCommand_order_lable=wifi_auto_to_link_cloud ;//0
+          }
 
 
 
-   }
+           Subscriber_Data_FromCloud_Handler();
+            HAL_Delay(350);
+		  wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+	     
+		 
+		  
+	}
+ 
    
 }
 /********************************************************************************
@@ -108,12 +112,9 @@ static void RunWifi_Command_Handler(void)
 
 	if(power_on_state() == power_on){
      
-		//Wifi_Fast_Led_Blink(); 
 		Wifi_SoftAP_Config_Handler();
 		//Wifi_Fast_Led_Blink();
 		SmartPhone_LinkTencent_Cloud();
-		//Wifi_Fast_Led_Blink();
-		//wifi_t.auto_linknet_flag =0;
 
 	}
 	
