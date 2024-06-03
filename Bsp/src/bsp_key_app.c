@@ -247,7 +247,7 @@ void ADD_Key_Fun(void)
             if(gctl_t.gSet_temperature_value > 40) gctl_t.gSet_temperature_value= 20;
 
              gpro_t.gTimer_pro_set_tem_value_blink =0;
-			 gctl_t.gSet_temperature_value_item = set_temp_value_item;
+			 gctl_t.gSet_temperature_value_item = disp_do_setting_ptc_value_item;
         
 			disp_temp_value =1;
 			//TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);	
@@ -336,7 +336,7 @@ void DEC_Key_Fun(void)
 	        if( gctl_t.gSet_temperature_value >40) gctl_t.gSet_temperature_value=40;
    
 			 gpro_t.gTimer_pro_set_tem_value_blink =0;
-			 gctl_t.gSet_temperature_value_item = set_temp_value_item;
+			 gctl_t.gSet_temperature_value_item = disp_do_setting_ptc_value_item;
              disp_temp_value =1;
 	        
 			//TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);

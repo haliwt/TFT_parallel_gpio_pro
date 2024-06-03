@@ -127,6 +127,8 @@ void TFT_Process_Handler(void)
 	    fan_continuce_flag =1;
 		gpro_t.gTimer_pro_fan =0;
         gpro_t.run_process_step=0;
+        gpro_t.set_timer_timing_success = 0;
+    
 		//LCD_Clear(BLACK);
 		TFT_BACKLIGHT_OFF();
 		Power_Off_Fun();
@@ -135,8 +137,11 @@ void TFT_Process_Handler(void)
 		
 		
 	}
-	if(wifi_link_net_state() ==1  && wifi_t.gTimer_main_pro_times > 50){
+	if(wifi_link_net_state() ==1   && gctl_t.beijing_time_flag == 1 && wifi_t.gTimer_main_pro_times > 50){
 		wifi_t.gTimer_main_pro_times=0;	
+        
+        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+        TFT_DonnotDisp_Works_Time();
 		MqttData_Publish_PowerOff_Ref();
 		
     }
@@ -208,16 +213,16 @@ static void TFT_Pocess_Command_Handler(void)
          if(wifi_t.smartphone_app_power_on_flag==0){
 		    Power_On_Led_Init();
          }
-		 TFT_BACKLIGHT_ON();
+		
 	    
 		Power_On_Fun();
 	    Fan_Run();
 		Device_Action_No_Wifi_Power_On_Handler();
+        TFT_BACKLIGHT_ON();
 
-		//TFT_BACKLIGHT_ON();
-
-
-		gpro_t.run_process_step=pro_disp_dht11_value;
+   
+        
+	    gpro_t.run_process_step=pro_disp_dht11_value;
 	
 	    gpro_t.gTimer_pro_update_dht11_data=30;
 
@@ -285,7 +290,7 @@ static void TFT_Pocess_Command_Handler(void)
        Wifi_Fast_Led_Blink();
 	   Temperature_Ptc_Pro_Handler();
 		
-        Display_Precise_Works_Time();
+       Display_Precise_Works_Time();
       gpro_t.run_process_step=pro_disp_wifi_led;
 
 	break;
@@ -422,15 +427,12 @@ static void Power_On_Fun(void)
 
     
      //works time
-
-	gctl_t.gTimer_ctl_disp_works_time_second=0; //works time seconds 
- 
     if(wifi_link_net_state()==0){
 		 gctl_t.disp_works_hours =0;
 	     gctl_t.disp_works_minutes=0;
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
 
-   }
+     }
 
  }
      

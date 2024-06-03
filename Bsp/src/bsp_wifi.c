@@ -326,6 +326,7 @@ static void RunWifi_Command_Handler(void)
 		wifi_t.gTimer_auto_detected_net_state_times=0;
 
          if(wifi_link_net_state()==0){
+           auto_det_flag=1;
            auto_repeat_link_netware_fun();
 
 

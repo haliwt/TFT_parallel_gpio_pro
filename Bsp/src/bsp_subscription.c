@@ -768,6 +768,7 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetState(1); //beijing timing = 1
 			HAL_Delay(50);
 			//do something
+			
 			 gpro_t.timer_mode_flag=works_time;//0
 			 gctl_t.timing_words_changed_flag++;
 			 TFT_Display_WorksTime();
@@ -786,14 +787,17 @@ void Json_Parse_Command_Fun(void)
 			buzzer_sound();
             temp_decade=wifi_t.wifi_data[14]-0x30;
             temp_unit=wifi_t.wifi_data[15]-0x30;
+           
             gctl_t.gSet_temperature_value = temp_decade*10 +  temp_unit;
             if(gctl_t.gSet_temperature_value > 40)   gctl_t.gSet_temperature_value=40;
             if(gctl_t.gSet_temperature_value <20 )   gctl_t.gSet_temperature_value=20;
             MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-			HAL_Delay(50);//350
-			gctl_t.gSet_temperature_value_item =1;
+			HAL_Delay(100);//350
+			gctl_t.gSet_temperature_value_item =disp_do_setting_ptc_value_item;
 			gpro_t.gTimer_pro_temp_delay= 100;
 			gpro_t.gTimer_pro_mode_key_be_select = 0;
+       
+             gpro_t.gTimer_pro_set_tem_value_blink=0; //temperature numbers is blink.
 			TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
 		}
       wifi_t.response_wifi_signal_label = 0xff;

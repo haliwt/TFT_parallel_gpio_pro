@@ -74,15 +74,13 @@
 #endif
 
 
-
-
 #define SAMPLE            0
 
 typedef enum set_temp{
 
-   normal_disp_item,
-   disp_set_temp_value_item,
-   set_temp_value_item,
+   disp_ptc_temp_value_item,
+   dsip_set_ptc_temp_value_item,
+   disp_do_setting_ptc_value_item,
    
 
 
@@ -126,8 +124,6 @@ typedef enum{
   pro_interval_ten_minutes
   
 
-
-
 }process_run_state;
 
 
@@ -150,7 +146,7 @@ typedef struct{
    uint8_t gKey_value;
    uint8_t gPower_On;
    uint8_t power_on_first ;
-
+  
    uint8_t run_process_step;
    uint8_t key_power_be_pressed_flag ;
    uint8_t power_off_flag;
@@ -161,7 +157,7 @@ typedef struct{
    //time
    uint8_t mode_key_select_label ;
    uint8_t disp_works_timer_timing_mode_item;
- 
+   uint8_t set_timer_timing_success ;
    
 
    //wifi info

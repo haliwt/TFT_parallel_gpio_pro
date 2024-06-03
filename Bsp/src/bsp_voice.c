@@ -645,7 +645,7 @@ static void  voice_set_temperature_value(uint8_t value)
 		//	gpro_t.buzzer_sound_flag =1;
 			gctl_t.gSet_temperature_value = value;
 		
-			gctl_t.gSet_temperature_value_item=set_temp_value_item;
+			gctl_t.gSet_temperature_value_item=disp_do_setting_ptc_value_item;
 	        v_t.voice_set_temperature_value_flag=1;
 		//	
 	       TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);

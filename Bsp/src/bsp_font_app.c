@@ -91,14 +91,14 @@ void TFT_MainDisp_Numbers_Pic_354(uint16_t x,uint16_t y,uint8_t bc,uint8_t num)
 			
 			if(temp & 0x80){
 				
-				color =BLACK; // WHITE;
+				color =BLACK; // background is black ,don't display words.
 
 			}
 			else if(0 == mode){
 				if(bc==0)
-				  color = WHITE;//BLACK;
+				  color = WHITE;//display normal words.
 				else
-				  color = BLACK;
+				  color = BLACK; // don't display words.
 
 			}
 			else color = BLACK;
