@@ -84,7 +84,14 @@ static void Mqtt_Value_update_data(void)
 	sg_info.anion =gctl_t.plasma_flag;
 	sg_info.sonic = gctl_t.ultrasonic_flag ;
     sg_info.find =  wifi_t.set_wind_speed_value;
-	sg_info.set_temperature = gctl_t.dht11_temp_value;
+    if(gpro_t.set_timer_timing_success==1){
+	   sg_info.set_temperature = gctl_t.gSet_temperature_value;
+     }
+     else{
+        sg_info.set_temperature  = 40;
+
+
+     }
 
 }
 

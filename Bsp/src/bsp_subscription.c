@@ -982,10 +982,6 @@ void Wifi_Rx_Beijing_Time_Handler(void)
 
 }
 
-void Wifi_Get_Beijing_Time_Handler(void)
-{
- /*AT+CIPSNTPTIME?+CIPSNTPTIME:Wed Jan 11 19:31:04 2023 OK */
-}
 /*****************************************************************************
 	*
 	*Function Name:static void smartphone_app_timer_power_on_handler(void)

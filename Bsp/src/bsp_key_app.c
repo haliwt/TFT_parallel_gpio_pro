@@ -672,6 +672,11 @@ void Mode_Key_Confirm_Fun(void)
 			    Ptc_On();
 				gctl_t.ptc_flag = 1;
 				gpro_t.add_or_dec_is_cofirm_key_flag =0;
+                gctl_t.cmd_open_ptc_flag =1;
+                if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPtc(1);
+                    HAL_Delay(200);
+                }
 				
 		    }
 			else{
@@ -679,6 +684,10 @@ void Mode_Key_Confirm_Fun(void)
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();
 				gctl_t.ptc_flag = 0;
+                if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPtc(0);
+                    HAL_Delay(200);
+                }
 				 
 				
             }
@@ -696,11 +705,19 @@ void Mode_Key_Confirm_Fun(void)
 			gctl_t.plasma_flag=1;
 			LED_KILL_ICON_ON() ;
 			Plasma_On();
+            if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPlasma(1);
+                    HAL_Delay(200);
+                }
 		}
      	else{
 		  gctl_t.plasma_flag=0;
 		  LED_KILL_ICON_OFF() ;
 		  Plasma_Off();
+          if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPlasma(0);
+                    HAL_Delay(200);
+                }
 		}
 		gctl_t.select_main_fun_numbers--;
 			if(gctl_t.select_main_fun_numbers==0)gctl_t.select_main_fun_numbers=5;
@@ -714,6 +731,10 @@ void Mode_Key_Confirm_Fun(void)
 	   	    gctl_t.ultrasonic_flag=1;
 			LED_RAT_ICON_ON(); 
 		    Ultrasonic_Pwm_Output();
+            if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetUltrasonic(1);
+                    HAL_Delay(200);
+              }
 			
 			
 	   	}
@@ -721,6 +742,10 @@ void Mode_Key_Confirm_Fun(void)
 		   gctl_t.ultrasonic_flag=0;
 		   LED_RAT_ICON_OFF();
 		   Ultrasonic_Pwm_Stop();
+           if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetUltrasonic(0);
+                    HAL_Delay(200);
+             }
 		  
 				
 		}

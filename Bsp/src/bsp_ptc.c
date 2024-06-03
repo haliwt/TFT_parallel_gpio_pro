@@ -174,7 +174,7 @@ void Temperature_Ptc_Pro_Handler(void)
 				else if(times_counter==1){
 					if(dht11_temp_value() <38){
 
-                     if(wifi_t.smartphone_app_power_on_flag==0){
+                     if(wifi_t.smartphone_app_power_on_flag==0 || gctl_t.cmd_open_ptc_flag ==1){
 
                           gctl_t.ptc_flag = 1;
     					  Ptc_On();
@@ -190,7 +190,7 @@ void Temperature_Ptc_Pro_Handler(void)
 			}
             else if(gpro_t.add_or_dec_is_cofirm_key_flag ==0){
                
-                if(wifi_t.smartphone_app_power_on_flag==0){
+                if(wifi_t.smartphone_app_power_on_flag==0 || gctl_t.cmd_open_ptc_flag ==1){
 					 gctl_t.ptc_flag = 1;//run_t.gDry = 1;
 			         Ptc_On();
 				      LED_PTC_ICON_ON();
@@ -235,7 +235,7 @@ void Temperature_Ptc_Pro_Handler(void)
                 }
     			else if(set_temp_value()> dht11_temp_value()){
     	  
-                    if(wifi_t.smartphone_app_power_on_flag==0){
+                    if(wifi_t.smartphone_app_power_on_flag==0 || gctl_t.cmd_open_ptc_flag ==1){
 
                      gctl_t.ptc_flag = 1;//run_t.gDry = 1;
     		         Ptc_On();

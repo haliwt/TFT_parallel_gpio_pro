@@ -330,15 +330,21 @@ static void voice_cmd_fun(uint8_t cmd)
 
      if(ptc_state()==0){
       // buzzer_sound();
-   
+        gctl_t.cmd_open_ptc_flag = 1;
 		gctl_t.ptc_flag =1;
 		Ptc_On();
 	    //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
 	    LED_PTC_ICON_ON();
 		 gpro_t.gTimer_pro_temp_delay= 70;
 		 gpro_t.add_or_dec_is_cofirm_key_flag =0;
+         if(wifi_link_net_state()==1){
+              MqttData_Publish_SetPtc(1);
+              HAL_Delay(200);
+            }
 
-	 }
+         
+
+	     }
 	 }
 	 else{
 		 voice_send_turn_on_power_on_cmd();
@@ -356,16 +362,21 @@ static void voice_cmd_fun(uint8_t cmd)
 		voice_send_function_cmd(0x06,0xA8);
 	
 		if(ptc_state()==0){
-		 // buzzer_sound();
-	  
+		
+	       gctl_t.cmd_open_ptc_flag = 1;
 		   gctl_t.ptc_flag =1;
 		   Ptc_On();
 		   //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
 		   LED_PTC_ICON_ON();
 		    gpro_t.gTimer_pro_temp_delay= 70;
 			gpro_t.add_or_dec_is_cofirm_key_flag =0;
-	
-		}
+            
+            if(wifi_link_net_state()==1){
+                MqttData_Publish_SetPtc(1);
+                HAL_Delay(200);
+             }
+    	
+    		}
 		}
 		else{
 			voice_send_turn_on_power_on_cmd();
@@ -385,11 +396,17 @@ static void voice_cmd_fun(uint8_t cmd)
 		voice_send_function_cmd(0x07,0xA9);
 	
 		 if(ptc_state() == 1){
-            //buzzer_sound();
+     
 			gctl_t.ptc_flag =0;
+            gctl_t.cmd_open_ptc_flag =0;
 			Ptc_Off();
 			gpro_t.add_or_dec_is_cofirm_key_flag=1; 
 		    LED_PTC_ICON_OFF();
+
+             if(wifi_link_net_state()==1){
+                MqttData_Publish_SetPtc(0);
+                HAL_Delay(200);
+             }
 		 }
 	    }
 		else{
@@ -408,11 +425,16 @@ static void voice_cmd_fun(uint8_t cmd)
 		voice_send_function_cmd(0x08,0xAA);
 	
 		 if(ptc_state() == 1){
-            //buzzer_sound();
+        
 			gctl_t.ptc_flag =0;
+            gctl_t.cmd_open_ptc_flag =0;
 			Ptc_Off();
 			gpro_t.add_or_dec_is_cofirm_key_flag=1;
 		    LED_PTC_ICON_OFF();
+           if(wifi_link_net_state()==1){
+                MqttData_Publish_SetPtc(0);
+                HAL_Delay(200);
+             }
 		 }
 	    }
 		else{
@@ -433,11 +455,15 @@ static void voice_cmd_fun(uint8_t cmd)
 		}
 		else{
 
-		// buzzer_sound();//SendData_Buzzer();
-		 gctl_t.plasma_flag=1;
-		 Plasma_On();
-		 LED_KILL_ICON_ON() ;
-		}
+    		// buzzer_sound();//SendData_Buzzer();
+    		 gctl_t.plasma_flag=1;
+    		 Plasma_On();
+    		 LED_KILL_ICON_ON() ;
+             if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPlasma(1);
+                    HAL_Delay(200);
+                }
+    		}
 	     }
 		 else{
 
@@ -458,11 +484,15 @@ static void voice_cmd_fun(uint8_t cmd)
 		}
 		else{
 
-		// buzzer_sound();//SendData_Buzzer();
-		 gctl_t.plasma_flag=1;
-		 Plasma_On();
-		 LED_KILL_ICON_ON() ;
-		}
+    		// buzzer_sound();//SendData_Buzzer();
+    		 gctl_t.plasma_flag=1;
+    		 Plasma_On();
+    		 LED_KILL_ICON_ON() ;
+              if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPlasma(1);
+                    HAL_Delay(200);
+                }
+		    }
 	     }
 		 else{
 
@@ -487,6 +517,10 @@ static void voice_cmd_fun(uint8_t cmd)
 	     gctl_t.plasma_flag=0;
 		 Plasma_Off();
 		 LED_KILL_ICON_OFF() ;
+         if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetPlasma(0);
+                    HAL_Delay(200);
+                }
 	 }
 
 	 }
@@ -513,6 +547,10 @@ static void voice_cmd_fun(uint8_t cmd)
 	     gctl_t.plasma_flag=0;
 		 Plasma_Off();
 		 LED_KILL_ICON_OFF() ;
+         if(wifi_link_net_state()==1){
+              MqttData_Publish_SetPlasma(0);
+              HAL_Delay(200);
+           }
 	 }
 
 	 }
@@ -539,6 +577,10 @@ static void voice_cmd_fun(uint8_t cmd)
             gctl_t.ultrasonic_flag =1;
 			Ultrasonic_Pwm_Output();
 		    LED_RAT_ICON_ON();
+            if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetUltrasonic(1);
+                    HAL_Delay(200);
+                }
 		 }
 	 }
 	 else{
@@ -564,6 +606,10 @@ static void voice_cmd_fun(uint8_t cmd)
             gctl_t.ultrasonic_flag =1;
 			Ultrasonic_Pwm_Output();
 		    LED_RAT_ICON_ON();
+            if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetUltrasonic(1);
+                    HAL_Delay(200);
+                }
 		 }
 	 }
 	 else{
@@ -587,6 +633,10 @@ static void voice_cmd_fun(uint8_t cmd)
 		  gctl_t.ultrasonic_flag =0;
 		 Ultrasonic_Pwm_Stop();
 		 LED_RAT_ICON_OFF();
+         if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetUltrasonic(0);
+                    HAL_Delay(200);
+                }
 		}
 	 }
 	 else{
@@ -612,6 +662,10 @@ static void voice_cmd_fun(uint8_t cmd)
 		  gctl_t.ultrasonic_flag =0;
 		 Ultrasonic_Pwm_Stop();
 		 LED_RAT_ICON_OFF();
+         if(wifi_link_net_state()==1){
+                    MqttData_Publish_SetUltrasonic(0);
+                    HAL_Delay(200);
+                }
 		}
 	 }
 	 else{
@@ -642,22 +696,27 @@ static void  voice_set_temperature_value(uint8_t value)
 
 	        value = 4+value;
 			send_tx_set_temp_data(value);
-		//	gpro_t.buzzer_sound_flag =1;
+		
 			gctl_t.gSet_temperature_value = value;
 		
 			gctl_t.gSet_temperature_value_item=disp_do_setting_ptc_value_item;
 	        v_t.voice_set_temperature_value_flag=1;
-		//	
+		
 	       TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
+            if(wifi_link_net_state()==1){
+                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
+                    HAL_Delay(200);
+                }
 
 		   gpro_t.gTimer_pro_set_tem_value_blink=0;
 
-		   if(gctl_t.gSet_temperature_value >= gctl_t.dht11_temp_value){
+		   if(gctl_t.gSet_temperature_value > gctl_t.dht11_temp_value){
 
 		    	if(ptc_state()==0){
 					gctl_t.ptc_flag =1;
 					Ptc_On();
 					LED_PTC_ICON_ON();
+                    gctl_t.cmd_open_ptc_flag =1; //confirm open ptc heat 
 					gpro_t.add_or_dec_is_cofirm_key_flag=0;
 		    	}
 
@@ -665,6 +724,7 @@ static void  voice_set_temperature_value(uint8_t value)
 			else{
 		   		if(ptc_state()==1){
                     gctl_t.ptc_flag = 0;
+                    gctl_t.cmd_open_ptc_flag =0;
 			   		Ptc_Off();
 			   		LED_PTC_ICON_OFF();
 					gpro_t.add_or_dec_is_cofirm_key_flag=1;
