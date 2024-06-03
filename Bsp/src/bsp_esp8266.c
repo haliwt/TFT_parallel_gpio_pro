@@ -48,6 +48,7 @@ void InitWifiModule_Hardware(void)
 	if(wifi_t.power_on_login_tencent_cloud_flag ==0){
 	   wifi_t.power_on_login_tencent_cloud_flag=1;
 	   wifi_t.gTimer_power_first_link_tencent=0;
+       wifi_t.linking_tencent_cloud_doing =1; 
 	   at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
 
 	}
