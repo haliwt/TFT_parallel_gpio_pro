@@ -62,7 +62,7 @@ void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOA, WIFI_EN_Pin|LED_POWER_Pin|PLASMA_CTL_Pin
                           |FAN_CTL_1_Pin|FAN_CTL_2_Pin|TEMP_SENSOR_Pin, GPIO_PIN_RESET);
 
-  HAL_GPIO_WritePin(GPIOA,LED_KEY_TIM_Pin,GPIO_PIN_SET);                  
+  HAL_GPIO_WritePin(GPIOA,LED_KEY_TIM_Pin,GPIO_PIN_RESET);                  
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, RELAY_CTL_Pin|TFT_WR_Pin
