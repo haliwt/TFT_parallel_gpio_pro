@@ -1053,6 +1053,7 @@ static void smartphone_app_timer_power_on_handler(void)
 
 		gpro_t.run_process_step=0;
 		wifi_t.smartphone_app_power_on_flag=1;
+        gpro_t.power_off_flag = 1;
 
         MqttData_Publis_App_PowerOn_Ref(0x01,gctl_t.plasma_flag,gctl_t.ptc_flag,gctl_t.ultrasonic_flag);
 		
