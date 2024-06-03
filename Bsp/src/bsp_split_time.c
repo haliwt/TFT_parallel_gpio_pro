@@ -123,50 +123,15 @@ void TimeTimer_Pro_Handler(void)
 	}
 
 }
-/**********************************************************************************************************
-    **
-    *Function Name:TFT_Donnot_Set_Timer_Time();
-    *Function : 记录设置的定时时间，
-    *Input Ref:
-    *Return Ref:NO
-    *
-*********************************************************************************************************/
-#if 0
-static void TFT_Donnot_Set_Timer_Time(void)
-{
-    if(gpro_t.disp_works_timer_timing_mode_item== timer_time ){
 
-	if(gctl_t.gTimer_ctl_set_timer_time_senconds >59){
-		gctl_t.gTimer_ctl_set_timer_time_senconds =0;
-
-		gctl_t.gSet_timer_minutes --;
-
-		if(gctl_t.gSet_timer_minutes <0){
-		gctl_t.gSet_timer_minutes =59;
-		gctl_t.gSet_timer_hours --;
-
-
-		}
-		if(gctl_t.gSet_timer_hours < 0){
-
-			gpro_t.gPower_On = power_off;
-
-		}
-
-	}
-
-   }
-
-}
-#endif
 
 void Display_Precise_Works_Time(void)
 {
 	  if(gpro_t.disp_works_timer_timing_mode_item==timer_time){
-	  	TFT_DonnotDisp_Works_Time();
+	  	    TFT_DonnotDisp_Works_Time();
 	  }
 	  else{
-	     if(gctl_t.gTimer_ctl_disp_works_time_second > 59){
+	    if(gctl_t.gTimer_ctl_disp_works_time_second > 59){
 				  TFT_Display_Precise_WorksTime();
 			}
 

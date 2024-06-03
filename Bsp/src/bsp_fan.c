@@ -46,8 +46,15 @@ void RunMain_And_Interval_Handler(void)
 			 Device_Action_No_Wifi_Handler();
              
 	      }
-          if(gctl_t.gTimer_ctl_fan_adc_times > 50 )
-		 	{ 
+          if(gctl_t.gTimer_maian_run_fun >0 ){
+
+              gctl_t.gTimer_maian_run_fun=0;
+            
+              Device_Action_No_Wifi_Power_On_Handler();
+
+          }
+          if(gctl_t.gTimer_ctl_fan_adc_times > 12 ){
+		 	 
 	        gctl_t.gTimer_ctl_fan_adc_times =0;
 	        Get_Fan_Adc_Fun(ADC_CHANNEL_0,5); //Modify :2023.09.03  //Get_Fan_Adc_Fun(ADC_CHANNEL_0,10); 
 	     }

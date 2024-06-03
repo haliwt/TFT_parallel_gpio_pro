@@ -77,11 +77,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	if(tm0>999){ //1000 *1ms = 1000ms = 1s
 		tm0=0;
 		tm2++;
-
-
-    
-
-	 //main process timer
+        //main process timer
 	
 	    //be used to timer 
 	   gpro_t.gTimer_pro_wifi_dht11_temp_hum++;
@@ -96,28 +92,35 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
    
         //cotrol timer
     
-	   gctl_t.gTimer_ctl_set_timer_time_senconds++;
-	   gctl_t.gTimer_ctl_ptc_adc_times++;
-	   gctl_t.gTimer_ctl_fan_adc_times ++;
-	   gctl_t.gTimer_ctl_disp_works_time_second++;
-	   gctl_t.gTimer_ctl_warning_time++;
-	   gctl_t.gTimer_ctl_usart1_error++; 
-	   gctl_t.gTimer_ctl_usart2_error++; 
+	   //be used to timer control
+
+        gctl_t.gTimer_ctl_set_timer_time_senconds++;
+        gctl_t.gTimer_ctl_disp_works_time_second++;
+        gctl_t.gTimer_ctl_ptc_adc_times++;
+        gctl_t.gTimer_ctl_fan_adc_times ++;
+        gctl_t.gTimer_ctl_warning_time++;
+        gctl_t.gTimer_maian_run_fun++;     //run main board of function .
+        gctl_t.gTimer_ctl_usart1_error++; 
+	    gctl_t.gTimer_ctl_usart2_error++; 
+        
 	  
 	
 	  //wifi counter 
 	 
-	  wifi_t.gTimer_login_tencent_times++;
-	  wifi_t.gTimer_publish_dht11++;
-	  wifi_t.gTimer_auto_detected_net_state_times++;
-	  wifi_t.gTimer_get_beijing_time++;
-	  wifi_t.gTimer_read_beijing_time++;
-	
-	  
-	 
-	  wifi_t.gTimer_linking_tencent_duration++;
-	  wifi_t.gTimer_power_first_link_tencent ++;
-	  wifi_t.gTimer_main_pro_times++;
+	     	//wifi
+		wifi_t.gTimer_wifi_pub_power_off++;
+		wifi_t.gTimer_power_first_link_tencent++;
+		wifi_t.power_on_login_tencent_cloud_flag++;
+		wifi_t.gTimer_power_first_link_tencent++;
+        wifi_t.gTimer_linking_tencent_duration++;
+
+        wifi_t.gTimer_login_tencent_times ++;
+		wifi_t.gTimer_publish_dht11++;
+		wifi_t.gTimer_get_beijing_time++;
+		wifi_t.gTimer_auto_detected_net_state_times++;
+		wifi_t.gTimer_read_beijing_time ++;
+		wifi_t.gTimer_wifi_counter_link_beijing_times++;
+       // wifi_t.gTimer_counter_repeat_link_net++;
      
 
 	  //voice sound 

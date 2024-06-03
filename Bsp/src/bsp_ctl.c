@@ -469,7 +469,7 @@ void Device_Action_No_Wifi_Handler(void)
 void Device_Action_No_Wifi_Power_On_Handler(void)
 {
 
-
+   
    Fan_Run();
 
    if(wifi_link_net_state() == 1){
