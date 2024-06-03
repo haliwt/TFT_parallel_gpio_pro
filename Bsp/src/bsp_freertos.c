@@ -242,7 +242,7 @@ static void vTaskStart(void *pvParameters)
             else if((ulValue & RUN_DEC_6 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
                 dec_flag =1;
-               // Dec_Key_Fun(gkey_t.key_add_dec_mode);
+               // Dec_Key_Fun(gpro_t.key_add_dec_mode);
                DEC_Key_Fun();
 
                  if(dec_flag ==1){
@@ -255,7 +255,7 @@ static void vTaskStart(void *pvParameters)
             else if((ulValue & RUN_ADD_7 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
                    add_flag =1;
-                  // Add_Key_Fun(gkey_t.key_add_dec_mode);
+                  // Add_Key_Fun(gpro_t.key_add_dec_mode);
                   ADD_Key_Fun();
 
                   if(add_flag ==1){
@@ -419,14 +419,13 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 *******************************************************************************/
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 {
-    static uint8_t state=0,state_uart1,voice_cmd_time = 0xff,voice_wakewor_int=0xff;
-    uint32_t temp ;
+    static uint8_t state_uart1 ;
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     //wifi usart2
     if(huart->Instance==USART2)
     {
            
-            if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
+        if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
 
 			wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
 			wifi_t.wifi_uart_counter++;
@@ -464,15 +463,14 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 				}
 	      }
-     
-	      
-	  HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
+	  
 	  
 //	__HAL_UART_CLEAR_NEFLAG(&huart2);
 //	__HAL_UART_CLEAR_FEFLAG(&huart2);
-//	__HAL_UART_CLEAR_OREFLAG(&huart2);
+	__HAL_UART_CLEAR_OREFLAG(&huart2);
 //	__HAL_UART_CLEAR_TXFECF(&huart2);
-     
+
+      HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
 	}
 
  //voice sound by USART1
@@ -614,11 +612,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
      break;
 
 	  
-		  
-	 
-
-	 
-	  }
+	}
 	 
 	  
     //  __HAL_UART_CLEAR_NEFLAG(&huart1);

@@ -21,7 +21,7 @@ void Key_Speical_Power_Fun_Handler(void)
       if(KEY_POWER_VALUE() ==KEY_DOWN && gpro_t.key_power_be_pressed_flag < 60   &&  gpro_t.gPower_On == power_on){
             gpro_t.key_power_be_pressed_flag++;
 
-            if(gpro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == 1){
+            if(gpro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == KEY_DOWN){
                gpro_t.key_power_be_pressed_flag = 100;
 			gpro_t.gTimer_pro_wifi_led =0;
             gpro_t.wifi_led_fast_blink_flag=1;
@@ -42,21 +42,15 @@ void Key_Speical_Power_Fun_Handler(void)
 	 }
 	 else if(KEY_POWER_VALUE() ==KEY_UP && gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 40){
              
-            gpro_t.key_power_be_pressed_flag=0;
-
-
-        
-           power_on_off = power_on_off ^ 0x01;
-			  gpro_t.key_power_be_pressed_flag=0;
-		  if(power_on_off==1){
-		
-		  
+           gpro_t.key_power_be_pressed_flag=0;
+           if(gpro_t.gPower_On == power_off){
 
 			buzzer_sound();	
 			gpro_t.gPower_On = power_on;   
-            gpro_t.long_key_flag =0;
+    
             gpro_t.run_process_step=0;
 		   
+       
 
 		
 			
@@ -65,8 +59,8 @@ void Key_Speical_Power_Fun_Handler(void)
 			 //gpro_t.gKey_value = power_key_id;
 			 buzzer_sound();
 			 gpro_t.power_off_flag=1;
-			 gpro_t.long_key_flag =0;
-			gpro_t.run_process_step=0xff;
+		
+			
 			gpro_t.gPower_On = power_off;   
 		
 			  

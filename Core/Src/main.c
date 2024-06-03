@@ -133,14 +133,6 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	
-  #if 0
-	bsp_Idle();
-   	Voice_Decoder_Handler();
-	TFT_Process_Handler();
-    WIFI_Process_Handler();
-	USART_Cmd_Error_Handler();
-   #endif 
   }
   /* USER CODE END 3 */
 }

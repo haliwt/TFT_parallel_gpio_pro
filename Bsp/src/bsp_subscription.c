@@ -610,7 +610,7 @@ void Json_Parse_Command_Fun(void)
 	  case OPEN_ON_ITEM:
       	buzzer_sound();
 		gpro_t.gPower_On = power_on;   
-        gpro_t.long_key_flag =0;
+    
         gpro_t.run_process_step=0;
 		wifi_t.esp8266_login_cloud_success=1;
 		MqttData_Publish_SetOpen(1);  
@@ -1046,7 +1046,7 @@ static void smartphone_app_timer_power_on_handler(void)
 
 		Device_Action_Publish_Handler();
 		gpro_t.gPower_On = power_on;   
-		gpro_t.long_key_flag =0;
+
 		gpro_t.run_process_step=0;
 		wifi_t.smartphone_app_power_on_flag=1;
 

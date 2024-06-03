@@ -231,7 +231,7 @@ void Wifi_SoftAP_Config_Handler(void)
            }
 
 		   
-		  if(wifi_t.gTimer_login_tencent_times > 1){
+		  if(wifi_t.gTimer_login_tencent_times > 4){//1
 		   
 			 wifi_t.gTimer_login_tencent_times = 0;
 

@@ -303,12 +303,6 @@ void TFT_Display_Precise_WorksTime(void)
 		}
    	}
 
-  //  }
-	
-	//works time value
-	
-//   	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(100,188,0,temp_decade_hours);
-//	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(134,188,0,temp_unit_hours);
 
 		
    	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,0,temp_decade_hours);
@@ -316,9 +310,6 @@ void TFT_Display_Precise_WorksTime(void)
 
 	
 
-    //symbol colon
-	//TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(186,188,0,temp_decade_minutes);
-	//TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(220,188,0,temp_unit_minutes);
 
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,0,temp_decade_minutes);
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,0,temp_unit_minutes);
@@ -376,10 +367,10 @@ void TFT_Display_WorksTime_Voice(void)
 	//TFT_Disp_Chinese_WorksTime_96_24(100,150);
 	if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
 
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X0,TIMER_Y,0);
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X1,TIMER_Y,1);
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X2,TIMER_Y,2);
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X3,TIMER_Y,3);
+			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X0,TIMER_Y,0); //"北"
+			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X1,TIMER_Y,1); //"京"
+			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X2,TIMER_Y,2); // "时"
+			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X3,TIMER_Y,3); // "间"
 
 	}
 	else{

@@ -13,19 +13,24 @@ typedef enum{
 
 typedef enum _wifi_state_t{  
 	
-    wifi_has_been_connected =0x01,
-	wifi_link_tencent_cloud, //2
-	wifi_tencent_publish_init_data, //3
-	wifi_publish_update_tencent_cloud_data,//4
-	wifi_atuo_link_cloud_ref,//5
-	wifi_auto_repeat_link_cloud,//6
-	wifi_tencent_publish_dht11_data,//7
-	wifi_get_beijing_time,//8
-	wifi_disconnect,//9
-	wifi_null//10
+    
+	wifi_link_tencent_cloud=0x01, //1
+	wifi_tencent_publish_init_data, //2
+	wifi_subscriber_form_tencent_data,//3
+	wifi_publish_dht11_delay,//4
+	wifi_subscriber_form_tencent_cloud_cmd,//5
+	wifi_publish_update_tencent_cloud_data,//6
+	wifi_auto_to_link_cloud,//7
+	wifi_atuo_link_cloud_ref,//8
+	wifi_auto_repeat_link_cloud,//9
+	wifi_tencent_publish_dht11_data,//10
+	wifi_get_beijing_time,//11
+	wifi_disconnect,//12
+	wifi_null//13
 
 
 }wifi_state_t;
+
 
 
 /* USER CODE BEGIN Prototypes */
@@ -58,6 +63,8 @@ typedef struct _WIFI_FUN{
 	uint8_t subscribe_cloud_success;
 	uint8_t power_off_step;
     uint8_t usart2_dataBuf[1];
+
+    uint8_t link_tencent_thefirst_times;
 	
 	
 	uint8_t esp8266_dynamic_reg_flag;
@@ -93,7 +100,7 @@ typedef struct _WIFI_FUN{
 	unsigned char wifi_data[150]; 
 	uint8_t  wifi_temp_data[150]; 
  
-	uint8_t usart1_dataBuf[1];
+	
   
     //uint8_t usart2_rx_flag;
     uint8_t first_power_on_link_net;
@@ -156,9 +163,11 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_main_pro_times;
 	uint8_t gTimer_wifi_sub_power_off;
 	uint8_t gTimer_wifi_rx_error;
+    uint8_t gTimer_counter_repeat_link_net;
 	
     uint16_t gTimer_get_beijing_time;
 	uint16_t gTimer_auto_detected_net_state_times;
+    
   
 	
 

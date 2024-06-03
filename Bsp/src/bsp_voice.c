@@ -196,13 +196,7 @@ void Rx_Voice_Data_Handler(void(*rx_voice_handler)(uint8_t data))
 void Voice_Decoder_Handler(void)
 {
 
- 
-       
-        
-       
-
-			
-		// if(v_t.gTimer_voice_time_counter_start< 15){
+    // if(v_t.gTimer_voice_time_counter_start< 15){
 	       key= v_t.voice_data[0] + v_t.voice_data[1]; //key= data4+ data6 = ; //A5 FA 00 81 01 00 21 FB 
 	    
 	
@@ -264,7 +258,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 		  gpro_t.run_process_step=0;
 		  voice_send_power_on_cmd();
-		  LED_Mode_Key_On();
+		    LED_Mode_Key_On();
 			LED_Power_Key_On();
 			Power_On_Led_Init();
 			TFT_BACKLIGHT_ON();

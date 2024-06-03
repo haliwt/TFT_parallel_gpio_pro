@@ -126,6 +126,7 @@ void TFT_Process_Handler(void)
 	    wifi_t.power_off_step=0; 
 	    fan_continuce_flag =1;
 		gpro_t.gTimer_pro_fan =0;
+        gpro_t.run_process_step=0;
 		//LCD_Clear(BLACK);
 		TFT_BACKLIGHT_OFF();
 		Power_Off_Fun();
@@ -201,6 +202,13 @@ static void TFT_Pocess_Command_Handler(void)
 		else{
            TFT_Display_PowerOn_WorksTime_Init();
 		}
+
+         LED_Mode_Key_On();
+	     LED_Power_Key_On();
+         if(wifi_t.smartphone_app_power_on_flag==0){
+		    Power_On_Led_Init();
+         }
+		 TFT_BACKLIGHT_ON();
 	    
 		Power_On_Fun();
 	    Fan_Run();
@@ -231,14 +239,14 @@ static void TFT_Pocess_Command_Handler(void)
 	   Wifi_Fast_Led_Blink();
 
 	  
-	   if(gpro_t.gTimer_pro_update_dht11_data > 8 && gpro_t.gTimer_pro_update_dht11_data < 10){
+	  if(gpro_t.gTimer_pro_update_dht11_data > 8 && gpro_t.gTimer_pro_update_dht11_data < 10){
 
 		   
 
 		    Update_DHT11_Value();
-
-
-	   }
+            TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+	        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+       }
 
 	   if(gpro_t.gTimer_pro_update_dht11_data > 12 && wifi_link_net_state() ==1){
 		   gpro_t.gTimer_pro_update_dht11_data=0;
@@ -388,9 +396,7 @@ static void TFT_Pocess_Command_Handler(void)
 static void Power_On_Fun(void)
 {
   //led on 
-  LED_Mode_Key_On();
-  LED_Power_Key_On();
-  Power_On_Led_Init();
+ 
   //smart phone control power on 
   if(wifi_t.smartphone_app_power_on_flag==0){
 	  gctl_t.ptc_flag = 1;
@@ -411,7 +417,7 @@ static void Power_On_Fun(void)
 	 //mode key long times 
 	  gpro_t.mode_key_run_item_step=0xff;
 	 gctl_t.mode_key_long_time_flag=0;
-	 gpro_t.long_key_flag =0;
+
 
 
     
