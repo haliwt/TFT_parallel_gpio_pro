@@ -238,6 +238,7 @@ typedef struct{
     //timing by interrupt
   uint8_t gTimer_wifi_connect_counter;
   uint8_t gTimer_run_time_out;
+  uint8_t gTimer_pro_disp_temphum;
  
    
 	

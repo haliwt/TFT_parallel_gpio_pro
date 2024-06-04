@@ -486,12 +486,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
      Ptc_On();
 	 LED_PTC_ICON_ON();
 
-     if(wifi_link_net_state()==1){
-          MqttData_Publish_SetPtc(1);
-          HAL_Delay(200);
-         }
     
-   
 
   }
   else{
@@ -499,10 +494,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
         Ptc_Off();
     	LED_PTC_ICON_OFF();
 
-        if(wifi_link_net_state()==1){
-          MqttData_Publish_SetPtc(0);
-          HAL_Delay(200);
-        }
+       
 
    }
    }
@@ -513,19 +505,13 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
    if(plasma_state() == 1){
        Plasma_On();
 	   LED_KILL_ICON_ON();
-       if(wifi_link_net_state()==1){
-          MqttData_Publish_SetPlasma(1);
-          HAL_Delay(200);
-         }
+      
       
    }
    else{
       Plasma_Off();
 	  LED_KILL_ICON_OFF();
-      if(wifi_link_net_state()==1){
-          MqttData_Publish_SetPlasma(0);
-          HAL_Delay(200);
-        }
+     
      
 
    }
@@ -538,20 +524,14 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
       Ultrasonic_Pwm_Output();
 	  LED_RAT_ICON_ON();
-      if(wifi_link_net_state()==1){
-          MqttData_Publish_SetUltrasonic(1);
-          HAL_Delay(200);
-       }
+     
      
    }
    else{
 
 	  Ultrasonic_Pwm_Stop();
 	  LED_RAT_ICON_OFF();
-      if(wifi_link_net_state()==1){
-          MqttData_Publish_SetUltrasonic(0);
-          HAL_Delay(200);
-       }
+      
      
 
    }

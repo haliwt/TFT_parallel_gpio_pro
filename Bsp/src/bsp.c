@@ -256,9 +256,9 @@ static void TFT_Pocess_Command_Handler(void)
 		wifi_t.three_times_link_beijing=0;
 		wifi_t.get_rx_beijing_time_enable=0;
 		
-      gpro_t.run_process_step= 0;
+   
 	
-    //  gpro_t.run_process_step=pro_disp_dht11_value;
+      gpro_t.run_process_step=pro_disp_dht11_value;
 	
 		
 	 break;
@@ -268,16 +268,16 @@ static void TFT_Pocess_Command_Handler(void)
 	   Wifi_Fast_Led_Blink();
 
 	  
-	  if(gpro_t.gTimer_pro_update_dht11_data > 8 && gpro_t.gTimer_pro_update_dht11_data < 10){
-
-		   
+	  if(gpro_t.gTimer_pro_disp_temphum > 4){
+           
+		   gpro_t.gTimer_pro_disp_temphum=0;
 
 		    Update_DHT11_Value();
             TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
 	        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
        }
 
-	   if(gpro_t.gTimer_pro_update_dht11_data > 12 && wifi_link_net_state() ==1){
+	   if(gpro_t.gTimer_pro_update_dht11_data > 30  && wifi_link_net_state() ==1 && wifi_t.link_beijing_times_flag ==0){
 		   gpro_t.gTimer_pro_update_dht11_data=0;
 
 			Update_Dht11_Totencent_Value();

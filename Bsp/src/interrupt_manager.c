@@ -89,6 +89,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        gpro_t.gTimer_pro_fan++;  //fan continuce counter 60s
        gpro_t.gTimer_pro_feed_dog++;
        gpro_t.gTimer_pro_temp_delay++;
+       gpro_t.gTimer_pro_disp_temphum++;
    
         //cotrol timer
     
