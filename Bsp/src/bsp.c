@@ -248,8 +248,7 @@ static void TFT_Pocess_Command_Handler(void)
 
    
         
-	    gpro_t.run_process_step=pro_disp_dht11_value;
-	
+	    
 	    gpro_t.gTimer_pro_update_dht11_data=30;
 
 	    wifi_t.gTimer_get_beijing_time=0;
@@ -257,8 +256,10 @@ static void TFT_Pocess_Command_Handler(void)
 		wifi_t.three_times_link_beijing=0;
 		wifi_t.get_rx_beijing_time_enable=0;
 		
-
-       
+      gpro_t.run_process_step= 0;
+	
+    //  gpro_t.run_process_step=pro_disp_dht11_value;
+	
 		
 	 break;
 

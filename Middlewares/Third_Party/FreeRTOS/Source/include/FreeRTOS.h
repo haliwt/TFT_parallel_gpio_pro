@@ -202,11 +202,11 @@ extern "C" {
 	#define configUSE_RECURSIVE_MUTEXES 0
 #endif
 
-#ifndef configUSE_MUTEXES
+#ifndef configUSE_MUTEXES       //互斥任务
 	#define configUSE_MUTEXES 0
 #endif
 
-#ifndef configUSE_TIMERS
+#ifndef configUSE_TIMERS         //定时器组，定义
 	#define configUSE_TIMERS 0
 #endif
 

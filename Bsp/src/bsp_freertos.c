@@ -47,6 +47,9 @@ static TaskHandle_t xHandleTaskStart = NULL;
 
 //static void power_long_short_key_fun(void);
 
+uint8_t add_key_counter,dec_key_counter;
+
+
 /**********************************************************************************************************
 *	函 数 名: main
 *	功能说明: 标准c程序入口。
@@ -206,7 +209,7 @@ static void vTaskStart(void *pvParameters)
    const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
    static uint8_t sound_flag,power_on_first;
    uint32_t ulValue;
-   static uint8_t add_flag,dec_flag,power_sound_flag;
+   static uint8_t key_add_sound_flag,power_sound_flag,key_dec_sound_flag;
 
     while(1)
     {
@@ -241,30 +244,22 @@ static void vTaskStart(void *pvParameters)
             }
             else if((ulValue & RUN_DEC_6 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
-                dec_flag =1;
-               // Dec_Key_Fun(gpro_t.key_add_dec_mode);
-               DEC_Key_Fun();
+                  if(gpro_t.gPower_On==power_on){
 
-                 if(dec_flag ==1){
-                     add_flag ++;
-                    buzzer_sound();
+                  key_dec_sound_flag=1;
 
-                  }
-                 
+                   }
+             
+
             }
             else if((ulValue & RUN_ADD_7 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
-                   add_flag =1;
-                  // Add_Key_Fun(gpro_t.key_add_dec_mode);
-                  ADD_Key_Fun();
+                 if(gpro_t.gPower_On==power_on){
+                   key_add_sound_flag=1;
 
-                  if(add_flag ==1){
-                     add_flag ++;
-                     buzzer_sound();
-
-                  }
-				
-            }
+                    }
+                  
+             }
             else if((ulValue & RUN_VOICE_9 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
 			    
@@ -284,6 +279,22 @@ static void vTaskStart(void *pvParameters)
 
         }
 
+        
+       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1){
+
+              if(key_dec_sound_flag == 1){
+                 key_dec_sound_flag++;
+
+              }
+              if(key_add_sound_flag ==1){
+                  key_add_sound_flag++;
+
+
+              }
+            buzzer_sound();
+
+        }
+
          //// power_long_short_key_fun();
          Key_Speical_Power_Fun_Handler();
               
@@ -291,6 +302,21 @@ static void vTaskStart(void *pvParameters)
                  bsp_Idle();
                 // mode_long_short_key_fun();
                 Key_Speical_Mode_Fun_Handler();
+
+
+                if(key_dec_sound_flag==2){
+                     key_dec_sound_flag++;
+                   DEC_Key_Fun();
+
+                }
+                if(key_add_sound_flag==2){
+
+                     key_add_sound_flag++;
+
+                     ADD_Key_Fun();
+
+
+                }
 
                  
 
@@ -337,6 +363,7 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
 
  
+ 
    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     __HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
  
@@ -362,6 +389,8 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
    case KEY_MODE_Pin:
       if(KEY_MODE_VALUE() == KEY_DOWN){
+         add_key_counter=0;
+         
         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
                MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
@@ -377,20 +406,26 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
 
    case KEY_ADD_Pin:
-    
-         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-                ADD_KEY_3,     /* 设置目标任务事件标志位bit0  */
-                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-                &xHigherPriorityTaskWoken);
-   
-         /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+         if(KEY_ADD_VALUE() == KEY_DOWN){
+           
+          xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
+                    ADD_KEY_3,     /* 设置目标任务事件标志位bit0  */
+                    eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+                    &xHigherPriorityTaskWoken);
+       
+             /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
+             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+         }
+
+         
        
    break;
 
    case KEY_DEC_Pin:
 
-       
+        if(KEY_DEC_VALUE() == KEY_DOWN){
+            
         xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
                 DEC_KEY_2,     /* 设置目标任务事件标志位bit0  */
                 eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
@@ -398,6 +433,10 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
    
          /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
          portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+         }
+
+           
 
    break;
 
