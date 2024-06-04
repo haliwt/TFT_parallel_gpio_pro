@@ -181,7 +181,7 @@ static void vTaskMsgPro(void *pvParameters)
                 
             MainBoard_Self_Inspection_PowerOn_Fun();
             WIFI_Process_Handler();
-	        USART_Cmd_Error_Handler();
+	       
              
 
              
@@ -323,6 +323,7 @@ static void vTaskStart(void *pvParameters)
          }
               
          TFT_Process_Handler();
+         USART_Cmd_Error_Handler();
          
          }
 
@@ -506,7 +507,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
 //	__HAL_UART_CLEAR_NEFLAG(&huart2);
 //	__HAL_UART_CLEAR_FEFLAG(&huart2);
-	__HAL_UART_CLEAR_OREFLAG(&huart2);
+//	__HAL_UART_CLEAR_OREFLAG(&huart2);
 //	__HAL_UART_CLEAR_TXFECF(&huart2);
 
       HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
@@ -656,7 +657,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
     //  __HAL_UART_CLEAR_NEFLAG(&huart1);
     //  __HAL_UART_CLEAR_FEFLAG(&huart1);
-      __HAL_UART_CLEAR_OREFLAG(&huart1);
+    //  __HAL_UART_CLEAR_OREFLAG(&huart1);
     //  __HAL_UART_CLEAR_TXFECF(&huart1);
 
 

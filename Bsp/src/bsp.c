@@ -123,17 +123,26 @@ void TFT_Process_Handler(void)
 
 	if(gpro_t.power_off_flag == 1){
 		gpro_t.power_off_flag ++;
-	    wifi_t.power_off_step=0; 
+	   
+        
 	    fan_continuce_flag =1;
 		gpro_t.gTimer_pro_fan =0;
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
 
+        
+
         //wifi ref 
         wifi_t.link_net_tencent_data_flag=1;
+        wifi_t.smartphone_app_power_on_flag=0;
+        wifi_t.power_off_step=0; 
+        
 
         //display ptc temperature value 
         gctl_t.gSet_temperature_value_item = disp_ptc_temp_value_item;
+        gctl_t.ptc_flag = 0;
+        gctl_t.plasma_flag = 0;
+	    gctl_t.ultrasonic_flag =0;
         
        
     
