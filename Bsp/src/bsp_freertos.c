@@ -152,16 +152,17 @@ static void vTaskMsgPro(void *pvParameters)
               
                 
             }
-           else if((ulValue & VOICE_BIT_8) != 0){
+            else if((ulValue & VOICE_BIT_8) != 0){
               
-             //  xTaskNotify(xHandleTaskStart, /* 目标任务 */
-                             ///          RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
-                              ///         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-                  v_t.sound_rx_data_success_flag = 1;
+               xTaskNotify(xHandleTaskStart, /* 目标任务 */
+                                    RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
+                                     eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+                //  v_t.sound_rx_data_success_flag = 1;
 
                
               
             }
+         
 
       
 
@@ -173,11 +174,7 @@ static void vTaskMsgPro(void *pvParameters)
 
        
         //MainBoard_Self_Inspection_PowerOn_Fun();
-        if(v_t.sound_rx_data_success_flag == 1 ){
-                 v_t.sound_rx_data_success_flag=0;
-                  Voice_Decoder_Handler();
-              
-           }
+       
                 
             MainBoard_Self_Inspection_PowerOn_Fun();
             WIFI_Process_Handler();
@@ -262,9 +259,10 @@ static void vTaskStart(void *pvParameters)
              }
             else if((ulValue & RUN_VOICE_9 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
-			    
+			     v_t.sound_rx_data_success_flag = 1;
                   
             }
+           
             
 
             
@@ -321,6 +319,12 @@ static void vTaskStart(void *pvParameters)
                  
 
          }
+
+         if(v_t.sound_rx_data_success_flag == 1 ){
+                 v_t.sound_rx_data_success_flag=0;
+                  Voice_Decoder_Handler();
+              
+          }
               
          TFT_Process_Handler();
          USART_Cmd_Error_Handler();

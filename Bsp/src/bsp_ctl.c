@@ -477,7 +477,64 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
       LED_WIFI_ICON_ON();
 
    }
+
+
+  if(wifi_t.smartphone_app_power_on_flag== 1){
+
    
+    if(ptc_state()== 1 &&  gctl_t.cmd_open_ptc_flag !=2){
+
+         Ptc_On();
+    	 LED_PTC_ICON_ON();
+
+        
+
+      }
+      else{
+       
+            Ptc_Off();
+        	LED_PTC_ICON_OFF();
+
+           
+
+       }
+ 
+
+   if(plasma_state() == 1){
+       Plasma_On();
+	   LED_KILL_ICON_ON();
+      
+      
+   }
+   else{
+      Plasma_Off();
+	  LED_KILL_ICON_OFF();
+     
+     
+
+   }
+   
+
+
+
+   if(ultrasonic_state()==1){
+
+      Ultrasonic_Pwm_Output();
+	  LED_RAT_ICON_ON();
+     
+     
+   }
+   else{
+
+	  Ultrasonic_Pwm_Stop();
+	  LED_RAT_ICON_OFF();
+      
+     
+
+   }
+   }
+   else{
+
   if(ptc_init != ptc_state()){
 
       ptc_init = ptc_state();
@@ -520,6 +577,8 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
    if(ult_init != ultrasonic_state()){
 
+       ult_init = ultrasonic_state();
+
    if(ultrasonic_state()==1){
 
       Ultrasonic_Pwm_Output();
@@ -537,7 +596,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
    }
    }
 
-
+   }
 
 }
 
