@@ -155,7 +155,7 @@ typedef struct{
    uint8_t buzzer_sound_flag;
   
    //time
-   uint8_t mode_key_select_label ;
+ 
    uint8_t disp_works_timer_timing_mode_item;
    uint8_t set_timer_timing_success ;
    
@@ -168,7 +168,7 @@ typedef struct{
  
    //modke key
    uint8_t mode_key_pressed_flag;
-   uint8_t timer_mode_flag;
+  
    uint8_t mode_key_run_item_step;
    uint8_t mode_key_special_fun;
  
@@ -195,7 +195,7 @@ typedef struct{
   
     //key
 	uint8_t add_or_dec_is_cofirm_key_flag;
-    uint8_t mode_key_run_proc_item ;
+ 
     uint8_t interval_stop_run_flag ;
    
   
@@ -239,6 +239,7 @@ typedef struct{
   uint8_t gTimer_wifi_connect_counter;
   uint8_t gTimer_run_time_out;
   uint8_t gTimer_pro_disp_temphum;
+  uint8_t gTimer_exit_mode_long_key;
  
    
 	

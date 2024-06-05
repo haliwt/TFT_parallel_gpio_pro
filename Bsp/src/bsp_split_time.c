@@ -84,7 +84,7 @@ void TimeTimer_Pro_Handler(void)
 			if(gctl_t.gSet_timer_hours >0 ){
            
 				gpro_t.disp_works_timer_timing_mode_item= timer_time;
-				gpro_t.mode_key_run_proc_item =0xff;
+				
 				gctl_t.gTimer_ctl_set_timer_time_senconds =0;
 			
 				gctl_t.gSet_timer_minutes =0;
@@ -103,7 +103,7 @@ void TimeTimer_Pro_Handler(void)
 				
 		  
 				if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
-					gpro_t.mode_key_run_proc_item =0xff;
+					
 					gpro_t.disp_works_timer_timing_mode_item= works_time;//gpro_t.disp_works_timer_timing_mode_item
 					TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X0,TIMER_Y,0);
 					TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X1,TIMER_Y,1);
@@ -114,7 +114,7 @@ void TimeTimer_Pro_Handler(void)
 				}
 				else{
 
-					gpro_t.mode_key_run_proc_item =0xff;
+					
 					gpro_t.disp_works_timer_timing_mode_item= works_time;//gpro_t.disp_works_timer_timing_mode_item
 					//TFT_Disp_Chinese_WorksTime_96_24(100,150);
 					TFT_Disp_Chinese_WorkTime_23_23(TIMER_X0,TIMER_Y,0);
@@ -200,10 +200,10 @@ void Key_Works_Timer_Timing_Handler(uint8_t(*worktiming_handler)(void))
 static uint8_t key_works_timer_timing_fun(void)
 {
 
-     if(gpro_t.mode_key_run_proc_item==mode_key_set_temp)return mode_key_set_temp;
-	 else if(gpro_t.mode_key_run_proc_item==mode_key_select)return mode_key_select;
-	 else if(gpro_t.mode_key_run_proc_item==mode_key_confirm)return mode_key_confirm;
-     else if(gpro_t.mode_key_run_proc_item==mode_key_set_timer_value)return mode_key_set_timer_value;
+     if(gpro_t.mode_key_run_item_step==mode_key_set_temp)return mode_key_set_temp;
+	 else if(gpro_t.mode_key_run_item_step==mode_key_select)return mode_key_select;
+	 else if(gpro_t.mode_key_run_item_step==mode_key_confirm)return mode_key_confirm;
+     else if(gpro_t.mode_key_run_item_step==mode_key_set_timer_value)return mode_key_set_timer_value;
 	 else 
 	 	return  mode_key_set_temp;
 

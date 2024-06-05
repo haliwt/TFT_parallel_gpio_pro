@@ -742,15 +742,11 @@ void Json_Parse_Command_Fun(void)
             MqttData_Publish_SetState(2); //timer model  = 2
 			HAL_Delay(50);
             //do someting
-			if(gpro_t.timer_mode_flag == timer_time){
-				gctl_t.timer_timing_words_changed_flag++;
-				TFT_Disp_Set_TimerTime(0);
-			}
-			else{
-     
-				gpro_t.timer_mode_flag=timer_set_time;
-				gpro_t.gTimer_pro_mode_key_be_select =4;
-			}
+			 gpro_t.disp_works_timer_timing_mode_item = timer_time;
+		     gctl_t.timer_timing_words_changed_flag++;
+			 TFT_Disp_Set_TimerTime(0);
+			
+			
 			
 			
         }
@@ -768,7 +764,8 @@ void Json_Parse_Command_Fun(void)
 			HAL_Delay(50);
 			//do something
 			
-			 gpro_t.timer_mode_flag=works_time;//0
+			 //gpro_t.timer_mode_flag=works_time;//0
+			 gpro_t.disp_works_timer_timing_mode_item = timer_time;
 			 gctl_t.timing_words_changed_flag++;
 			 TFT_Display_WorksTime();
           

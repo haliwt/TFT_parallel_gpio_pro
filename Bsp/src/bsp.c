@@ -43,8 +43,8 @@ void bsp_Init(void)
    TimerTiming_Init();
    Buzzer_Sound_Fun_Init();
    gpro_t.disp_works_timer_timing_mode_item = works_time;
-   gpro_t.mode_key_run_item_step=0xff;
-  // Buzzer_Sound_Fun_Init();
+   gpro_t.mode_key_run_item_step = mode_key_set_temp;
+
 
 
 }
@@ -345,7 +345,7 @@ static void TFT_Pocess_Command_Handler(void)
 
              case 0: //slowly of blink led 
 
-			    if(gpro_t.mode_key_run_proc_item != mode_key_select){
+			    if(gpro_t.mode_key_run_item_step!= mode_key_select){
                 
 				if(gpro_t.gTimer_pro_wifi_led > 1 && gpro_t.gTimer_pro_wifi_led < 3){
 					
@@ -446,12 +446,12 @@ static void Power_On_Fun(void)
    //timer timing
    gctl_t.mode_flag = works_time;
    gctl_t.timer_time_define_flag = 0;
-    gpro_t.timer_mode_flag=works_time;
+  
 	 gctl_t.gSet_timer_hours =0;
 	 gctl_t.gSet_timer_minutes =0;
 
 	 //mode key long times 
-	  gpro_t.mode_key_run_item_step=0xff;
+	 
 	 gctl_t.mode_key_long_time_flag=0;
 
 
@@ -477,13 +477,13 @@ static void Power_Off_Fun(void)
 	Power_Off_Led();
    gctl_t.mode_flag = 0;
    gpro_t.gPower_On = power_off;
-   gpro_t.mode_key_run_item_step=0xff;
+
    gctl_t.plasma_flag = 0;
    gctl_t.ultrasonic_flag =0;
    gctl_t.ptc_flag = 0;
    //timer timing flag
-     gpro_t.timer_mode_flag=works_time;
-	gpro_t.timer_mode_flag=0;
+ 
+
 	gpro_t.wifi_led_fast_blink_flag=0;
 	gctl_t.gSet_timer_hours =0;
 
