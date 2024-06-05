@@ -173,21 +173,21 @@ void property_report_update_data(void)
 
 }
 
-static void property_report_power_on_state(void)
-{
+//static void property_report_power_on_state(void)
+//{
 
-	char       message[256]    = {0};
-    int        message_len     = 0;
+//	char       message[256]    = {0};
+//    int        message_len     = 0;
 
-   Mqtt_Value_Init();
-   message_len = snprintf(message, sizeof(message),"\"{\\\"method\\\":\\\"report\\\"\\,\\\"clientToken\\\":\\\"up01\\\"\\,\\\"params\\\":{\\\"open\\\":%d\\,\\\"Anion\\\":%d\\,\\\"ptc\\\":%d\\,\\\"sonic\\\":%d\\,\\\"state\\\":%d\\,\\\"find\\\":%d\\,\\\"temperature\\\":%d}}\"\r\n",
-                             sg_info.open,sg_info.anion,sg_info.ptc,sg_info.sonic,sg_info.state,sg_info.find,sg_info.set_temperature);
-                               
- 
-  at_send_data((uint8_t *)message, message_len);
+//   Mqtt_Value_Init();
+//   message_len = snprintf(message, sizeof(message),"\"{\\\"method\\\":\\\"report\\\"\\,\\\"clientToken\\\":\\\"up01\\\"\\,\\\"params\\\":{\\\"open\\\":%d\\,\\\"Anion\\\":%d\\,\\\"ptc\\\":%d\\,\\\"sonic\\\":%d\\,\\\"state\\\":%d\\,\\\"find\\\":%d\\,\\\"temperature\\\":%d}}\"\r\n",
+//                             sg_info.open,sg_info.anion,sg_info.ptc,sg_info.sonic,sg_info.state,sg_info.find,sg_info.set_temperature);
+//                               
+// 
+//  at_send_data((uint8_t *)message, message_len);
 
 
-}
+//}
 
 
 static void property_report_power_off_state(void)

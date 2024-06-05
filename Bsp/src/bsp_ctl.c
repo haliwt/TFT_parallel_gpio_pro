@@ -34,7 +34,7 @@ static uint8_t Mode_Default_Handler(void);
 static uint8_t Ptc_Default_Handler(void);
 static uint8_t Plasma_Default_Handler(void);
 static uint8_t Ultrasonic_Default_Handler(void);
-static uint8_t Fan_Default_Handler(void);
+
 
 static uint8_t dht11_humidity_default_Handler(void);
 static uint8_t dht11_tmep_default_Handler(void);
@@ -680,6 +680,8 @@ void Device_Action_Led_OnOff_Handler(void)
 
 
 }
+
+
 
 
 

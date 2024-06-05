@@ -31,7 +31,7 @@ void Fan_Stop(void)
 ********************************************************************************************/
 void RunMain_And_Interval_Handler(void)
 {
-   static uint8_t fan_2_hours_stop,fan_continuce_run_flag;
+   static uint8_t fan_2_hours_stop;
 
    if(fan_error_state()==0){
 	

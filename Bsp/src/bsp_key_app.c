@@ -16,7 +16,7 @@ static  void Add_Dec_Key_As_mode_key_confirm_handler(void);
 ******************************************************************************/
 void Key_Speical_Power_Fun_Handler(void)
 {
-	static uint8_t power_on_off;
+
 
 	
       if(KEY_POWER_VALUE() ==KEY_DOWN && gpro_t.key_power_be_pressed_flag < 60   &&  gpro_t.gPower_On == power_on){
@@ -45,7 +45,16 @@ void Key_Speical_Power_Fun_Handler(void)
 	 else if(KEY_POWER_VALUE() ==KEY_UP && gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 40){
              
            gpro_t.key_power_be_pressed_flag=0;
-           if(gpro_t.gPower_On == power_off){
+
+           if(gpro_t.run_process_step==0xf0){
+
+                buzzer_sound();
+               // gpro_t.run_process_step =0;
+                gpro_t.power_off_flag=1;
+                  
+                gpro_t.gPower_On = power_off; 
+          }
+          else if(gpro_t.gPower_On == power_off){
 
 			buzzer_sound();	
 			gpro_t.gPower_On = power_on;   
@@ -213,7 +222,7 @@ void Mode_Key_Config_Fun_Handler(void)
 void ADD_Key_Fun(void)
 {
 
- static uint8_t select_flag,disp_temp_value,timer_timing_flag;
+ static uint8_t disp_temp_value,timer_timing_flag;
  if(power_on_state()==power_on){
 
 	if(gctl_t.ptc_warning ==0 && ptc_error_state() ==0){

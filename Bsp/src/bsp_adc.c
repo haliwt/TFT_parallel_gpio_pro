@@ -131,7 +131,7 @@ void Get_Fan_Adc_Fun(uint32_t channel,uint8_t times)
 {
 	uint16_t adc_fan_hex;
 	
-	static uint8_t detect_error_times;
+
 	
 	adc_fan_hex = Get_Adc_Average(channel,times);
 

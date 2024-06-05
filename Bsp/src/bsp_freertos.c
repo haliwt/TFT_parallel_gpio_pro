@@ -21,7 +21,7 @@
 #define RUN_DEC_6           (1 << 6)
 #define RUN_ADD_7           (1 << 7)
 #define VOICE_BIT_8         (1 << 8)
-#define RUN_VOICE_9          (1<<9)
+#define RUN_VOICE_9         (1 << 9)
 
 /*
 **********************************************************************************************************
@@ -45,7 +45,6 @@ static void AppTaskCreate (void);
 static TaskHandle_t xHandleTaskMsgPro = NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
 
-//static void power_long_short_key_fun(void);
 
 uint8_t add_key_counter,dec_key_counter;
 uint8_t voice_inter_flag;
@@ -160,52 +159,31 @@ static void vTaskMsgPro(void *pvParameters)
                                      eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                 //  v_t.sound_rx_data_success_flag = 1;
                
-               
-              
             }
-         
-
-      
-
-		
-		}
+       }
 		else
 		{
 			/* 超时 */
-
-       
-        //MainBoard_Self_Inspection_PowerOn_Fun();
-       
-                
-            MainBoard_Self_Inspection_PowerOn_Fun();
-            WIFI_Process_Handler();
-	        USART_Cmd_Error_Handler();
+          MainBoard_Self_Inspection_PowerOn_Fun();
+          WIFI_Process_Handler();
+	      USART_Cmd_Error_Handler();
              
-
-             
-         }
+        }
       
-        
-        
-			
-		}
+    }
 }
 
-
-/*
-*********************************************************************************************************
+/**********************************************************************************************************
 *	函 数 名: vTaskStart
 *	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
 *	形    参: pvParameters 是在创建该任务时传递的形参
 *	返 回 值: 无
 *   优 先 级: 4  
-*********************************************************************************************************
-*/
+**********************************************************************************************************/
 static void vTaskStart(void *pvParameters)
 {
    BaseType_t xResult;
    const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
-   static uint8_t sound_flag,power_on_first;
    uint32_t ulValue;
    static uint8_t key_add_sound_flag,power_sound_flag,key_dec_sound_flag;
 
@@ -264,9 +242,6 @@ static void vTaskStart(void *pvParameters)
                   
             }
            
-            
-
-            
         }
         else {
             
@@ -340,15 +315,12 @@ static void vTaskStart(void *pvParameters)
       }
   }
 
-				
-/*
-*********************************************************************************************************
+/**********************************************************************************************************
 *	函 数 名: AppTaskCreate
 *	功能说明: 创建应用任务
 *	形    参：无
 *	返 回 值: 无
-*********************************************************************************************************
-*/
+**********************************************************************************************************/
 static void AppTaskCreate (void)
 {
 
@@ -369,13 +341,16 @@ static void AppTaskCreate (void)
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
-
+/*********************************************************************************************************
+*	函 数 名: void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
+*	功能说明: GPIO外部中断，回调函数
+*	形    参：外部中断GPIO 
+*	返 回 值: 无
+*********************************************************************************************************/
 void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
 
- 
- 
-   BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     __HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
  
    switch(GPIO_Pin){
@@ -696,5 +671,21 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 
 }
 
+
+/*****************************************************************************
+ * 
+ * Function Name: void Timer_PowerOff_Handler(void)
+ * Function:
+ * Input Ref: NO
+ * Return Ref: NO
+ * 
+*****************************************************************************/
+void Timer_PowerOff_Handler(void)
+{
+     xTaskNotify(xHandleTaskStart, /* 目标任务 */
+	 RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
+	 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+}
 
 

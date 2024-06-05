@@ -2,7 +2,7 @@
 #include "bsp.h"
 
 
-static void delay_chip_wifi_led_fast_blink(void);
+
 
 static uint32_t ic_id;
 

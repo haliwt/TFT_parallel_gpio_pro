@@ -12,18 +12,11 @@ static void TFT_Pocess_Command_Handler(void);
 static void Power_On_Fun(void);
 static void Power_Off_Fun(void);
 
-static void Mainboard_Action_Fun(void);
-static void Mainboard_Fun_Stop(void);
-
-
-
-
-
 void bsp_Init(void);
 
 uint16_t power_off_counter;
 
-static uint8_t confirm_key_data;
+
 
 
 
@@ -130,11 +123,7 @@ void TFT_Process_Handler(void)
 		gpro_t.gTimer_pro_fan =0;
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
-
-
-        
-
-        //wifi ref 
+		//wifi ref 
         wifi_t.link_net_tencent_data_flag=1;
         wifi_t.smartphone_app_power_on_flag=0;
         wifi_t.power_off_step=0; 
@@ -258,7 +247,7 @@ static void TFT_Pocess_Command_Handler(void)
         TFT_BACKLIGHT_ON();
 
    
-        
+        gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 20; //
 	    gpro_t.gTimer_pro_update_dht11_data=60;
 

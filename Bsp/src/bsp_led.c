@@ -123,7 +123,7 @@ void Breath_Led(void)
 {
  
      static uint8_t flag,switch_flag,dec_led_flag;
-        static uint8_t i,j,z;
+        static uint8_t i,j;
         led_k++;
         
         
@@ -206,7 +206,7 @@ void Breath_Led(void)
         
             led_k=0;
              i=0;
-             z=0;
+          
              dec_led_flag=1;
             
          //  }
@@ -218,7 +218,7 @@ void Breath_Led(void)
            
             led_k=0;
              i=0;
-             z=0;
+        
              dec_led_flag=0;
             
     //        if(z<20){

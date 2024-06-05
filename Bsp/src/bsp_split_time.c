@@ -47,25 +47,27 @@ void TimeTimer_Pro_Handler(void)
 		
 			gctl_t.gTimer_ctl_set_timer_time_senconds =0;
 
-			gctl_t.gSet_timer_minutes --;
+			//gctl_t.gSet_timer_minutes --;
+
+            gctl_t.gSet_timer_minutes = gctl_t.gSet_timer_minutes - 20;
 
 			if(gctl_t.gSet_timer_minutes <0){
-			gctl_t.gSet_timer_minutes =59;
-			gctl_t.gSet_timer_hours --;
+			gctl_t.gSet_timer_minutes =20; //59
+			 gctl_t.gSet_timer_hours --;
+			// gctl_t.gSet_timer_minutes = gctl_t.gSet_timer_minutes - 20;
 			}
 
 			
 			if(gctl_t.gSet_timer_hours < 0){
+			gpro_t.run_process_step=0xf0;
 
-			gpro_t.gPower_On = power_off;
-			gpro_t.power_off_flag=1;
-			gpro_t.run_process_step=0xff;
-			   // TFT_BACKLIGHT_OFF();
-				//LED_Mode_Key_Off();
-			   // LED_Power_Key_Off();
+            Timer_PowerOff_Handler();
 
 			}
+            else{
 			TFT_Disp_Set_TimerTime(0);
+
+            }
 		}
 		
 		TFT_DonnotDisp_Works_Time();
@@ -226,6 +228,8 @@ static uint8_t disp_works_timer_timing_fun(void)
   if(gpro_t.disp_works_timer_timing_mode_item==works_time)return works_time ;
   else if(gpro_t.disp_works_timer_timing_mode_item==timer_time)return timer_time ;
   else if(gpro_t.disp_works_timer_timing_mode_item==timer_set_time)return timer_set_time ;
+   
+   return 0;
 
 }
 
