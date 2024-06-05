@@ -77,29 +77,26 @@ void TimeTimer_Pro_Handler(void)
 
 	 case timer_set_time://03
 
-		if(gpro_t.gTimer_pro_set_long_key_tims > 2){
+		if(gpro_t.gTimer_pro_set_long_key_tims > 3){
             gpro_t.gTimer_pro_set_long_key_tims =0;  
             
 		    if(gctl_t.gSet_timer_hours >0 ){
            
-				gpro_t.disp_works_timer_timing_mode_item= timer_time;
-				
-				gctl_t.gTimer_ctl_set_timer_time_senconds =0;
-			
-				gctl_t.gSet_timer_minutes =0;
-				//TFT_Disp_Chinese_Timer_96_24(100,150);
-				 TFT_Disp_Chinese_Timer_23_23(TIMER_X0,TIMER_Y,0);
-				   TFT_Disp_Chinese_Timer_23_23(TIMER_X1,TIMER_Y,1);
-				   TFT_Disp_Chinese_Timer_23_23(TIMER_X2,TIMER_Y,2);
-				   TFT_Disp_Chinese_Timer_23_23(TIMER_X3,TIMER_Y,3);
-				    TFT_Only_Disp_Set_Timer_Blink();
-					HAL_Delay(100);
-					TFT_Disp_Onley_Set_TimerTime_Value();
+            gpro_t.disp_works_timer_timing_mode_item= timer_time;
 
-                 
+            gctl_t.gTimer_ctl_set_timer_time_senconds =0;
 
-					 
-			}
+            gctl_t.gSet_timer_minutes =0;
+            //TFT_Disp_Chinese_Timer_96_24(100,150);
+            TFT_Disp_Chinese_Timer_23_23(TIMER_X0,TIMER_Y,0);//"定"
+            TFT_Disp_Chinese_Timer_23_23(TIMER_X1,TIMER_Y,1);//"时"
+            TFT_Disp_Chinese_Timer_23_23(TIMER_X2,TIMER_Y,2);//“时”
+            TFT_Disp_Chinese_Timer_23_23(TIMER_X3,TIMER_Y,3);//“间”
+            TFT_Only_Disp_Set_Timer_Blink();
+            HAL_Delay(200);
+            TFT_Disp_Onley_Set_TimerTime_Value();
+
+           }
 			else{
 				
 		  
