@@ -448,11 +448,11 @@ static void Power_On_Fun(void)
    gctl_t.timer_time_define_flag = 0;
   
 	 gctl_t.gSet_timer_hours =0;
-	 gctl_t.gSet_timer_minutes =0;
+
 
 	 //mode key long times 
 	 
-	 gctl_t.mode_key_long_time_flag=0;
+	
 
 
 

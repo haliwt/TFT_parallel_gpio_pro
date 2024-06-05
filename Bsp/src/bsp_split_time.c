@@ -79,9 +79,8 @@ void TimeTimer_Pro_Handler(void)
 
 		if(gpro_t.gTimer_pro_set_long_key_tims > 2){
             gpro_t.gTimer_pro_set_long_key_tims =0;  
-			gctl_t.mode_long_key_flag =0;  
-		
-			if(gctl_t.gSet_timer_hours >0 ){
+            
+		    if(gctl_t.gSet_timer_hours >0 ){
            
 				gpro_t.disp_works_timer_timing_mode_item= timer_time;
 				
@@ -96,8 +95,11 @@ void TimeTimer_Pro_Handler(void)
 				    TFT_Only_Disp_Set_Timer_Blink();
 					HAL_Delay(100);
 					TFT_Disp_Onley_Set_TimerTime_Value();
-					
-					
+
+                    gpro_t.key_mode_long_time_over_flag=0;
+			        gpro_t.mode_key_run_item_step = mode_key_set_temp; //key input item by changed.
+
+					 
 			}
 			else{
 				
@@ -124,6 +126,9 @@ void TimeTimer_Pro_Handler(void)
 					TFT_Display_WorksTime();
 			}
 			}
+
+            gpro_t.key_mode_long_time_over_flag=0;
+			gpro_t.mode_key_run_item_step = mode_key_set_temp; //key input item by changed.
 			
 		}
 	   break;

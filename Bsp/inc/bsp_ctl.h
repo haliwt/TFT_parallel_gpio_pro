@@ -36,14 +36,14 @@ typedef struct _bsp_ctl{
 	uint8_t ptc_flag;
 	uint8_t plasma_flag;
 	uint8_t ultrasonic_flag;
-	uint8_t mode_key_long_time_flag;
+
    
 
 	uint8_t ptc_warning;
 	uint8_t fan_warning;
 	
 	uint8_t memory_confimr_key_done;
-    uint8_t mode_long_key_flag;
+
    
     //time
    uint8_t disp_works_hours;
@@ -60,9 +60,9 @@ typedef struct _bsp_ctl{
  
    
    uint8_t disp_works_minutes;
-   int8_t gSet_timer_minutes ;
+  
    int8_t gSet_timer_hours ;
-   
+   int8_t gSet_timer_minutes;
    int8_t gSet_temperature_value;
    int8_t select_main_fun_numbers;
 
