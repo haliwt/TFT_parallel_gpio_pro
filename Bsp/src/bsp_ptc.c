@@ -157,10 +157,11 @@ void Temperature_Ptc_Pro_Handler(void)
 
          case disp_ptc_temp_value_item:
 
-		  	if(gpro_t.gTimer_pro_temp_delay > 12  && ptc_error_state()==0){ //WT.EDIT 2023.07.27 over 40 degree shut of ptc off
+		  	if(gpro_t.gTimer_pro_temp_delay > 17  && ptc_error_state()==0){ //WT.EDIT 2023.07.27 over 40 degree shut of ptc off
                 gpro_t.gTimer_pro_temp_delay=0;
                 	
-				if(dht11_temp_value() >39 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){//envirment temperature
+               TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+                if(dht11_temp_value() >39 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){//envirment temperature
                     times_counter=1;
 					gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
 					Ptc_Off();
@@ -218,10 +219,12 @@ void Temperature_Ptc_Pro_Handler(void)
 
        
 
-    		   if(gpro_t.gTimer_pro_temp_delay> 10   && ptc_error_state()==0 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){
+    		   if(gpro_t.gTimer_pro_temp_delay> 17   && ptc_error_state()==0 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){
                    gpro_t.gTimer_pro_temp_delay =0;
 
-    		 
+              TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+
+    	
     		  
     		  if(set_temp_value() < dht11_temp_value()){//envirment temperature
     	  
@@ -266,8 +269,7 @@ void Temperature_Ptc_Pro_Handler(void)
 		   if(gpro_t.gTimer_pro_set_tem_value_blink > 1){
 			
                gpro_t.gTimer_pro_set_tem_value_blink =0;
-              // gpro_t.set_timer_timing_success = 1;
-			   gpro_t.gTimer_pro_temp_delay= 65; //at once display temperature of sensor dht11 of value.
+             
 			   gpro_t.mode_key_run_item_step = 0xff;
 			   gctl_t.gSet_temperature_value_item= dsip_set_ptc_temp_value_item;
 
@@ -276,11 +278,13 @@ void Temperature_Ptc_Pro_Handler(void)
                TFT_Disp_Only_Temp_Numbers(0,gctl_t.gSet_temperature_value); //don't     display number
 			 
 			   gpro_t.add_or_dec_is_cofirm_key_flag =0;
-
+               gpro_t.set_timer_timing_success=1;
+               
+               gpro_t.gTimer_pro_temp_delay= 30; //at once display temperature of sensor dht11 of value.
 			    if(v_t.voice_set_temperature_value_flag==1){
 			   	 v_t.voice_set_temperature_value_flag++;
 				 
-			     TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
+			     //TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
                }
 
 		   }

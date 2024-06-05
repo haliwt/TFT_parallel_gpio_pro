@@ -447,18 +447,10 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
          }
 
-           
-
-   break;
-
-
-   }
-
-
+      break;
+    }
 
 }
-
-
 /********************************************************************************
 	**
 	*Function Name:void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -597,20 +589,12 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 		   {
 
                v_t.voice_data[0]=  v_t.voice_rxBuf[4]; //voice data4 + data6
-			 
-			  
 			   state_uart1=5;
-			   
-
-			 
 		   }
 		   else
 			  state_uart1=0; 
 		  
-    	     
-
-
-    	 }
+    	    }
 		  else{
 
 		   state_uart1=0; 

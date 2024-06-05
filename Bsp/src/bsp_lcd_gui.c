@@ -243,7 +243,14 @@ void TFT_Display_WorksTime(void)
 
 }
 
-
+/***********************************************************************************************
+	*
+	*Function Name:void TFT_Display_WorksTime(void)
+	*Function : display of works time value 
+	*Input: NO
+	*Return: NO 
+	*
+***********************************************************************************************/
 void TFT_Display_Precise_WorksTime(void)
 {
    static uint8_t temp_decade_hours,temp_unit_hours,temp_decade_minutes,temp_unit_minutes;
@@ -279,42 +286,42 @@ void TFT_Display_Precise_WorksTime(void)
 	if(disp_timing ==1){
 	   disp_timing=0;
 	if(gpro_t.gPower_On == power_on){
-	temp_decade_hours = gctl_t.disp_works_hours /10;
-	temp_unit_hours = gctl_t.disp_works_hours % 10;
+    	temp_decade_hours = gctl_t.disp_works_hours /10;
+    	temp_unit_hours = gctl_t.disp_works_hours % 10;
 
-	temp_decade_minutes = gctl_t.disp_works_minutes/10;
-	temp_unit_minutes = gctl_t.disp_works_minutes%10;
+    	temp_decade_minutes = gctl_t.disp_works_minutes/10;
+    	temp_unit_minutes = gctl_t.disp_works_minutes%10;
 
-	if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
+    	if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
 
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X0,TIMER_Y,0);
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X1,TIMER_Y,1);
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X2,TIMER_Y,2);
-			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X3,TIMER_Y,3);
+    			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X0,TIMER_Y,0);
+    			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X1,TIMER_Y,1);
+    			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X2,TIMER_Y,2);
+    			TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X3,TIMER_Y,3);
 
-		}
-		else{
-			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X0,TIMER_Y,0);
-			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X1,TIMER_Y,1);
-			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X2,TIMER_Y,2);
-			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X3,TIMER_Y,3);
-			if(wifi_link_net_state()==0)gctl_t.beijing_time_flag=0;
+    		}
+    		else{
+    			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X0,TIMER_Y,0);
+    			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X1,TIMER_Y,1);
+    			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X2,TIMER_Y,2);
+    			TFT_Disp_Chinese_WorkTime_23_23(TIMER_X3,TIMER_Y,3);
+    			if(wifi_link_net_state()==0)gctl_t.beijing_time_flag=0;
 
-		}
+    		}
    	}
 
 
-		
-   	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,0,temp_decade_hours);
-	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(114,190,0,temp_unit_hours);
+	if(gpro_t.gPower_On == power_on){	
+       	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,0,temp_decade_hours);
+    	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(114,190,0,temp_unit_hours);
 
-	
+    	
 
 
-	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,0,temp_decade_minutes);
-	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,0,temp_unit_minutes);
+    	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,0,temp_decade_minutes);
+    	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,0,temp_unit_minutes);
 
-	
+    }
 
 	}
 }

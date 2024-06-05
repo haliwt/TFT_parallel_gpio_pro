@@ -83,6 +83,7 @@ void bsp_Idle(void)
 
     TFT_Disp_Timer_Split_Symbol();
     Wifi_Fast_Led_Blink();
+    Display_Precise_Works_Time();
 	/* --- 让CPU进入休眠，由Systick定时中断唤醒或者其他中断唤醒 */
 
 	/* 例如 emWin 图形库，可以插入图形库需要的轮询函数 */
@@ -129,6 +130,7 @@ void TFT_Process_Handler(void)
 		gpro_t.gTimer_pro_fan =0;
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
+
 
         
 
@@ -293,7 +295,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 	   }
 
-	   Display_Precise_Works_Time();
+
 
 	 gpro_t.run_process_step=pro_run_main_fun;
 	   
@@ -303,7 +305,7 @@ static void TFT_Pocess_Command_Handler(void)
 	    Wifi_Fast_Led_Blink();
 
 	    RunMain_And_Interval_Handler();
-	    Display_Precise_Works_Time();
+	  
 	   gpro_t.run_process_step=pro_disp_works_time;
 	 break;
 
@@ -323,7 +325,7 @@ static void TFT_Pocess_Command_Handler(void)
        Wifi_Fast_Led_Blink();
 	   Temperature_Ptc_Pro_Handler();
 		
-       Display_Precise_Works_Time();
+       
       gpro_t.run_process_step=pro_disp_wifi_led;
 
 	break;

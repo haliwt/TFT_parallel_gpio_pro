@@ -15,8 +15,15 @@ void TimerTiming_Init(void)
 }
 
 
-//static void TFT_Donnot_Set_Timer_Time(void);
 
+/*******************************************************************************************************
+    **
+    *Function Name:void TimeTimer_Pro_Handler(void)
+    *Function :display works or timer timing 
+    *Input Ref:NO
+    *Return Ref:NO
+    *
+*********************************************************************************************************/
 void TimeTimer_Pro_Handler(void)
 {
  
@@ -124,7 +131,14 @@ void TimeTimer_Pro_Handler(void)
 
 }
 
-
+/*******************************************************************************************************
+    **
+    *Function Name:void Display_Precise_Works_Time(void)
+    *Function :display works or beijing timing value 
+    *Input Ref:NO
+    *Return Ref:NO
+    *
+*********************************************************************************************************/
 void Display_Precise_Works_Time(void)
 {
 	  if(gpro_t.disp_works_timer_timing_mode_item==timer_time){
@@ -140,7 +154,6 @@ void Display_Precise_Works_Time(void)
 
 
 }
-
 /********************************************************************************
  * 
  * Function Name: void Power_Off_Retain_Beijing_Time(void)
@@ -169,7 +182,7 @@ void Power_Off_Retain_Beijing_Time(void)
 }
 
 	
-/**********************************************************************************************************
+/*******************************************************************************************************
     **
     *Function Name:void Power_Key_Detected(void)
     *Function : 
