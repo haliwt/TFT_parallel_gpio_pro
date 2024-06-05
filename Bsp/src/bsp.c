@@ -359,11 +359,7 @@ static void TFT_Pocess_Command_Handler(void)
 				ModeKey_Select_Default_LedOnOff();
 			 break;
 
-             
-
-            }
-			
-
+             }
 		}
 		else{
 
