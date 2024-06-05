@@ -18,7 +18,7 @@
 
 
 static void Mqtt_power_off_Value(void);
-static void property_report_power_on_state(void);
+
 
 
 static void property_report_SetOpen(uint8_t open);

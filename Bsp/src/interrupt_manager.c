@@ -108,11 +108,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         
 	  
 	
-	  //wifi counter 
-	 
-	     	//wifi
+	  //wifi timer 
+
 	    wifi_t.gTimer_auto_detected_net++;
-		wifi_t.gTimer_wifi_pub_power_off++;
+	
 		wifi_t.gTimer_power_first_link_tencent++;
 		wifi_t.power_on_login_tencent_cloud_flag++;
 	

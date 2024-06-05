@@ -103,7 +103,7 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
 *********************************************************************************/
 static void RunWifi_Command_Handler(void)
 {
-  static uint8_t link_net_flag; 
+//  static uint8_t link_net_flag; 
 
     
  	switch(wifi_t.runCommand_order_lable){

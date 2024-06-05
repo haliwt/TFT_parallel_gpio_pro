@@ -157,18 +157,19 @@ typedef struct _WIFI_FUN{
 	
 	uint8_t gTimer_login_tencent_times;
 	uint8_t gTimer_power_first_link_tencent ;
-	uint8_t gTimer_wifi_pub_power_off;
+
 	uint8_t gTimer_wifi_power_on_detect ;
 	uint8_t gTimer_wifi_counter_link_beijing_times ;
 	uint8_t gTimer_main_pro_times;
-	uint8_t gTimer_wifi_sub_power_off;
+
 	uint8_t gTimer_wifi_rx_error;
     uint8_t gTimer_counter_repeat_link_net;
     uint8_t gTimer_auto_detected_net;
 	
     uint16_t gTimer_get_beijing_time;
 	uint16_t gTimer_auto_detected_net_state_times;
-    
+
+ 
     
   
 	

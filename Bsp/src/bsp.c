@@ -147,26 +147,27 @@ void TFT_Process_Handler(void)
 	}
 
     if(wifi_link_net_state() ==1 && gpro_t.power_off_flag ==2){
-		wifi_t.gTimer_wifi_pub_power_off=0;
+	
         wifi_t.link_net_tencent_data_flag=1;
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
+        HAL_Delay(200);
 		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		 
 		  
 	}
-	if(wifi_link_net_state() ==1  && gctl_t.beijing_time_flag == 1 && wifi_t.gTimer_wifi_pub_power_off > 50){
+	if(wifi_link_net_state() ==1  ){
 		
-        wifi_t.gTimer_wifi_pub_power_off =0;
-        TFT_DonnotDisp_Works_Time();
+       TFT_DonnotDisp_Works_Time();
 		
     }
 
-    if(wifi_link_net_state() ==1  && wifi_t.gTimer_wifi_sub_power_off > 4 && gpro_t.power_off_flag==3){
+    if(wifi_link_net_state() ==1   && gpro_t.power_off_flag==3){
 		gpro_t.power_off_flag++;
-		wifi_t.gTimer_wifi_sub_power_off=0;
+		
         Subscriber_Data_FromCloud_Handler();
+          HAL_Delay(200);
 	  
 	
     }
