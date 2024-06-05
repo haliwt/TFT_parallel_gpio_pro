@@ -41,7 +41,7 @@ void TimeTimer_Pro_Handler(void)
 
 	break;
 
-	case timer_time: //01 ->timer_time 
+	case timer_time: //02 ->timer_time 
 		if(gctl_t.gTimer_ctl_set_timer_time_senconds >59 ){
 
 		
@@ -75,7 +75,7 @@ void TimeTimer_Pro_Handler(void)
 
 	
 
-	 case timer_set_time://02
+	 case timer_set_time://03
 
 		if(gpro_t.gTimer_pro_set_long_key_tims > 2){
             gpro_t.gTimer_pro_set_long_key_tims =0;  
@@ -96,8 +96,7 @@ void TimeTimer_Pro_Handler(void)
 					HAL_Delay(100);
 					TFT_Disp_Onley_Set_TimerTime_Value();
 
-                    gpro_t.key_mode_long_time_over_flag=0;
-			        gpro_t.mode_key_run_item_step = mode_key_set_temp; //key input item by changed.
+                 
 
 					 
 			}

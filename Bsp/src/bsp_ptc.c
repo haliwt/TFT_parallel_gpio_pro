@@ -270,7 +270,6 @@ void Temperature_Ptc_Pro_Handler(void)
 			
                gpro_t.gTimer_pro_set_tem_value_blink =0;
              
-			   gpro_t.mode_key_run_item_step = 0xff;
 			   gctl_t.gSet_temperature_value_item= dsip_set_ptc_temp_value_item;
 
                TFT_Disp_Only_Temp_Numbers(1,gctl_t.gSet_temperature_value); //don't     display number
