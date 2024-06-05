@@ -48,6 +48,7 @@ static TaskHandle_t xHandleTaskStart = NULL;
 //static void power_long_short_key_fun(void);
 
 uint8_t add_key_counter,dec_key_counter;
+uint8_t voice_inter_flag;
 
 
 /**********************************************************************************************************
@@ -82,7 +83,7 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
    
    
@@ -155,10 +156,10 @@ static void vTaskMsgPro(void *pvParameters)
             else if((ulValue & VOICE_BIT_8) != 0){
               
                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-                                    RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
+                                   RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
                                      eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                 //  v_t.sound_rx_data_success_flag = 1;
-
+               
                
               
             }
@@ -178,7 +179,7 @@ static void vTaskMsgPro(void *pvParameters)
                 
             MainBoard_Self_Inspection_PowerOn_Fun();
             WIFI_Process_Handler();
-	       
+	        USART_Cmd_Error_Handler();
              
 
              
@@ -259,7 +260,7 @@ static void vTaskStart(void *pvParameters)
              }
             else if((ulValue & RUN_VOICE_9 ) != 0)   /* 接收到消息，检测那个位被按下 */
 			{
-			     v_t.sound_rx_data_success_flag = 1;
+			    v_t.sound_rx_data_success_flag = 1;
                   
             }
            
@@ -321,13 +322,18 @@ static void vTaskStart(void *pvParameters)
          }
 
          if(v_t.sound_rx_data_success_flag == 1 ){
-                 v_t.sound_rx_data_success_flag=0;
-                  Voice_Decoder_Handler();
+               v_t.sound_rx_data_success_flag=0;
+                voice_inter_flag--;
+               Voice_Decoder_Handler();
+         
               
           }
+         else{
               
-         TFT_Process_Handler();
-         USART_Cmd_Error_Handler();
+            TFT_Process_Handler();
+
+         }
+        
          
          }
 
@@ -468,7 +474,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     //wifi usart2
     if(huart->Instance==USART2)
     {
-           
+         //DISABLE_INT();
+        // taskENTER_CRITICAL();
         if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
 
 			wifi_t.wifi_data[wifi_t.wifi_uart_counter] = wifi_t.usart2_dataBuf[0];
@@ -508,10 +515,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				}
 	      }
 	  
-	  
+	 // ENABLE_INT();
+	//  taskEXIT_CRITICAL();
 //	__HAL_UART_CLEAR_NEFLAG(&huart2);
 //	__HAL_UART_CLEAR_FEFLAG(&huart2);
-//	__HAL_UART_CLEAR_OREFLAG(&huart2);
+	__HAL_UART_CLEAR_OREFLAG(&huart2);
 //	__HAL_UART_CLEAR_TXFECF(&huart2);
 
       HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
@@ -519,6 +527,9 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
  //voice sound by USART1
   if(huart->Instance==USART1){
+
+        //DISABLE_INT();
+       // taskENTER_CRITICAL();
 
     	switch(state_uart1)
 		{
@@ -632,7 +643,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	     if(v_t.voice_rxBuf[7]==0xFB){ //hex : 41 -'A'	-fixed master
 		  
            state_uart1=0; 
-   
+         
+           voice_inter_flag++;
             
            xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
                    VOICE_BIT_8,      /* 设置目标任务事件标志位bit0  */
@@ -658,10 +670,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
 	}
 	 
-	  
+	 // ENABLE_INT();
+	 //taskEXIT_CRITICAL();
     //  __HAL_UART_CLEAR_NEFLAG(&huart1);
     //  __HAL_UART_CLEAR_FEFLAG(&huart1);
-    //  __HAL_UART_CLEAR_OREFLAG(&huart1);
+     __HAL_UART_CLEAR_OREFLAG(&huart1);
     //  __HAL_UART_CLEAR_TXFECF(&huart1);
 
 
@@ -669,6 +682,34 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 
 	}
 	
+}
+
+/********************************************************************************
+**
+*Function Name:void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+*Function :UART callback function  for UART interrupt for transmit data
+*Input Ref: structure UART_HandleTypeDef pointer
+*Return Ref:NO
+*
+*******************************************************************************/
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
+{
+	if(huart==&huart1) //voice  sound send 
+	{
+       //DISABLE_INT();
+
+      // taskENTER_CRITICAL_FROM_ISR();
+       v_t.transOngoingFlag=0; //UART Transmit interrupt flag =0 ,RUN
+      // //ENABLE_INT();
+      // taskEXIT_CRITICAL_FROM_ISR(0);
+	}
+
+//	if(huart== &huart2){
+//
+//       usart2_transOngoingFlag =0;
+//
+//	}
+
 }
 
 

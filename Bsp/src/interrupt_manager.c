@@ -145,29 +145,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
   }
 }
 
-/********************************************************************************
-**
-*Function Name:void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-*Function :UART callback function  for UART interrupt for transmit data
-*Input Ref: structure UART_HandleTypeDef pointer
-*Return Ref:NO
-*
-*******************************************************************************/
-void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
-{
-	if(huart==&huart1) //voice  sound send 
-	{
-		v_t.transOngoingFlag=0; //UART Transmit interrupt flag =0 ,RUN
-	}
-
-//	if(huart== &huart2){
-//
-//       usart2_transOngoingFlag =0;
-//
-//	}
-
-}
-
 
 
 
