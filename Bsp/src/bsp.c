@@ -74,12 +74,12 @@ void bsp_Idle(void)
 	}
 	
 	/* --- 喂狗 */
-//    if(gpro_t.gTimer_pro_feed_dog > 2){ //16s
-//	gpro_t.gTimer_pro_feed_dog = 0;
-//    TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
-//	iwdg_feed();
-//
-//    }
+    if(gpro_t.gTimer_pro_feed_dog > 10){ //16s
+    	gpro_t.gTimer_pro_feed_dog = 0;
+        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+    	iwdg_feed();
+
+    }
 
     TFT_Disp_Timer_Split_Symbol();
     Wifi_Fast_Led_Blink();
@@ -259,8 +259,8 @@ static void TFT_Pocess_Command_Handler(void)
 
    
         
-	    
-	    gpro_t.gTimer_pro_update_dht11_data=30;
+	    gpro_t.gTimer_pro_disp_temphum = 20; //
+	    gpro_t.gTimer_pro_update_dht11_data=60;
 
 	    wifi_t.gTimer_get_beijing_time=0;
 		wifi_t.receive_beijing_time=0;

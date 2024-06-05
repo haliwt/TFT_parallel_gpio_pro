@@ -80,7 +80,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         //main process timer
 	
 	    //be used to timer 
-	   gpro_t.gTimer_pro_wifi_dht11_temp_hum++;
+	 
        gpro_t.gTimer_pro_update_dht11_data ++;
        gpro_t.gTimer_pro_set_tem_value_blink++;
        gpro_t.gTimer_pro_mode_key_be_select++;

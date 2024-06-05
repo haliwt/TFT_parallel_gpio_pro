@@ -60,9 +60,9 @@ void TimeTimer_Pro_Handler(void)
 			gpro_t.gPower_On = power_off;
 			gpro_t.power_off_flag=1;
 			gpro_t.run_process_step=0xff;
-			 TFT_BACKLIGHT_OFF();
-				LED_Mode_Key_Off();
-			    LED_Power_Key_Off();
+			   // TFT_BACKLIGHT_OFF();
+				//LED_Mode_Key_Off();
+			   // LED_Power_Key_Off();
 
 			}
 			TFT_Disp_Set_TimerTime(0);

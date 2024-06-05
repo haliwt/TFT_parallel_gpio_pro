@@ -215,18 +215,12 @@ typedef struct{
   uint8_t gTimer_pro_set_tem_value_blink;
   
 
-
-
- 
-  
- 
-
   uint8_t gTimer_pro_set_long_key_tims;
 
   uint8_t gTimer_pro_update_dht11_data;
   
 
-  uint8_t gTimer_pro_wifi_dht11_temp_hum;
+ 
   
  
 
