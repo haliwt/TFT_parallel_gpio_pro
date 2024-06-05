@@ -97,10 +97,8 @@ void TimeTimer_Pro_Handler(void)
             TFT_Disp_Onley_Set_TimerTime_Value();
 
            }
-			else{
-				
-		  
-				if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
+		   else{
+			   if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
 					
 					gpro_t.disp_works_timer_timing_mode_item= works_time;//gpro_t.disp_works_timer_timing_mode_item
 					TFT_Disp_Chinese_BeiJing_Time_23_23(TIMER_X0,TIMER_Y,0);

@@ -758,21 +758,17 @@ static void voice_set_timer_timing_value(uint8_t set_hours)
 	   
 	   send_tx_set_timer_value(set_value);
    
-		gpro_t.mode_key_pressed_flag =0;
-	//	Buzzer_KeySound();
-		gpro_t.gTimer_pro_mode_key_be_select = 0; 
-
-	    
-	    if(set_value == 3)set_value=2;
+	   if(set_value == 3)set_value=2;
 		else if(set_value > 3){
 
 			set_value--;
 
 		}
 		gctl_t.gSet_timer_hours = set_value ;
-
+        gpro_t.gTimer_pro_set_long_key_tims=0;
         gctl_t.gTimer_ctl_set_timer_time_senconds =0;
-		gpro_t.disp_works_timer_timing_mode_item=timer_time;
+	    gpro_t.disp_works_timer_timing_mode_item = timer_set_time; //disp set timer timing value 
+	  	
 	
 		TFT_Disp_Voice_Set_TimerTime_Init();
 		

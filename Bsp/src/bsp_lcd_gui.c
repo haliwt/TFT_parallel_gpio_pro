@@ -4,15 +4,7 @@
 
 uint16_t BACK_COLOR=BLACK;
 uint16_t  POINT_COLOR=WHITE;
-
-
 static void lcd_draw_line(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t color);
-
-
-
-
-
-
 /***********************************************************************
  *
  * Function Name: void TFT_Display_Handler(void)
@@ -691,7 +683,7 @@ void TFT_Disp_Voice_Set_TimerTime_Init(void)
 	    timer_decade_minutes=0;
 	    timer_unit_minutes =0;
 
-    gpro_t.disp_works_timer_timing_mode_item=timer_time;
+
  
 	//TFT_Disp_Chinese_Timer_96_24(100,150);
 	 TFT_Disp_Chinese_Timer_23_23(TIMER_X0,TIMER_Y,0);

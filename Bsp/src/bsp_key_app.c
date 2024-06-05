@@ -80,10 +80,7 @@ void Key_Speical_Power_Fun_Handler(void)
 ******************************************************************************/
 void Key_Speical_Mode_Fun_Handler(void)
 {
- //modke _key_long_time
-
-
-		//mode key be pressed long times
+    //mode key be pressed long times
 	if(KEY_MODE_VALUE() ==KEY_DOWN && gpro_t.mode_key_pressed_flag < 100){
 
 
