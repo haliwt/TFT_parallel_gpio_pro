@@ -123,13 +123,7 @@ void Key_Speical_Mode_Fun_Handler(void)
 	   	
 	   }
 
-      
-	if(gpro_t.key_mode_long_time_over_flag=1 &&  gpro_t.gTimer_exit_mode_long_key < 2){
-
-          gpro_t.key_mode_long_time_over_flag =0;
-           gpro_t.mode_key_run_item_step = mode_key_set_temp;
-    } 
-
+    
     
 
     Mode_Key_Config_Fun_Handler();
@@ -255,7 +249,7 @@ void ADD_Key_Fun(void)
 		
 			
 			gctl_t.gSet_timer_minutes=0;
-			gpro_t.gTimer_exit_mode_long_key=0;
+			
 			gctl_t.gSet_timer_hours ++ ;//disp_t.disp_timer_time_hours++ ;//gpro_t.dispTime_minutes = gpro_t.dispTime_minutes + 60;
 			if(gctl_t.gSet_timer_hours  > 24){ //if(gpro_t.dispTime_minutes > 59){
 
@@ -339,7 +333,7 @@ void DEC_Key_Fun(void)
 			   
 			    gpro_t.gTimer_pro_set_long_key_tims=0;
 	         
-                gpro_t.gTimer_exit_mode_long_key= 0;
+        
 			
 				gctl_t.gSet_timer_minutes=0;
                 

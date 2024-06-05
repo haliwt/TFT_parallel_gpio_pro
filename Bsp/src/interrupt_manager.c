@@ -90,7 +90,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        gpro_t.gTimer_pro_feed_dog++;
        gpro_t.gTimer_pro_temp_delay++;
        gpro_t.gTimer_pro_disp_temphum++;
-       gpro_t.gTimer_exit_mode_long_key++;
+    
    
         //cotrol timer
     
