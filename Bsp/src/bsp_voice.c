@@ -703,10 +703,10 @@ static void  voice_set_temperature_value(uint8_t value)
 	        v_t.voice_set_temperature_value_flag=1;
 		
 	       TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
-            if(wifi_link_net_state()==1){
-                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                    HAL_Delay(200);
-                }
+            // if(wifi_link_net_state()==1){
+            //          MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
+            //         HAL_Delay(200);
+            //     }
 
 		   gpro_t.gTimer_pro_set_tem_value_blink=0;
 
