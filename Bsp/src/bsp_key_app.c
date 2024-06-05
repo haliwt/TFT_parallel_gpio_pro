@@ -252,7 +252,8 @@ void ADD_Key_Fun(void)
 	
 			gctl_t.mode_key_long_time_flag++;
 			
-			gctl_t.gSet_timer_minutes=0;
+			//gctl_t.gSet_timer_minutes=0;
+			gpro_t.gTimer_exit_mode_long_key=0;
 			gctl_t.gSet_timer_hours ++ ;//disp_t.disp_timer_time_hours++ ;//gpro_t.dispTime_minutes = gpro_t.dispTime_minutes + 60;
 			if(gctl_t.gSet_timer_hours  > 24){ //if(gpro_t.dispTime_minutes > 59){
 
@@ -337,8 +338,10 @@ void DEC_Key_Fun(void)
 			   
 			  //  gpro_t.buzzer_sound_flag = 1;
 	            gctl_t.mode_key_long_time_flag++;
+                gpro_t.gTimer_exit_mode_long_key= 0;
 			
 				gctl_t.gSet_timer_minutes=0;
+                
 				gctl_t.gSet_timer_hours --;//disp_t.disp_timer_time_hours -- ;//gpro_t.dispTime_minutes = gpro_t.dispTime_minutes - 1;
 				if(gctl_t.gSet_timer_hours  < 0){//if(gpro_t.dispTime_minutes < 0){
 
