@@ -47,7 +47,7 @@ static TaskHandle_t xHandleTaskStart = NULL;
 
 
 uint8_t add_key_counter,dec_key_counter;
-uint8_t voice_inter_flag;
+
 
 
 /**********************************************************************************************************
@@ -268,15 +268,15 @@ static void vTaskStart(void *pvParameters)
             buzzer_sound();
 
         }
-
-         //// power_long_short_key_fun();
+          //run_main_board_process();
+        
          Key_Speical_Power_Fun_Handler();
          bsp_run_iwdg();
               
          if(gpro_t.gPower_On==power_on){
                  
                   bsp_Idle();
-                // mode_long_short_key_fun();
+             
                 Key_Speical_Mode_Fun_Handler();
 
 
@@ -300,7 +300,7 @@ static void vTaskStart(void *pvParameters)
 
          if(v_t.sound_rx_data_success_flag == 1 ){
                v_t.sound_rx_data_success_flag=0;
-                voice_inter_flag--;
+         
                Voice_Decoder_Handler();
          
               
@@ -604,8 +604,6 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	     if(v_t.voice_rxBuf[7]==0xFB){ //hex : 41 -'A'	-fixed master
 		  
            state_uart1=0; 
-         
-           voice_inter_flag++;
             
            xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
                    VOICE_BIT_8,      /* 设置目标任务事件标志位bit0  */
@@ -672,8 +670,6 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 //	}
 
 }
-
-
 /*****************************************************************************
  * 
  * Function Name: void Timer_PowerOff_Handler(void)
@@ -686,7 +682,7 @@ void Timer_PowerOff_Handler(void)
 {
      xTaskNotify(xHandleTaskStart, /* 目标任务 */
 	 RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
-	 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+	 eSetBits);             /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
 }
 
