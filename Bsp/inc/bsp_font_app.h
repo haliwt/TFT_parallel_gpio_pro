@@ -55,5 +55,11 @@ void TFT_Disp_Chinese_WorkTime_23_23(uint16_t x,uint16_t y,uint8_t num);
 void TFT_Disp_Chinese_BeiJing_Time_23_23(uint16_t x,uint16_t y,uint8_t num);
 
 
+
+
+
+
+
+
 #endif 
 

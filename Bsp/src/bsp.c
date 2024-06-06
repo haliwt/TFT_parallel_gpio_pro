@@ -145,7 +145,9 @@ void TFT_Process_Handler(void)
        
     
 		//LCD_Clear(BLACK);
-		TFT_BACKLIGHT_OFF();
+		//TFT_BACKLIGHT_OFF();
+		LCD_Clear(BLACK);
+        TFT_Disp_Fan_RunIcon(100,60);
 		Power_Off_Fun();
 		Device_NoAction_Power_Off();
 		LED_Mode_Key_Off();
@@ -183,13 +185,15 @@ void TFT_Process_Handler(void)
 	if(fan_continuce_flag ==1){
 
 	    if(gpro_t.gTimer_pro_fan <61){
-            Fan_Run();        
+            Fan_Run();
+            
 
 		}
 		else{
 			fan_continuce_flag++;
-
+            TFT_BACKLIGHT_OFF();
             Fan_Stop();
+            LCD_Clear(BLACK);
 		}
       
 

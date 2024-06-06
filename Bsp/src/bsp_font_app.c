@@ -899,7 +899,6 @@ void TFT_Disp_Chinese_Humidity_39_18(uint16_t x,uint16_t y,uint8_t num)
 }
 
 
-#if 0
 void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
 {
 
@@ -908,10 +907,10 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
    
 	static uint16_t color;
 
-	for(t = 0; t < 9360; t++)	/*遍历打印所有像素点到LCD */
+	for(t = 0; t <1785; t++)	/*遍历打印所有像素点到LCD */
 	{   
 	    
-		  temp = fan_font_390_240[t]; 
+		  temp = font_fan_1_icon[t]; 
 		
 		
 		
@@ -931,7 +930,7 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
 
 			}
 			
-			if((x - x0) == 309){
+			if((x - x0) == 120){
 				x = x0;
 				y++;
 				
@@ -947,5 +946,5 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
 	}  
 
 }
-#endif 
+ 
 
