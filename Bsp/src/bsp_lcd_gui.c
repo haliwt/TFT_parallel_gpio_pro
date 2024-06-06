@@ -54,6 +54,29 @@ void TFT_Display_Handler(void)
    	//TFT_Disp_Only_Humidity_Value(gctl_t.dht11_hum_value);
 }
 
+/***********************************************************************
+ *
+ * Function Name: void TFT_Display_PowerOn_Init_Handler(void)
+ * Function: TFT LCD 显示全部的内容
+ * Inpurt Ref: NO           
+ * Return Ref: NO 
+ *
+************************************************************************/
+void TFT_Display_PowerOn_Init_Handler(void)
+{
+
+    TFT_Display_Temp_Symbol();
+
+	TFT_Display_Humidity_Symbol();
+
+ //	TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+	
+	//TFT_Disp_Voice_Temp_Value(0,gctl_t.dht11_temp_value);
+
+   //	TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+   	//TFT_Disp_Only_Humidity_Value(gctl_t.dht11_hum_value);
+}
+
 void TFT_Display_Update_Handler(void)
 {
 

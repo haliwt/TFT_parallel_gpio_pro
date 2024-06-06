@@ -107,6 +107,8 @@ void TFT_Display_Update_Handler(void);
 
 void TFT_Display_Precise_WorksTime(void);
 
+void TFT_Display_PowerOn_Init_Handler(void);
+
 
 #endif
 

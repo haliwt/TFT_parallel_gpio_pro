@@ -898,8 +898,15 @@ void TFT_Disp_Chinese_Humidity_39_18(uint16_t x,uint16_t y,uint8_t num)
 
 }
 
-
-void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
+/****************************************************************************************
+	*
+	*Function  Name :void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num)
+	*Function: display fan run icon
+	*Input Ref:x - position x axis , y- position y axis ,array of number
+	*Return Ref:NO
+	*
+****************************************************************************************/
+void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 {
 
 	uint16_t temp, t, tbit;
@@ -910,14 +917,26 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y)
 	for(t = 0; t <1785; t++)	/*遍历打印所有像素点到LCD */
 	{   
 	    
-		  temp = font_fan_1_icon[t]; 
+		  temp = font_fan_1_icon[num][t]; 
 		
 		
 		
 		for(tbit = 0; tbit < 8; tbit++)	/* 打印一个像素点到液晶 */
 		{	
-			if(temp & 0x80)	color = BLACK;//WHITE; //words is "white",backgroud is "black"
+
+
+            if(bc == 0){
+
+            if(temp & 0x80)	color = BLACK;//WHITE; //words is "white",backgroud is "black"
 			else color = WHITE;
+            }
+            else{
+
+              if(temp & 0x80)  color = BLACK;//WHITE; //words is "white",backgroud is "black"
+              else color = BLACK;
+
+
+            }
 			TFT_DrawPoint(x, y,color );
 			
 			temp <<= 1;			

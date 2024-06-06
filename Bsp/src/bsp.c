@@ -105,7 +105,7 @@ void bsp_Idle(void)
 void TFT_Process_Handler(void)
 {
 	
-   static uint8_t fan_continuce_flag;
+   static uint8_t fan_continuce_flag,color_flag;
 	if(gpro_t.buzzer_sound_flag ==1){
 		gpro_t.buzzer_sound_flag=0;
 		Buzzer_KeySound();
@@ -146,11 +146,13 @@ void TFT_Process_Handler(void)
     
 		//LCD_Clear(BLACK);
 		//TFT_BACKLIGHT_OFF();
+		gpro_t.gTimer_pro_wifi_fast_led=0;
 		LCD_Clear(BLACK);
-        TFT_Disp_Fan_RunIcon(100,60);
+        TFT_Disp_Fan_RunIcon(100,60,0,0);
 		Power_Off_Fun();
 		Device_NoAction_Power_Off();
 		LED_Mode_Key_Off();
+        
 		
 		
 	}
@@ -186,8 +188,7 @@ void TFT_Process_Handler(void)
 
 	    if(gpro_t.gTimer_pro_fan <61){
             Fan_Run();
-            
-
+           
 		}
 		else{
 			fan_continuce_flag++;
@@ -195,9 +196,15 @@ void TFT_Process_Handler(void)
             Fan_Stop();
             LCD_Clear(BLACK);
 		}
+    }
       
+     if(gpro_t.gTimer_pro_fan > 5 && fan_continuce_flag==2){
+        gpro_t.gTimer_pro_fan =0;
+        Update_DHT11_Value();
 
-	}
+       }
+
+	
 	gctl_t.ptc_warning=0;
 	gctl_t.fan_warning =0;
 	wifi_t.repeat_login_tencent_cloud_init_ref=0;
@@ -212,15 +219,10 @@ void TFT_Process_Handler(void)
 
 
 	break;
+       }
 
-
-	}
-	
 }
-
-
-
-
+	
 /******************************************************************************
 	*
 	*Function Name:void TFT_Pocess_Command_Handler(void)
@@ -237,7 +239,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 
 	 case 0:
-	  
+	    LCD_Clear(BLACK);
 	    if(wifi_link_net_state() ==1){
 		    
 		    TFT_Display_WorksTime_Voice();
@@ -251,6 +253,11 @@ static void TFT_Pocess_Command_Handler(void)
          if(wifi_t.smartphone_app_power_on_flag==0){
 		    Power_On_Led_Init();
          }
+       
+         
+		TFT_Display_PowerOn_Init_Handler();
+	    
+         TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
 		
 	    
 		Power_On_Fun();
@@ -260,7 +267,8 @@ static void TFT_Pocess_Command_Handler(void)
 
    
         gpro_t.disp_works_timer_timing_mode_item = works_time;
-	    gpro_t.gTimer_pro_disp_temphum = 20; //
+	    gpro_t.gTimer_pro_disp_temphum = 0; //
+	    gpro_t.gTimer_pro_fan  = 30;
 	    gpro_t.gTimer_pro_update_dht11_data=60;
 
 	    wifi_t.gTimer_get_beijing_time=0;
@@ -285,8 +293,18 @@ static void TFT_Pocess_Command_Handler(void)
 		   gpro_t.gTimer_pro_disp_temphum=0;
 
 		    Update_DHT11_Value();
-            TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
-	        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+            TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+            //TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+	       // TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+       }
+
+      if(gpro_t.gTimer_pro_fan > 10){
+
+          gpro_t.gTimer_pro_fan =0;
+
+          TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
+
+
        }
 
 	   if(gpro_t.gTimer_pro_update_dht11_data > 30  && wifi_link_net_state() ==1 && wifi_t.link_beijing_times_flag ==0){

@@ -46,7 +46,7 @@ void TFT_Disp_Chinese_Temp_36_18(uint16_t x,uint16_t y);
 
 
 
-void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y);
+void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc);
 
 
 

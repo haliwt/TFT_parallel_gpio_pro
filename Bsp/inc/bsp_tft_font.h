@@ -62,7 +62,7 @@ extern const uint8_t font2323_chinese_beijing_time[4][69];
 //extern const uint8_t fan_font_390_240[9360];
 
 
-extern const uint8_t font_fan_1_icon[1785];
+extern const uint8_t font_fan_1_icon[2][1785];
 
 
 
