@@ -271,9 +271,11 @@ static void vTaskStart(void *pvParameters)
 
          //// power_long_short_key_fun();
          Key_Speical_Power_Fun_Handler();
+         bsp_Idle();
               
          if(gpro_t.gPower_On==power_on){
-                 bsp_Idle();
+                 
+                  bsp_run_Idle();
                 // mode_long_short_key_fun();
                 Key_Speical_Mode_Fun_Handler();
 

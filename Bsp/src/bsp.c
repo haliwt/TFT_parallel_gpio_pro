@@ -73,6 +73,11 @@ void bsp_Idle(void)
     	iwdg_feed();
 
     }
+}
+
+
+void bsp_run_Idle(void)
+{
 
     TFT_Disp_Timer_Split_Symbol();
     Wifi_Fast_Led_Blink();

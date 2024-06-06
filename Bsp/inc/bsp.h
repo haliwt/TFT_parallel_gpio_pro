@@ -246,7 +246,11 @@ extern PRO_T gpro_t;
 
 void bsp_Init(void);
 
+
 void bsp_Idle(void);
+
+void bsp_run_Idle(void);
+
 
 void Key_Process_Handler(uint8_t keyvalue);
 void TFT_Process_Handler(void);
