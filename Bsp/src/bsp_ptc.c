@@ -56,7 +56,7 @@ void Temperature_Ptc_Pro_Handler(void)
 
 		  case ptc_no_warning:
 
-		   if(gctl_t.gTimer_ctl_ptc_adc_times > 2 ){
+		   if(gctl_t.gTimer_ctl_ptc_adc_times > 5 ){
               gctl_t.gTimer_ctl_ptc_adc_times =0;
 
 			 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,20); //Modify :2023.09.03 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10);
@@ -67,6 +67,8 @@ void Temperature_Ptc_Pro_Handler(void)
 		  break;
 
 		  case ptc_waning:
+
+          
           if(fan_error_state()==0){
 				turn_off_ptc_function();
 			

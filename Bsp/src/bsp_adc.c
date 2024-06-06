@@ -95,15 +95,16 @@ static void Judge_PTC_Temperature_Value(uint16_t adc_ptc)
 {
   
 	
-  // if(adc_ptc < 373 || adc_ptc ==373){ //90 degree
-  if(adc_ptc < 295 || adc_ptc == 295){   //50 degree //50 degree
+  if(adc_ptc < 270 || adc_ptc == 270){   //105 degree //105 degree
 
+         gctl_t.ptc_warning =1;
 
-		gctl_t.ptc_flag=0 ;
-		PTC_SetLow(); //turn off
+		 gctl_t.ptc_flag=0 ;
+
+         Ptc_Off();
 		HAL_Delay(50);
 		LED_PTC_ICON_OFF();
-        gctl_t.ptc_warning =1;
+      
 
 		Publish_Data_Warning(ptc_temp_warning,warning);
 		HAL_Delay(200);  

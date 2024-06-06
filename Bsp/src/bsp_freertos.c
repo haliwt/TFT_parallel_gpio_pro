@@ -213,8 +213,6 @@ static void vTaskStart(void *pvParameters)
 
                   gpro_t.mode_key_pressed_flag =1;
 
-               
-              
                  }
 				
             }
@@ -275,7 +273,7 @@ static void vTaskStart(void *pvParameters)
               
          if(gpro_t.gPower_On==power_on){
                  
-                  bsp_Idle();
+                bsp_Idle();
              
                 Key_Speical_Mode_Fun_Handler();
 
