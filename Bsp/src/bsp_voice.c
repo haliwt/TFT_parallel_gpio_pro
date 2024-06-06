@@ -258,6 +258,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 		  gpro_t.run_process_step=0;
 		  voice_send_power_on_cmd();
+            gpro_t.power_off_flag = 1;
 		    LED_Mode_Key_On();
 			LED_Power_Key_On();
 			Power_On_Led_Init();
@@ -273,12 +274,16 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	if(gpro_t.gPower_On == power_on){
 		gpro_t.gPower_On = power_off;
-		gpro_t.power_off_flag = 1;
+
+
+        voice_send_power_off_cmd();
+
+        gpro_t.run_process_step=0xf0;
+
+        Timer_PowerOff_Handler();
 		
-		 voice_send_power_off_cmd();
-		  TFT_BACKLIGHT_OFF();
-				LED_Mode_Key_Off();
-			    LED_Power_Key_Off();
+		
+		 
 		
 	
 	}
