@@ -10,7 +10,7 @@
 
 static void UartSend(UART_T *_pUart, uint8_t *_ucaBuf, uint16_t _usLen);
 static uint8_t UartGetChar(UART_T *_pUart, uint8_t *_pByte);
-static void UartIRQ(UART_T *_pUart);
+//static void UartIRQ(UART_T *_pUart);
 
 /* 定义每个串口结构体变量 */
 #if UART1_FIFO_EN == 1

@@ -50,21 +50,10 @@ void bsp_Init(void)
 *	返 回 值: 无
 *********************************************************************************************************
 */
-void bsp_Idle(void)
+void bsp_run_iwdg(void)
 {
 
-	if(gpro_t.power_on_first ==0){
-      
-	 
 	
-	    Update_DHT11_Value();
-        
-	    TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
-        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
-        TFT_Display_Handler();
-		 gpro_t.power_on_first =1;
-
-	}
 	
 	/* --- 喂狗 */
     if(gpro_t.gTimer_pro_feed_dog > 10){ //16s
@@ -76,8 +65,21 @@ void bsp_Idle(void)
 }
 
 
-void bsp_run_Idle(void)
+void bsp_Idle(void)
 {
+
+   if(gpro_t.power_on_first ==0){
+      
+	    Update_DHT11_Value();
+        
+	    TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+        TFT_Display_Handler();
+		 gpro_t.power_on_first =1;
+
+	}
+
+
 
     TFT_Disp_Timer_Split_Symbol();
     Wifi_Fast_Led_Blink();

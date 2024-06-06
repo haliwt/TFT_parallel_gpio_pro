@@ -249,7 +249,7 @@ void bsp_Init(void);
 
 void bsp_Idle(void);
 
-void bsp_run_Idle(void);
+void bsp_run_iwdg(void);
 
 
 void Key_Process_Handler(uint8_t keyvalue);
