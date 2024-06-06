@@ -174,7 +174,7 @@ void TFT_Process_Handler(void)
 		gpro_t.power_off_flag++;
 		
         Subscriber_Data_FromCloud_Handler();
-          HAL_Delay(200);
+        HAL_Delay(200);
 	  
 	
     }

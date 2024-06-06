@@ -6,12 +6,11 @@
   ******************************************************************************
   * @attention
   *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
+  * s07 8080 TFT version : 1.0 
+  * DATA: 2024.06.06
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  *
+  * 
   *
   ******************************************************************************
   */
