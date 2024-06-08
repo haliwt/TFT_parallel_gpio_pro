@@ -19,7 +19,7 @@ void Key_Speical_Power_Fun_Handler(void)
 
 
 	
-      if(KEY_POWER_VALUE() ==KEY_DOWN && (gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 60) &&  gpro_t.gPower_On == power_on){
+     if(KEY_POWER_VALUE() ==KEY_DOWN && (gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 60) &&  gpro_t.gPower_On == power_on){
             gpro_t.key_power_be_pressed_flag++;
 
             if(gpro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == KEY_DOWN){

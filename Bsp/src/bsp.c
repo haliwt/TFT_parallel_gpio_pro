@@ -9,7 +9,9 @@ uint8_t fan_continuce_run_flag;
 
 static void TFT_Pocess_Command_Handler(void);
 
-static void Power_On_Fun(void);
+
+static void Power_On_Init(void);
+
 static void Power_Off_Fun(void);
 
 void bsp_Init(void);
@@ -125,7 +127,7 @@ void TFT_Process_Handler(void)
 	if(gpro_t.power_off_flag == 1){
 		gpro_t.power_off_flag ++;
 	   
-        
+         LCD_Clear(BLACK);
 	    fan_continuce_flag =1;
 		
         gpro_t.run_process_step=0;
@@ -143,18 +145,17 @@ void TFT_Process_Handler(void)
 	    gctl_t.ultrasonic_flag =0;
         
        
-    
-		//LCD_Clear(BLACK);
-		//TFT_BACKLIGHT_OFF();
+  
 		gpro_t.gTimer_pro_wifi_fast_led=0;
-		LCD_Clear(BLACK);
-      //  TFT_Disp_Fan_RunIcon(100,60,0,0);
-        TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
-		Power_Off_Fun();
-		Device_NoAction_Power_Off();
+	   
+
+        Power_Off_Fun();
 		LED_Mode_Key_Off();
-        gpro_t.gTimer_countdown_one_minute =90;
+      
+        TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
+	    gpro_t.gTimer_countdown_one_minute =90;
         TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
+        Device_NoAction_Power_Off();
 		
 		
 	}
@@ -164,7 +165,7 @@ void TFT_Process_Handler(void)
         wifi_t.link_net_tencent_data_flag=1;
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
-        HAL_Delay(200);
+        osDelay(100);
 		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		 
@@ -180,7 +181,7 @@ void TFT_Process_Handler(void)
 		gpro_t.power_off_flag++;
 		
         Subscriber_Data_FromCloud_Handler();
-        HAL_Delay(200);
+        osDelay(100);
 	  
 	
     }
@@ -196,7 +197,7 @@ void TFT_Process_Handler(void)
 			fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-            LCD_Clear(BLACK);
+            //LCD_Clear(BLACK);
 		}
     }
 
@@ -252,22 +253,19 @@ static void TFT_Pocess_Command_Handler(void)
            TFT_Display_PowerOn_WorksTime_Init();
 		}
 
-         LED_Mode_Key_On();
-	     LED_Power_Key_On();
+       
          if(wifi_t.smartphone_app_power_on_flag==0){
 		    Power_On_Led_Init();
          }
+
+        Update_DHT11_Value();
+        TFT_Display_PowerOn_Init_Handler();
        
-         
-		TFT_Display_PowerOn_Init_Handler();
-	    
          TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
-		
-	    
-		Power_On_Fun();
-	    Fan_Run();
-		Device_Action_No_Wifi_Power_On_Handler();
-        TFT_BACKLIGHT_ON();
+         TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
+         LED_Mode_Key_On();
+	     LED_Power_Key_On();
+		 TFT_BACKLIGHT_ON();
 
    
         gpro_t.disp_works_timer_timing_mode_item = works_time;
@@ -280,10 +278,11 @@ static void TFT_Pocess_Command_Handler(void)
 		wifi_t.three_times_link_beijing=0;
 		wifi_t.get_rx_beijing_time_enable=0;
 		
-   
+       Device_Action_No_Wifi_Power_On_Handler(); 
+	  Power_On_Init();
 	
       gpro_t.run_process_step=pro_disp_dht11_value;
-	
+	  Fan_Run();
 		
 	 break;
 
@@ -452,7 +451,7 @@ static void TFT_Pocess_Command_Handler(void)
 	*Return Ref:No
 	*
 ************************************************************************/
-static void Power_On_Fun(void)
+static void Power_On_Init(void)
 {
   //led on 
  
