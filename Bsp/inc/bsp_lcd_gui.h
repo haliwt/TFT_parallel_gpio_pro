@@ -109,6 +109,9 @@ void TFT_Display_Precise_WorksTime(void);
 
 void TFT_Display_PowerOn_Init_Handler(void);
 
+void TFT_Disp_CountDown_60s(uint8_t idata);
+
+
 
 #endif
 

@@ -1199,6 +1199,25 @@ void lcd_draw_rectangle(uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint
 }
 
 
+/*************************************************************************************************
+ * @brief       void CountDown_60s(void)
+ * @param       power off fan run one half minutes ,stop.
+ * @param       x2,y2: end 
+ * @param       color: rectangle is color
+ * @retval      ÎÞ
+ *************************************************************************************************/
+void TFT_Disp_CountDown_60s(uint8_t idata)
+{
+    uint8_t minute_flag, second_flag;
 
+    minute_flag = idata / 10;
+
+    second_flag = idata %10;
+  	    
+	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,0,minute_flag);
+	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(114,190,0,second_flag);
+
+
+}
 
 

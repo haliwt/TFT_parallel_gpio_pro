@@ -65,12 +65,12 @@ void RunMain_And_Interval_Handler(void)
           Device_stop_Action_Fun();
             if(fan_2_hours_stop==0){
 			 	fan_2_hours_stop=1;
-                gpro_t.gTimer_pro_fan=0;
+                gpro_t.gTimer_fan_run_one_minute=0;
               
 
 			 }
 
-			 if(gpro_t.gTimer_pro_fan < 61 && fan_2_hours_stop==1){
+			 if(gpro_t.gTimer_fan_run_one_minute < 61 && fan_2_hours_stop==1){
 
                    Fan_Run();
 			 }

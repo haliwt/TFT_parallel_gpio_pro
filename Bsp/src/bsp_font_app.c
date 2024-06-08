@@ -906,18 +906,41 @@ void TFT_Disp_Chinese_Humidity_39_18(uint16_t x,uint16_t y,uint8_t num)
 	*Return Ref:NO
 	*
 ****************************************************************************************/
+#if 0
 void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 {
-
+    static uint8_t number =0;
 	uint16_t temp, t, tbit;
-    uint16_t x0=x;
-   
+    uint16_t x0=x,x1 =x;
+    
+    static  uint16_t y0 ,y1,x_init;
+    x_init = x;
+    y0 = y;
+    y1= y;
 	static uint16_t color;
 
-	for(t = 0; t <1785; t++)	/*遍历打印所有像素点到LCD */
+	for(t = 0; t <1786; t++)	/*遍历打印所有像素点到LCD */
 	{   
-	    
-		  temp = font_fan_1_icon[num][t]; 
+
+          if(t == 1785){
+
+              number++;
+              t=0;
+              x0 = x_init;
+              x1 = x_init;
+             
+              if(number > 1){
+                  number =0;
+                  y0 = y;
+                  y1=y;
+                  
+                  
+
+              }
+              
+          }
+         
+		 temp = fan_1_icon[number][t]; 
 		
 		
 		
@@ -937,6 +960,75 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 
 
             }
+            if(number == 0){
+                
+			  TFT_DrawPoint(x1, y0,color );
+
+            }
+            else{
+              
+               TFT_DrawPoint(x1, y1,color );
+
+
+            }
+			
+			temp <<= 1;			
+			//y++; // 垂直扫描
+			
+			 x1++;//水平扫描
+			
+           
+
+//			if(x >= LCD_Width){
+//                    gpro_t.lcd_over_width_flag =1;
+//					return;	/* 超区域了 */
+//
+//			}
+			
+			if((x1 - x0) == 120){
+				x1 = x0;
+                if(number ==0){
+				  y0++;
+                }
+                else{
+                  y1++;
+
+                }
+				
+//			    if(y >= LCD_Height){
+//				gpro_t.lcd_over_height_flag=1;
+//				return;		/* 超区域了 */
+
+			     }
+
+            
+ 
+			//	break;
+			}
+
+         
+		}  	 
+}  
+#endif 
+ void TFT_Disp_Fan_Leasefiness_RunIcon(uint16_t x,uint16_t y,uint8_t num)
+{
+   uint16_t temp, t, tbit,mode;
+    uint16_t x0=x;
+    mode =0;
+	static uint16_t color;
+
+	for(t = 0; t < 1984; t++)	/*遍历打印所有像素点到LCD */
+	{   
+	
+		temp = font_1_leafiness_icon[t]; 
+		
+		for(tbit = 0; tbit < 8; tbit++)	/* 打印一个像素点到液晶 */
+		{	
+			
+			
+			if(temp & 0x80)	color =  BLACK;//WHITE;
+			else if(0 == mode)	color = GBLUE;//BLUE;//WHITE;//BLACK;
+			else color = BLACK;
 			TFT_DrawPoint(x, y,color );
 			
 			temp <<= 1;			
@@ -949,7 +1041,7 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 
 			}
 			
-			if((x - x0) == 120){
+			if((x - x0) == 124){
 				x = x0;
 				y++;
 				
@@ -964,6 +1056,60 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 		}  	 
 	}  
 
+
+
 }
+
+
+
+#if 0 
+void TFT_Disp_Fan_Leasefiness2_RunIcon(uint16_t x,uint16_t y,uint8_t num)
+{
+   uint16_t temp, t, tbit,mode;
+    uint16_t x0=x;
+    mode =0;
+	static uint16_t color;
+
+	for(t = 0; t < 2016; t++)	/*遍历打印所有像素点到LCD */
+	{   
+	
+		temp = font_2_leafiness_icon[t]; 
+		
+		for(tbit = 0; tbit < 8; tbit++)	/* 打印一个像素点到液晶 */
+		{	
+			
+			
+			if(temp & 0x80)	color =  WHITE;
+			else if(0 == mode)	color = BLACK;
+			else color = BLACK;
+			TFT_DrawPoint(x, y,color );
+			
+			temp <<= 1;			
+			//y++; // 垂直扫描
+			x++;//水平扫描
+
+			if(x >= LCD_Width){
+                    gpro_t.lcd_over_width_flag =1;
+					return;	/* 超区域了 */
+
+			}
+			
+			if((x - x0) == 126){
+				x = x0;
+				y++;
+				
+			    if(y >= LCD_Height){
+				gpro_t.lcd_over_height_flag=1;
+				return;		/* 超区域了 */
+
+			     }
  
+				break;
+			}
+		}  	 
+	}  
+}
+#endif 
+
+
 

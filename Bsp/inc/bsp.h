@@ -201,7 +201,7 @@ typedef struct{
   
 	
 	 //main process timer 
-    uint8_t gTimer_pro_fan;
+
 	uint8_t gTimer_usart_error;
 
 	uint8_t gTime_pro_run_voice_time;
@@ -234,6 +234,9 @@ typedef struct{
   uint8_t gTimer_run_time_out;
   uint8_t gTimer_pro_disp_temphum;
   uint8_t gTimer_exit_mode_long_key;
+  uint8_t gTimer_read_humidity_value;
+  uint8_t  gTimer_fan_run_one_minute;
+  int8_t gTimer_countdown_one_minute;
  
    
 	

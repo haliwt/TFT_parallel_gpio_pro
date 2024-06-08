@@ -86,11 +86,13 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        gpro_t.gTimer_pro_mode_key_be_select++;
        gpro_t.gTimer_pro_wifi_led++;
        gpro_t.gTimer_pro_time_split_symbol++;  //diplay timer ":"
-       gpro_t.gTimer_pro_fan++;  //fan continuce counter 60s
+       gpro_t.gTimer_fan_run_one_minute++;  //fan continuce counter 60s
        gpro_t.gTimer_pro_feed_dog++;
        gpro_t.gTimer_pro_temp_delay++;
        gpro_t.gTimer_pro_disp_temphum++;
        gpro_t.gTimer_pro_set_long_key_tims++;
+       gpro_t.gTimer_read_humidity_value++;
+       gpro_t.gTimer_countdown_one_minute--;
     
    
         //cotrol timer

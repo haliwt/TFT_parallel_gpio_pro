@@ -127,7 +127,7 @@ void TFT_Process_Handler(void)
 	   
         
 	    fan_continuce_flag =1;
-		gpro_t.gTimer_pro_fan =0;
+		
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
 		//wifi ref 
@@ -148,11 +148,13 @@ void TFT_Process_Handler(void)
 		//TFT_BACKLIGHT_OFF();
 		gpro_t.gTimer_pro_wifi_fast_led=0;
 		LCD_Clear(BLACK);
-        TFT_Disp_Fan_RunIcon(100,60,0,0);
+      //  TFT_Disp_Fan_RunIcon(100,60,0,0);
+        TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
 		Power_Off_Fun();
 		Device_NoAction_Power_Off();
 		LED_Mode_Key_Off();
-        
+        gpro_t.gTimer_countdown_one_minute =90;
+        TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
 		
 		
 	}
@@ -186,7 +188,7 @@ void TFT_Process_Handler(void)
 
 	if(fan_continuce_flag ==1){
 
-	    if(gpro_t.gTimer_pro_fan <61){
+	    if(gpro_t.gTimer_countdown_one_minute   > 0 || gpro_t.gTimer_countdown_one_minute==0){
             Fan_Run();
            
 		}
@@ -197,13 +199,15 @@ void TFT_Process_Handler(void)
             LCD_Clear(BLACK);
 		}
     }
+
+
+    if(fan_continuce_flag ==1){
+
+       TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
+
+    }
       
-     if(gpro_t.gTimer_pro_fan > 5 && fan_continuce_flag==2){
-        gpro_t.gTimer_pro_fan =0;
-        Update_DHT11_Value();
-
-       }
-
+ 
 	
 	gctl_t.ptc_warning=0;
 	gctl_t.fan_warning =0;
@@ -268,9 +272,9 @@ static void TFT_Pocess_Command_Handler(void)
    
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
-	    gpro_t.gTimer_pro_fan  = 30;
+	  
 	    gpro_t.gTimer_pro_update_dht11_data=60;
-
+        gpro_t.gTimer_read_humidity_value = 30;
 	    wifi_t.gTimer_get_beijing_time=0;
 		wifi_t.receive_beijing_time=0;
 		wifi_t.three_times_link_beijing=0;
@@ -298,9 +302,9 @@ static void TFT_Pocess_Command_Handler(void)
 	       // TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
        }
 
-      if(gpro_t.gTimer_pro_fan > 10){
+      if(gpro_t.gTimer_read_humidity_value > 10){
 
-          gpro_t.gTimer_pro_fan =0;
+           gpro_t.gTimer_read_humidity_value=0;
 
           TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
 
