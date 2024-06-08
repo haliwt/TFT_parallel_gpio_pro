@@ -769,6 +769,7 @@ static void voice_set_timer_timing_value(uint8_t set_hours)
 			set_value--;
 
 		}
+        gpro_t.set_timer_timing_success = 1;
 		gctl_t.gSet_timer_hours = set_value ;
         gpro_t.gTimer_pro_set_long_key_tims=0;
         gctl_t.gTimer_ctl_set_timer_time_senconds =0;

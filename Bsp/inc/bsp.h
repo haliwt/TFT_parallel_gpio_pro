@@ -5,6 +5,12 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+
+#include "FreeRTOS.h"
+#include "task.h"
+#include "cmsis_os.h"
+
+
 #include "adc.h"
 //#include "dma.h"
 #include "iwdg.h"
@@ -250,7 +256,7 @@ extern PRO_T gpro_t;
 void bsp_Init(void);
 
 
-void bsp_Idle(void);
+void bsp_run_Idle(void);
 
 void bsp_run_iwdg(void);
 

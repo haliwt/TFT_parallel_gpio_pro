@@ -274,7 +274,7 @@ static void vTaskStart(void *pvParameters)
               
          if(gpro_t.gPower_On==power_on){
                  
-                bsp_Idle();
+                bsp_run_Idle();
              
                 Key_Speical_Mode_Fun_Handler();
 

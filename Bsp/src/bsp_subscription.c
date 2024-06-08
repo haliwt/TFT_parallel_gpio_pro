@@ -740,7 +740,7 @@ void Json_Parse_Command_Fun(void)
 	  	    buzzer_sound();
 	        gctl_t.mode_flag=timer_time;
             MqttData_Publish_SetState(2); //timer model  = 2
-			HAL_Delay(50);
+			osDelay(100);//HAL_Delay(50);
             //do someting
 			 gpro_t.disp_works_timer_timing_mode_item = timer_time;
 		     gctl_t.timer_timing_words_changed_flag++;
@@ -761,11 +761,11 @@ void Json_Parse_Command_Fun(void)
 		    buzzer_sound();
 		    gctl_t.mode_flag=works_time;
             MqttData_Publish_SetState(1); //beijing timing = 1
-			HAL_Delay(50);
+			osDelay(200);//HAL_Delay(50);
 			//do something
 			
 			 //gpro_t.timer_mode_flag=works_time;//0
-			 gpro_t.disp_works_timer_timing_mode_item = timer_time;
+			 gpro_t.disp_works_timer_timing_mode_item = works_time;
 			 gctl_t.timing_words_changed_flag++;
 			 TFT_Display_WorksTime();
           

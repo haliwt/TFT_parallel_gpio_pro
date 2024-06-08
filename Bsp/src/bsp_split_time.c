@@ -33,16 +33,15 @@ void TimeTimer_Pro_Handler(void)
 
    case works_time://1
 
-		if(gctl_t.gTimer_ctl_disp_works_time_second > 59 ){
+		if(gctl_t.gTimer_ctl_disp_works_time_second > 59){
 			TFT_Display_WorksTime();
 		}
-
-		//TFT_Donnot_Set_Timer_Time();
+      
 
 	break;
 
 	case timer_time: //02 ->timer_time 
-		if(gctl_t.gTimer_ctl_set_timer_time_senconds >59 ){
+		if(gctl_t.gTimer_ctl_set_timer_time_senconds >59  && gpro_t.set_timer_timing_success == 1){
 
 		
 			gctl_t.gTimer_ctl_set_timer_time_senconds =0;
@@ -69,8 +68,13 @@ void TimeTimer_Pro_Handler(void)
 
             }
 		}
+        else{
+             
+           TFT_Disp_Set_TimerTime(0);
+
+        }
 		
-		TFT_DonnotDisp_Works_Time();
+	//	TFT_DonnotDisp_Works_Time();
 
 		
 	break;
@@ -79,12 +83,13 @@ void TimeTimer_Pro_Handler(void)
 
 	 case timer_set_time://03
 
-		if(gpro_t.gTimer_pro_set_long_key_tims > 3){
+		if(gpro_t.gTimer_pro_set_long_key_tims > 2){
             gpro_t.gTimer_pro_set_long_key_tims =0;  
             
 		    if(gctl_t.gSet_timer_hours >0 ){
            
             gpro_t.disp_works_timer_timing_mode_item= timer_time;
+            gpro_t.set_timer_timing_success = 1;
 
             gctl_t.gTimer_ctl_set_timer_time_senconds =0;
 
@@ -120,7 +125,9 @@ void TimeTimer_Pro_Handler(void)
 					TFT_Disp_Chinese_WorkTime_23_23(TIMER_X2,TIMER_Y,2);
 					TFT_Disp_Chinese_WorkTime_23_23(TIMER_X3,TIMER_Y,3);
 					TFT_Display_WorksTime();
-			}
+			   }
+               gpro_t.set_timer_timing_success = 0;
+                
 			}
 
             gpro_t.key_mode_long_time_over_flag=0;

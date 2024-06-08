@@ -14,7 +14,6 @@ static void Power_On_Init(void);
 
 static void Power_Off_Fun(void);
 
-void bsp_Init(void);
 
 uint16_t power_off_counter;
 
@@ -43,6 +42,9 @@ void bsp_Init(void)
 
 
 }
+
+
+
 /*
 *********************************************************************************************************
 *	函 数 名: bsp_Idle
@@ -55,9 +57,27 @@ void bsp_Init(void)
 void bsp_run_iwdg(void)
 {
 
-	
-	
-	/* --- 喂狗 */
+
+    if(gpro_t.power_on_first ==0){
+        
+          Update_DHT11_Value();
+          
+          TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+          TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+          TFT_Display_Handler();
+           gpro_t.power_on_first =1;
+  
+    }
+
+   if(gpro_t.disp_works_timer_timing_mode_item == timer_time || gpro_t.disp_works_timer_timing_mode_item ==timer_set_time){
+    
+     TFT_DonnotDisp_Works_Time();
+
+    }
+
+
+
+    /* --- 喂狗 */
     if(gpro_t.gTimer_pro_feed_dog > 10){ //16s
     	gpro_t.gTimer_pro_feed_dog = 0;
         TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
@@ -67,20 +87,10 @@ void bsp_run_iwdg(void)
 }
 
 
-void bsp_Idle(void)
+void bsp_run_Idle(void)
 {
 
-   if(gpro_t.power_on_first ==0){
-      
-	    Update_DHT11_Value();
-        
-	    TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
-        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
-        TFT_Display_Handler();
-		 gpro_t.power_on_first =1;
-
-	}
-
+   
 
 
     TFT_Disp_Timer_Split_Symbol();
@@ -107,7 +117,7 @@ void bsp_Idle(void)
 void TFT_Process_Handler(void)
 {
 	
-   static uint8_t fan_continuce_flag,color_flag;
+   static uint8_t fan_continuce_flag;
 	if(gpro_t.buzzer_sound_flag ==1){
 		gpro_t.buzzer_sound_flag=0;
 		Buzzer_KeySound();
