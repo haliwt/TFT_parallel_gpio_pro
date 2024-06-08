@@ -110,7 +110,7 @@ static void vTaskMsgPro(void *pvParameters)
 		xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
 						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue中 */
-						          xMaxBlockTime);  /* 最大允许延迟时间 */
+						          portMAX_DELAY);  /* 最大允许延迟时间 */
 		
 		if( xResult == pdPASS )
 		{
@@ -164,9 +164,9 @@ static void vTaskMsgPro(void *pvParameters)
 		else
 		{
 			/* 超时 */
-          MainBoard_Self_Inspection_PowerOn_Fun();
-          WIFI_Process_Handler();
-	      USART_Cmd_Error_Handler();
+        //  MainBoard_Self_Inspection_PowerOn_Fun();
+        ///  WIFI_Process_Handler();
+	    //  USART_Cmd_Error_Handler();
              
         }
       
@@ -269,7 +269,9 @@ static void vTaskStart(void *pvParameters)
           //run_main_board_process();
         
          Key_Speical_Power_Fun_Handler();
-         bsp_run_iwdg();
+        
+       
+	     
               
          if(gpro_t.gPower_On==power_on){
                  
@@ -304,10 +306,17 @@ static void vTaskStart(void *pvParameters)
               
           }
          else{
+            
               
             TFT_Process_Handler();
 
          }
+
+           MainBoard_Self_Inspection_PowerOn_Fun();
+            bsp_run_iwdg();
+           WIFI_Process_Handler();
+
+           USART_Cmd_Error_Handler();
         
          
          }
@@ -327,7 +336,7 @@ static void AppTaskCreate (void)
 	
 	xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
                  "vTaskMsgPro",   		/* 任务名    */
-                 256,             		/* 任务栈大小，单位word，也就是4字节 */
+                 128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
