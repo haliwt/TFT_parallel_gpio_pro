@@ -82,8 +82,9 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
+    static uint8_t key_add_sound_flag,power_sound_flag,key_dec_sound_flag;
    
    
 	
@@ -110,7 +111,7 @@ static void vTaskMsgPro(void *pvParameters)
 		xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
 						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue中 */
-						          portMAX_DELAY);  /* 最大允许延迟时间 */
+						          pdMS_TO_TICKS);  /* 最大允许延迟时间 */
 		
 		if( xResult == pdPASS )
 		{
@@ -119,130 +120,65 @@ static void vTaskMsgPro(void *pvParameters)
 			if((ulValue & POWER_KEY_0) != 0)
 			{
                  
-                 xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-				                                    
-			}
+//                 xTaskNotify(xHandleTaskStart, /* 目标任务 */
+//							RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
+//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+			   	 gpro_t.key_power_be_pressed_flag =1;	                                    
+
+            }
             else if((ulValue & MODE_KEY_1) != 0){
 
                //switch timer timing and works timing 
 
-                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_MODE_5 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-               
-            }   
-            else if((ulValue & DEC_KEY_2) != 0){
-
-
-                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_DEC_6 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-
-               
-            }
-            else if((ulValue & ADD_KEY_3) != 0){
-
-                  xTaskNotify(xHandleTaskStart, /* 目标任务 */
-							RUN_ADD_7 ,            /* 设置目标任务事件标志位bit0  */
-							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-
-              
-                
-            }
-            else if((ulValue & VOICE_BIT_8) != 0){
-              
-               xTaskNotify(xHandleTaskStart, /* 目标任务 */
-                                   RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
-                                     eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-                //  v_t.sound_rx_data_success_flag = 1;
-               
-            }
-       }
-		else
-		{
-			/* 超时 */
-        //  MainBoard_Self_Inspection_PowerOn_Fun();
-        ///  WIFI_Process_Handler();
-	    //  USART_Cmd_Error_Handler();
-             
-        }
-      
-    }
-}
-
-/**********************************************************************************************************
-*	函 数 名: vTaskStart
-*	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
-*	形    参: pvParameters 是在创建该任务时传递的形参
-*	返 回 值: 无
-*   优 先 级: 4  
-**********************************************************************************************************/
-static void vTaskStart(void *pvParameters)
-{
-   BaseType_t xResult;
-   const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
-   uint32_t ulValue;
-   static uint8_t key_add_sound_flag,power_sound_flag,key_dec_sound_flag;
-
-    while(1)
-    {
-		/* 按键扫描 */
-		//bsp_KeyScan();
-
-       xResult = xTaskNotifyWait(0x00000000,      
-						           0xFFFFFFFF,      
-						          &ulValue,        /* 保存ulNotifiedValue到变量ulValue中 */
-						          xMaxBlockTime);  /* 最大允许延迟时间 */
-        if( xResult == pdPASS )
-		{
-			/* 接收到消息，检测那个位被按下 */
-			if((ulValue & RUN_POWER_4 ) != 0)
-			{
-				//printf("接收到K2按键按下消息, ulNotifiedValue = 0x%08x\r\n", ulValue);
-				//printf("receive notice key1_bit0 \n");
-				 gpro_t.key_power_be_pressed_flag =1;
-            }
-            else if((ulValue & RUN_MODE_5 ) != 0)   /* 接收到消息，检测那个位被按下 */
-			{
-
+//                xTaskNotify(xHandleTaskStart, /* 目标任务 */
+//							RUN_MODE_5 ,            /* 设置目标任务事件标志位bit0  */
+//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                  if(gpro_t.gPower_On==power_on){
                 
 
                   gpro_t.mode_key_pressed_flag =1;
 
                  }
-				
-            }
-            else if((ulValue & RUN_DEC_6 ) != 0)   /* 接收到消息，检测那个位被按下 */
-			{
-                  if(gpro_t.gPower_On==power_on){
+               
+            }   
+            else if((ulValue & DEC_KEY_2) != 0){
+
+
+//                xTaskNotify(xHandleTaskStart, /* 目标任务 */
+//							RUN_DEC_6 ,            /* 设置目标任务事件标志位bit0  */
+//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+                 if(gpro_t.gPower_On==power_on){
 
                   key_dec_sound_flag=1;
 
                    }
-             
 
+               
             }
-            else if((ulValue & RUN_ADD_7 ) != 0)   /* 接收到消息，检测那个位被按下 */
-			{
-                 if(gpro_t.gPower_On==power_on){
+            else if((ulValue & ADD_KEY_3) != 0){
+
+//                  xTaskNotify(xHandleTaskStart, /* 目标任务 */
+//							RUN_ADD_7 ,            /* 设置目标任务事件标志位bit0  */
+//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+//
+                   if(gpro_t.gPower_On==power_on){
                    key_add_sound_flag=1;
 
-                    }
-                  
-             }
-            else if((ulValue & RUN_VOICE_9 ) != 0)   /* 接收到消息，检测那个位被按下 */
-			{
-			    v_t.sound_rx_data_success_flag = 1;
-                  
+                    }           
+                
             }
-           
-        }
-        else {
-            
+            else if((ulValue & VOICE_BIT_8) != 0){
               
+//               xTaskNotify(xHandleTaskStart, /* 目标任务 */
+//                                   RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
+//                                     eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+                v_t.sound_rx_data_success_flag = 1;
+               
+            }
+       }
+	   else
+		{
+		         
         if(power_sound_flag==0){
           power_sound_flag++;
           VOICE_OUTPUT_SOUND_ENABLE();
@@ -268,10 +204,6 @@ static void vTaskStart(void *pvParameters)
           //run_main_board_process();
         
          Key_Speical_Power_Fun_Handler();
-        
-       
-	     
-              
          if(gpro_t.gPower_On==power_on){
                  
                 bsp_run_Idle();
@@ -319,10 +251,64 @@ static void vTaskStart(void *pvParameters)
         
          
          }
+             
+    }
+      
+ }
+/**********************************************************************************************************
+*	函 数 名: vTaskStart
+*	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
+*	形    参: pvParameters 是在创建该任务时传递的形参
+*	返 回 值: 无
+*   优 先 级: 4  
+**********************************************************************************************************/
+static void vTaskStart(void *pvParameters)
+{
+   BaseType_t xResult;
+   const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+   uint32_t ulValue;
+  
 
-      }
+    while(1)
+    {
+		/* 按键扫描 */
+		//bsp_KeyScan();
+
+     if(KEY_POWER_VALUE()==KEY_DOWN){
+
+        xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+					 POWER_KEY_0,            /* 设置目标任务事件标志位bit0  */
+					 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+				                                    
+
+
+     }
+     else if(KEY_MODE_VALUE() == KEY_DOWN){
+
+           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                         MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
+                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+
+     }
+     else if(KEY_ADD_VALUE() == KEY_DOWN){
+          xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                         ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
+                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+
+     }
+     if(KEY_DEC_VALUE() == KEY_DOWN){
+              xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                              DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
+                              eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+
+     }
+     
+      vTaskDelay(20);
   }
-
+}
 /**********************************************************************************************************
 *	函 数 名: AppTaskCreate
 *	功能说明: 创建应用任务
@@ -335,7 +321,7 @@ static void AppTaskCreate (void)
 	
 	xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
                  "vTaskMsgPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
@@ -343,7 +329,7 @@ static void AppTaskCreate (void)
 	
 	xTaskCreate( vTaskStart,     		/* 任务函数  */
                  "vTaskStart",   		/* 任务名    */
-                 256,            		/* 任务栈大小，单位word，也就是4字节 */
+                 128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  2,              		/* 任务优先级*/
                  &xHandleTaskStart );   /* 任务句柄  */
@@ -355,6 +341,7 @@ static void AppTaskCreate (void)
 *	形    参：外部中断GPIO 
 *	返 回 值: 无
 *********************************************************************************************************/
+#if 0
 void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 {
 
@@ -432,8 +419,8 @@ void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
 
       break;
     }
-
 }
+#endif 
 /********************************************************************************
 	**
 	*Function Name:void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
