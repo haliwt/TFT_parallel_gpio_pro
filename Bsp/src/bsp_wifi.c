@@ -296,7 +296,7 @@ static void RunWifi_Command_Handler(void)
 
 			gctl_t.beijing_time_flag = 1; //WT.2024.04.25
 
-            if(gpro_t.disp_works_timer_timing_mode_item==works_time){
+            if(gpro_t.disp_works_timer_timing_mode_item==works_time && gpro_t.gPower_On == power_on){
 
                 TFT_Display_WorksTime_Voice();
 

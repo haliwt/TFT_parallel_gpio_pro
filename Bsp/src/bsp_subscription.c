@@ -794,7 +794,7 @@ void Json_Parse_Command_Fun(void)
 			gpro_t.gTimer_pro_mode_key_be_select = 0;
        
              gpro_t.gTimer_pro_set_tem_value_blink=0; //temperature numbers is blink.
-			TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
+			 TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
 		}
       wifi_t.response_wifi_signal_label = 0xff;
 	    wifi_t.gTimer_auto_detected_net_state_times=0;

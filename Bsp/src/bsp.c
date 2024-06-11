@@ -60,12 +60,13 @@ void bsp_run_iwdg(void)
 
     if(power_on_first ==0){
         
+          power_on_first ++;
           Update_DHT11_Value();
           
           TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
           TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
           TFT_Display_Handler();
-           power_on_first =1;
+         
   
     }
 
@@ -80,7 +81,6 @@ void bsp_run_iwdg(void)
     /* --- 喂狗 */
     if(gpro_t.gTimer_pro_feed_dog > 10){ //16s
     	gpro_t.gTimer_pro_feed_dog = 0;
-        TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
     	iwdg_feed();
 
     }
@@ -127,7 +127,7 @@ void TFT_Process_Handler(void)
 
 	if(gpro_t.power_off_flag == 1){
 		gpro_t.power_off_flag ++;
-	   
+	      
          LCD_Clear(BLACK);
 	    fan_continuce_flag =1;
 		
@@ -157,6 +157,7 @@ void TFT_Process_Handler(void)
 	    gpro_t.gTimer_countdown_one_minute =90;
         TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
         Device_NoAction_Power_Off();
+        #if 0
 		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X0,TIMER_Y,0);
 		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X1,TIMER_Y,1);
 		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X2,TIMER_Y,2);
@@ -167,6 +168,8 @@ void TFT_Process_Handler(void)
 
 	  TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,1,1);
 	  TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,1,1);
+
+       #endif 
 		
 		
 	}
@@ -308,8 +311,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 		    Update_DHT11_Value();
             TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
-            //TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
-	       // TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+           
        }
 
       if(gpro_t.gTimer_read_humidity_value > 10){
