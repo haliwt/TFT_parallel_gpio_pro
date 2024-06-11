@@ -56,16 +56,16 @@ void bsp_Init(void)
 */
 void bsp_run_iwdg(void)
 {
+   static uint8_t power_on_first;
 
-
-    if(gpro_t.power_on_first ==0){
+    if(power_on_first ==0){
         
           Update_DHT11_Value();
           
           TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
           TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
           TFT_Display_Handler();
-           gpro_t.power_on_first =1;
+           power_on_first =1;
   
     }
 
@@ -90,19 +90,10 @@ void bsp_run_iwdg(void)
 void bsp_run_Idle(void)
 {
 
-   
-
-
-    TFT_Disp_Timer_Split_Symbol();
+   TFT_Disp_Timer_Split_Symbol();
     Wifi_Fast_Led_Blink();
     Display_Precise_Works_Time();
-	/* --- 让CPU进入休眠，由Systick定时中断唤醒或者其他中断唤醒 */
 
-	/* 例如 emWin 图形库，可以插入图形库需要的轮询函数 */
-	//GUI_Exec();
-
-	/* 例如 uIP 协议，可以插入uip轮询函数 */
-	//TOUCH_CapScan();
 }
 /*
 *********************************************************************************************************
@@ -117,7 +108,7 @@ void bsp_run_Idle(void)
 void TFT_Process_Handler(void)
 {
 	
-   static uint8_t fan_continuce_flag;
+   static uint8_t fan_continuce_flag,color_flag;
 	if(gpro_t.buzzer_sound_flag ==1){
 		gpro_t.buzzer_sound_flag=0;
 		Buzzer_KeySound();

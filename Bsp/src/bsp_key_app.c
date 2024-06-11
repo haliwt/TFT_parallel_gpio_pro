@@ -665,7 +665,7 @@ void Mode_Key_Confirm_Fun(void)
                 gctl_t.cmd_open_ptc_flag =1;
                 if(wifi_link_net_state()==1){
                     MqttData_Publish_SetPtc(1);
-                    HAL_Delay(200);
+                    osDelay(100);//HAL_Delay(200);
                 }
 				
 		    }
@@ -677,7 +677,7 @@ void Mode_Key_Confirm_Fun(void)
 				gctl_t.ptc_flag = 0;
                 if(wifi_link_net_state()==1){
                     MqttData_Publish_SetPtc(0);
-                    HAL_Delay(200);
+                    osDelay(100);//HAL_Delay(200);
                 }
 				 
 				

@@ -403,7 +403,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		 if(ptc_state() == 1){
      
 			gctl_t.ptc_flag =0;
-            gctl_t.cmd_open_ptc_flag =0;
+            gctl_t.cmd_open_ptc_flag =2;
 			Ptc_Off();
 			gpro_t.add_or_dec_is_cofirm_key_flag=1; 
 		    LED_PTC_ICON_OFF();
@@ -432,7 +432,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		 if(ptc_state() == 1){
         
 			gctl_t.ptc_flag =0;
-            gctl_t.cmd_open_ptc_flag =0;
+            gctl_t.cmd_open_ptc_flag =2;
 			Ptc_Off();
 			gpro_t.add_or_dec_is_cofirm_key_flag=1;
 		    LED_PTC_ICON_OFF();
@@ -708,10 +708,7 @@ static void  voice_set_temperature_value(uint8_t value)
 	        v_t.voice_set_temperature_value_flag=1;
 		
 	       TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
-            // if(wifi_link_net_state()==1){
-            //          MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-            //         HAL_Delay(200);
-            //     }
+          
 
 		   gpro_t.gTimer_pro_set_tem_value_blink=0;
 
@@ -723,18 +720,35 @@ static void  voice_set_temperature_value(uint8_t value)
 					LED_PTC_ICON_ON();
                     gctl_t.cmd_open_ptc_flag =1; //confirm open ptc heat 
 					gpro_t.add_or_dec_is_cofirm_key_flag=0;
+
+                    if(wifi_link_net_state()==1){
+                        MqttData_Publish_SetPtc(1);
+                        osDelay(100);//HAL_Delay(200);
+                    
+                    }
 		    	}
 
 			}
 			else{
 		   		if(ptc_state()==1){
                     gctl_t.ptc_flag = 0;
-                    gctl_t.cmd_open_ptc_flag =0;
+                    gctl_t.cmd_open_ptc_flag =2;
 			   		Ptc_Off();
 			   		LED_PTC_ICON_OFF();
 					gpro_t.add_or_dec_is_cofirm_key_flag=1;
+
+                    if(wifi_link_net_state()==1){
+                        MqttData_Publish_SetPtc(0);
+                        osDelay(100);//HAL_Delay(200);
+                    
+                    }
 				}
 			}
+
+             if(wifi_link_net_state()==1){
+                  MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
+                  osDelay(100); //HAL_Delay(200);
+              }
        }
 		else{
 
