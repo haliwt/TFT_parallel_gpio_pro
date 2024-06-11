@@ -100,7 +100,7 @@ void TimeTimer_Pro_Handler(void)
             TFT_Disp_Chinese_Timer_23_23(TIMER_X2,TIMER_Y,2);//“时”
             TFT_Disp_Chinese_Timer_23_23(TIMER_X3,TIMER_Y,3);//“间”
             TFT_Only_Disp_Set_Timer_Blink();
-            HAL_Delay(200);
+            osDelay(100);//HAL_Delay(200);
             TFT_Disp_Onley_Set_TimerTime_Value();
 
            }

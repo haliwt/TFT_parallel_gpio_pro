@@ -60,6 +60,7 @@ void TFT_Disp_Fan_Leasefiness_RunIcon(uint16_t x,uint16_t y,uint8_t num);
 
 void TFT_Disp_Fan_Leasefiness2_RunIcon(uint16_t x,uint16_t y,uint8_t num);
 
+void TFT_donotDisp_Chinese_WorkTime_23_23(uint16_t x,uint16_t y,uint8_t num);
 
 
 

@@ -157,6 +157,16 @@ void TFT_Process_Handler(void)
 	    gpro_t.gTimer_countdown_one_minute =90;
         TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
         Device_NoAction_Power_Off();
+		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X0,TIMER_Y,0);
+		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X1,TIMER_Y,1);
+		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X2,TIMER_Y,2);
+		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X3,TIMER_Y,3);
+
+       TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,1,1);
+	   TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(114,190,1,1);
+
+	  TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,1,1);
+	  TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,1,1);
 		
 		
 	}

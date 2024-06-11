@@ -171,7 +171,7 @@ void Temperature_Ptc_Pro_Handler(void)
 					LED_PTC_ICON_OFF();
 					if(wifi_link_net_state()==1){
 					MqttData_Publish_SetPtc(0);
-					HAL_Delay(200);
+					osDelay(100);//HAL_Delay(200);
 					}
 				}
 				else if(times_counter==1){
@@ -184,7 +184,7 @@ void Temperature_Ptc_Pro_Handler(void)
     				      LED_PTC_ICON_ON();
     	                 if(wifi_link_net_state()==1){
     	                      MqttData_Publish_SetPtc(1);
-    	                      HAL_Delay(200);
+    	                      osDelay(100);//HAL_Delay(200);
     	                  }
                          }
                      }
@@ -221,14 +221,14 @@ void Temperature_Ptc_Pro_Handler(void)
 
        
 
-    		   if(gpro_t.gTimer_pro_temp_delay> 17   && ptc_error_state()==0 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){
+    		   if(gpro_t.gTimer_pro_temp_delay> 9   && ptc_error_state()==0 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){
                    gpro_t.gTimer_pro_temp_delay =0;
 
-              TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+                    TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
 
     	
     		  
-    		  if(set_temp_value() < dht11_temp_value()){//envirment temperature
+    		  if(set_temp_value() < dht11_temp_value() || set_temp_value()      == dht11_temp_value()){//envirment temperature
     	  
                     gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
     			    Ptc_Off();
@@ -267,12 +267,14 @@ void Temperature_Ptc_Pro_Handler(void)
 		   break;
 
 		   case disp_do_setting_ptc_value_item:
+
+           gpro_t.gTimer_pro_temp_delay=0; //don't display temperature sensor of value .
 	    
 		   if(gpro_t.gTimer_pro_set_tem_value_blink > 1){
 			
                gpro_t.gTimer_pro_set_tem_value_blink =0;
              
-			   gctl_t.gSet_temperature_value_item= dsip_set_ptc_temp_value_item;
+			  
 
                TFT_Disp_Only_Temp_Numbers(1,gctl_t.gSet_temperature_value); //don't     display number
                HAL_Delay(200);
@@ -288,9 +290,12 @@ void Temperature_Ptc_Pro_Handler(void)
 			     //TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
                }
                if(wifi_link_net_state()==1){
-                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                    HAL_Delay(200);
+                    MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
+                    osDelay(100);//HAL_Delay(200);
                 }
+               gpro_t.gTimer_pro_temp_delay = 20;
+               gctl_t.gSet_temperature_value_item= dsip_set_ptc_temp_value_item;
+               
 
 		   }
 
