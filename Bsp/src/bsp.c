@@ -518,16 +518,18 @@ void Wifi_Fast_Led_Blink(void)
 {
 
   if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
-     if(gpro_t.gTimer_pro_wifi_led < 166){//2'46s
+    if(gpro_t.gTimer_pro_wifi_led < 166){//2'46s
 
 	if( gpro_t.gTimer_pro_wifi_fast_led < 80 ){ //50ms
 
 	         LED_WIFI_ICON_ON();
+            
 	}
 	else if(gpro_t.gTimer_pro_wifi_fast_led > 79 && gpro_t.gTimer_pro_wifi_fast_led< 161){
 
         
 		LED_WIFI_ICON_OFF();
+     
 	}
 	else{
 

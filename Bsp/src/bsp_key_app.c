@@ -20,7 +20,7 @@ void Key_Speical_Power_Fun_Handler(void)
 
 	
      if(gpro_t.key_power_be_pressed_flag  == 2 &&  gpro_t.gPower_On == power_on){
-            gpro_t.key_power_be_pressed_flag =0;
+            gpro_t.key_power_be_pressed_flag ++;
 
            
             gpro_t.wifi_led_fast_blink_flag=1;
@@ -32,15 +32,18 @@ void Key_Speical_Power_Fun_Handler(void)
 			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
 			wifi_t.wifi_config_net_lable= wifi_set_restor;
 			wifi_t.gTimer_login_tencent_times=0;
-            gpro_t.wifi_led_fast_blink_flag=1;
+      
 			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
 			buzzer_sound();
+            gpro_t.gTimer_exit_mode_long_key =0;
+           
 			
 			 
      }
-     else if(gpro_t.key_power_be_pressed_flag  == 1 ){
+     else if(gpro_t.key_power_be_pressed_flag  == 1){
              
            gpro_t.key_power_be_pressed_flag=0;
+         
 
            if(gpro_t.run_process_step==0xf0){
 

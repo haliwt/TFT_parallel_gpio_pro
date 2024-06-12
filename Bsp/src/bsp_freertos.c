@@ -113,6 +113,13 @@ static void vTaskRunPro(void *pvParameters)
       WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
+      if(gpro_t.gPower_On == power_off){
+        mode_key_long_conter  =0;
+        power_key_long_conter = 0;
+
+
+
+      }
       vTaskDelay(50);
   }
 	
@@ -167,11 +174,9 @@ static void vTaskMsgPro(void *pvParameters)
              
 			if((ulValue & POWER_KEY_0) != 0)
 			{
-                 
-//                 xTaskNotify(xHandleTaskStart, /* 目标任务 */
-//							RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
-//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-			   	 gpro_t.key_power_be_pressed_flag =1;	                                    
+                if(gpro_t.key_power_be_pressed_flag !=3)
+			   	 gpro_t.key_power_be_pressed_flag =1;
+                 power_key_long_conter =0;
 
             }
             else if((ulValue & POWER_LONG_KEY_11) != 0){
@@ -206,10 +211,6 @@ static void vTaskMsgPro(void *pvParameters)
            }
             else if((ulValue & DEC_KEY_2) != 0){
 
-
-//                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-//							RUN_DEC_6 ,            /* 设置目标任务事件标志位bit0  */
-//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                  if(gpro_t.gPower_On==power_on){
 
                   key_dec_sound_flag=1;
@@ -219,12 +220,7 @@ static void vTaskMsgPro(void *pvParameters)
                
             }
             else if((ulValue & ADD_KEY_3) != 0){
-
-//                  xTaskNotify(xHandleTaskStart, /* 目标任务 */
-//							RUN_ADD_7 ,            /* 设置目标任务事件标志位bit0  */
-//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-//
-                   if(gpro_t.gPower_On==power_on){
+                if(gpro_t.gPower_On==power_on){
                        key_add_sound_flag=1;
 
                     }           
@@ -232,9 +228,7 @@ static void vTaskMsgPro(void *pvParameters)
             }
            else if((ulValue & VOICE_BIT_8) != 0){
               
-//               xTaskNotify(xHandleTaskStart, /* 目标任务 */
-//                                   RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
-//                                     eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
                 v_t.sound_rx_data_success_flag = 1;
                
             }
@@ -285,6 +279,9 @@ static void vTaskMsgPro(void *pvParameters)
                if(gpro_t.gTimer_exit_mode_long_key > 1){
 
                   mode_key_long_conter =0;
+
+                 power_key_long_conter =0; //clear power key loong flag .
+                 gpro_t.key_power_be_pressed_flag = 0;
 
 
                }
@@ -362,7 +359,7 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN){
 
-          power_key_long_conter=0;
+         
 
          while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500){
 
@@ -390,7 +387,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN){
-          power_key_long_conter=0;
+        
           
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
@@ -399,7 +396,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN){
-            power_key_long_conter=0;
+          
        
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
