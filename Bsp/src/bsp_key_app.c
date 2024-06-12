@@ -90,12 +90,8 @@ void Key_Speical_Power_Fun_Handler(void)
 void Key_Speical_Mode_Fun_Handler(void)
 {
     //mode key be pressed long times
-	if(KEY_MODE_VALUE() ==KEY_DOWN && gpro_t.mode_key_pressed_flag < 100){
-
-
-        gpro_t.mode_key_pressed_flag ++;
-		if(gpro_t.mode_key_pressed_flag >  40 && KEY_MODE_VALUE() == KEY_DOWN){
-			gpro_t.mode_key_pressed_flag =150;
+	if(gpro_t.mode_key_pressed_flag == 2){
+          gpro_t.mode_key_pressed_flag =0;
 		
              buzzer_sound();
 		    
@@ -105,11 +101,14 @@ void Key_Speical_Mode_Fun_Handler(void)
 			Mode_Long_Key_Fun();
 
 		   
-       }
+       
+     
+       
     }
-    else if(KEY_MODE_VALUE() ==KEY_UP && gpro_t.mode_key_pressed_flag > 0 && gpro_t.mode_key_pressed_flag < 40){
+    else if(gpro_t.mode_key_pressed_flag ==1){
        
 		gpro_t.mode_key_pressed_flag =0;
+      
 	   
 		//gpro_t.mode_key_run_proc_item = mode_key_select; //shield this is WIFI_LED blink. 
 		 gpro_t.mode_key_run_item_step = mode_key_select;

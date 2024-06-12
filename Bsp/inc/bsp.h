@@ -151,11 +151,13 @@ typedef struct{
   //key
    uint8_t gKey_value;
    uint8_t gPower_On;
+   
 
   
    uint8_t run_process_step;
    uint8_t key_power_be_pressed_flag ;
    uint8_t power_off_flag;
+ 
 
    //buzzer
    uint8_t buzzer_sound_flag;

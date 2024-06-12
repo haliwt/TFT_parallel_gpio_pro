@@ -23,6 +23,8 @@
 #define VOICE_BIT_8         (1 << 8)
 #define RUN_VOICE_9         (1 << 9)
 
+#define MODE_LONG_KEY_10      (1 << 10)
+
 /*
 **********************************************************************************************************
 											函数声明
@@ -47,6 +49,8 @@ static TaskHandle_t xHandleTaskStart = NULL;
 
 
 uint8_t add_key_counter,dec_key_counter;
+
+uint32_t mode_key_long_conter;
 
 
 
@@ -174,19 +178,24 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue & MODE_KEY_1) != 0){
 
-               //switch timer timing and works timing 
 
-//                xTaskNotify(xHandleTaskStart, /* 目标任务 */
-//							RUN_MODE_5 ,            /* 设置目标任务事件标志位bit0  */
-//							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
                  if(gpro_t.gPower_On==power_on){
                 
-
+                    
                   gpro_t.mode_key_pressed_flag =1;
 
                  }
                
-            }   
+            }
+            else if((ulValue & MODE_LONG_KEY_10) != 0){
+                
+                if(gpro_t.gPower_On==power_on){
+                           
+               
+                     gpro_t.mode_key_pressed_flag =2;
+            
+                  }
+           }
             else if((ulValue & DEC_KEY_2) != 0){
 
 
@@ -208,7 +217,7 @@ static void vTaskMsgPro(void *pvParameters)
 //							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 //
                    if(gpro_t.gPower_On==power_on){
-                   key_add_sound_flag=1;
+                       key_add_sound_flag=1;
 
                     }           
                 
@@ -294,9 +303,9 @@ static void vTaskMsgPro(void *pvParameters)
 **********************************************************************************************************/
 static void vTaskStart(void *pvParameters)
 {
-   BaseType_t xResult;
-   const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
-   uint32_t ulValue;
+   //BaseType_t xResult;
+   ///const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+  
   
 
     while(1)
@@ -305,6 +314,8 @@ static void vTaskStart(void *pvParameters)
 		//bsp_KeyScan();
 
      if(KEY_POWER_VALUE()==KEY_DOWN){
+
+
 
         xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 					 POWER_KEY_0,            /* 设置目标任务事件标志位bit0  */
@@ -315,13 +326,35 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN){
 
+          
+
+         while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965400){
+
+               mode_key_long_conter++;
+               if(mode_key_long_conter > 2965000){
+                   mode_key_long_conter = 2965500;
+               
+               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                         MODE_LONG_KEY_10,            /* 设置目标任务事件标志位bit0  */
+                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+                }
+
+
+         }
+         
+         if(mode_key_long_conter < 2965000){
+            
            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
+          }
+
 
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN){
+          mode_key_long_conter =0;
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
@@ -329,12 +362,15 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN){
+        mode_key_long_conter =0;
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
 
      }
+
+    
      
       vTaskDelay(20);
   }
