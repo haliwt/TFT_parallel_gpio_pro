@@ -274,6 +274,7 @@ void Wifi_Fast_Led_Blink(void);
 
 void Mode_Long_Key_Fun(void);;
 
+void WIFI_LED_Blink(void);
 
 
 #endif 

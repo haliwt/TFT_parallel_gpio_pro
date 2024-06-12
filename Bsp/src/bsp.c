@@ -88,7 +88,7 @@ void bsp_run_iwdg(void)
 void bsp_run_Idle(void)
 {
 
-   TFT_Disp_Timer_Split_Symbol();
+    TFT_Disp_Timer_Split_Symbol();
     Wifi_Fast_Led_Blink();
     Display_Precise_Works_Time();
 
@@ -378,19 +378,6 @@ static void TFT_Pocess_Command_Handler(void)
 
              case 0: //slowly of blink led 
 
-			    if(gpro_t.mode_key_run_item_step!= mode_key_select){
-                
-				if(gpro_t.gTimer_pro_wifi_led > 1 && gpro_t.gTimer_pro_wifi_led < 3){
-					
-					LED_WIFI_ICON_ON();
-				}
-				else if(gpro_t.gTimer_pro_wifi_led > 2){
-
-					gpro_t.gTimer_pro_wifi_led=0;
-					LED_WIFI_ICON_OFF();
-				}
-			    }
-
 				ModeKey_Select_Default_LedOnOff();
 			 break;
 
@@ -585,5 +572,26 @@ void Wifi_Fast_Led_Blink(void)
 
 
 
+
+void WIFI_LED_Blink(void)
+{
+
+   if(wifi_link_net_state()==0 && gpro_t.gPower_On == power_on){
+       if(gpro_t.mode_key_run_item_step != mode_key_select){
+                    
+        if(gpro_t.gTimer_pro_wifi_led > 1 && gpro_t.gTimer_pro_wifi_led < 3){
+
+        LED_WIFI_ICON_ON();
+        }
+        else if(gpro_t.gTimer_pro_wifi_led > 2){
+
+        gpro_t.gTimer_pro_wifi_led=0;
+        LED_WIFI_ICON_OFF();
+        }
+        }
+
+    }
+
+}
 
 

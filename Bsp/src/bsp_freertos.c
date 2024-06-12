@@ -101,7 +101,9 @@ static void vTaskRunPro(void *pvParameters)
 
       bsp_run_iwdg();
       bsp_run_Idle();
+      
       TFT_Process_Handler();
+    
       MainBoard_Self_Inspection_PowerOn_Fun();
     
       WIFI_Process_Handler();
@@ -295,6 +297,7 @@ static void vTaskMsgPro(void *pvParameters)
          
               
           }
+          WIFI_LED_Blink();
        
          
         
