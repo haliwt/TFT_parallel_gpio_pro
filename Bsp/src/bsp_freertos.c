@@ -29,7 +29,7 @@
 **********************************************************************************************************
 */
 //static void vTaskTaskUserIF(void *pvParameters);
-//static void vTaskLED(void *pvParameters);
+static void vTaskRunPro(void *pvParameters);
 static void vTaskMsgPro(void *pvParameters);
 static void vTaskStart(void *pvParameters);
 static void AppTaskCreate (void);
@@ -41,7 +41,7 @@ static void AppTaskCreate (void);
 **********************************************************************************************************
 */
 //static TaskHandle_t xHandleTaskUserIF = NULL;
-//static TaskHandle_t xHandleTaskLED = NULL;
+static TaskHandle_t xHandleTaskRunPro = NULL;
 static TaskHandle_t xHandleTaskMsgPro = NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
 
@@ -68,7 +68,51 @@ void freeRTOS_Handler(void)
     vTaskStartScheduler();
 }
 
+/*
+*********************************************************************************************************
+*	函 数 名: vTaskRunPro
+*	功能说明: 使用函数xTaskNotifyWait接收任务vTaskTaskUserIF发送的事件标志位设置
+*	形    参: pvParameters 是在创建该任务时传递的形参
+*	返 回 值: 无
+*   优 先 级: 3  
+*********************************************************************************************************
+*/
+static void vTaskRunPro(void *pvParameters)
+{
 
+   static uint8_t power_sound_flag;
+
+   while(1)
+   {
+
+
+      
+      if(power_sound_flag==0){
+               power_sound_flag++;
+               VOICE_OUTPUT_SOUND_ENABLE();
+               buzzer_sound();
+      
+             }
+
+      MainBoard_Self_Inspection_PowerOn_Fun();
+      bsp_run_iwdg();
+      WIFI_Process_Handler();
+
+      USART_Cmd_Error_Handler();
+
+
+
+     vTaskDelay(200);
+
+
+
+
+   }
+	
+ 
+
+
+}
 /*
 *********************************************************************************************************
 *	函 数 名: vTaskMsgPro
@@ -82,9 +126,9 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
-    static uint8_t key_add_sound_flag,power_sound_flag,key_dec_sound_flag;
+    static uint8_t key_add_sound_flag,key_dec_sound_flag;
    
    
 	
@@ -126,7 +170,7 @@ static void vTaskMsgPro(void *pvParameters)
 			   	 gpro_t.key_power_be_pressed_flag =1;	                                    
 
             }
-            else if((ulValue & MODE_KEY_1) != 0){
+            if((ulValue & MODE_KEY_1) != 0){
 
                //switch timer timing and works timing 
 
@@ -141,7 +185,7 @@ static void vTaskMsgPro(void *pvParameters)
                  }
                
             }   
-            else if((ulValue & DEC_KEY_2) != 0){
+            if((ulValue & DEC_KEY_2) != 0){
 
 
 //                xTaskNotify(xHandleTaskStart, /* 目标任务 */
@@ -155,7 +199,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                
             }
-            else if((ulValue & ADD_KEY_3) != 0){
+            if((ulValue & ADD_KEY_3) != 0){
 
 //                  xTaskNotify(xHandleTaskStart, /* 目标任务 */
 //							RUN_ADD_7 ,            /* 设置目标任务事件标志位bit0  */
@@ -167,7 +211,7 @@ static void vTaskMsgPro(void *pvParameters)
                     }           
                 
             }
-            else if((ulValue & VOICE_BIT_8) != 0){
+           if((ulValue & VOICE_BIT_8) != 0){
               
 //               xTaskNotify(xHandleTaskStart, /* 目标任务 */
 //                                   RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
@@ -179,13 +223,7 @@ static void vTaskMsgPro(void *pvParameters)
 	   else
 		{
 		         
-        if(power_sound_flag==0){
-          power_sound_flag++;
-          VOICE_OUTPUT_SOUND_ENABLE();
-          buzzer_sound();
-
-        }
-
+       
         
        if(key_dec_sound_flag ==1 || key_add_sound_flag ==1){
 
@@ -243,11 +281,7 @@ static void vTaskMsgPro(void *pvParameters)
 
          }
 
-           MainBoard_Self_Inspection_PowerOn_Fun();
-            bsp_run_iwdg();
-           WIFI_Process_Handler();
-
-           USART_Cmd_Error_Handler();
+         
         
          
          }
@@ -318,12 +352,20 @@ static void vTaskStart(void *pvParameters)
 static void AppTaskCreate (void)
 {
 
-	
-	xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
-                 "vTaskMsgPro",   		/* 任务名    */
+	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
+                 "vTaskRunPro",   		/* 任务名    */
                  256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
+                 &xHandleTaskRunPro);  /* 任务句柄  */
+
+
+
+    xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
+                 "vTaskMsgPro",   		/* 任务名    */
+                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 NULL,           		/* 任务参数  */
+                 2,               		/* 任务优先级*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
 	
 	
@@ -331,7 +373,7 @@ static void AppTaskCreate (void)
                  "vTaskStart",   		/* 任务名    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,              		/* 任务优先级*/
+                 3,              		/* 任务优先级*/
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
@@ -490,7 +532,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
  //voice sound by USART1
   if(huart->Instance==USART1){
 
-        //DISABLE_INT();
+        DISABLE_INT();
        // taskENTER_CRITICAL();
 
     	switch(state_uart1)
@@ -622,7 +664,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
 	}
 	 
-	 // ENABLE_INT();
+	 ENABLE_INT();
 	 //taskEXIT_CRITICAL();
     //  __HAL_UART_CLEAR_NEFLAG(&huart1);
     //  __HAL_UART_CLEAR_FEFLAG(&huart1);
