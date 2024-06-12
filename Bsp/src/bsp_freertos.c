@@ -106,20 +106,24 @@ static void vTaskRunPro(void *pvParameters)
       bsp_run_iwdg();
       bsp_run_Idle();
       
-      TFT_Process_Handler();
+     
     
       MainBoard_Self_Inspection_PowerOn_Fun();
     
       WIFI_Process_Handler();
 
-      USART_Cmd_Error_Handler();
-      if(gpro_t.gPower_On == power_off){
-        mode_key_long_conter  =0;
-        power_key_long_conter = 0;
+    
+      if(gpro_t.gPower_On == power_on){
 
-
+         PowerOn_Process_Handler();
 
       }
+      else if(gpro_t.gPower_On == power_off){
+        mode_key_long_conter  =0;
+        power_key_long_conter = 0;
+         Power_Off_Handler(); 
+      }
+      USART_Cmd_Error_Handler();
       vTaskDelay(50);
   }
 	
@@ -285,8 +289,13 @@ static void vTaskMsgPro(void *pvParameters)
 
 
                }
-              
 
+              WIFI_LED_Blink();
+           
+              Wifi_Fast_Led_Blink();
+
+              TFT_Disp_Timer_Split_Symbol();
+              
          }
 
          if(v_t.sound_rx_data_success_flag == 1 ){
@@ -296,11 +305,7 @@ static void vTaskMsgPro(void *pvParameters)
          
               
           }
-          WIFI_LED_Blink();
-       
-          Wifi_Fast_Led_Blink();
-
-          TFT_Disp_Timer_Split_Symbol();
+        
         
          
          }

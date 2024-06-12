@@ -103,26 +103,31 @@ void bsp_run_Idle(void)
 *
 *********************************************************************************************************
 */
-void TFT_Process_Handler(void)
+void PowerOn_Process_Handler(void)
 {
 	
-   static uint8_t fan_continuce_flag,color_flag;
+ 
 	if(gpro_t.buzzer_sound_flag ==1){
 		gpro_t.buzzer_sound_flag=0;
 		Buzzer_KeySound();
 	}
 	
 
-	switch(gpro_t.gPower_On){
+	if(gpro_t.gPower_On == power_on){
 	
-	case power_on:
-		
-	    TFT_Pocess_Command_Handler();
+
+	TFT_Pocess_Command_Handler();
+
+   }
 	
-	break;
+	
 
-	case power_off:
+}
 
+
+ void Power_Off_Handler(void)
+ {   
+   static uint8_t fan_continuce_flag;
 	if(gpro_t.power_off_flag == 1){
 		gpro_t.power_off_flag ++;
 	      
@@ -233,12 +238,9 @@ void TFT_Process_Handler(void)
 	
 	Breath_Led();
 	
-
-
-	break;
-       }
-
 }
+
+
 	
 /******************************************************************************
 	*
