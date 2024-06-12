@@ -79,11 +79,9 @@ void bsp_run_iwdg(void)
 
 
     /* --- 喂狗 */
-    if(gpro_t.gTimer_pro_feed_dog > 10){ //16s
-    	gpro_t.gTimer_pro_feed_dog = 0;
-    	iwdg_feed();
+   iwdg_feed();
 
-    }
+    
 }
 
 

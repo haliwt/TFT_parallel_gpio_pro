@@ -54,6 +54,7 @@ uint32_t mode_key_long_conter;
 
 
 
+
 /**********************************************************************************************************
 *	函 数 名: main
 *	功能说明: 标准c程序入口。
@@ -98,10 +99,11 @@ static void vTaskRunPro(void *pvParameters)
       
          }
 
+      bsp_run_iwdg();
       bsp_run_Idle();
       TFT_Process_Handler();
       MainBoard_Self_Inspection_PowerOn_Fun();
-      bsp_run_iwdg();
+    
       WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
@@ -181,8 +183,9 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
                 
-                    
+                 
                   gpro_t.mode_key_pressed_flag =1;
+                   mode_key_long_conter =0;
 
                  }
                
@@ -191,10 +194,11 @@ static void vTaskMsgPro(void *pvParameters)
                 
                 if(gpro_t.gPower_On==power_on){
                            
-               
-                     gpro_t.mode_key_pressed_flag =2;
+                     
+                    gpro_t.mode_key_pressed_flag =2;
+                   
             
-                  }
+                 }
            }
             else if((ulValue & DEC_KEY_2) != 0){
 
@@ -274,7 +278,13 @@ static void vTaskMsgPro(void *pvParameters)
 
                 }
 
-                 
+               if(gpro_t.gTimer_exit_mode_long_key > 1){
+
+                  mode_key_long_conter =0;
+
+
+               }
+              
 
          }
 
@@ -328,11 +338,11 @@ static void vTaskStart(void *pvParameters)
 
           
 
-         while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965400){
+         while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500){
 
                mode_key_long_conter++;
                if(mode_key_long_conter > 2965000){
-                   mode_key_long_conter = 2965500;
+                   mode_key_long_conter = 2965900;
                
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_LONG_KEY_10,            /* 设置目标任务事件标志位bit0  */
@@ -343,7 +353,7 @@ static void vTaskStart(void *pvParameters)
 
          }
          
-         if(mode_key_long_conter < 2965000){
+         if(mode_key_long_conter < 2965000 ){
             
            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
@@ -354,7 +364,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN){
-          mode_key_long_conter =0;
+          
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
@@ -362,7 +372,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN){
-        mode_key_long_conter =0;
+       
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/

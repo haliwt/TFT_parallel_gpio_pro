@@ -21,7 +21,7 @@
 #include "iwdg.h"
 
 /* USER CODE BEGIN 0 */
-
+#include "bsp.h"
 /* USER CODE END 0 */
 
 IWDG_HandleTypeDef hiwdg;
@@ -54,7 +54,10 @@ void MX_IWDG_Init(void)
 /* USER CODE BEGIN 1 */
 void iwdg_feed(void)
 {
-   HAL_IWDG_Refresh(&hiwdg);  /* ��װ�ؼ����� */
+   if(gpro_t.gTimer_pro_feed_dog > 10){ //16s
+    	gpro_t.gTimer_pro_feed_dog = 0;
+       HAL_IWDG_Refresh(&hiwdg);  /* ��װ�ؼ����� */
+   }
 }
 
 

@@ -157,6 +157,7 @@ typedef struct{
    uint8_t run_process_step;
    uint8_t key_power_be_pressed_flag ;
    uint8_t power_off_flag;
+   
  
 
    //buzzer
@@ -206,7 +207,7 @@ typedef struct{
  
     uint8_t interval_stop_run_flag ;
    
-  
+   
 	
 	 //main process timer 
 

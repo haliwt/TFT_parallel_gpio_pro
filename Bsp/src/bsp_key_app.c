@@ -96,16 +96,14 @@ void Key_Speical_Mode_Fun_Handler(void)
              buzzer_sound();
 		    
 		    gpro_t.key_mode_long_time_over_flag=1;
-            gpro_t.gTimer_exit_mode_long_key = 0;
+           
          
 			Mode_Long_Key_Fun();
 
-		   
-       
-     
-       
-    }
-    else if(gpro_t.mode_key_pressed_flag ==1){
+            gpro_t.gTimer_exit_mode_long_key = 0;
+
+   }
+   else if(gpro_t.mode_key_pressed_flag ==1){
        
 		gpro_t.mode_key_pressed_flag =0;
       

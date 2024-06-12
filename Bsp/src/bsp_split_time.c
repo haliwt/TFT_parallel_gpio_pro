@@ -68,13 +68,14 @@ void TimeTimer_Pro_Handler(void)
 
             }
 		}
-        else{
-             
-           TFT_Disp_Set_TimerTime(0);
+       
+        if(gpro_t.set_timer_timing_success == 0){
 
+             TFT_Disp_Set_TimerTime(0);
+             gpro_t.disp_works_timer_timing_mode_item  =  works_time;
+
+             TFT_Display_WorksTime();
         }
-		
-	//	TFT_DonnotDisp_Works_Time();
 
 		
 	break;
@@ -105,6 +106,7 @@ void TimeTimer_Pro_Handler(void)
 
            }
 		   else{
+               
 			   if(wifi_link_net_state()==1 && gctl_t.beijing_time_flag==1){
 					
 					gpro_t.disp_works_timer_timing_mode_item= works_time;//gpro_t.disp_works_timer_timing_mode_item

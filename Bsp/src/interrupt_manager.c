@@ -93,6 +93,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        gpro_t.gTimer_pro_set_long_key_tims++;
        gpro_t.gTimer_read_humidity_value++;
        gpro_t.gTimer_countdown_one_minute--;
+       gpro_t.gTimer_exit_mode_long_key++;
     
    
         //cotrol timer
@@ -105,6 +106,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         gctl_t.gTimer_ctl_fan_adc_times ++;
         gctl_t.gTimer_ctl_warning_time++;
         gctl_t.gTimer_maian_run_fun++;     //run main board of function .
+        
        gctl_t.gTimer_ctl_usart1_error++; 
 	   gctl_t.gTimer_ctl_usart2_error++; 
 
