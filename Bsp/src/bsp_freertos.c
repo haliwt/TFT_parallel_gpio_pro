@@ -396,7 +396,7 @@ static void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
                  "vTaskRunPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskRunPro);  /* 任务句柄  */
