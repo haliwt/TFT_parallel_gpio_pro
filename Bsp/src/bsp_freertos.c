@@ -104,7 +104,7 @@ static void vTaskRunPro(void *pvParameters)
 
 
 
-     vTaskDelay(200);
+     vTaskDelay(50);
 
 
 
@@ -128,7 +128,7 @@ static void vTaskMsgPro(void *pvParameters)
 {
    // MSG_T *ptMsg;
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag;
    
@@ -172,7 +172,7 @@ static void vTaskMsgPro(void *pvParameters)
 			   	 gpro_t.key_power_be_pressed_flag =1;	                                    
 
             }
-            if((ulValue & MODE_KEY_1) != 0){
+            else if((ulValue & MODE_KEY_1) != 0){
 
                //switch timer timing and works timing 
 
@@ -187,7 +187,7 @@ static void vTaskMsgPro(void *pvParameters)
                  }
                
             }   
-            if((ulValue & DEC_KEY_2) != 0){
+            else if((ulValue & DEC_KEY_2) != 0){
 
 
 //                xTaskNotify(xHandleTaskStart, /* 目标任务 */
@@ -201,7 +201,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                
             }
-            if((ulValue & ADD_KEY_3) != 0){
+            else if((ulValue & ADD_KEY_3) != 0){
 
 //                  xTaskNotify(xHandleTaskStart, /* 目标任务 */
 //							RUN_ADD_7 ,            /* 设置目标任务事件标志位bit0  */
@@ -213,7 +213,7 @@ static void vTaskMsgPro(void *pvParameters)
                     }           
                 
             }
-           if((ulValue & VOICE_BIT_8) != 0){
+           else if((ulValue & VOICE_BIT_8) != 0){
               
 //               xTaskNotify(xHandleTaskStart, /* 目标任务 */
 //                                   RUN_VOICE_9 ,            /* 设置目标任务事件标志位bit0  */
@@ -328,7 +328,7 @@ static void vTaskStart(void *pvParameters)
 
 
      }
-     if(KEY_DEC_VALUE() == KEY_DOWN){
+     else if(KEY_DEC_VALUE() == KEY_DOWN){
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
@@ -350,7 +350,7 @@ static void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
                  "vTaskRunPro",   		/* 任务名    */
-                 256,             		/* 任务栈大小，单位word，也就是4字节 */
+                 128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskRunPro);  /* 任务句柄  */
