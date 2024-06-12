@@ -628,6 +628,7 @@ void Json_Parse_Command_Fun(void)
 	    if(ptc_error_state() ==0){
 			
 		 buzzer_sound()	;
+          gctl_t.manual_operation_flag  =  ptc_manual_on;
          gctl_t.cmd_open_ptc_flag =1;//ptc open
 		 Ptc_On();
 	     LED_PTC_ICON_ON();
@@ -648,6 +649,7 @@ void Json_Parse_Command_Fun(void)
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 		 buzzer_sound()	;
          gctl_t.cmd_open_ptc_flag =2;//ptc closed
+         gctl_t.manual_operation_flag  =  ptc_manual_off;
 		 Ptc_Off();
 	     LED_PTC_ICON_OFF();
 		 

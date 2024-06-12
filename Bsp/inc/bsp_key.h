@@ -5,7 +5,7 @@
 
 #define INTERRUPT_KEY                0
 #define NORMAL_KEY                   0
-#define NORMAL_KEY_2                 0
+#define NORMAL_KEY_2                0
 #define NORMAL_KEY_3                 0
 
 #define KEY_POWER_VALUE()            HAL_GPIO_ReadPin(KEY_POWER_GPIO_Port,KEY_POWER_Pin)
@@ -173,7 +173,7 @@ void Power_Handler(uint8_t(*power_on_handler)(void));
 uint8_t ReadKey(void);
 
 
-//KEYState_TypeDef POWER_KEY_StateRead(void);
+//uint8_t  POWER_KEY_StateRead(void);
 //KEYState_TypeDef MODE_KEY_StateRead(void);
 //KEYState_TypeDef ADD_KEY_StateRead(void);
 //KEYState_TypeDef DEC_KEY_StateRead(void);

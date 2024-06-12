@@ -26,6 +26,14 @@ typedef enum{
 
 }fun_name;
 
+typedef enum ptc_manual{
+
+    ptc_manual_on,
+    ptc_manual_off
+
+
+}ptc_manual_op;
+
 
 
 
@@ -36,6 +44,7 @@ typedef struct _bsp_ctl{
 	uint8_t ptc_flag;
 	uint8_t plasma_flag;
 	uint8_t ultrasonic_flag;
+    uint8_t manual_operation_flag ;
 
    
 

@@ -2,9 +2,16 @@
 #include "bsp.h"
 
 
+#define KEY_POWER_LONG_DOWN     2
+#define KEY_MODE_LONG_DOWN      2
+
+
+
 key_types key_t;
 uint8_t power_key_detected;
 uint16_t key_mode_counter;
+
+
 
 
 uint32_t  K1=0;
@@ -368,7 +375,7 @@ uint8_t ReadKey(void)
   *           KEY_UP  ：按键没被按下
   * 说    明：无。
   */
-KEYState_TypeDef POWER_KEY_StateRead(void)
+uint8_t  POWER_KEY_StateRead(void)
 {
   /* 读取此时按键值并判断是否是被按下状态，如果是被按下状态进入函数内 */
   if(HAL_GPIO_ReadPin(KEY_POWER_GPIO_Port,KEY_POWER_Pin)==KEY_DOWN_LEVEL)
@@ -388,11 +395,11 @@ KEYState_TypeDef POWER_KEY_StateRead(void)
 		    if(K1 > 900000){
                 K1=0;
 				
-				//SendData_Set_Wifi(0x01);
-				gpro_t.long_key_flag =1;
+				
+	
 				gpro_t.wifi_led_fast_blink_flag=0;
 				 gpro_t.gTimer_pro_wifi_led =0;
-				//gctl_t.wifi_flag =0;
+			
 				return KEY_POWER_LONG_DOWN;
 			}
 		}
@@ -400,29 +407,14 @@ KEYState_TypeDef POWER_KEY_StateRead(void)
 
 	  };      
        /* 按键扫描完毕，确定按键被按下，返回按键被按下状态 */
-	 
-	  if(K1 > 900000 && power_on_state() == power_on && gpro_t.long_key_flag ==0){
-	  	 K1 =0;
-		//  SendData_Set_Wifi(0x01);
-		  gpro_t.long_key_flag =1;
-		  gpro_t.wifi_led_fast_blink_flag=0;
-		// gctl_t.wifi_flag =0;
-		 gpro_t.gTimer_pro_wifi_led =0;
-		 return KEY_POWER_LONG_DOWN;
-
-
-	  }
-	  else{
-	  	K1=0;
-         return KEY_DOWN;
+	  K1=0;
+      return 1;
 
 	  }
     }
-  }
+  
   /* 按键没被按下，返回没被按下状态 */
- 
-
-  return KEY_UP;
+   return 0;
 }
 
 /**
@@ -433,7 +425,7 @@ KEYState_TypeDef POWER_KEY_StateRead(void)
   * 说    明：无。
   */
 
-KEYState_TypeDef MODE_KEY_StateRead(void)
+uint8_t  MODE_KEY_StateRead(void)
 {
   /* 读取此时按键值并判断是否是被按下状态，如果是被按下状态进入函数内 */
   if(HAL_GPIO_ReadPin(KEY_MODE_GPIO_Port,KEY_MODE_Pin)==KEY_DOWN_LEVEL)
@@ -450,7 +442,7 @@ KEYState_TypeDef MODE_KEY_StateRead(void)
 
 		    if(K2 > 900000){
                 K2=0;
-				gpro_t.long_key_flag =1;
+				
 			    
 				return KEY_MODE_LONG_DOWN;
 

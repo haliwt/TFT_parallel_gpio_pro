@@ -56,7 +56,7 @@ void Temperature_Ptc_Pro_Handler(void)
 
 		  case ptc_no_warning:
 
-		   if(gctl_t.gTimer_ctl_ptc_adc_times > 5 ){
+		   if(gctl_t.gTimer_ctl_ptc_adc_times > 12 ){
               gctl_t.gTimer_ctl_ptc_adc_times =0;
 
 			 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,20); //Modify :2023.09.03 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10);
@@ -159,11 +159,13 @@ void Temperature_Ptc_Pro_Handler(void)
 
          case disp_ptc_temp_value_item:
 
-		  	if(gpro_t.gTimer_pro_temp_delay > 17  && ptc_error_state()==0){ //WT.EDIT 2023.07.27 over 40 degree shut of ptc off
+		  	if(gpro_t.gTimer_pro_temp_delay > 17){ //WT.EDIT 2023.07.27 over 40 degree shut of ptc off
                 gpro_t.gTimer_pro_temp_delay=0;
                 	
-               TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
-                if(dht11_temp_value() >39 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){//envirment temperature
+               TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value); //sensor temperature value 
+
+               
+                if(dht11_temp_value() >39){//envirment temperature
                     times_counter=1;
 					gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
 					Ptc_Off();
@@ -174,8 +176,8 @@ void Temperature_Ptc_Pro_Handler(void)
 					osDelay(100);//HAL_Delay(200);
 					}
 				}
-				else if(times_counter==1){
-					if(dht11_temp_value() <38){
+				else if(times_counter==1 &&  gctl_t.manual_operation_flag ==0){
+					if(dht11_temp_value() <38 ){
 
                      if(wifi_t.smartphone_app_power_on_flag==0){
                          if(gctl_t.cmd_open_ptc_flag !=2){
@@ -192,26 +194,7 @@ void Temperature_Ptc_Pro_Handler(void)
 
 				  	}
 			}
-            else if(gpro_t.add_or_dec_is_cofirm_key_flag ==0){
-               
-                if(wifi_t.smartphone_app_power_on_flag==0){
-
-                    if(gctl_t.cmd_open_ptc_flag !=2){
-					 gctl_t.ptc_flag = 1;//run_t.gDry = 1;
-			         Ptc_On();
-				      LED_PTC_ICON_ON();
-	                 if(wifi_link_net_state()==1){
-	                      MqttData_Publish_SetPtc(1);
-	                      HAL_Delay(200);
-	                  }
-
-                        }
-
-                 }
-                 
-    			    
-                
-             }
+            
           }
 
          break;
@@ -219,9 +202,7 @@ void Temperature_Ptc_Pro_Handler(void)
 
 		   case dsip_set_ptc_temp_value_item:
 
-       
-
-    		   if(gpro_t.gTimer_pro_temp_delay> 9   && ptc_error_state()==0 && gpro_t.add_or_dec_is_cofirm_key_flag ==0){
+           if(gpro_t.gTimer_pro_temp_delay > 12   && ptc_error_state()==0 ){
                    gpro_t.gTimer_pro_temp_delay =0;
 
                     TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
@@ -236,35 +217,32 @@ void Temperature_Ptc_Pro_Handler(void)
                           
                   if(wifi_link_net_state()==1){
                       MqttData_Publish_SetPtc(0);
-                      HAL_Delay(200);
+                      osDelay(100);//HAL_Delay(200);
                    }
 
                   
                 }
-    			else if(set_temp_value()> dht11_temp_value()){
+    			else if(set_temp_value() > dht11_temp_value() &&     gctl_t.manual_operation_flag ==0){
     	  
                     if(wifi_t.smartphone_app_power_on_flag==0){
 
-                     if( gctl_t.cmd_open_ptc_flag !=2){//ptc closed)
+                   
                          gctl_t.ptc_flag = 1;//run_t.gDry = 1;
         		         Ptc_On();
         			     LED_PTC_ICON_ON();
 
                          if(wifi_link_net_state()==1){
                           MqttData_Publish_SetPtc(1);
-                          HAL_Delay(200);
+                          osDelay(100);//HAL_Delay(200);
                          }
         			    
                         }
                     }
                    
 
-                }
+              }
 				 
-            }
-
-
-		   break;
+          break;
 
 		   case disp_do_setting_ptc_value_item:
 
@@ -277,13 +255,12 @@ void Temperature_Ptc_Pro_Handler(void)
 			  
 
                TFT_Disp_Only_Temp_Numbers(1,gctl_t.gSet_temperature_value); //don't     display number
-               HAL_Delay(200);
+               HAL_Delay(300);
                TFT_Disp_Only_Temp_Numbers(0,gctl_t.gSet_temperature_value); //don't     display number
 			 
-			   gpro_t.add_or_dec_is_cofirm_key_flag =0;
+			   gctl_t.manual_operation_flag=0;
                gpro_t.set_timer_timing_success=1;
                
-               gpro_t.gTimer_pro_temp_delay= 30; //at once display temperature of sensor dht11 of value.
 			    if(v_t.voice_set_temperature_value_flag==1){
 			   	 v_t.voice_set_temperature_value_flag++;
 				 
@@ -293,7 +270,7 @@ void Temperature_Ptc_Pro_Handler(void)
                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
                     osDelay(100);//HAL_Delay(200);
                 }
-               gpro_t.gTimer_pro_temp_delay = 20;
+               gpro_t.gTimer_pro_temp_delay = 10;//at once display temperature of sensor dht11 of value.
                gctl_t.gSet_temperature_value_item= dsip_set_ptc_temp_value_item;
                
 

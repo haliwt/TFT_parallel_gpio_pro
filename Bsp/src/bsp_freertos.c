@@ -24,6 +24,8 @@
 #define RUN_VOICE_9         (1 << 9)
 
 #define MODE_LONG_KEY_10      (1 << 10)
+#define POWER_LONG_KEY_11     (1 << 11)
+
 
 /*
 **********************************************************************************************************
@@ -51,6 +53,8 @@ static TaskHandle_t xHandleTaskStart = NULL;
 uint8_t add_key_counter,dec_key_counter;
 
 uint32_t mode_key_long_conter;
+uint32_t power_key_long_conter;
+
 
 
 
@@ -109,19 +113,9 @@ static void vTaskRunPro(void *pvParameters)
       WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
-
-
-
-     vTaskDelay(50);
-
-
-
-
-   }
+      vTaskDelay(50);
+  }
 	
- 
-
-
 }
 /*
 *********************************************************************************************************
@@ -179,6 +173,14 @@ static void vTaskMsgPro(void *pvParameters)
 //							eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 			   	 gpro_t.key_power_be_pressed_flag =1;	                                    
 
+            }
+            else if((ulValue & POWER_LONG_KEY_11) != 0){
+
+              if(gpro_t.gPower_On==power_on){
+
+                gpro_t.key_power_be_pressed_flag =2;    
+
+              }
             }
             else if((ulValue & MODE_KEY_1) != 0){
 
@@ -299,7 +301,9 @@ static void vTaskMsgPro(void *pvParameters)
           }
           WIFI_LED_Blink();
        
-         
+          Wifi_Fast_Led_Blink();
+
+          TFT_Disp_Timer_Split_Symbol();
         
          
          }
@@ -325,21 +329,40 @@ static void vTaskStart(void *pvParameters)
     {
 		/* 按键扫描 */
 		//bsp_KeyScan();
-
-     if(KEY_POWER_VALUE()==KEY_DOWN){
-
+    if(KEY_POWER_VALUE() == KEY_DOWN){
 
 
-        xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+        while(KEY_POWER_VALUE() == KEY_DOWN && power_key_long_conter < 2965500){
+
+               power_key_long_conter++;
+               if(power_key_long_conter > 2965000){
+                   power_key_long_conter = 2965900;
+
+                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                            POWER_LONG_KEY_11,            /* 设置目标任务事件标志位bit0  */
+                            eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+                }
+
+         }
+
+
+         if(power_key_long_conter < 2965000 ){
+
+             
+               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 					 POWER_KEY_0,            /* 设置目标任务事件标志位bit0  */
 					 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+
+         }
 				                                    
 
 
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN){
 
-          
+          power_key_long_conter=0;
 
          while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500){
 
@@ -367,6 +390,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN){
+          power_key_long_conter=0;
           
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
@@ -375,6 +399,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN){
+            power_key_long_conter=0;
        
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */

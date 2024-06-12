@@ -19,12 +19,10 @@ void Key_Speical_Power_Fun_Handler(void)
 
 
 	
-     if(KEY_POWER_VALUE() ==KEY_DOWN && (gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 60) &&  gpro_t.gPower_On == power_on){
-            gpro_t.key_power_be_pressed_flag++;
+     if(gpro_t.key_power_be_pressed_flag  == 2 &&  gpro_t.gPower_On == power_on){
+            gpro_t.key_power_be_pressed_flag =0;
 
-            if(gpro_t.key_power_be_pressed_flag > 40   && KEY_POWER_VALUE() == KEY_DOWN){
-               gpro_t.key_power_be_pressed_flag = 100;
-			gpro_t.gTimer_pro_wifi_led =0;
+           
             gpro_t.wifi_led_fast_blink_flag=1;
 			
 			//WIFI CONNCETOR process
@@ -39,10 +37,8 @@ void Key_Speical_Power_Fun_Handler(void)
 			buzzer_sound();
 			
 			 
-        }
-
-	 }
-	 else if(KEY_POWER_VALUE() ==KEY_UP && gpro_t.key_power_be_pressed_flag > 0 && gpro_t.key_power_be_pressed_flag < 40){
+     }
+     else if(gpro_t.key_power_be_pressed_flag  == 1 ){
              
            gpro_t.key_power_be_pressed_flag=0;
 
@@ -187,7 +183,7 @@ void Mode_Key_Config_Fun_Handler(void)
             if(gctl_t.select_main_fun_numbers == 0){
             gctl_t.select_main_fun_numbers = 5;
             }
-            gpro_t.add_or_dec_is_cofirm_key_flag =0;
+        
             Device_Action_Led_OnOff_Handler();
         }
 
@@ -661,7 +657,8 @@ void Mode_Key_Confirm_Fun(void)
 				LED_PTC_ICON_ON(); 
 			    Ptc_On();
 				gctl_t.ptc_flag = 1;
-				gpro_t.add_or_dec_is_cofirm_key_flag =0;
+                 gctl_t.manual_operation_flag  =  ptc_manual_on;
+		
                 gctl_t.cmd_open_ptc_flag =1;
                 if(wifi_link_net_state()==1){
                     MqttData_Publish_SetPtc(1);
@@ -670,7 +667,7 @@ void Mode_Key_Confirm_Fun(void)
 				
 		    }
 			else{
-				gpro_t.add_or_dec_is_cofirm_key_flag =1;
+			    gctl_t.manual_operation_flag = ptc_manual_off;
                 gctl_t.cmd_open_ptc_flag =2;
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();

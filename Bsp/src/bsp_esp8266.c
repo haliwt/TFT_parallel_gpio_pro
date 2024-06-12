@@ -202,7 +202,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 
 		}
 		
-	  Wifi_Fast_Led_Blink();
+	
 
 }
 
@@ -231,9 +231,9 @@ void Wifi_SoftAP_Config_Handler(void)
   {
 
     case wifi_set_restor:
-           Wifi_Fast_Led_Blink();
+       
            ReConnect_Wifi_Net_ATReset_Hardware();//InitWifiModule_Hardware()
-		   Wifi_Fast_Led_Blink();
+	
 	       if(wifi_t.link_tencent_step_counter==driver_esp8266_step_4){
              wifi_t.wifi_config_net_lable =wifi_set_cwmode;
 		   }
@@ -242,7 +242,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
 	 case wifi_set_cwmode:
     	    WIFI_IC_ENABLE();
-			Wifi_Fast_Led_Blink();
+	
 	        if(wifi_t.link_tencent_step_counter==driver_esp8266_step_4){
 				wifi_t.link_tencent_step_counter =driver_esp8266_step_5;
 				wifi_t.gTimer_login_tencent_times=0;
@@ -258,12 +258,12 @@ void Wifi_SoftAP_Config_Handler(void)
 			}
 	       
 		   
-			Wifi_Fast_Led_Blink();
+	
 
 	 break;
 
 	  case wifi_set_softap:
-            WIFI_IC_ENABLE();
+         //   WIFI_IC_ENABLE();
 			if(wifi_t.link_tencent_step_counter ==driver_esp8266_step_5){
 				wifi_t.link_tencent_step_counter =driver_esp8266_step_6;
 				wifi_t.gTimer_login_tencent_times=0;
@@ -277,7 +277,7 @@ void Wifi_SoftAP_Config_Handler(void)
               wifi_t.wifi_config_net_lable=wifi_set_tcdevreg;
 			}
 		
-	       Wifi_Fast_Led_Blink();
+
 
 
 	 case wifi_set_tcdevreg://dynamic register
@@ -292,7 +292,7 @@ void Wifi_SoftAP_Config_Handler(void)
 	         wifi_t.gTimer_login_tencent_times =0;
              wifi_t.wifi_config_net_lable=wifi_set_tcsap;
          }
-	     Wifi_Fast_Led_Blink();
+
 
 	 break;
 
@@ -317,7 +317,7 @@ void Wifi_SoftAP_Config_Handler(void)
 			 wifi_t.wifi_uart_counter=0;
 			 wifi_t.wifi_config_net_lable=0xff;
 		  }
-		  Wifi_Fast_Led_Blink();
+		
 			
 	 break;
 

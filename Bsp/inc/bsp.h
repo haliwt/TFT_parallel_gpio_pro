@@ -203,7 +203,7 @@ typedef struct{
 
   
     //key
-	uint8_t add_or_dec_is_cofirm_key_flag;
+
  
     uint8_t interval_stop_run_flag ;
    

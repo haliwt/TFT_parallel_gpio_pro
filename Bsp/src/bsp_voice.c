@@ -341,7 +341,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	    //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
 	    LED_PTC_ICON_ON();
 		 gpro_t.gTimer_pro_temp_delay= 70;
-		 gpro_t.add_or_dec_is_cofirm_key_flag =0;
+	
          if(wifi_link_net_state()==1){
               MqttData_Publish_SetPtc(1);
               HAL_Delay(200);
@@ -371,10 +371,10 @@ static void voice_cmd_fun(uint8_t cmd)
 	       gctl_t.cmd_open_ptc_flag = 1;
 		   gctl_t.ptc_flag =1;
 		   Ptc_On();
-		   //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
+		
 		   LED_PTC_ICON_ON();
 		    gpro_t.gTimer_pro_temp_delay= 70;
-			gpro_t.add_or_dec_is_cofirm_key_flag =0;
+		
             
             if(wifi_link_net_state()==1){
                 MqttData_Publish_SetPtc(1);
@@ -405,7 +405,7 @@ static void voice_cmd_fun(uint8_t cmd)
 			gctl_t.ptc_flag =0;
             gctl_t.cmd_open_ptc_flag =2;
 			Ptc_Off();
-			gpro_t.add_or_dec_is_cofirm_key_flag=1; 
+	
 		    LED_PTC_ICON_OFF();
 
              if(wifi_link_net_state()==1){
@@ -434,7 +434,7 @@ static void voice_cmd_fun(uint8_t cmd)
 			gctl_t.ptc_flag =0;
             gctl_t.cmd_open_ptc_flag =2;
 			Ptc_Off();
-			gpro_t.add_or_dec_is_cofirm_key_flag=1;
+	
 		    LED_PTC_ICON_OFF();
            if(wifi_link_net_state()==1){
                 MqttData_Publish_SetPtc(0);
@@ -460,7 +460,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		}
 		else{
 
-    	
+    	     gctl_t.manual_operation_flag = ptc_manual_on;
     		 gctl_t.plasma_flag=1;
     		 Plasma_On();
     		 LED_KILL_ICON_ON() ;
@@ -489,7 +489,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		}
 		else{
 
-    	
+    	     gctl_t.manual_operation_flag = ptc_manual_on;
     		 gctl_t.plasma_flag=1;
     		 Plasma_On();
     		 LED_KILL_ICON_ON() ;
@@ -518,7 +518,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	 }
 	 else{
-   	  
+   	     gctl_t.manual_operation_flag = ptc_manual_off;
 	     gctl_t.plasma_flag=0;
 		 Plasma_Off();
 		 LED_KILL_ICON_OFF() ;
@@ -548,7 +548,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	 }
 	 else{
-   	  
+   	     gctl_t.manual_operation_flag = ptc_manual_off;
 	     gctl_t.plasma_flag=0;
 		 Plasma_Off();
 		 LED_KILL_ICON_OFF() ;
@@ -719,7 +719,7 @@ static void  voice_set_temperature_value(uint8_t value)
 					Ptc_On();
 					LED_PTC_ICON_ON();
                     gctl_t.cmd_open_ptc_flag =1; //confirm open ptc heat 
-					gpro_t.add_or_dec_is_cofirm_key_flag=0;
+				
 
                     if(wifi_link_net_state()==1){
                         MqttData_Publish_SetPtc(1);
@@ -735,7 +735,7 @@ static void  voice_set_temperature_value(uint8_t value)
                     gctl_t.cmd_open_ptc_flag =2;
 			   		Ptc_Off();
 			   		LED_PTC_ICON_OFF();
-					gpro_t.add_or_dec_is_cofirm_key_flag=1;
+				
 
                     if(wifi_link_net_state()==1){
                         MqttData_Publish_SetPtc(0);

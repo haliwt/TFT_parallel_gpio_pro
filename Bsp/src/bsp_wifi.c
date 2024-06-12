@@ -113,14 +113,14 @@ static void RunWifi_Command_Handler(void)
 	if(power_on_state() == power_on){
      
 		Wifi_SoftAP_Config_Handler();
-		//Wifi_Fast_Led_Blink();
+
 		SmartPhone_LinkTencent_Cloud();
 
 	}
 	
 	if(wifi_link_net_state()==0){
 		if(wifi_t.gTimer_linking_tencent_duration < 166 ){
-			//Wifi_Fast_Led_Blink();
+		
 		   wifi_t.runCommand_order_lable = wifi_link_tencent_cloud;
 		}
 		else if(wifi_link_net_state()==0 && wifi_t.gTimer_linking_tencent_duration >166){
@@ -137,11 +137,9 @@ static void RunWifi_Command_Handler(void)
 			 wifi_t.runCommand_order_lable = wifi_auto_to_link_cloud;
 		   
 		 }
+       }
 
-		
-		
-
-		}
+       
 
 
 	if(wifi_link_net_state()==1   && power_on_state() == power_on ){

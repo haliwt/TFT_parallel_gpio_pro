@@ -746,24 +746,32 @@ void TFT_Disp_Timer_Split_Symbol(void)
 		  }
 		 #endif 
 
-		 if(gpro_t.gTimer_pro_time_split_symbol > 1  && split_times==0){
+		 if(gpro_t.gTimer_pro_time_split_symbol > 1 &&  gpro_t.gTimer_pro_time_split_symbol < 4){
              
-            
+           
              //.TFT_Disp_Time_Split_Symbol(160,173,0); //时间分割符号,turn on
-			  if(split_times ==0){
+            
+			 if(split_times  == 0){
 				 split_times++;
                 TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
 			  }
 		 }
-		 else if(gpro_t.gTimer_pro_time_split_symbol > 3  && split_times==1){
-                gpro_t.gTimer_pro_time_split_symbol=0;
-				if(split_times ==1){
+		 else if(gpro_t.gTimer_pro_time_split_symbol > 3  &&  gpro_t.gTimer_pro_time_split_symbol < 6){
+               
+			if(split_times == 1){
 		       
-				split_times =0;
-				 //TFT_Disp_Time_Split_Symbol(160,173,1); //时间分割符号 turn off
+				split_times=0;
+				
 		        TFT_Disp_Time_Split_Symbol(140,173,1); //时间分割符号 turn off
-				}
+			  }
 		 }
+         else if(gpro_t.gTimer_pro_time_split_symbol > 5){
+
+        
+		   gpro_t.gTimer_pro_time_split_symbol=0;
+            TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
+
+         }
 
      }
 }

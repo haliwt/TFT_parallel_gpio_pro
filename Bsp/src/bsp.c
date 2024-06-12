@@ -300,7 +300,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 	 case pro_disp_dht11_value: //1 //display works time + "temperature value " + "humidity value"
 
-	   Wifi_Fast_Led_Blink();
+	  // Wifi_Fast_Led_Blink();
 
 	  
 	  if(gpro_t.gTimer_pro_disp_temphum > 4){
@@ -334,8 +334,6 @@ static void TFT_Pocess_Command_Handler(void)
 	   
 	case pro_run_main_fun: //02
 	
-   
-	    Wifi_Fast_Led_Blink();
 
 	    RunMain_And_Interval_Handler();
 	  
@@ -344,10 +342,8 @@ static void TFT_Pocess_Command_Handler(void)
 
 	 case pro_disp_works_time: //display works times and timer timing .
 
-		Wifi_Fast_Led_Blink();
 	
-	
-	    TimeTimer_Pro_Handler();
+	     TimeTimer_Pro_Handler();
 			
 
 		gpro_t.run_process_step=pro_set_temperature;
@@ -355,7 +351,7 @@ static void TFT_Pocess_Command_Handler(void)
 
     case pro_set_temperature:
 
-       Wifi_Fast_Led_Blink();
+      
 	   Temperature_Ptc_Pro_Handler();
 		
        
@@ -364,38 +360,20 @@ static void TFT_Pocess_Command_Handler(void)
 	break;
 
 	case pro_disp_wifi_led: //4
-	      Wifi_Fast_Led_Blink();
-	
-		  if(wifi_link_net_state() ==0){
-	
-             switch(gpro_t.wifi_led_fast_blink_flag){
-
-			 case 1:
-				Wifi_Fast_Led_Blink();
-
-			 	gpro_t.run_process_step=1;
-             break;
-
-             case 0: //slowly of blink led 
-
-				ModeKey_Select_Default_LedOnOff();
-			 break;
-
-             }
-		}
-		else{
-
-		  LED_WIFI_ICON_ON();
+	 
+       if(wifi_link_net_state() ==1){
+	      LED_WIFI_ICON_ON();
 		  ModeKey_Select_Default_LedOnOff();
-
+            
 		}
+		
 
 	  gpro_t.run_process_step=pro_wifi_publish_init;
 	 break; 
 		  
       // handler of wifi 
 	  case pro_wifi_publish_init: //7
-		Wifi_Fast_Led_Blink();
+		//Wifi_Fast_Led_Blink();
 
         if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
              wifi_t.link_net_tencent_data_flag ++;
@@ -528,9 +506,6 @@ void power_off_fan_run(void)
 	
 
 }
-
-
-
 /**********************************************************************************************************
     **
     *Function Name:void Power_Key_Detected(void)
@@ -543,7 +518,7 @@ void Wifi_Fast_Led_Blink(void)
 {
 
   if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
-        wifi_led: if(gpro_t.gTimer_pro_wifi_led < 166){//2'46s
+     if(gpro_t.gTimer_pro_wifi_led < 166){//2'46s
 
 	if( gpro_t.gTimer_pro_wifi_fast_led < 80 ){ //50ms
 
@@ -556,11 +531,8 @@ void Wifi_Fast_Led_Blink(void)
 	}
 	else{
 
-		gpro_t.gTimer_pro_wifi_fast_led=0;
-		goto wifi_led;
-
-		
-	  }
+		gpro_t.gTimer_pro_wifi_fast_led=0; 
+    }
    }
    else{
 	
@@ -568,6 +540,12 @@ void Wifi_Fast_Led_Blink(void)
    }
 
   }
+
+  if(gpro_t.gTimer_pro_wifi_led > 166 && gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
+      gpro_t.wifi_led_fast_blink_flag=0; 
+
+   }
+ 
 }
 
 
