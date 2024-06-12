@@ -92,8 +92,10 @@ static void vTaskRunPro(void *pvParameters)
                VOICE_OUTPUT_SOUND_ENABLE();
                buzzer_sound();
       
-             }
+         }
 
+      bsp_run_Idle();
+      TFT_Process_Handler();
       MainBoard_Self_Inspection_PowerOn_Fun();
       bsp_run_iwdg();
       WIFI_Process_Handler();
@@ -244,7 +246,7 @@ static void vTaskMsgPro(void *pvParameters)
          Key_Speical_Power_Fun_Handler();
          if(gpro_t.gPower_On==power_on){
                  
-                bsp_run_Idle();
+              
              
                 Key_Speical_Mode_Fun_Handler();
 
@@ -274,13 +276,7 @@ static void vTaskMsgPro(void *pvParameters)
          
               
           }
-         else{
-            
-              
-            TFT_Process_Handler();
-
-         }
-
+       
          
         
          
