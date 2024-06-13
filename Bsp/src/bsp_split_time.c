@@ -41,7 +41,8 @@ void TimeTimer_Pro_Handler(void)
 
 		if(gctl_t.power_on_dis_work_time < 1){
 			
-			TFT_Display_WorksTime_Voice();
+			TFT_Only_Disp_Timing();//
+			
 		}
       
 

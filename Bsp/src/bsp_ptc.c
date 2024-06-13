@@ -156,11 +156,18 @@ void Temperature_Ptc_Pro_Handler(void)
 }
 
 
-
+/********************************************************************************************
+	*
+	*Function Name:void SetPtc_TempComare_Value(void)
+	*Function: 
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+********************************************************************************************/
 void SetPtc_TempComare_Value(void)
 {
 
-static uint8_t times_counter;
+static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,update_down_init=0xff;
    //set up 
    if(ptc_error_state() == 0){
 
@@ -179,24 +186,37 @@ static uint8_t times_counter;
 					Ptc_Off();
 
 					LED_PTC_ICON_OFF();
+
+                      update_down++;
+                    
                     times_counter = 1;
+
+                    if(update_init != update_data_flag){
+                        update_init = update_data_flag;
 					if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
-					MqttData_Publish_SetPtc(0);
-					osDelay(100);//HAL_Delay(200);
+    					MqttData_Publish_SetPtc(0);
+    					osDelay(100);//HAL_Delay(200);
 					}
+
+                    }
 				}
 				else if(gctl_t.manual_operation_ptc_flag ==0){
 					if((dht11_temp_value() <38 || dht11_temp_value() == 38) && times_counter == 1){
 
                      if(wifi_t.smartphone_app_power_on_flag==0){
-                      
+                          update_data_flag++;
                           gctl_t.ptc_flag = 1;
     					  Ptc_On();
     				      LED_PTC_ICON_ON();
+
+                         
+                         if(update_down_init != update_down){
+                                  update_down_init = update_down;
     	                 if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
     	                      MqttData_Publish_SetPtc(1);
     	                      osDelay(100);//HAL_Delay(200);
     	                  }
+                         }
                          
                      }
 
@@ -223,11 +243,18 @@ static uint8_t times_counter;
                     gctl_t.ptc_flag = 0 ;//run_t.gDry = 0;
     			    Ptc_Off();
     		        LED_PTC_ICON_OFF();
+
+                    update_down++;
+                  if(update_init != update_data_flag){
+                        update_init = update_data_flag;
                           
                   if(wifi_link_net_state()==1   && wifi_t.link_net_tencent_data_flag ==3){
+                    
                       MqttData_Publish_SetPtc(0);
                       osDelay(100);//HAL_Delay(200);
                    }
+
+                  }
 
                   
                 }
@@ -235,15 +262,23 @@ static uint8_t times_counter;
     	  
                     if(wifi_t.smartphone_app_power_on_flag==0){
 
-                   
+                         update_data_flag++;
+
+                        
+                    
                          gctl_t.ptc_flag = 1;//run_t.gDry = 1;
         		         Ptc_On();
         			     LED_PTC_ICON_ON();
+
+                         if(update_down_init != update_down){
+                            update_down_init = update_down;
 
                          if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                           MqttData_Publish_SetPtc(1);
                           osDelay(100);//HAL_Delay(200);
                          }
+
+                        }
         			    
                         }
                     }

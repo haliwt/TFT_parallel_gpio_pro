@@ -136,7 +136,7 @@ typedef struct _WIFI_FUN{
 	uint8_t received_data_from_tencent_cloud ;
     
 	//beijing time
-	uint8_t set_beijing_time_flag;
+	
 	uint8_t get_beijing_time_success ;
 
     uint8_t link_net_tencent_data_flag;

@@ -565,9 +565,11 @@ void TFT_DonnotDisp_Works_Time(void)
 				   }
 		     }
               
-			 
+			gctl_t.save_time_hours[0] = gctl_t.disp_works_hours;
+            gctl_t.save_time_hours[1] = gctl_t.disp_works_minutes;
 			   
      }
+     
    
 	
 

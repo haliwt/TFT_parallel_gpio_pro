@@ -455,7 +455,8 @@ void Tencent_Cloud_Rx_Handler(void)
 
     if(wifi_t.rx_data_success==1){
          wifi_t.rx_data_success=0;
-         wifi_t.set_beijing_time_flag =0; //WT.EDIT 2023.06.12
+         //wifi_t.set_beijing_time_flag =0; //WT.EDIT 2023.06.12
+         wifi_t.link_beijing_times_flag =0;
 		 // wifi_t.get_rx_beijing_time_enable=0; //enable beijing times
 	
      if(wifi_t.received_data_from_tencent_cloud ==0x25){ //36
@@ -845,7 +846,8 @@ void Json_Parse_Command_Fun(void)
 
 	  case APP_TIMER_POWER_ON_REF :
 
-	       wifi_t.set_beijing_time_flag=0;
+	       //wifi_t.set_beijing_time_flag=0;
+	       wifi_t.link_beijing_times_flag = 0;
 		   wifi_t.get_rx_beijing_time_enable=0; //enable beijing times
          
 		   smartphone_app_timer_power_on_handler();

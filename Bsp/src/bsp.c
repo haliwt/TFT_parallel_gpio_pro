@@ -19,8 +19,6 @@ uint16_t power_off_counter;
 
 
 
-
-
 /*
 *********************************************************************************************************
 *	函 数 名: bsp_Idle
@@ -217,11 +215,7 @@ void PowerOn_Process_Handler(void)
 			fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-            MqttData_Publish_PowerOff_Ref();
-            HAL_Delay(100);
-
-           Subscriber_Data_FromCloud_Handler();
-           HAL_Delay(100);
+        
            
 		}
     }
@@ -234,7 +228,7 @@ void PowerOn_Process_Handler(void)
     }
       
  
-	
+	TFT_DonnotDisp_Works_Time();
 	gctl_t.ptc_warning=0;
 	gctl_t.fan_warning =0;
 	wifi_t.repeat_login_tencent_cloud_init_ref=0;
@@ -463,6 +457,12 @@ static void Power_On_Init(void)
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
 
      }
+     else{
+
+       gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
+       gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
+
+     }
      gctl_t.power_on_dis_work_time =0;
     
 
@@ -494,11 +494,7 @@ static void Power_Off_Fun(void)
 	//
 	
 
-	if(wifi_link_net_state()==0){
-		 gctl_t.disp_works_hours =0;
-	     gctl_t.disp_works_minutes=0;
-
-   }
+	
 	//clear set timer timing value and flag 
 }
 void power_off_fan_run(void)
