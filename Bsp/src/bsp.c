@@ -136,6 +136,7 @@ void PowerOn_Process_Handler(void)
 		
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
+       
 		//wifi ref 
         wifi_t.link_net_tencent_data_flag=1;
         wifi_t.smartphone_app_power_on_flag=0;
@@ -147,8 +148,9 @@ void PowerOn_Process_Handler(void)
         gctl_t.ptc_flag = 0;
         gctl_t.plasma_flag = 0;
 	    gctl_t.ultrasonic_flag =0;
+        gctl_t.set_ptc_temp_value_success =0;
         
-       
+        //main process ref
   
 		gpro_t.gTimer_pro_wifi_fast_led=0;
 	   
@@ -302,15 +304,13 @@ static void TFT_Pocess_Command_Handler(void)
 
 	 case pro_disp_dht11_value: //1 //display works time + "temperature value " + "humidity value"
 
-	  // Wifi_Fast_Led_Blink();
-
-	  
-	  if(gpro_t.gTimer_pro_disp_temphum > 4){
+	   if(gpro_t.gTimer_pro_disp_temphum > 5){
            
 		   gpro_t.gTimer_pro_disp_temphum=0;
 
-		    Update_DHT11_Value();
+		        Update_DHT11_Value();
             TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+           
            
        }
 
@@ -375,7 +375,7 @@ static void TFT_Pocess_Command_Handler(void)
 		  
       // handler of wifi 
 	  case pro_wifi_publish_init: //7
-		//Wifi_Fast_Led_Blink();
+		
 
         if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
              wifi_t.link_net_tencent_data_flag ++;
@@ -445,25 +445,17 @@ static void Power_On_Init(void)
  
    //timer timing
    gctl_t.mode_flag = works_time;
-   gctl_t.timer_time_define_flag = 0;
-  
-	 gctl_t.gSet_timer_hours =0;
+ 
+   gctl_t.gSet_timer_hours =0;
 
-
-	 //mode key long times 
-	 
-	
-
-
-
-    
-     //works time
-    if(wifi_link_net_state()==0){
+//works time
+    if(wifi_link_net_state()==0 ||(wifi_link_net_state()==1 &&      wifi_t.beijing_time_success ==0)){
 		 gctl_t.disp_works_hours =0;
 	     gctl_t.disp_works_minutes=0;
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
 
      }
+   
 
  }
      
@@ -545,7 +537,7 @@ void Wifi_Fast_Led_Blink(void)
 
   }
 
-  if(gpro_t.gTimer_pro_wifi_led > 166 && gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
+  if(wifi_t.gTimer_linking_tencent_duration > 166 && gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
       gpro_t.wifi_led_fast_blink_flag=0; 
 
    }

@@ -134,11 +134,13 @@ typedef struct _WIFI_FUN{
 	uint8_t real_seconds;
 	uint8_t restart_link_tencent_cloud ;
 	uint8_t received_data_from_tencent_cloud ;
+    
 	//beijing time
 	uint8_t set_beijing_time_flag;
 	uint8_t beijing_time_flag ;
 
     uint8_t link_net_tencent_data_flag;
+    uint8_t beijing_time_success;
 
 	//auto link net
 	uint8_t rx_error_codes_flag;

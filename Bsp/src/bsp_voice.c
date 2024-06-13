@@ -705,7 +705,7 @@ static void  voice_set_temperature_value(uint8_t value)
 			gctl_t.gSet_temperature_value = value;
 		
 			gctl_t.gSet_temperature_value_item=disp_do_setting_ptc_value_item;
-	        v_t.voice_set_temperature_value_flag=1;
+	   
 		
 	       TFT_Disp_Voice_Temp_Value(0,gctl_t.gSet_temperature_value);
           
@@ -810,6 +810,7 @@ static void voice_cancel_timer_timing(void)
 		 if(gpro_t.disp_works_timer_timing_state()==timer_time){
 	  
 		     gpro_t.disp_works_timer_timing_mode_item= works_time;
+             gpro_t.set_timer_timing_success = 0; //WT.EDIT 2024.06.13
 		
 			TFT_Display_WorksTime_Voice();
 	   	}

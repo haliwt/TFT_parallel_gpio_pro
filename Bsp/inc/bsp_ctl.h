@@ -45,6 +45,7 @@ typedef struct _bsp_ctl{
 	uint8_t plasma_flag;
 	uint8_t ultrasonic_flag;
     uint8_t manual_operation_flag ;
+    uint8_t set_ptc_temp_value_success;
 
    
 
@@ -56,7 +57,7 @@ typedef struct _bsp_ctl{
    
     //time
    uint8_t disp_works_hours;
-   uint8_t timer_time_define_flag;
+
    uint8_t timer_timing_words_changed_flag;
    uint8_t timing_words_changed_flag;
    uint8_t beijing_time_flag;

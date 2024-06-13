@@ -231,7 +231,8 @@ void ADD_Key_Fun(void)
 		case mode_key_set_temp: //set temperature value add number
 		
 			if(gpro_t.key_mode_long_time_over_flag ==0 ){
-			
+
+            gpro_t.gTimer_pro_disp_temphum = 0; //don't display sensor realy temperature value .
 			gctl_t.gSet_temperature_value ++;
 			if( gctl_t.gSet_temperature_value < 20)gctl_t.gSet_temperature_value=20;
 			
@@ -320,7 +321,7 @@ void DEC_Key_Fun(void)
 		   case mode_key_set_temp:  //default tempearture value 
 	       
 	        if(gpro_t.key_mode_long_time_over_flag ==0){
-	     
+	          gpro_t.gTimer_pro_disp_temphum = 0; //don't display sensor realy temperature value .
 			 gctl_t.gSet_temperature_value--;
 			if( gctl_t.gSet_temperature_value<20)  gctl_t.gSet_temperature_value=40;
 	        if( gctl_t.gSet_temperature_value >40) gctl_t.gSet_temperature_value=40;

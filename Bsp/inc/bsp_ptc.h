@@ -13,6 +13,7 @@ void Ptc_Off(void);
 void Ptc_OnOff_Handler(void);
 
 void Temperature_Ptc_Pro_Handler(void);
+void SetPtc_TempComare_Value(void);
 
 
 #endif 
