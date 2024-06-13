@@ -51,7 +51,7 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
 		
 	  Auto_InitWifiModule_Hardware();//InitWifiModule();
       Auto_SmartPhone_TryToLink_TencentCloud();
-		
+	  wifi_t.linking_tencent_cloud_doing = 1;
 
 		if(counter ==0){
 			counter++;
@@ -60,16 +60,18 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
        
     }
 
-	if(wifi_t.gTimer_auto_detected_net > 8  && wifi_link_net_state()==0 && counter==1){
-		counter++;
-       wifi_t.runCommand_order_lable=wifi_auto_to_link_cloud ;//0
-
-  
-   }
+//	if(wifi_t.gTimer_auto_detected_net > 8  && wifi_link_net_state()==0 && counter==1){
+//		counter++;
+//       wifi_t.runCommand_order_lable=wifi_auto_to_link_cloud ;//0
+//
+//  
+//   }
 
    if(wifi_link_net_state()==1    && power_on_det_net ==0){
              power_on_det_net++;
              counter++;
+             
+           wifi_t.linking_tencent_cloud_doing = 0;
 
            wifi_t.power_on_login_tencent_cloud_flag =0;
            wifi_t.link_net_tencent_data_flag=1;

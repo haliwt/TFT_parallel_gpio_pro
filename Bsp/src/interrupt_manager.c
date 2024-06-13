@@ -131,6 +131,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		wifi_t.gTimer_wifi_counter_link_beijing_times++;
         wifi_t.gTimer_counter_repeat_link_net++;
      
+      
+     
 
 	  //voice sound 
 	  v_t.gTimer_voice_time_counter_start++;
