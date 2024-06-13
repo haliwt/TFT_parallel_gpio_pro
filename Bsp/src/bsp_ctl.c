@@ -487,7 +487,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
 
     if(gctl_t.ptc_warning ==0){
-    if(ptc_state()== 1 &&  gctl_t.cmd_open_ptc_flag !=2){
+    if(ptc_state()== 1 && gctl_t.manual_operation_ptc_flag == ptc_manual_on){
 
          Ptc_On();
     	 LED_PTC_ICON_ON();
@@ -556,22 +556,23 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
   if(ptc_init != ptc_state()){
 
-      ptc_init = ptc_state();
-  if(ptc_state()== 1   && gctl_t.manual_operation_ptc_flag == ptc_manual_on){
+        ptc_init = ptc_state();
+      if(ptc_state()== 1   && gctl_t.manual_operation_ptc_flag == ptc_manual_on){
 
-     Ptc_On();
-	 LED_PTC_ICON_ON();
+         Ptc_On();
+    	 LED_PTC_ICON_ON();
 
-   }
-  else{
-   
-        Ptc_Off();
-    	LED_PTC_ICON_OFF();
-
+       }
+      else{
        
+            Ptc_Off();
+        	LED_PTC_ICON_OFF();
 
-   }
-   }
+           
+
+        }
+       }
+    }
    else{
        gctl_t.ptc_flag = 0;
        Ptc_Off();
@@ -580,7 +581,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
 
    }
-
+   
 
    if(plasma_init != plasma_state()){
     plasma_init = plasma_state();
@@ -628,7 +629,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
    }
 
 }
-}
+
 
 void Device_NoAction_Power_Off(void)
 {
