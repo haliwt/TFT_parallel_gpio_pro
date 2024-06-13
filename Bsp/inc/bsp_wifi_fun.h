@@ -94,7 +94,7 @@ typedef struct _WIFI_FUN{
     uint8_t soft_ap_config_flag;
     uint8_t get_rx_beijing_time_enable;
 	uint8_t auto_link_login_tencent_cloud_flag;
-	uint8_t receive_beijing_time;
+
 	
 	//wifi
 	unsigned char wifi_data[150]; 
@@ -137,10 +137,10 @@ typedef struct _WIFI_FUN{
     
 	//beijing time
 	uint8_t set_beijing_time_flag;
-	uint8_t beijing_time_flag ;
+	uint8_t get_beijing_time_success ;
 
     uint8_t link_net_tencent_data_flag;
-    uint8_t beijing_time_success;
+    
 
 	//auto link net
 	uint8_t rx_error_codes_flag;

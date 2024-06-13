@@ -60,7 +60,7 @@ typedef struct _bsp_ctl{
 
    uint8_t timer_timing_words_changed_flag;
    uint8_t timing_words_changed_flag;
-   uint8_t beijing_time_flag;
+   uint8_t get_beijing_time_success;
 
    //
    uint8_t cmd_open_ptc_flag ;

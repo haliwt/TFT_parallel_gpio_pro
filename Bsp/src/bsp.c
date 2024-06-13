@@ -297,8 +297,8 @@ static void TFT_Pocess_Command_Handler(void)
 	    gpro_t.gTimer_pro_update_dht11_data=60;
         gpro_t.gTimer_read_humidity_value = 30;
 	    wifi_t.gTimer_get_beijing_time=0;
-		wifi_t.receive_beijing_time=0;
-		wifi_t.three_times_link_beijing=0;
+		
+	
 		wifi_t.get_rx_beijing_time_enable=0;
 		
        Device_Action_No_Wifi_Power_On_Handler(); 
@@ -456,7 +456,7 @@ static void Power_On_Init(void)
    gctl_t.gSet_timer_hours =0;
 
 //works time
-    if(wifi_link_net_state()==0 ||(wifi_link_net_state()==1 &&      wifi_t.beijing_time_success ==0)){
+    if(wifi_link_net_state()==0 ||(wifi_link_net_state()==1 &&      wifi_t.get_beijing_time_success ==0)){
 		 gctl_t.disp_works_hours =0;
 	     gctl_t.disp_works_minutes=0;
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
