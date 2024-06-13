@@ -460,7 +460,8 @@ static void Power_On_Init(void)
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
 
      }
-   
+     gctl_t.power_on_dis_work_time =0;
+    
 
  }
      

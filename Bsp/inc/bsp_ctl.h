@@ -57,6 +57,7 @@ typedef struct _bsp_ctl{
    
     //time
    uint8_t disp_works_hours;
+   uint8_t power_on_dis_work_time;
 
    uint8_t timer_timing_words_changed_flag;
    uint8_t timing_words_changed_flag;
