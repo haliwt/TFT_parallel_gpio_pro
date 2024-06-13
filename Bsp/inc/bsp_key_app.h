@@ -20,6 +20,8 @@ void Mode_Key_Confirm_Fun(void);
 void ModeKey_Select_Default_LedOnOff(void);
 
 
+void Power_Off_Speical_Fun(void);
+
 
 
 

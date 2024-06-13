@@ -45,15 +45,7 @@ void Key_Speical_Power_Fun_Handler(void)
            gpro_t.key_power_be_pressed_flag=0;
          
 
-           if(gpro_t.run_process_step==0xf0){
-
-                buzzer_sound();
-               // gpro_t.run_process_step =0;
-                gpro_t.power_off_flag=1;
-                  
-                gpro_t.gPower_On = power_off; 
-          }
-          else if(gpro_t.gPower_On == power_off){
+          if(gpro_t.gPower_On == power_off){
 
 			buzzer_sound();	
 			gpro_t.gPower_On = power_on;   
@@ -78,6 +70,18 @@ void Key_Speical_Power_Fun_Handler(void)
 		}
 }
 
+void Power_Off_Speical_Fun(void)
+{
+
+    buzzer_sound();
+    gpro_t.power_off_flag=1;
+           
+               
+   gpro_t.gPower_On = power_off;   
+
+
+
+}
 /******************************************************************************
 	*
 	*Function Name:static void Key_Speical_Mode_Fun_Handler(void)

@@ -277,16 +277,11 @@ static void voice_cmd_fun(uint8_t cmd)
 
 
         voice_send_power_off_cmd();
-
         gpro_t.run_process_step=0xf0;
-
         Timer_PowerOff_Handler();
 		
 		
-		 
-		
-	
-	}
+    }
    else{
 			  
 	  voice_send_has_been_power_off_cmd(); 

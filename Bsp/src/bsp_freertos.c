@@ -190,6 +190,13 @@ static void vTaskMsgPro(void *pvParameters)
 
               }
             }
+            else if((ulValue &  RUN_POWER_4) != 0){
+
+
+                Power_Off_Speical_Fun();
+
+
+            }
             else if((ulValue & MODE_KEY_1) != 0){
 
 
@@ -452,92 +459,7 @@ static void AppTaskCreate (void)
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
-/*********************************************************************************************************
-*	函 数 名: void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
-*	功能说明: GPIO外部中断，回调函数
-*	形    参：外部中断GPIO 
-*	返 回 值: 无
-*********************************************************************************************************/
-#if 0
-void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
-{
 
-    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
-    __HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
- 
-   switch(GPIO_Pin){
-
-   case KEY_POWER_Pin:
-
-    if(KEY_POWER_VALUE()==KEY_DOWN){
-
-        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-        POWER_KEY_0,      /* 设置目标任务事件标志位bit0  */
-        eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-        &xHigherPriorityTaskWoken);
-
-        /* Èç¹ûxHigherPriorityTaskWoken = pdTRUE£¬ÄÇÃ´ÍË³öÖÐ¶ÏºóÇÐµ½µ±Ç°×î¸ßÓÅÏÈ¼¶ÈÎÎñÖ´ÐÐ */
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-
-    }
-            
-   
-   break;
-
-   case KEY_MODE_Pin:
-      if(KEY_MODE_VALUE() == KEY_DOWN){
-         add_key_counter=0;
-         
-        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-               MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
-               eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-               &xHigherPriorityTaskWoken);
-
-        /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-
-       }
-   
-   break;
-
-
-   case KEY_ADD_Pin:
-         if(KEY_ADD_VALUE() == KEY_DOWN){
-           
-          xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-                    ADD_KEY_3,     /* 设置目标任务事件标志位bit0  */
-                    eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-                    &xHigherPriorityTaskWoken);
-       
-             /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-         }
-
-         
-       
-   break;
-
-   case KEY_DEC_Pin:
-
-        if(KEY_DEC_VALUE() == KEY_DOWN){
-            
-        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
-                DEC_KEY_2,     /* 设置目标任务事件标志位bit0  */
-                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
-                &xHigherPriorityTaskWoken);
-   
-         /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
-         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
-
-         }
-
-      break;
-    }
-}
-#endif 
 /********************************************************************************
 	**
 	*Function Name:void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
@@ -790,10 +712,96 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 *****************************************************************************/
 void Timer_PowerOff_Handler(void)
 {
-     xTaskNotify(xHandleTaskStart, /* 目标任务 */
+     xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 	 RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
 	 eSetBits);             /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
 }
 
+/*********************************************************************************************************
+*	函 数 名: void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
+*	功能说明: GPIO外部中断，回调函数
+*	形    参：外部中断GPIO 
+*	返 回 值: 无
+*********************************************************************************************************/
+#if 0
+void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)
+{
+
+    BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+    __HAL_GPIO_EXTI_CLEAR_RISING_IT(GPIO_Pin);
+ 
+   switch(GPIO_Pin){
+
+   case KEY_POWER_Pin:
+
+    if(KEY_POWER_VALUE()==KEY_DOWN){
+
+        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
+        POWER_KEY_0,      /* 设置目标任务事件标志位bit0  */
+        eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+        &xHigherPriorityTaskWoken);
+
+        /* Èç¹ûxHigherPriorityTaskWoken = pdTRUE£¬ÄÇÃ´ÍË³öÖÐ¶ÏºóÇÐµ½µ±Ç°×î¸ßÓÅÏÈ¼¶ÈÎÎñÖ´ÐÐ */
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+
+    }
+            
+   
+   break;
+
+   case KEY_MODE_Pin:
+      if(KEY_MODE_VALUE() == KEY_DOWN){
+         add_key_counter=0;
+         
+        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
+               MODE_KEY_1,     /* 设置目标任务事件标志位bit0  */
+               eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+               &xHigherPriorityTaskWoken);
+
+        /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
+        portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+
+       }
+   
+   break;
+
+
+   case KEY_ADD_Pin:
+         if(KEY_ADD_VALUE() == KEY_DOWN){
+           
+          xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
+                    ADD_KEY_3,     /* 设置目标任务事件标志位bit0  */
+                    eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+                    &xHigherPriorityTaskWoken);
+       
+             /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
+             portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+         }
+
+         
+       
+   break;
+
+   case KEY_DEC_Pin:
+
+        if(KEY_DEC_VALUE() == KEY_DOWN){
+            
+        xTaskNotifyFromISR(xHandleTaskMsgPro,  /* 目标任务 */
+                DEC_KEY_2,     /* 设置目标任务事件标志位bit0  */
+                eSetBits,  /* 将目标任务的事件标志位与BIT_0进行或操作， 将结果赋值给事件标志位 */
+                &xHigherPriorityTaskWoken);
+   
+         /* 如果xHigherPriorityTaskWoken = pdTRUE，那么退出中断后切到当前最高优先级任务执行 */
+         portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+
+         }
+
+      break;
+    }
+}
+#endif 
 
