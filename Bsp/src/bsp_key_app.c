@@ -661,22 +661,22 @@ void Mode_Key_Confirm_Fun(void)
 				LED_PTC_ICON_ON(); 
 			    Ptc_On();
 				gctl_t.ptc_flag = 1;
-                 gctl_t.manual_operation_flag  =  ptc_manual_on;
+                 gctl_t.manual_operation_ptc_flag  =  ptc_manual_on;
 		
                 gctl_t.cmd_open_ptc_flag =1;
-                if(wifi_link_net_state()==1){
+                if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetPtc(1);
                     osDelay(100);//HAL_Delay(200);
                 }
 				
 		    }
 			else{
-			    gctl_t.manual_operation_flag = ptc_manual_off;
+			    gctl_t.manual_operation_ptc_flag = ptc_manual_off;
                 gctl_t.cmd_open_ptc_flag =2;
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();
 				gctl_t.ptc_flag = 0;
-                if(wifi_link_net_state()==1){
+                if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetPtc(0);
                     osDelay(100);//HAL_Delay(200);
                 }
@@ -697,7 +697,7 @@ void Mode_Key_Confirm_Fun(void)
 			gctl_t.plasma_flag=1;
 			LED_KILL_ICON_ON() ;
 			Plasma_On();
-            if(wifi_link_net_state()==1){
+            if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetPlasma(1);
                     HAL_Delay(200);
                 }
@@ -706,7 +706,7 @@ void Mode_Key_Confirm_Fun(void)
 		  gctl_t.plasma_flag=0;
 		  LED_KILL_ICON_OFF() ;
 		  Plasma_Off();
-          if(wifi_link_net_state()==1){
+          if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetPlasma(0);
                     HAL_Delay(200);
                 }
@@ -723,7 +723,7 @@ void Mode_Key_Confirm_Fun(void)
 	   	    gctl_t.ultrasonic_flag=1;
 			LED_RAT_ICON_ON(); 
 		    Ultrasonic_Pwm_Output();
-            if(wifi_link_net_state()==1){
+            if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetUltrasonic(1);
                     HAL_Delay(200);
               }
@@ -734,7 +734,7 @@ void Mode_Key_Confirm_Fun(void)
 		   gctl_t.ultrasonic_flag=0;
 		   LED_RAT_ICON_OFF();
 		   Ultrasonic_Pwm_Stop();
-           if(wifi_link_net_state()==1){
+           if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetUltrasonic(0);
                     HAL_Delay(200);
              }

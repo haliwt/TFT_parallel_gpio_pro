@@ -180,12 +180,12 @@ static uint8_t times_counter;
 
 					LED_PTC_ICON_OFF();
                     times_counter = 1;
-					if(wifi_link_net_state()==1){
+					if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
 					MqttData_Publish_SetPtc(0);
 					osDelay(100);//HAL_Delay(200);
 					}
 				}
-				else if(gctl_t.manual_operation_flag ==0){
+				else if(gctl_t.manual_operation_ptc_flag ==0){
 					if((dht11_temp_value() <38 || dht11_temp_value() == 38) && times_counter == 1){
 
                      if(wifi_t.smartphone_app_power_on_flag==0){
@@ -193,7 +193,7 @@ static uint8_t times_counter;
                           gctl_t.ptc_flag = 1;
     					  Ptc_On();
     				      LED_PTC_ICON_ON();
-    	                 if(wifi_link_net_state()==1){
+    	                 if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
     	                      MqttData_Publish_SetPtc(1);
     	                      osDelay(100);//HAL_Delay(200);
     	                  }
@@ -224,14 +224,14 @@ static uint8_t times_counter;
     			    Ptc_Off();
     		        LED_PTC_ICON_OFF();
                           
-                  if(wifi_link_net_state()==1){
+                  if(wifi_link_net_state()==1   && wifi_t.link_net_tencent_data_flag ==3){
                       MqttData_Publish_SetPtc(0);
                       osDelay(100);//HAL_Delay(200);
                    }
 
                   
                 }
-    			else if(set_temp_value() > dht11_temp_value() &&     gctl_t.manual_operation_flag ==0){
+    			else if(set_temp_value() > dht11_temp_value() &&     gctl_t.manual_operation_ptc_flag ==0){
     	  
                     if(wifi_t.smartphone_app_power_on_flag==0){
 
@@ -240,7 +240,7 @@ static uint8_t times_counter;
         		         Ptc_On();
         			     LED_PTC_ICON_ON();
 
-                         if(wifi_link_net_state()==1){
+                         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                           MqttData_Publish_SetPtc(1);
                           osDelay(100);//HAL_Delay(200);
                          }
@@ -268,11 +268,11 @@ static uint8_t times_counter;
                HAL_Delay(300);
                TFT_Disp_Only_Temp_Numbers(0,gctl_t.gSet_temperature_value); //don't     display number
 			 
-			   gctl_t.manual_operation_flag= 0; //
+			   gctl_t.manual_operation_ptc_flag= 0; //
                gctl_t.set_ptc_temp_value_success = 1;
                
 			
-               if(wifi_link_net_state()==1){
+               if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
                     osDelay(100);//HAL_Delay(200);
                 }

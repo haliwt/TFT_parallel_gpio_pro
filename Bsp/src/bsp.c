@@ -88,9 +88,12 @@ void bsp_run_iwdg(void)
 void bsp_run_Idle(void)
 {
 
-    TFT_Disp_Timer_Split_Symbol();
-    Wifi_Fast_Led_Blink();
-    Display_Precise_Works_Time();
+   // TFT_Disp_Timer_Split_Symbol();
+   // Wifi_Fast_Led_Blink();
+   if(gpro_t.gPower_On == power_on){
+     Display_Precise_Works_Time();
+
+    }
 
 }
 /*
@@ -169,19 +172,7 @@ void PowerOn_Process_Handler(void)
 	    gpro_t.gTimer_countdown_one_minute =90;
         TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
         Device_NoAction_Power_Off();
-        #if 0
-		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X0,TIMER_Y,0);
-		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X1,TIMER_Y,1);
-		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X2,TIMER_Y,2);
-		TFT_donotDisp_Chinese_WorkTime_23_23(TIMER_X3,TIMER_Y,3);
-
-       TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,1,1);
-	   TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(114,190,1,1);
-
-	  TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,1,1);
-	  TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,1,1);
-
-       #endif 
+     
 		
 		
 	}
@@ -191,7 +182,7 @@ void PowerOn_Process_Handler(void)
         wifi_t.link_net_tencent_data_flag=1;
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
-        osDelay(100);
+        HAL_Delay(100);
 		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		 
@@ -207,7 +198,7 @@ void PowerOn_Process_Handler(void)
 		gpro_t.power_off_flag++;
 		
         Subscriber_Data_FromCloud_Handler();
-        osDelay(100);
+        HAL_Delay(100);
 	  
 	
     }
@@ -223,7 +214,12 @@ void PowerOn_Process_Handler(void)
 			fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-            //LCD_Clear(BLACK);
+            MqttData_Publish_PowerOff_Ref();
+            HAL_Delay(100);
+
+           Subscriber_Data_FromCloud_Handler();
+           HAL_Delay(100);
+           
 		}
     }
 
@@ -290,7 +286,7 @@ static void TFT_Pocess_Command_Handler(void)
 	     LED_Power_Key_On();
 		 TFT_BACKLIGHT_ON();
 
-   
+        gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
 	  
@@ -330,7 +326,7 @@ static void TFT_Pocess_Command_Handler(void)
 
        }
 
-	   if(gpro_t.gTimer_pro_update_dht11_data > 30  && wifi_link_net_state() ==1 && wifi_t.link_beijing_times_flag ==0){
+	   if(gpro_t.gTimer_pro_update_dht11_data > 30  && wifi_link_net_state() ==1 && wifi_t.link_beijing_times_flag ==0 && wifi_t.link_net_tencent_data_flag ==3){
 		   gpro_t.gTimer_pro_update_dht11_data=0;
 
 			Update_Dht11_Totencent_Value();
@@ -385,19 +381,21 @@ static void TFT_Pocess_Command_Handler(void)
 		
 
         if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
-             wifi_t.link_net_tencent_data_flag ++;
+             
 		   
 		     MqttData_Publish_SetOpen(0x01);
-		     HAL_Delay(350);
+		     osDelay(200);//HAL_Delay(350);
+            
+             wifi_t.link_net_tencent_data_flag ++;
             
 
 		}
 		if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==2 ){
-             wifi_t.link_net_tencent_data_flag ++;
+            
 		    
 		    MqttData_Publish_Update_Data();
-		     HAL_Delay(350);
-
+		    osDelay(200);// HAL_Delay(350);
+            wifi_t.link_net_tencent_data_flag ++;
 		}
 	 
 	   gpro_t.run_process_step=pro_check_time_out;
@@ -456,7 +454,7 @@ static void Power_On_Init(void)
    gctl_t.gSet_timer_hours =0;
 
 //works time
-    if(wifi_link_net_state()==0 ||(wifi_link_net_state()==1 &&      wifi_t.get_beijing_time_success ==0)){
+    if(wifi_link_net_state()==0 || wifi_t.get_beijing_time_success ==0){
 		 gctl_t.disp_works_hours =0;
 	     gctl_t.disp_works_minutes=0;
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;

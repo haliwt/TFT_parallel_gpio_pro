@@ -168,7 +168,7 @@ static void RunWifi_Command_Handler(void)
 
 	case wifi_tencent_publish_init_data://02
 
-       if(wifi_t.gTimer_publish_dht11 >10){
+       if(wifi_t.gTimer_publish_dht11 >10 && power_on_state() == power_on ){
 	 
 	       MqttData_Publish_Update_Data();//Publish_Data_ToTencent_Initial_Data();
 		   wifi_t.gTimer_publish_dht11=0;
@@ -183,7 +183,7 @@ static void RunWifi_Command_Handler(void)
 			
      case wifi_subscriber_form_tencent_data: //03
 
-	   if( wifi_t.gTimer_publish_dht11 >12){
+	   if( wifi_t.gTimer_publish_dht11 >12 ){
 
 	      Subscriber_Data_FromCloud_Handler();
 		 wifi_t.gTimer_publish_dht11=0;

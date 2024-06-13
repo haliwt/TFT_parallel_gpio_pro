@@ -407,7 +407,7 @@ void Device_Action_No_Wifi_Handler(void)
 {
 
 
-   Fan_Run();
+ //  Fan_Run();
 
    if(wifi_link_net_state() == 1){
       LED_WIFI_ICON_ON();
@@ -473,15 +473,17 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
 
    static uint8_t ptc_init=0xff,plasma_init=0xff,ult_init=0xff;
-   Fan_Run();
+ //  Fan_Run();
 
    if(wifi_link_net_state() == 1){
       LED_WIFI_ICON_ON();
 
    }
 
+  switch(wifi_t.smartphone_app_power_on_flag){
 
-  if(wifi_t.smartphone_app_power_on_flag== 1){
+
+    case 1:
 
 
     if(gctl_t.ptc_warning ==0){
@@ -543,8 +545,11 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
      
 
    }
-   }
-   else{
+   break;
+
+
+   case 0:
+
 
 
   if(gctl_t.ptc_warning ==0){
@@ -552,14 +557,12 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
   if(ptc_init != ptc_state()){
 
       ptc_init = ptc_state();
-  if(ptc_state()== 1 &&  gctl_t.cmd_open_ptc_flag !=2){
+  if(ptc_state()== 1   && gctl_t.manual_operation_ptc_flag == ptc_manual_on){
 
      Ptc_On();
 	 LED_PTC_ICON_ON();
 
-    
-
-  }
+   }
   else{
    
         Ptc_Off();
@@ -567,7 +570,6 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
        
 
-   }
    }
    }
    else{
@@ -600,29 +602,33 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
    if(ult_init != ultrasonic_state()){
 
-       ult_init = ultrasonic_state();
+           ult_init = ultrasonic_state();
 
-   if(ultrasonic_state()==1){
+       if(ultrasonic_state()==1){
 
-      Ultrasonic_Pwm_Output();
-	  LED_RAT_ICON_ON();
-     
-     
+          Ultrasonic_Pwm_Output();
+    	  LED_RAT_ICON_ON();
+         
+         
+       }
+       else{
+
+    	  Ultrasonic_Pwm_Stop();
+    	  LED_RAT_ICON_OFF();
+          
+         
+
+           }
+
+  
    }
-   else{
 
-	  Ultrasonic_Pwm_Stop();
-	  LED_RAT_ICON_OFF();
-      
-     
-
-   }
-   }
+    break;
 
    }
 
 }
-
+}
 
 void Device_NoAction_Power_Off(void)
 {

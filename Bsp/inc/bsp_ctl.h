@@ -44,7 +44,7 @@ typedef struct _bsp_ctl{
 	uint8_t ptc_flag;
 	uint8_t plasma_flag;
 	uint8_t ultrasonic_flag;
-    uint8_t manual_operation_flag ;
+    uint8_t manual_operation_ptc_flag ;
     uint8_t set_ptc_temp_value_success;
 
    
