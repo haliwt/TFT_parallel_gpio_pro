@@ -90,10 +90,13 @@ void bsp_run_Idle(void)
 
    // TFT_Disp_Timer_Split_Symbol();
    // Wifi_Fast_Led_Blink();
-   if(gpro_t.gPower_On == power_on){
-     Display_Precise_Works_Time();
+  if(gpro_t.gPower_On == power_on){
+   // Display_Precise_Works_Time();
+   if(gpro_t.disp_works_timer_timing_mode_item==timer_time){
+	  	    TFT_DonnotDisp_Works_Time();
+	  }
 
-    }
+   }
 
 }
 /*
@@ -325,7 +328,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 
        }
-
+       //update data to tencent cloud.
 	   if(gpro_t.gTimer_pro_update_dht11_data > 30  && wifi_link_net_state() ==1 && wifi_t.link_beijing_times_flag ==0 && wifi_t.link_net_tencent_data_flag ==3){
 		   gpro_t.gTimer_pro_update_dht11_data=0;
 

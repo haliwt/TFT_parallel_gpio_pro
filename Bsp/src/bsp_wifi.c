@@ -168,7 +168,7 @@ static void RunWifi_Command_Handler(void)
 
 	case wifi_tencent_publish_init_data://02
 
-       if(wifi_t.gTimer_publish_dht11 >10 && power_on_state() == power_on ){
+       if(wifi_t.gTimer_publish_dht11 >10 && gpro_t.gPower_On == power_on ){
 	 
 	       MqttData_Publish_Update_Data();//Publish_Data_ToTencent_Initial_Data();
 		   wifi_t.gTimer_publish_dht11=0;

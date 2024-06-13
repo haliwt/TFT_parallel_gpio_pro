@@ -34,12 +34,14 @@ void TimeTimer_Pro_Handler(void)
    case works_time://1
 
 		if(gctl_t.gTimer_ctl_disp_works_time_second > 59){
+             gctl_t.power_on_dis_work_time = 2;
 			TFT_Display_WorksTime();
+           
 		}
 
-		if(gctl_t.power_on_dis_work_time == 0){
-			gctl_t.power_on_dis_work_time++;
-			TFT_Display_WorksTime();
+		if(gctl_t.power_on_dis_work_time < 1){
+			
+			TFT_Display_WorksTime_Voice();
 		}
       
 
