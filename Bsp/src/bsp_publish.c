@@ -102,12 +102,12 @@ void Publish_Data_ToTencent_Initial_Data(void)
 }
 	
 
-void Publish_Data_ToTencent_Update_Data(void)
-{
-      MqttData_Publish_Update_Data();
-  
-
-}
+//void Publish_Data_ToTencent_Update_Data(void)
+//{
+//      MqttData_Publish_Update_Data();
+//  
+//
+//}
 /*******************************************************************************
 **
 *Function Name:static void Publish_Data_Ptc_Temp_Warning_Handler(uint8_t warning)

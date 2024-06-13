@@ -151,6 +151,7 @@ static void RunWifi_Command_Handler(void)
 
         wifi_t.gTimer_auto_detected_net_state_times =0;
         wifi_t.gTimer_linking_tencent_duration=0;
+        wifi_t.auto_link_login_tencent_cloud_flag = 1; //WT.EDIT.2024.06.13
         // MqttData_Publish_SetOpen(0x01);
         wifi_t.gTimer_get_beijing_time =0;
         wifi_t.gTimer_publish_dht11=0; 
@@ -523,11 +524,18 @@ static void auto_repeat_link_netware_fun(void)
 		  wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;//04
 		  
 		  auto_det_flag=0;
-          wifi_t.link_net_tencent_data_flag = 1;
+         // wifi_t.link_net_tencent_data_flag = 1;
 
-            if(power_on_state() == 1){
+            if(power_on_state() == 1 && gpro_t.gPower_On == power_on){
                 MqttData_Publish_Update_Data();//Publish_Data_ToTencent_Initial_Data();
                 HAL_Delay(200);
+
+            }
+            else if(power_on_state() == 1 && gpro_t.gPower_On == power_off){
+
+               MqttData_Publish_PowerOff_Ref();
+               HAL_Delay(100);
+
 
             }
             Subscriber_Data_FromCloud_Handler();

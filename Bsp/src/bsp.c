@@ -308,7 +308,7 @@ static void TFT_Pocess_Command_Handler(void)
            
 		   gpro_t.gTimer_pro_disp_temphum=0;
 
-		        Update_DHT11_Value();
+		     Update_DHT11_Value();
             TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
            
            
@@ -378,21 +378,21 @@ static void TFT_Pocess_Command_Handler(void)
 		
 
         if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
-             
+               wifi_t.link_net_tencent_data_flag ++;
 		   
 		     MqttData_Publish_SetOpen(0x01);
 		     osDelay(200);//HAL_Delay(350);
             
-             wifi_t.link_net_tencent_data_flag ++;
+           
             
 
 		}
 		if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==2 ){
             
-		    
+		    wifi_t.link_net_tencent_data_flag ++; 
 		    MqttData_Publish_Update_Data();
 		    osDelay(200);// HAL_Delay(350);
-            wifi_t.link_net_tencent_data_flag ++;
+           
 		}
 	 
 	   gpro_t.run_process_step=pro_check_time_out;
