@@ -16,8 +16,8 @@
 #define DEC_KEY_2           (1 << 2)
 #define ADD_KEY_3           (1 << 3)
 
-#define RUN_POWER_4         (1 << 4)
-#define RUN_MODE_5          (1 << 5)
+#define POWER_OFF_4         (1 << 4)
+#define POWER_ON_5          (1 << 5)
 #define RUN_DEC_6           (1 << 6)
 #define RUN_ADD_7           (1 << 7)
 #define VOICE_BIT_8         (1 << 8)
@@ -190,12 +190,19 @@ static void vTaskMsgPro(void *pvParameters)
 
               }
             }
-            else if((ulValue &  RUN_POWER_4) != 0){
+            else if((ulValue &  POWER_OFF_4) != 0){
 
 
-                Power_Off_Speical_Fun();
+                Power_Off_Special_Fun(); //void Power_On_Special_Fun(void)
 
 
+            }
+            else if((ulValue &  POWER_ON_5) != 0){
+            
+            
+                 Power_On_Special_Fun();
+            
+            
             }
             else if((ulValue & MODE_KEY_1) != 0){
 
@@ -713,10 +720,20 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 void Timer_PowerOff_Handler(void)
 {
      xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-	 RUN_POWER_4 ,            /* 设置目标任务事件标志位bit0  */
+	 POWER_OFF_4 ,            /* 设置目标任务事件标志位bit0  */
 	 eSetBits);             /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
 }
+
+
+void Timer_PowerOn_Handler(void)
+{
+     xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+	 POWER_ON_5 ,            /* 设置目标任务事件标志位bit0  */
+	 eSetBits);             /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+}
+
 
 /*********************************************************************************************************
 *	函 数 名: void HAL_GPIO_EXTI_Falling_Callback(uint16_t GPIO_Pin)

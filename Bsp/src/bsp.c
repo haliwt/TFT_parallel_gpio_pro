@@ -215,7 +215,7 @@ void PowerOn_Process_Handler(void)
 			fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-        
+            LCD_Clear(BLACK);
            
 		}
     }
@@ -261,6 +261,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 	 case 0:
 	    LCD_Clear(BLACK);
+      //  HAL_Delay(100);
 	    if(wifi_link_net_state() ==1){
 		    
 		    TFT_Display_WorksTime_Voice();

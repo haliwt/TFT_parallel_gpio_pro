@@ -48,6 +48,7 @@ void Key_Speical_Power_Fun_Handler(void)
           if(gpro_t.gPower_On == power_off){
 
 			buzzer_sound();	
+            LCD_Clear(BLACK);
 			gpro_t.gPower_On = power_on;   
     
             gpro_t.run_process_step=0;
@@ -70,15 +71,27 @@ void Key_Speical_Power_Fun_Handler(void)
 		}
 }
 
-void Power_Off_Speical_Fun(void)
+void Power_Off_Special_Fun(void)
 {
 
+  
     buzzer_sound();
     gpro_t.power_off_flag=1;
            
                
    gpro_t.gPower_On = power_off;   
 
+
+
+}
+
+void Power_On_Special_Fun(void)
+{
+       buzzer_sound();	
+       LCD_Clear(BLACK);
+	   gpro_t.gPower_On = power_on;   
+  
+       gpro_t.run_process_step=0;
 
 
 }
