@@ -139,7 +139,6 @@ static void vTaskRunPro(void *pvParameters)
 */
 static void vTaskMsgPro(void *pvParameters)
 {
-   // MSG_T *ptMsg;
     BaseType_t xResult;
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
@@ -280,15 +279,19 @@ static void vTaskMsgPro(void *pvParameters)
 
                 }
 
-               if(gpro_t.gTimer_exit_mode_long_key > 1){
+               if(gpro_t.gTimer_exit_mode_long_key > 1 && (gpro_t.key_power_be_pressed_flag != 0 ||   gpro_t.mode_key_pressed_flag !=0)){
 
-                  mode_key_long_conter =0;
+                  if(gpro_t.key_power_be_pressed_flag !=0){
+                      power_key_long_conter =0; //clear power key loong flag .
+                      gpro_t.key_power_be_pressed_flag = 0;
 
-                 power_key_long_conter =0; //clear power key loong flag .
-                 gpro_t.key_power_be_pressed_flag = 0;
 
+                  }
+                   
+                 if( gpro_t.mode_key_pressed_flag !=0)
+                     mode_key_long_conter =0;
 
-               }
+                }
 
               WIFI_LED_Blink();
            

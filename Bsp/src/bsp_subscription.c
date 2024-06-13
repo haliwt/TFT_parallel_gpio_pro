@@ -594,7 +594,7 @@ void Json_Parse_Command_Fun(void)
 		 
 		   	buzzer_sound();
 		 	MqttData_Publish_SetOpen(0);  
-			HAL_Delay(50);//350
+			HAL_Delay(200);//350
 
             wifi_t.esp8266_login_cloud_success=1;
 			
@@ -614,7 +614,7 @@ void Json_Parse_Command_Fun(void)
         gpro_t.run_process_step=0;
 		wifi_t.esp8266_login_cloud_success=1;
 		MqttData_Publish_SetOpen(1);  
-		HAL_Delay(50);//300
+		HAL_Delay(200);//300
 
 		gctl_t.ptc_warning =0;
 		gctl_t.fan_warning =0;
@@ -1050,7 +1050,7 @@ static void smartphone_app_timer_power_on_handler(void)
 
 
           }
-          else{
+          else if(gpro_t.gPower_On == power_on){
 
            gpro_t.run_process_step=1;
 

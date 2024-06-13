@@ -124,7 +124,14 @@ void PowerOn_Process_Handler(void)
 
 }
 
-
+/*****************************************************************
+ * 
+ * Function Name : void Power_Off_Handler(void)
+ * Function : handle power off function 
+ * Input Ref:No
+ * Return Ref:NO
+ * 
+******************************************************************/
  void Power_Off_Handler(void)
  {   
    static uint8_t fan_continuce_flag;
