@@ -211,6 +211,7 @@ static void RunWifi_Command_Handler(void)
 
             }
             else{
+               wifi_t.gTimer_get_beijing_time=0;
                wifi_t.runCommand_order_lable=  wifi_auto_to_link_cloud;//7
 
                wifi_t.gTimer_auto_detected_net_state_times =290;
@@ -400,7 +401,7 @@ static void RunWifi_Command_Handler(void)
 	wifi_t.linking_tencent_cloud_doing =0;
     if(wifi_t.link_beijing_times_flag ==1){   //&& wifi_t.gTimer_beijing_time>1){
         
-		//wifi_t.set_beijing_time_flag ++;
+		
 		wifi_t.link_beijing_times_flag ++;
         //disable publish data to tencent cloud.
         gpro_t.gTimer_pro_update_dht11_data =0;
