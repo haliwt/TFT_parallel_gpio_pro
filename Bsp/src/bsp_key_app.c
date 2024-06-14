@@ -105,16 +105,12 @@ void Power_On_Special_Fun(void)
 ******************************************************************************/
 void Key_Speical_Mode_Fun_Handler(void)
 {
-    //mode key be pressed long times
-	if(gpro_t.mode_key_pressed_flag == 2){
-          gpro_t.mode_key_pressed_flag =0;
-		
-             buzzer_sound();
-		     Mode_Long_Key_Fun();
+   
+        Mode_Long_Key_Fun();
 
-            gpro_t.gTimer_exit_mode_long_key = 0;
+       gpro_t.gTimer_exit_mode_long_key = 0;
 
-   }
+   
 }
 
 
@@ -130,7 +126,6 @@ void Mode_Key_Selection_Func(void)
 
     gctl_t.memory_confimr_key_done = 1;
 
-    gpro_t.buzzer_sound_flag =1;
 
     gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
     gctl_t.gTimer_ctl_select_led =0;

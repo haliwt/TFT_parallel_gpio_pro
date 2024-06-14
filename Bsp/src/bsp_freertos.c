@@ -142,8 +142,8 @@ static void vTaskMsgPro(void *pvParameters)
     BaseType_t xResult;
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
-    static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_sound_flag;
-   
+    static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
+    static uint8_t key_mode_long_sound_flag;
    
 	
     while(1)
@@ -209,8 +209,11 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
                 
-                  key_mode_sound_flag = 1;
-                  mode_key_long_conter =0;
+                    if(key_mode_long_sound_flag != 3){
+                     key_mode_short_sound_flag =1;
+                      mode_key_long_conter=0;
+
+                    }
 
                  }
                
@@ -219,10 +222,8 @@ static void vTaskMsgPro(void *pvParameters)
                 
                 if(gpro_t.gPower_On==power_on){
                            
-                     
-                    gpro_t.mode_key_pressed_flag =2;
-                   
-            
+                    key_mode_long_sound_flag = 1;
+                    
                  }
            }
             else if((ulValue & DEC_KEY_2) != 0){
@@ -254,12 +255,18 @@ static void vTaskMsgPro(void *pvParameters)
 		         
        
         
-       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_sound_flag == 1){
+       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_short_sound_flag == 1 || key_mode_long_sound_flag ==1){
 
-              if(key_mode_sound_flag == 1){
+              if(key_mode_short_sound_flag== 1){
 
-                key_mode_sound_flag  ++;
+                key_mode_short_sound_flag  ++;
     
+
+              }
+              else if(key_mode_long_sound_flag == 1){
+
+                   key_mode_long_sound_flag++;
+
 
               }
               else if(key_dec_sound_flag == 1){
@@ -281,13 +288,17 @@ static void vTaskMsgPro(void *pvParameters)
          if(gpro_t.gPower_On==power_on){
                  
               
-             
-                Key_Speical_Mode_Fun_Handler();
-
-                if(key_mode_sound_flag==2){
-                    key_mode_sound_flag++;
+             if(key_mode_short_sound_flag==2){
+                    key_mode_short_sound_flag++;
 
                     Mode_Key_Selection_Func() ;
+
+                }
+                else if(key_mode_long_sound_flag==2){
+                    key_mode_long_sound_flag ++;
+
+                    Key_Speical_Mode_Fun_Handler();
+
 
                 }
                 else if(key_dec_sound_flag==2){
@@ -306,7 +317,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               Mode_Key_Config_Fun_Handler();
 
-               if(gpro_t.gTimer_exit_mode_long_key > 1 && (gpro_t.key_power_be_pressed_flag != 0 ||   gpro_t.mode_key_pressed_flag !=0)){
+               if(gpro_t.gTimer_exit_mode_long_key > 1 && (gpro_t.key_power_be_pressed_flag != 0 ||  key_mode_long_sound_flag==3)){
 
                   if(gpro_t.key_power_be_pressed_flag !=0){
                       power_key_long_conter =0; //clear power key loong flag .
@@ -315,9 +326,11 @@ static void vTaskMsgPro(void *pvParameters)
 
                   }
                    
-                 if( gpro_t.mode_key_pressed_flag !=0)
+                 if(key_mode_long_sound_flag==3){
+                      key_mode_long_sound_flag =0;
                      mode_key_long_conter =0;
 
+                   }
                 }
 
               WIFI_LED_Blink();
