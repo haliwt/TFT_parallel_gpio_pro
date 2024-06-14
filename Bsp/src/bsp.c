@@ -89,7 +89,6 @@ void bsp_run_Idle(void)
    // TFT_Disp_Timer_Split_Symbol();
    // Wifi_Fast_Led_Blink();
   if(gpro_t.gPower_On == power_on){
-   // Display_Precise_Works_Time();
    if(gpro_t.disp_works_timer_timing_mode_item==timer_time){
 	  	    TFT_DonnotDisp_Works_Time();
 	  }

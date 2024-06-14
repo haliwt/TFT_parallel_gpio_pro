@@ -176,14 +176,10 @@ typedef struct{
   
  
    //modke key
-   uint8_t mode_key_pressed_flag;
   
    uint8_t mode_key_run_item_step;
-   uint8_t mode_key_special_fun;
- 
   
-
-   //temperature 
+  //temperature 
      uint8_t set_temperature_value_flag;
 
    //warning
@@ -193,24 +189,11 @@ typedef struct{
      uint8_t lcd_over_height_flag ;
 	//wifi
 	uint8_t wifi_led_fast_blink_flag;
-	
-
-
-
-	//usart 2 voice 
-	uint8_t v_usart2_rx_numbers;
-	uint8_t v_usart2_rx_flag;
-
-  
-    //key
-
- 
-    uint8_t interval_stop_run_flag ;
+    
+	uint8_t interval_stop_run_flag ;
    
    
-   
-	
-	 //main process timer 
+   //main process timer 
 
 	uint8_t gTimer_usart_error;
 
@@ -230,11 +213,7 @@ typedef struct{
   uint8_t gTimer_pro_update_dht11_data;
   
 
- 
-  
- 
-
-  uint8_t gTimer_run_total;
+   uint8_t gTimer_run_total;
 
   //timer timing function
   uint8_t gTimer_pro_feed_dog;
