@@ -46,6 +46,7 @@ typedef struct _bsp_ctl{
 	uint8_t ultrasonic_flag;
     uint8_t manual_operation_ptc_flag ;
     uint8_t set_ptc_temp_value_success;
+    uint8_t fan_continuce_flag;
 
    
 

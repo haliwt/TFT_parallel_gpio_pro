@@ -40,37 +40,46 @@ void Key_Speical_Power_Fun_Handler(void)
 			
 			 
      }
-     else if(gpro_t.key_power_be_pressed_flag  == 1){
-             
-           gpro_t.key_power_be_pressed_flag=0;
-         
 
-          if(gpro_t.gPower_On == power_off){
+}
 
-			buzzer_sound();	
-            LCD_Clear(BLACK);
+/******************************************************************************
+	*
+	*Function Name:void PowerOn_Normal_Key(void)
+	*Funcion: speical of power key function
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
+void PowerOn_Normal_Key(void)
+{
+   
+    if(gpro_t.gPower_On == power_off){
+
+		
+          //  LCD_Clear(BLACK);
 			gpro_t.gPower_On = power_on;   
     
             gpro_t.run_process_step=0;
 		   
-       
-
-		
-			
-		  }
-		  else {
+    }
+    else {
 			 //gpro_t.gKey_value = power_key_id;
-			 buzzer_sound();
-			 gpro_t.power_off_flag=1;
-		
 			
-			gpro_t.gPower_On = power_off;   
+     gpro_t.power_off_flag=1;
+	  gpro_t.gPower_On = power_off;   
 		
-			  
-			 }
-		}
+	}
+		
 }
-
+/******************************************************************************
+	*
+	*Function Name:void Power_Off_Special_Fun(void)
+	*Funcion: speical of power key function
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
 void Power_Off_Special_Fun(void)
 {
 

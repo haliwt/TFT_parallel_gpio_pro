@@ -143,7 +143,7 @@ static void vTaskMsgPro(void *pvParameters)
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
-    static uint8_t key_mode_long_sound_flag;
+    static uint8_t key_mode_long_sound_flag,key_power_sound_flag;
    
 	
     while(1)
@@ -177,8 +177,9 @@ static void vTaskMsgPro(void *pvParameters)
              
 			if((ulValue & POWER_KEY_0) != 0)
 			{
-                if(gpro_t.key_power_be_pressed_flag !=3)
-			   	 gpro_t.key_power_be_pressed_flag =1;
+                if(gpro_t.key_power_be_pressed_flag !=3){
+			   	 key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
+                 }
                  power_key_long_conter =0;
 
             }
@@ -210,10 +211,13 @@ static void vTaskMsgPro(void *pvParameters)
                  if(gpro_t.gPower_On==power_on){
                 
                     if(key_mode_long_sound_flag != 3){
-                     key_mode_short_sound_flag =1;
-                      mode_key_long_conter=0;
+                       key_mode_short_sound_flag =1;
 
                     }
+                    
+                      mode_key_long_conter=0;
+
+                    
 
                  }
                
@@ -255,9 +259,17 @@ static void vTaskMsgPro(void *pvParameters)
 		         
        
         
-       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_short_sound_flag == 1 || key_mode_long_sound_flag ==1){
+       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_short_sound_flag == 1 || key_mode_long_sound_flag ==1 \
+           || key_power_sound_flag ==1){
 
-              if(key_mode_short_sound_flag== 1){
+
+             if(key_power_sound_flag == 1){
+
+                key_power_sound_flag ++;
+                LCD_Clear(BLACK);
+
+              }
+              else if(key_mode_short_sound_flag== 1){
 
                 key_mode_short_sound_flag  ++;
     
@@ -283,12 +295,15 @@ static void vTaskMsgPro(void *pvParameters)
 
         }
           //run_main_board_process();
-        
-         Key_Speical_Power_Fun_Handler();
+         if(key_power_sound_flag==2){
+            key_power_sound_flag++;
+            PowerOnOff_Init_Ref_Fun();
+         }
+            
          if(gpro_t.gPower_On==power_on){
                  
               
-             if(key_mode_short_sound_flag==2){
+               if(key_mode_short_sound_flag==2){
                     key_mode_short_sound_flag++;
 
                     Mode_Key_Selection_Func() ;
@@ -397,7 +412,7 @@ static void vTaskStart(void *pvParameters)
              
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 					 POWER_KEY_0,            /* 设置目标任务事件标志位bit0  */
-					 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+					 eSetValueWithOverwrite);//eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
 
          }

@@ -4,6 +4,7 @@
 
 
 
+void PowerOn_Normal_Key(void);
 
 void Key_Speical_Power_Fun_Handler(void);
 void Mode_Key_Long_Fun(void);
