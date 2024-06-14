@@ -193,15 +193,15 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue &  POWER_OFF_4) != 0){
 
-
-                Power_Off_Special_Fun(); //void Power_On_Special_Fun(void)
+                 key_power_sound_flag = 1;
+                //Power_Off_Special_Fun(); //void Power_On_Special_Fun(void)
 
 
             }
             else if((ulValue &  POWER_ON_5) != 0){
             
-            
-                 Power_On_Special_Fun();
+                  key_power_sound_flag = 1;
+                 //Power_On_Special_Fun();
             
             
             }
@@ -286,6 +286,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               }
               else if(key_add_sound_flag ==1){
+                
                   key_add_sound_flag++;
 
 
@@ -412,7 +413,7 @@ static void vTaskStart(void *pvParameters)
              
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 					 POWER_KEY_0,            /* 设置目标任务事件标志位bit0  */
-					 eSetValueWithOverwrite);//eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+					 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
 
          }
