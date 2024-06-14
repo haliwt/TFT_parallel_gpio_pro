@@ -14,32 +14,26 @@ static  void Add_Dec_Key_As_mode_key_confirm_handler(void);
 	*Return Ref:NO
 	*
 ******************************************************************************/
-void Key_Speical_Power_Fun_Handler(void)
+void PowerOn_LongKey_Fun(void)
 {
 
+gpro_t.wifi_led_fast_blink_flag=1;
 
-	
-     if(gpro_t.key_power_be_pressed_flag  == 2 &&  gpro_t.gPower_On == power_on){
-            gpro_t.key_power_be_pressed_flag ++;
+//WIFI CONNCETOR process
+wifi_t.link_tencent_step_counter=0;
+wifi_t.esp8266_login_cloud_success =0;
+wifi_t.power_on_login_tencent_cloud_flag =0;
+wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
+wifi_t.wifi_config_net_lable= wifi_set_restor;
+wifi_t.gTimer_login_tencent_times=0;
 
-           
-            gpro_t.wifi_led_fast_blink_flag=1;
-			
-			//WIFI CONNCETOR process
-			wifi_t.link_tencent_step_counter=0;
-			wifi_t.esp8266_login_cloud_success =0;
-            wifi_t.power_on_login_tencent_cloud_flag =0;
-			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
-			wifi_t.wifi_config_net_lable= wifi_set_restor;
-			wifi_t.gTimer_login_tencent_times=0;
-      
-			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
-			buzzer_sound();
-            gpro_t.gTimer_exit_mode_long_key =0;
+wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
+
+gpro_t.gTimer_exit_mode_long_key =0;
            
 			
 			 
-     }
+     
 
 }
 
@@ -51,27 +45,7 @@ void Key_Speical_Power_Fun_Handler(void)
 	*Return Ref:NO
 	*
 ******************************************************************************/
-void PowerOn_Normal_Key(void)
-{
-   
-    if(gpro_t.gPower_On == power_off){
 
-		
-          //  LCD_Clear(BLACK);
-			gpro_t.gPower_On = power_on;   
-    
-            gpro_t.run_process_step=0;
-		   
-    }
-    else {
-			 //gpro_t.gKey_value = power_key_id;
-			
-     gpro_t.power_off_flag=1;
-	  gpro_t.gPower_On = power_off;   
-		
-	}
-		
-}
 /******************************************************************************
 	*
 	*Function Name:void Power_Off_Special_Fun(void)

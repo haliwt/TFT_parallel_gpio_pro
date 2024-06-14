@@ -143,7 +143,7 @@ static void vTaskMsgPro(void *pvParameters)
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
-    static uint8_t key_mode_long_sound_flag,key_power_sound_flag;
+    static uint8_t key_mode_long_sound_flag,key_power_sound_flag,key_power_long_sound_flag;
    
 	
     while(1)
@@ -177,7 +177,7 @@ static void vTaskMsgPro(void *pvParameters)
              
 			if((ulValue & POWER_KEY_0) != 0)
 			{
-                if(gpro_t.key_power_be_pressed_flag !=3){
+                if(key_power_long_sound_flag !=3){
 			   	 key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
                  }
                  power_key_long_conter =0;
@@ -187,7 +187,8 @@ static void vTaskMsgPro(void *pvParameters)
 
               if(gpro_t.gPower_On==power_on){
 
-                gpro_t.key_power_be_pressed_flag =2;    
+                //gpro_t.key_power_be_pressed_flag =2;
+                key_power_long_sound_flag =1;
 
               }
             }
@@ -260,7 +261,7 @@ static void vTaskMsgPro(void *pvParameters)
        
         
        if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_short_sound_flag == 1 || key_mode_long_sound_flag ==1 \
-           || key_power_sound_flag ==1){
+           || key_power_sound_flag ==1 || key_power_long_sound_flag==1){
 
 
              if(key_power_sound_flag == 1){
@@ -293,6 +294,11 @@ static void vTaskMsgPro(void *pvParameters)
 
 
               }
+              else if(key_power_long_sound_flag ==1){
+
+                  key_power_long_sound_flag ++;
+
+              }
              
             buzzer_sound();
 
@@ -306,6 +312,9 @@ static void vTaskMsgPro(void *pvParameters)
          if(gpro_t.gPower_On==power_on){
                  
               
+   
+
+
                if(key_mode_short_sound_flag==2){
                     key_mode_short_sound_flag++;
 
@@ -330,16 +339,21 @@ static void vTaskMsgPro(void *pvParameters)
 
                      ADD_Key_Fun();
 
+                }
+                else if(key_power_long_sound_flag == 2){
+                     key_power_long_sound_flag ++;
+
+                      PowerOn_LongKey_Fun();
 
                 }
 
               Mode_Key_Config_Fun_Handler();
 
-               if(gpro_t.gTimer_exit_mode_long_key > 1 && (gpro_t.key_power_be_pressed_flag != 0 ||  key_mode_long_sound_flag==3)){
+               if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 3 ||  key_mode_long_sound_flag==3)){
 
-                  if(gpro_t.key_power_be_pressed_flag !=0){
+                  if(key_power_long_sound_flag ==3){
                       power_key_long_conter =0; //clear power key loong flag .
-                      gpro_t.key_power_be_pressed_flag = 0;
+                     key_power_long_sound_flag  = 0;
 
 
                   }
