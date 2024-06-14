@@ -595,7 +595,7 @@ void Json_Parse_Command_Fun(void)
 
        
 		 
-		   	buzzer_sound();
+		   //	buzzer_sound();
 		 	MqttData_Publish_SetOpen(0);  
 			HAL_Delay(200);//350
 
@@ -612,8 +612,8 @@ void Json_Parse_Command_Fun(void)
 	  break;
 
 	  case OPEN_ON_ITEM:
-      	buzzer_sound();
-		gpro_t.gPower_On = power_on;   
+      //	buzzer_sound();
+		//gpro_t.gPower_On = power_on;   
     
         //gpro_t.run_process_step=0;
 		//wifi_t.esp8266_login_cloud_success=1;
@@ -1052,9 +1052,10 @@ static void smartphone_app_timer_power_on_handler(void)
 
 		//Device_Action_Publish_Handler();
 		if(gpro_t.gPower_On == power_off){
-		   gpro_t.gPower_On = power_on;
-           gpro_t.run_process_step=0;
-           gpro_t.power_off_flag = 1;
+		   //gpro_t.gPower_On = power_on;
+          // gpro_t.run_process_step=0;
+          // gpro_t.power_off_flag = 1;
+           Timer_PowerOn_Handler();
            wifi_t.link_net_tencent_data_flag =3; //has been publish and subscription of data
 
           }
