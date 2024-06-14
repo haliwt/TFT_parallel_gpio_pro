@@ -472,7 +472,8 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 {
 
 
-   static uint8_t ptc_init=0xff,plasma_init=0xff,ult_init=0xff;
+   static uint8_t ptc_up_init=0xff,ptc_down_init= 0xff,ptc_up,ptc_down;
+   static uint8_t plasma_init=0xff,ptc_init=0xff,ult_init;
  //  Fan_Run();
 
    if(wifi_link_net_state() == 1){
@@ -491,14 +492,31 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
          Ptc_On();
     	 LED_PTC_ICON_ON();
+         ptc_down++;
 
-        
+        if(ptc_up_init !=ptc_up){
+            ptc_up_init =ptc_up;
+         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+    	         MqttData_Publish_SetPtc(1);
+    	         HAL_Delay(100);
+    	   }
+         }
 
       }
       else{
-       
+
+          
             Ptc_Off();
         	LED_PTC_ICON_OFF();
+            ptc_up++;
+
+          if(ptc_down_init !=ptc_down){
+            ptc_down_init =ptc_down;
+         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+    	         MqttData_Publish_SetPtc(0);
+    	         HAL_Delay(100);
+    	   }
+         }
 
          }
       }
@@ -506,6 +524,16 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
         gctl_t.ptc_flag = 0;
         Ptc_Off();
         LED_PTC_ICON_OFF();
+
+             ptc_up++;
+
+          if(ptc_down_init !=ptc_down){
+            ptc_down_init =ptc_down;
+         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+    	         MqttData_Publish_SetPtc(0);
+    	         HAL_Delay(100);
+    	   }
+         }
 
 
       }
@@ -561,12 +589,30 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 
          Ptc_On();
     	 LED_PTC_ICON_ON();
+         ptc_down++;
+
+        if(ptc_up_init !=ptc_up){
+            ptc_up_init =ptc_up;
+         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+    	         MqttData_Publish_SetPtc(1);
+    	         HAL_Delay(100);
+    	   }
+         }
 
        }
       else{
        
             Ptc_Off();
         	LED_PTC_ICON_OFF();
+              ptc_up++;
+
+          if(ptc_down_init !=ptc_down){
+            ptc_down_init =ptc_down;
+         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+    	         MqttData_Publish_SetPtc(0);
+    	         HAL_Delay(100);
+    	   }
+         }
 
            
 
@@ -577,6 +623,16 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
        gctl_t.ptc_flag = 0;
        Ptc_Off();
        LED_PTC_ICON_OFF();
+
+         ptc_up++;
+
+        if(ptc_down_init !=ptc_down){
+            ptc_down_init =ptc_down;
+         if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+    	         MqttData_Publish_SetPtc(0);
+    	         HAL_Delay(100);
+    	   }
+         }
 
 
 

@@ -384,7 +384,7 @@ static void TFT_Pocess_Command_Handler(void)
                wifi_t.link_net_tencent_data_flag ++;
 		   
 		     MqttData_Publish_SetOpen(0x01);
-		     osDelay(200);//HAL_Delay(350);
+		     HAL_Delay(200);
             
            
             
@@ -394,7 +394,7 @@ static void TFT_Pocess_Command_Handler(void)
             
 		    wifi_t.link_net_tencent_data_flag ++; 
 		    MqttData_Publish_Update_Data();
-		    osDelay(200);// HAL_Delay(350);
+		    HAL_Delay(200);
            
 		}
 	 
