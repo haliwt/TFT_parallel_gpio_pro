@@ -476,6 +476,7 @@ void PowerOnOff_Init_Ref_Fun(void)
        // LCD_Clear(BLACK);
        /// HAL_Delay(100);
        Donot_Disp_CountDown_60s();
+      // HAL_Delay(20);
        power_on_init_set_ref();
 	    
      }

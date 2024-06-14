@@ -207,7 +207,7 @@ extern "C" {
 #endif
 
 #ifndef configUSE_TIMERS         //定时器组，定义
-	#define configUSE_TIMERS 0
+	#define configUSE_TIMERS   0 
 #endif
 
 #ifndef configUSE_COUNTING_SEMAPHORES
