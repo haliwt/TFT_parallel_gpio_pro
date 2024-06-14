@@ -144,9 +144,10 @@ void PowerOn_Process_Handler(void)
 	      
          LCD_Clear(BLACK);
 	    fan_continuce_flag =1;
-		
+		 //clear control falg
         gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
+        
        
 		//wifi ref 
         wifi_t.link_net_tencent_data_flag=1;
@@ -160,6 +161,7 @@ void PowerOn_Process_Handler(void)
         gctl_t.plasma_flag = 0;
 	    gctl_t.ultrasonic_flag =0;
         gctl_t.set_ptc_temp_value_success =0;
+        gctl_t.manual_operation_ptc_flag = ptc_manual_on;
         
         //main process ref
   
@@ -462,6 +464,7 @@ static void Power_On_Init(void)
 
        gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
        gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
+       gctl_t.gTimer_ctl_disp_works_time_second = gctl_t.save_time_hours[2];
 
      }
      gctl_t.power_on_dis_work_time =0;

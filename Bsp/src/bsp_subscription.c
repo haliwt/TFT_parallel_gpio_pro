@@ -601,8 +601,9 @@ void Json_Parse_Command_Fun(void)
 
             wifi_t.esp8266_login_cloud_success=1;
 			
-			gpro_t.power_off_flag=1;
-			gpro_t.gPower_On = power_off; //WT.EDIT 2024.02.20
+			//gpro_t.power_off_flag=1;
+			//gpro_t.gPower_On = power_off; //WT.EDIT 2024.02.20
+			Timer_PowerOff_Handler();
             
 		
 	    wifi_t.gTimer_auto_detected_net_state_times=0; //don't need check wifi if has or not
@@ -614,10 +615,13 @@ void Json_Parse_Command_Fun(void)
       	buzzer_sound();
 		gpro_t.gPower_On = power_on;   
     
-        gpro_t.run_process_step=0;
-		wifi_t.esp8266_login_cloud_success=1;
+        //gpro_t.run_process_step=0;
+		//wifi_t.esp8266_login_cloud_success=1;
+		
 		MqttData_Publish_SetOpen(1);  
 		HAL_Delay(200);//300
+		Timer_PowerOn_Handler();
+		
 
 		gctl_t.ptc_warning =0;
 		gctl_t.fan_warning =0;

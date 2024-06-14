@@ -62,7 +62,7 @@ typedef struct _bsp_ctl{
    uint8_t timer_timing_words_changed_flag;
    uint8_t timing_words_changed_flag;
    uint8_t get_beijing_time_success;
-   uint8_t save_time_hours[2];
+   uint8_t save_time_hours[3];
    
 
    //
