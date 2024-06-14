@@ -138,7 +138,7 @@ void Key_Speical_Mode_Fun_Handler(void)
 
 		gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
 		gctl_t.gTimer_ctl_select_led =0;
-        buzzer_sound();
+       // buzzer_sound();
 	   	
 	   }
 

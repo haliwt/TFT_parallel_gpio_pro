@@ -142,7 +142,7 @@ static void vTaskMsgPro(void *pvParameters)
     BaseType_t xResult;
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
-    static uint8_t key_add_sound_flag,key_dec_sound_flag;
+    static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_sound_flag;
    
    
 	
@@ -209,9 +209,8 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
                 
-                 
-                  gpro_t.mode_key_pressed_flag =1;
-                   mode_key_long_conter =0;
+                  key_mode_sound_flag = 1;
+                  mode_key_long_conter =0;
 
                  }
                
@@ -255,17 +254,24 @@ static void vTaskMsgPro(void *pvParameters)
 		         
        
         
-       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1){
+       if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_sound_flag == 1){
 
-              if(key_dec_sound_flag == 1){
+              if(key_mode_sound_flag == 1){
+
+                key_mode_sound_flag  ++;
+                gpro_t.mode_key_pressed_flag =1;
+
+              }
+              else if(key_dec_sound_flag == 1){
                  key_dec_sound_flag++;
 
               }
-              if(key_add_sound_flag ==1){
+              else if(key_add_sound_flag ==1){
                   key_add_sound_flag++;
 
 
               }
+             
             buzzer_sound();
 
         }
