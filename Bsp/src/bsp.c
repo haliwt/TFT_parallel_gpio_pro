@@ -276,6 +276,9 @@ void Power_Off_Special_Fun(void)
 
   
     buzzer_sound();
+    DISABLE_INT();
+     LCD_Clear(BLACK);
+     ENABLE_INT();
     PowerOff_Ref_Fun();
     gpro_t.power_off_flag=1;
            
@@ -556,10 +559,6 @@ static void Power_On_Init(void)
      }
      else{
        gctl_t.power_on_dis_work_time =0;
-
-       gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
-       gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
-       gctl_t.gTimer_ctl_disp_works_time_second = gctl_t.save_time_hours[2];
 
      }
     

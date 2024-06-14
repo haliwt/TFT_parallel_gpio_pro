@@ -39,10 +39,10 @@ void TimeTimer_Pro_Handler(void)
            
 		}
 
-		if(gctl_t.power_on_dis_work_time ==0){
+		if(gctl_t.power_on_dis_work_time ==0 && gctl_t.get_beijing_time_success == 1){
 
-             gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
-             gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
+            gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
+           gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
 			
 			TFT_Only_Disp_Timing();//
 			

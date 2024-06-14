@@ -254,9 +254,6 @@ static void voice_cmd_fun(uint8_t cmd)
 	  }
 	  else{
 	  	  gpro_t.gPower_On = power_on;
-		   
-
-	
 		  voice_send_power_on_cmd();
           PowerOn_Handler();
           
