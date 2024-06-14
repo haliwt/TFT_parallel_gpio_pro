@@ -195,7 +195,7 @@ typedef struct{
 	uint8_t wifi_led_fast_blink_flag;
 	
 
-  uint8_t key_mode_long_time_over_flag;
+
 
 	//usart 2 voice 
 	uint8_t v_usart2_rx_numbers;

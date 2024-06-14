@@ -229,7 +229,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
 
-                  key_dec_sound_flag=1;
+                       key_dec_sound_flag=1;
 
                    }
 
@@ -259,7 +259,7 @@ static void vTaskMsgPro(void *pvParameters)
               if(key_mode_sound_flag == 1){
 
                 key_mode_sound_flag  ++;
-                gpro_t.mode_key_pressed_flag =1;
+    
 
               }
               else if(key_dec_sound_flag == 1){
@@ -284,13 +284,18 @@ static void vTaskMsgPro(void *pvParameters)
              
                 Key_Speical_Mode_Fun_Handler();
 
+                if(key_mode_sound_flag==2){
+                    key_mode_sound_flag++;
 
-                if(key_dec_sound_flag==2){
+                    Mode_Key_Selection_Func() ;
+
+                }
+                else if(key_dec_sound_flag==2){
                      key_dec_sound_flag++;
                    DEC_Key_Fun();
 
                 }
-                if(key_add_sound_flag==2){
+                else if(key_add_sound_flag==2){
 
                      key_add_sound_flag++;
 
@@ -298,6 +303,8 @@ static void vTaskMsgPro(void *pvParameters)
 
 
                 }
+
+              Mode_Key_Config_Fun_Handler();
 
                if(gpro_t.gTimer_exit_mode_long_key > 1 && (gpro_t.key_power_be_pressed_flag != 0 ||   gpro_t.mode_key_pressed_flag !=0)){
 

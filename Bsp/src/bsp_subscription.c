@@ -314,6 +314,7 @@ void Subscribe_Rx_Interrupt_Handler(void)
 
        if(wifi_t.usart2_dataBuf[0]== '0'){   //hex :4B - "K" -fixed
             wifi_t.esp8266_login_cloud_success =0;
+            gctl_t.get_beijing_time_success = 0;
             wifi_t.rx_data_state =0;
             wifi_t.rx_counter=0;
         }

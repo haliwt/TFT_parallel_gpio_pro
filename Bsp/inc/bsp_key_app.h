@@ -15,6 +15,7 @@ void Mode_Key_Select_Fun(void);
 
 void Mode_Key_Confirm_Fun(void);
 
+void Mode_Key_Selection_Func(void) ;
 
 
 void ModeKey_Select_Default_LedOnOff(void);

@@ -110,46 +110,31 @@ void Key_Speical_Mode_Fun_Handler(void)
           gpro_t.mode_key_pressed_flag =0;
 		
              buzzer_sound();
-		    
-		    gpro_t.key_mode_long_time_over_flag=1;
-           
-         
-			Mode_Long_Key_Fun();
+		     Mode_Long_Key_Fun();
 
             gpro_t.gTimer_exit_mode_long_key = 0;
 
    }
-   else if(gpro_t.mode_key_pressed_flag ==1){
-       
-		gpro_t.mode_key_pressed_flag =0;
-      
-	   
-		//gpro_t.mode_key_run_proc_item = mode_key_select; //shield this is WIFI_LED blink. 
-		 gpro_t.mode_key_run_item_step = mode_key_select;
-
-	     gctl_t.select_main_fun_numbers++; // 0,1,2
-		 if(gctl_t.select_main_fun_numbers > 3){
-			  gctl_t.select_main_fun_numbers = 1;
-			}
-		
-		gctl_t.memory_confimr_key_done = 1;
-        
-		gpro_t.buzzer_sound_flag =1;
-
-		gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
-		gctl_t.gTimer_ctl_select_led =0;
-       // buzzer_sound();
-	   	
-	   }
-
-    
-    
-
-    Mode_Key_Config_Fun_Handler();
+}
 
 
-    
-		
+void Mode_Key_Selection_Func(void) 
+{
+
+    gpro_t.mode_key_run_item_step = mode_key_select;
+
+    gctl_t.select_main_fun_numbers++; // 0,1,2
+    if(gctl_t.select_main_fun_numbers > 3){
+    gctl_t.select_main_fun_numbers = 1;
+    }
+
+    gctl_t.memory_confimr_key_done = 1;
+
+    gpro_t.buzzer_sound_flag =1;
+
+    gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
+    gctl_t.gTimer_ctl_select_led =0;
+     
 }
 /************************************************************************
 	*
@@ -194,7 +179,7 @@ void Mode_Key_Config_Fun_Handler(void)
 
         }
         else{
-           gpro_t.key_mode_long_time_over_flag=0;
+           
             gctl_t.memory_confimr_key_done = 0;
             gpro_t.mode_key_run_item_step = mode_key_set_temp; //
              
@@ -247,7 +232,7 @@ void ADD_Key_Fun(void)
 
 		case mode_key_set_temp: //set temperature value add number
 		
-			if(gpro_t.key_mode_long_time_over_flag ==0 ){
+			
 
             gpro_t.gTimer_pro_disp_temphum = 0; //don't display sensor realy temperature value .
 			gctl_t.gSet_temperature_value ++;
@@ -262,7 +247,7 @@ void ADD_Key_Fun(void)
         
 			disp_temp_value =1;
 			//TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);	
-			}
+			
 		break;
 
 		case mode_key_set_timer_value:
@@ -337,7 +322,7 @@ void DEC_Key_Fun(void)
 
 		   case mode_key_set_temp:  //default tempearture value 
 	       
-	        if(gpro_t.key_mode_long_time_over_flag ==0){
+	      
 	          gpro_t.gTimer_pro_disp_temphum = 0; //don't display sensor realy temperature value .
 			 gctl_t.gSet_temperature_value--;
 			if( gctl_t.gSet_temperature_value<20)  gctl_t.gSet_temperature_value=40;
@@ -349,7 +334,7 @@ void DEC_Key_Fun(void)
              disp_temp_value =1;
 	        
 			
-	        }
+	        
 			break;
 
 			case mode_key_set_timer_value: //timer timing set "decrease -down"

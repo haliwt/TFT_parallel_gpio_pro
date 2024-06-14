@@ -144,7 +144,7 @@ void TimeTimer_Pro_Handler(void)
                 
 			}
 
-            gpro_t.key_mode_long_time_over_flag=0;
+        
 			gpro_t.mode_key_run_item_step = mode_key_set_temp; //key input item by changed.
 			
 		}
