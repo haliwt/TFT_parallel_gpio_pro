@@ -111,6 +111,7 @@ void TFT_Display_PowerOn_Init_Handler(void);
 
 void TFT_Disp_CountDown_60s(uint8_t idata);
 
+void Donot_Disp_CountDown_60s(void);
 
 
 #endif

@@ -1245,4 +1245,13 @@ void TFT_Disp_CountDown_60s(uint8_t idata)
 
 }
 
+void Donot_Disp_CountDown_60s(void)
+{
+
+    TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(130,180,1,1);
+    TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(164,180,1,1);
+
+
+}
+
 

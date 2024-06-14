@@ -296,7 +296,8 @@ void Power_On_Special_Fun(void)
        DISABLE_INT();
        LCD_Clear(BLACK);
        ENABLE_INT();
-	  
+	   Donot_Disp_CountDown_60s();
+	   HAL_Delay(50);
        power_on_init_set_ref();
        gpro_t.gPower_On = power_on;   
   
@@ -339,7 +340,7 @@ static void TFT_Pocess_Command_Handler(void)
 	
       gpro_t.run_process_step=pro_disp_dht11_value;
 	  Fan_Run();
-		
+	 
 	 break;
 
 	 case pro_disp_dht11_value: //1 //display works time + "temperature value " + "humidity value"
@@ -474,6 +475,7 @@ void PowerOnOff_Init_Ref_Fun(void)
           gpro_t.run_process_step=0;
        // LCD_Clear(BLACK);
        /// HAL_Delay(100);
+       Donot_Disp_CountDown_60s();
        power_on_init_set_ref();
 	    
      }
