@@ -97,13 +97,13 @@ void Power_On_Special_Fun(void)
 }
 /******************************************************************************
 	*
-	*Function Name:static void Key_Speical_Mode_Fun_Handler(void)
+	*Function Name:static void Mode_Key_Long_Fun(void)
 	*Funcion: speical of mode key fun
 	*Input Ref:NO
 	*Return Ref:NO
 	*
 ******************************************************************************/
-void Key_Speical_Mode_Fun_Handler(void)
+void Mode_Key_Long_Fun(void)
 {
    
         Mode_Long_Key_Fun();

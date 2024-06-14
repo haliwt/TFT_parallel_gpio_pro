@@ -297,7 +297,7 @@ static void vTaskMsgPro(void *pvParameters)
                 else if(key_mode_long_sound_flag==2){
                     key_mode_long_sound_flag ++;
 
-                    Key_Speical_Mode_Fun_Handler();
+                    Mode_Key_Long_Fun();
 
 
                 }
