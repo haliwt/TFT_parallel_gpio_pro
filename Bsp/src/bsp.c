@@ -6,6 +6,7 @@ uint8_t led_blink_times;
 uint8_t update_step;
 uint8_t fan_continuce_run_flag;
 
+static void power_on_init_set_ref(void);
 
 static void TFT_Pocess_Command_Handler(void);
 
@@ -262,7 +263,45 @@ void PowerOff_Ref_Fun(void)
 
 }
       
+/******************************************************************************
+	*
+	*Function Name:void Power_Off_Special_Fun(void)
+	*Funcion: speical of power key function
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
+void Power_Off_Special_Fun(void)
+{
+
   
+    buzzer_sound();
+    PowerOff_Ref_Fun();
+    gpro_t.power_off_flag=1;
+           
+               
+   gpro_t.gPower_On = power_off;  
+   
+
+
+
+}
+
+void Power_On_Special_Fun(void)
+{
+       buzzer_sound();	
+       DISABLE_INT();
+       LCD_Clear(BLACK);
+       ENABLE_INT();
+	  
+       power_on_init_set_ref();
+       gpro_t.gPower_On = power_on;   
+  
+       gpro_t.run_process_step=0;
+
+
+}
+
 
 	
 /******************************************************************************
@@ -427,34 +466,15 @@ void PowerOnOff_Init_Ref_Fun(void)
 {
    
        
-       if(gpro_t.gPower_On == power_off){
+  if(gpro_t.gPower_On == power_off){
           gpro_t.gPower_On = power_on;   
           gpro_t.run_process_step=0;
        // LCD_Clear(BLACK);
        /// HAL_Delay(100);
-	    if(wifi_link_net_state() ==1){
-		    
-		    TFT_Display_WorksTime_Voice();
-	    }
-		else{
-           TFT_Display_PowerOn_WorksTime_Init();
-		}
-
-       
-         if(wifi_t.smartphone_app_power_on_flag==0){
-		    Power_On_Led_Init();
-         }
-
-        Update_DHT11_Value();
-        TFT_Display_PowerOn_Init_Handler();
-       
-         TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
-         TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
-         LED_Mode_Key_On();
-	     LED_Power_Key_On();
-		 TFT_BACKLIGHT_ON();
-        }
-        else{
+       power_on_init_set_ref();
+	    
+     }
+     else{//POWER OFF
 
             gpro_t.power_off_flag=1;
 	        gpro_t.gPower_On = power_off; 
@@ -471,6 +491,34 @@ void PowerOnOff_Init_Ref_Fun(void)
 //      gpro_t.run_process_step=pro_disp_dht11_value;
 //	  Fan_Run();
 		
+}
+
+static void power_on_init_set_ref(void)
+{
+
+  if(wifi_link_net_state() ==1){
+		    
+		    TFT_Display_WorksTime_Voice();
+	    }
+		  else{
+          TFT_Display_PowerOn_WorksTime_Init();
+		     }
+
+       
+         if(wifi_t.smartphone_app_power_on_flag==0){
+		    Power_On_Led_Init();
+         }
+
+        Update_DHT11_Value();
+        TFT_Display_PowerOn_Init_Handler();
+       
+         TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+         TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
+         LED_Mode_Key_On();
+	     LED_Power_Key_On();
+		 TFT_BACKLIGHT_ON();
+
+
 }
 /************************************************************************
 	*

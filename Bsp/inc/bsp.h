@@ -265,5 +265,10 @@ void Mode_Long_Key_Fun(void);;
 
 void WIFI_LED_Blink(void);
 
+void Power_Off_Special_Fun(void);
+
+void Power_On_Special_Fun(void);
+
+
 
 #endif 

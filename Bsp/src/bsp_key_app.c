@@ -46,38 +46,7 @@ gpro_t.gTimer_exit_mode_long_key =0;
 	*
 ******************************************************************************/
 
-/******************************************************************************
-	*
-	*Function Name:void Power_Off_Special_Fun(void)
-	*Funcion: speical of power key function
-	*Input Ref:NO
-	*Return Ref:NO
-	*
-******************************************************************************/
-void Power_Off_Special_Fun(void)
-{
 
-  
-    buzzer_sound();
-    gpro_t.power_off_flag=1;
-           
-               
-   gpro_t.gPower_On = power_off;   
-
-
-
-}
-
-void Power_On_Special_Fun(void)
-{
-       buzzer_sound();	
-       LCD_Clear(BLACK);
-	   gpro_t.gPower_On = power_on;   
-  
-       gpro_t.run_process_step=0;
-
-
-}
 /******************************************************************************
 	*
 	*Function Name:static void Mode_Key_Long_Fun(void)

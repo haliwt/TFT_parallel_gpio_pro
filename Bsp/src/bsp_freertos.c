@@ -194,15 +194,15 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue &  POWER_OFF_4) != 0){
 
-                 key_power_sound_flag = 1;
-                //Power_Off_Special_Fun(); //void Power_On_Special_Fun(void)
+         
+                Power_Off_Special_Fun(); //void Power_On_Special_Fun(void)
 
 
             }
             else if((ulValue &  POWER_ON_5) != 0){
             
-                  key_power_sound_flag = 1;
-                 //Power_On_Special_Fun();
+                
+                 Power_On_Special_Fun();
             
             
             }

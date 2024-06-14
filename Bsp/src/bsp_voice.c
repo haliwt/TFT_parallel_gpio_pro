@@ -258,7 +258,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	
 		  voice_send_power_on_cmd();
-          Power_On_Special_Fun();
+          PowerOn_Handler();
           
 	  }
 
