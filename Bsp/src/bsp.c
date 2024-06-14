@@ -142,8 +142,11 @@ void PowerOn_Process_Handler(void)
 		gpro_t.power_off_flag ++;
 	      
         
-      
+        DISABLE_INT();
+        LCD_Clear(BLACK);
         TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
+
+        ENABLE_INT();
 	    gpro_t.gTimer_countdown_one_minute =90;
         TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
         Device_NoAction_Power_Off();
@@ -225,8 +228,8 @@ void PowerOn_Process_Handler(void)
 void PowerOff_Ref_Fun(void)
 {
  
-	      
-         LCD_Clear(BLACK);
+	   
+       //  LCD_Clear(BLACK);
 	     gctl_t.fan_continuce_flag =1;
 		 //clear control falg
         gpro_t.run_process_step=0;

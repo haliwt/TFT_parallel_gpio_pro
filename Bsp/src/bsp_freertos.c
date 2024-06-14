@@ -266,7 +266,9 @@ static void vTaskMsgPro(void *pvParameters)
              if(key_power_sound_flag == 1){
 
                 key_power_sound_flag ++;
+                DISABLE_INT();
                 LCD_Clear(BLACK);
+                ENABLE_INT();
 
               }
               else if(key_mode_short_sound_flag== 1){
