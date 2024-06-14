@@ -556,23 +556,25 @@ void TFT_DonnotDisp_Works_Time(void)
 	 else if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==1){
 			  gctl_t.gTimer_ctl_disp_works_time_second =0;
 
-              gctl_t.disp_works_minutes++;
-			  if(gctl_t.disp_works_minutes>59){
-				   gctl_t.disp_works_minutes=0;
-				   gctl_t.disp_works_hours++;
-				   if(gctl_t.disp_works_hours > 23){
-					   gctl_t.disp_works_hours=0;
+                gctl_t.save_time_hours[1] ++ ;//gctl_t.disp_works_minutes++;
+			 if(gctl_t.save_time_hours[1]>59){ //if(gctl_t.disp_works_minutes>59){
+				   gctl_t.save_time_hours[1]=0;//gctl_t.disp_works_minutes=0;
+				   gctl_t.save_time_hours[0]++;//gctl_t.disp_works_hours++;
+				   if(gctl_t.save_time_hours[0]> 23){//if(gctl_t.disp_works_hours > 23){
+					   gctl_t.save_time_hours[0]=0;//gctl_t.disp_works_hours=0;
 				   }
 		     }
               
-			gctl_t.save_time_hours[0] = gctl_t.disp_works_hours;
-            gctl_t.save_time_hours[1] = gctl_t.disp_works_minutes;
+			 gctl_t.disp_works_hours= gctl_t.save_time_hours[0];
+            gctl_t.disp_works_minutes = gctl_t.save_time_hours[1] ;
            
 			   
      }
      
-   
-	 gctl_t.save_time_hours[2] = gctl_t.gTimer_ctl_disp_works_time_second;
+     if(wifi_link_net_state()==1){
+	    gctl_t.save_time_hours[2] = gctl_t.gTimer_ctl_disp_works_time_second;
+
+      }
 
 }
 

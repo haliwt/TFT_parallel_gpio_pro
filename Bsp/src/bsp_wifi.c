@@ -289,12 +289,17 @@ static void RunWifi_Command_Handler(void)
 		
 		 if(wifi_t.three_times_link_beijing > 1){
 			
+             gctl_t.save_time_hours[0] = wifi_t.real_hours;                     
+             gctl_t.disp_works_hours = gctl_t.save_time_hours[0];
 
-             gctl_t.disp_works_hours = wifi_t.real_hours;
+             
+            gctl_t.save_time_hours[1] = wifi_t.real_minutes;
 
-			gctl_t.disp_works_minutes = wifi_t.real_minutes;
+			gctl_t.disp_works_minutes = gctl_t.save_time_hours[1];
 
-           gctl_t.gTimer_ctl_disp_works_time_second = wifi_t.real_seconds;
+            gctl_t.save_time_hours[2] =  wifi_t.real_seconds;
+
+           gctl_t.gTimer_ctl_disp_works_time_second =   gctl_t.save_time_hours[2];
 
 			gctl_t.get_beijing_time_success = 1; //WT.2024.04.25
 

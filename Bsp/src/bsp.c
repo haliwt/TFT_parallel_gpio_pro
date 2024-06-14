@@ -454,20 +454,21 @@ static void Power_On_Init(void)
    gctl_t.gSet_timer_hours =0;
 
 //works time
-    if(wifi_link_net_state()==0 || wifi_t.get_beijing_time_success ==0){
+    if(wifi_link_net_state()==0){
 		 gctl_t.disp_works_hours =0;
 	     gctl_t.disp_works_minutes=0;
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
 
      }
      else{
+       gctl_t.power_on_dis_work_time =0;
 
        gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
        gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
        gctl_t.gTimer_ctl_disp_works_time_second = gctl_t.save_time_hours[2];
 
      }
-     gctl_t.power_on_dis_work_time =0;
+    
     
 
  }

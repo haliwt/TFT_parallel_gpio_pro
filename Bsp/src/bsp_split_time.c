@@ -39,7 +39,7 @@ void TimeTimer_Pro_Handler(void)
            
 		}
 
-		if(gctl_t.power_on_dis_work_time < 1){
+		if(gctl_t.power_on_dis_work_time ==0){
 
              gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
              gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
