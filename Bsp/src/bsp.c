@@ -136,7 +136,7 @@ void PowerOn_Process_Handler(void)
  * Return Ref:NO
  * 
 ******************************************************************/
- void Power_Off_Handler(void)
+ void Power_Off_Process_Handler(void)
  {   
    static uint8_t fan_continuce_flag;
 	if(gpro_t.power_off_flag == 1){

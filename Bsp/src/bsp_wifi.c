@@ -45,7 +45,7 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
 
 
    
-	if(counter < 2 && wifi_link_net_state()==0 && wifi_t.rx_error_codes_flag==0){
+	if(counter < 2 && wifi_link_net_state()==0){
 		
 
 		
@@ -59,15 +59,7 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
        }
        
     }
-
-//	if(wifi_t.gTimer_auto_detected_net > 8  && wifi_link_net_state()==0 && counter==1){
-//		counter++;
-//       wifi_t.runCommand_order_lable=wifi_auto_to_link_cloud ;//0
-//
-//  
-//   }
-
-   if(wifi_link_net_state()==1    && power_on_det_net ==0){
+    if(wifi_link_net_state()==1    && power_on_det_net ==0){
              power_on_det_net++;
              counter++;
              
@@ -79,14 +71,14 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
         
           if(gpro_t.gPower_On == power_off) {
 		     MqttData_Publish_PowerOff_Ref();
-                HAL_Delay(350);
+                HAL_Delay(200);
 
           }
 
 
 
            Subscriber_Data_FromCloud_Handler();
-            HAL_Delay(350);
+            HAL_Delay(200);
 		  wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		 
@@ -128,12 +120,12 @@ static void RunWifi_Command_Handler(void)
 		else if(wifi_link_net_state()==0 && wifi_t.gTimer_linking_tencent_duration >166){
 		  //auto link wifi net 
 		  	wifi_t.gTimer_linking_tencent_duration=0;
-		    gpro_t.wifi_led_fast_blink_flag=0;
-			wifi_t.esp8266_login_cloud_success =0;
-			wifi_t.rx_error_codes_flag= 1;
-			wifi_t.rx_setup_hardware_counter=0;
+		    gpro_t.wifi_led_fast_blink_flag=0; //fast blink wifi of dication led
+			wifi_t.esp8266_login_cloud_success =0; //link tencent cloud flag 
+
+		
 			wifi_t.gTimer_auto_detected_net_state_times=0;
-			wifi_t.gTimer_wifi_rx_error = 0;
+		
 			wifi_t.get_rx_beijing_time_enable=0;
 
 			 wifi_t.runCommand_order_lable = wifi_auto_to_link_cloud;
@@ -242,7 +234,7 @@ static void RunWifi_Command_Handler(void)
 		wifi_t.runCommand_order_lable= wifi_get_beijing_time;
        }
 	   else{
-        if(wifi_t.three_times_link_beijing % 4 == 0){
+        if(wifi_t.three_times_link_beijing % 2 == 0){
 			
 			//wifi_t.set_beijing_time_flag =1;
 			wifi_t.link_beijing_times_flag =1;
@@ -480,7 +472,7 @@ static void RunWifi_Command_Handler(void)
 	// MqttData_Publish_SetOpen(0x01);
 	   wifi_t.gTimer_get_beijing_time =0;
 	  wifi_t.gTimer_publish_dht11=0;  
-	  wifi_t.rx_error_codes_flag= 0;
+
     }
 
 

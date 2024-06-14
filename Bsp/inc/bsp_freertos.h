@@ -8,10 +8,10 @@ void freeRTOS_Handler(void);
 
 
 
-void Timer_PowerOff_Handler(void);
+void PowerOff_Handler(void);
 
 
-void Timer_PowerOn_Handler(void);
+void PowerOn_Handler(void);
 
 
 

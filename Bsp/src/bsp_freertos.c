@@ -121,7 +121,7 @@ static void vTaskRunPro(void *pvParameters)
       else if(gpro_t.gPower_On == power_off){
         mode_key_long_conter  =0;
         power_key_long_conter = 0;
-         Power_Off_Handler(); 
+        Power_Off_Process_Handler();
       }
       USART_Cmd_Error_Handler();
       vTaskDelay(50);
@@ -711,13 +711,13 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart)
 }
 /*****************************************************************************
  * 
- * Function Name: void Timer_PowerOff_Handler(void)
+ * Function Name: void PowerOff_Handler(void)
  * Function:
  * Input Ref: NO
  * Return Ref: NO
  * 
 *****************************************************************************/
-void Timer_PowerOff_Handler(void)
+void PowerOff_Handler(void)
 {
      xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 	 POWER_OFF_4 ,            /* 设置目标任务事件标志位bit0  */
@@ -726,7 +726,7 @@ void Timer_PowerOff_Handler(void)
 }
 
 
-void Timer_PowerOn_Handler(void)
+void PowerOn_Handler(void)
 {
      xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 	 POWER_ON_5 ,            /* 设置目标任务事件标志位bit0  */

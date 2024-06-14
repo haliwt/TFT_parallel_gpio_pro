@@ -274,7 +274,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
         voice_send_power_off_cmd();
       
-        Timer_PowerOff_Handler();
+        PowerOff_Handler();
 		
 		
     }

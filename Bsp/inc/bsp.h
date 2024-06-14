@@ -270,7 +270,8 @@ void PowerOn_Process_Handler(void);
 
 
 
-void Power_Off_Handler(void);
+void Power_Off_Process_Handler(void);
+
 
 
 void Wifi_Fast_Led_Blink(void);

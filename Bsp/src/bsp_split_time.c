@@ -70,7 +70,7 @@ void TimeTimer_Pro_Handler(void)
 			
 			if(gctl_t.gSet_timer_hours < 0){
 			 gpro_t.run_process_step=0xf0;
-             Timer_PowerOff_Handler();
+             PowerOff_Handler();
 
                  
 

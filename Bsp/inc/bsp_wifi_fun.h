@@ -143,9 +143,9 @@ typedef struct _WIFI_FUN{
     
 
 	//auto link net
-	uint8_t rx_error_codes_flag;
-	uint8_t power_on_thefirst_times;
-	uint8_t rx_setup_hardware_counter;
+	
+	
+    uint8_t rx_error_data_success;
 
     //wifi gtimer
 	uint8_t gTimer_read_beijing_time;
@@ -164,7 +164,7 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_wifi_counter_link_beijing_times ;
 	uint8_t gTimer_main_pro_times;
 
-	uint8_t gTimer_wifi_rx_error;
+
     uint8_t gTimer_counter_repeat_link_net;
     uint8_t gTimer_auto_detected_net;
 	
