@@ -38,21 +38,15 @@ void bsp_Init(void)
    gpro_t.disp_works_timer_timing_mode_item = works_time;
    gpro_t.mode_key_run_item_step = mode_key_set_temp;
 
-
-
 }
 
-
-
-/*
-*********************************************************************************************************
+/*******************************************************************************************************
 *	函 数 名: bsp_Idle
 *	功能说明: 空闲时执行的函数。一般主程序在for和while循环程序体中需要插入 CPU_IDLE() 宏来调用本函数。
 *			 本函数缺省为空操作。用户可以添加喂狗、设置CPU进入休眠模式的功能。
 *	形    参: 无
 *	返 回 值: 无
-*********************************************************************************************************
-*/
+**********************************************************************************************************/
 void bsp_run_iwdg(void)
 {
    static uint8_t power_on_first;
@@ -282,13 +276,8 @@ void Power_Off_Special_Fun(void)
     PowerOff_Ref_Fun();
     gpro_t.power_off_flag=1;
            
-               
-   gpro_t.gPower_On = power_off;  
-   
-
-
-
-}
+     gpro_t.gPower_On = power_off;  
+ }
 
 void Power_On_Special_Fun(void)
 {
@@ -305,9 +294,6 @@ void Power_On_Special_Fun(void)
 
 
 }
-
-
-	
 /******************************************************************************
 	*
 	*Function Name:void TFT_Pocess_Command_Handler(void)

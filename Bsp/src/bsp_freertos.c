@@ -18,13 +18,12 @@
 
 #define POWER_OFF_4         (1 << 4)
 #define POWER_ON_5          (1 << 5)
-#define RUN_DEC_6           (1 << 6)
-#define RUN_ADD_7           (1 << 7)
 #define VOICE_BIT_8         (1 << 8)
-#define RUN_VOICE_9         (1 << 9)
 
-#define MODE_LONG_KEY_10      (1 << 10)
-#define POWER_LONG_KEY_11     (1 << 11)
+//long key define 
+#define MODE_LONG_KEY_10             (1 << 10)
+#define POWER_LONG_KEY_11            (1 << 11)
+#define ADD_DEC_COMBIN_KEY_12        (1 << 12)    
 
 
 /*
@@ -55,6 +54,7 @@ uint8_t add_key_counter,dec_key_counter;
 uint32_t mode_key_long_conter;
 uint32_t power_key_long_conter;
 
+uint32_t add_dec_combin_counter;
 
 
 
@@ -144,7 +144,7 @@ static void vTaskMsgPro(void *pvParameters)
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_sound_flag,key_power_long_sound_flag;
-   
+    static uint8_t add_dec_combin;
 	
     while(1)
     {
@@ -254,6 +254,17 @@ static void vTaskMsgPro(void *pvParameters)
                 v_t.sound_rx_data_success_flag = 1;
                
             }
+            else if((ulValue & ADD_DEC_COMBIN_KEY_12) != 0){
+
+                 buzzer_sound();
+                add_dec_combin=1;
+               gpro_t.gTimer_exit_mode_long_key=0;
+                gctl_t.disp_ntc_res_flag ++;
+                gctl_t.gTimer_ctl_ptc_adc_times =20;
+                
+               
+            }
+           
        }
 	   else
 		{
@@ -349,7 +360,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               Mode_Key_Config_Fun_Handler();
 
-               if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 3 ||  key_mode_long_sound_flag==3)){
+               if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 3 ||  key_mode_long_sound_flag==3 ||  add_dec_combin==1)){
 
                   if(key_power_long_sound_flag ==3){
                       power_key_long_conter =0; //clear power key loong flag .
@@ -363,6 +374,13 @@ static void vTaskMsgPro(void *pvParameters)
                      mode_key_long_conter =0;
 
                    }
+
+                  if(add_dec_combin==1){
+                     add_dec_combin =0;
+                    add_dec_combin_counter =0;
+
+
+                  }
                 }
 
               WIFI_LED_Blink();
@@ -466,7 +484,7 @@ static void vTaskStart(void *pvParameters)
 
 
      }
-     else if(KEY_ADD_VALUE() == KEY_DOWN){
+     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_UP){
         
           
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
@@ -475,13 +493,27 @@ static void vTaskStart(void *pvParameters)
 
 
      }
-     else if(KEY_DEC_VALUE() == KEY_DOWN){
+     else if(KEY_DEC_VALUE() == KEY_DOWN && KEY_ADD_VALUE() == KEY_UP){
           
        
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
+
+     }
+     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_DOWN && add_dec_combin_counter <201){
+
+
+            add_dec_combin_counter++;
+             if(add_dec_combin_counter > 117){
+                   add_dec_combin_counter = 230;
+
+              xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                            ADD_DEC_COMBIN_KEY_12,          /* 设置目标任务事件标志位bit0  */
+                            eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+             }
 
      }
 

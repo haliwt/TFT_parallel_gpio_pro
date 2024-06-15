@@ -323,7 +323,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
      if(ptc_state()==0){
       // buzzer_sound();
-        gctl_t.cmd_open_ptc_flag = 1;
+   
 		gctl_t.ptc_flag =1;
 		Ptc_On();
 	    //gpro_t.add_or_dec_is_cofirm_key_flag=1;//logic is open compare temperature value WT.EDIT.2024.04.20
@@ -356,7 +356,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	
 		if(ptc_state()==0){
 		
-	       gctl_t.cmd_open_ptc_flag = 1;
+	   
 		   gctl_t.ptc_flag =1;
 		   Ptc_On();
 		
@@ -391,7 +391,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		 if(ptc_state() == 1){
      
 			gctl_t.ptc_flag =0;
-            gctl_t.cmd_open_ptc_flag =2;
+ 
 			Ptc_Off();
 	
 		    LED_PTC_ICON_OFF();
@@ -420,7 +420,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		 if(ptc_state() == 1){
         
 			gctl_t.ptc_flag =0;
-            gctl_t.cmd_open_ptc_flag =2;
+   
 			Ptc_Off();
 	
 		    LED_PTC_ICON_OFF();
@@ -706,7 +706,7 @@ static void  voice_set_temperature_value(uint8_t value)
 					gctl_t.ptc_flag =1;
 					Ptc_On();
 					LED_PTC_ICON_ON();
-                    gctl_t.cmd_open_ptc_flag =1; //confirm open ptc heat 
+               
 				
 
                     if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
@@ -720,7 +720,7 @@ static void  voice_set_temperature_value(uint8_t value)
 			else{
 		   		if(ptc_state()==1){
                     gctl_t.ptc_flag = 0;
-                    gctl_t.cmd_open_ptc_flag =2;
+               
 			   		Ptc_Off();
 			   		LED_PTC_ICON_OFF();
 				

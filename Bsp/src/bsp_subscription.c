@@ -621,7 +621,7 @@ void Json_Parse_Command_Fun(void)
 			
 		 buzzer_sound()	;
           gctl_t.manual_operation_ptc_flag  =  ptc_manual_on;
-         gctl_t.cmd_open_ptc_flag =1;//ptc open
+     
 		 Ptc_On();
 	     LED_PTC_ICON_ON();
          MqttData_Publish_SetPtc(0x01);
@@ -640,7 +640,7 @@ void Json_Parse_Command_Fun(void)
 	  case PTC_OFF_ITEM:
 	  	if(power_on_state() ==power_on && ptc_error_state()==0 && fan_error_state()==0){
 		 buzzer_sound()	;
-         gctl_t.cmd_open_ptc_flag =2;//ptc closed
+       
          gctl_t.manual_operation_ptc_flag  =  ptc_manual_off;
 		 Ptc_Off();
 	     LED_PTC_ICON_OFF();

@@ -612,7 +612,7 @@ void Mode_Key_Confirm_Fun(void)
 				gctl_t.ptc_flag = 1;
                  gctl_t.manual_operation_ptc_flag  =  ptc_manual_on;
 		
-                gctl_t.cmd_open_ptc_flag =1;
+         
                 if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publish_SetPtc(1);
                     osDelay(100);//HAL_Delay(200);
@@ -621,7 +621,7 @@ void Mode_Key_Confirm_Fun(void)
 		    }
 			else{
 			    gctl_t.manual_operation_ptc_flag = ptc_manual_off;
-                gctl_t.cmd_open_ptc_flag =2;
+            
 				LED_PTC_ICON_OFF() ;
 				Ptc_Off();
 				gctl_t.ptc_flag = 0;
