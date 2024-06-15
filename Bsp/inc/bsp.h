@@ -62,7 +62,7 @@
 
 
 /* ���� BSP �汾�� */
-#define __STM33G030C8T6_BSP_VERSION		"0.1"
+#define __STM33G030C8T6_BSP_VERSION		"1.0"
 
 
 

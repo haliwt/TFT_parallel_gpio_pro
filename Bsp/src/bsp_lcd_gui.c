@@ -385,10 +385,7 @@ void TFT_Display_WorksTime_Voice(void)
 			  
 			   
      }
- 
-
-	
-	temp_decade_hours = gctl_t.disp_works_hours /10;
+    temp_decade_hours = gctl_t.disp_works_hours /10;
 	temp_unit_hours = gctl_t.disp_works_hours % 10;
 
 	temp_decade_minutes = gctl_t.disp_works_minutes/10;
@@ -411,9 +408,7 @@ void TFT_Display_WorksTime_Voice(void)
 	}
 	 
 
-    
-	
-	//works time value
+//works time value
 	
 //   	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(100,188,0,temp_decade_hours);
 //	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(134,188,0,temp_unit_hours);
@@ -430,10 +425,6 @@ void TFT_Display_WorksTime_Voice(void)
 
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,0,temp_decade_minutes);
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,0,temp_unit_minutes);
-
-	
-
-	
 
 }
 

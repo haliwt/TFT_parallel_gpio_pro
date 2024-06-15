@@ -374,10 +374,12 @@ static void RunWifi_Command_Handler(void)
 	case 1:  //link is OK
 	   // Wifi_Rx_Auto_Link_Net_Handler();
 	    Wifi_Link_Tencent_Net_State();
+        Subscriber_Data_FromCloud_Handler(); //WT.EDIT 2024.06.15
+        HAL_Delay(200);
 		wifi_t.get_rx_auto_repeat_net_enable=0;
 		wifi_t.gTimer_publish_dht11=0;
-		wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data;//wifi_tencent_publish_init_data;//wifi_tencent_publish_init_data;
-		 wifi_t.gTimer_auto_detected_net_state_times=0;  
+		wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data; //06 
+		wifi_t.gTimer_auto_detected_net_state_times=0;  
 
 	break;
 

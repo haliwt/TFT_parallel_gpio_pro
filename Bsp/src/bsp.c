@@ -72,7 +72,7 @@ void bsp_run_iwdg(void)
 
 
     /* --- 喂狗 */
-   iwdg_feed();
+ //  iwdg_feed();
 
     
 }
@@ -136,7 +136,6 @@ void PowerOn_Process_Handler(void)
 	if(gpro_t.power_off_flag == 1){
 		gpro_t.power_off_flag ++;
 	      
-        
         DISABLE_INT();
         LCD_Clear(BLACK);
         TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
@@ -169,6 +168,7 @@ void PowerOn_Process_Handler(void)
     }
 
     }
+    
 	if(wifi_link_net_state() ==1  ){
 		
        TFT_DonnotDisp_Works_Time();
@@ -185,7 +185,7 @@ void PowerOn_Process_Handler(void)
 			gctl_t.fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-            LCD_Clear(BLACK);
+      
            
 		}
     }
@@ -194,6 +194,13 @@ void PowerOn_Process_Handler(void)
     if(gctl_t.fan_continuce_flag==1){
 
        TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
+
+    }
+    else if(gctl_t.fan_continuce_flag==2){
+        gctl_t.fan_continuce_flag++;
+
+        LCD_Clear(BLACK);
+
 
     }
       
@@ -248,10 +255,11 @@ void PowerOff_Ref_Fun(void)
         //main process ref
   
 		gpro_t.gTimer_pro_wifi_fast_led=0;
+    gpro_t.disp_works_timer_timing_mode_item = timer_countdown; //display count down timing .
 	   
 
         Power_Off_Fun();
-		LED_Mode_Key_Off();
+		    LED_Mode_Key_Off();
 
    
 
@@ -457,13 +465,10 @@ void PowerOnOff_Init_Ref_Fun(void)
    
        
   if(gpro_t.gPower_On == power_off){
+          
+          power_on_init_set_ref();
           gpro_t.gPower_On = power_on;   
           gpro_t.run_process_step=0;
-       // LCD_Clear(BLACK);
-       /// HAL_Delay(100);
-       Donot_Disp_CountDown_60s();
-      // HAL_Delay(20);
-       power_on_init_set_ref();
 	    
      }
      else{//POWER OFF
@@ -475,7 +480,7 @@ void PowerOnOff_Init_Ref_Fun(void)
 
         }
 
-        
+       
 		
 //       Device_Action_No_Wifi_Power_On_Handler(); 
 //	  Power_On_Init();
@@ -487,20 +492,21 @@ void PowerOnOff_Init_Ref_Fun(void)
 
 static void power_on_init_set_ref(void)
 {
-
+  
   if(wifi_link_net_state() ==1){
-		    
+		    Donot_Disp_CountDown_60s();
 		    TFT_Display_WorksTime_Voice();
 	    }
 		  else{
+         Donot_Disp_CountDown_60s();
           TFT_Display_PowerOn_WorksTime_Init();
-		     }
+		    }
 
        
          if(wifi_t.smartphone_app_power_on_flag==0){
-		    Power_On_Led_Init();
+		       Power_On_Led_Init();
          }
-
+         
         Update_DHT11_Value();
         TFT_Display_PowerOn_Init_Handler();
        
