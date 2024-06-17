@@ -325,10 +325,13 @@ static void TFT_Pocess_Command_Handler(void)
 	  
 	    gpro_t.gTimer_pro_update_dht11_data=60;
         gpro_t.gTimer_read_humidity_value = 30;
+        gctl_t.disp_ntc_res_flag  = 0 ;
+
+        //wifi of ref
 	    wifi_t.gTimer_get_beijing_time=0;
-		
-	
-		wifi_t.get_rx_beijing_time_enable=0;
+        wifi_t.get_rx_beijing_time_enable=0;
+
+        
 	  Device_Action_No_Wifi_Power_On_Handler(); 
 	  Power_On_Init();
 	

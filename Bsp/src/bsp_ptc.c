@@ -62,10 +62,10 @@ void Temperature_Ptc_Pro_Handler(void)
 			 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,20); //Modify :2023.09.03 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10);
 	        
              }
-             else if(gctl_t.disp_ntc_res_flag == 1 && gctl_t.gTimer_ctl_ptc_adc_times > 4){
+             else if(gctl_t.disp_ntc_res_flag == 1 && gctl_t.gTimer_ctl_ptc_adc_times > 0){
                      gctl_t.gTimer_ctl_ptc_adc_times=0;
 
-             		Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,20);
+             		Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,2);
              		Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
              } 
              else if(gctl_t.disp_ntc_res_flag > 1){
