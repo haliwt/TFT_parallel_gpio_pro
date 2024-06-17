@@ -323,10 +323,7 @@ static void vTaskMsgPro(void *pvParameters)
          if(gpro_t.gPower_On==power_on){
                  
               
-   
-
-
-               if(key_mode_short_sound_flag==2){
+                if(key_mode_short_sound_flag==2){
                     key_mode_short_sound_flag++;
 
                     Mode_Key_Selection_Func() ;
@@ -502,7 +499,7 @@ static void vTaskStart(void *pvParameters)
 
 
      }
-     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_DOWN && add_dec_combin_counter <201){
+     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_DOWN && add_dec_combin_counter <220){
 
 
             add_dec_combin_counter++;
@@ -572,7 +569,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
     //wifi usart2
     if(huart->Instance==USART2)
     {
-         //DISABLE_INT();
+         DISABLE_INT();
         // taskENTER_CRITICAL();
         if(wifi_t.linking_tencent_cloud_doing  ==1){ //link tencent netware of URL
 
@@ -613,7 +610,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 				}
 	      }
 	  
-	 // ENABLE_INT();
+	 ENABLE_INT();
 	//  taskEXIT_CRITICAL();
 //	__HAL_UART_CLEAR_NEFLAG(&huart2);
 //	__HAL_UART_CLEAR_FEFLAG(&huart2);

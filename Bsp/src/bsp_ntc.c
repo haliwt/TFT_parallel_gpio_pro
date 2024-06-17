@@ -1406,7 +1406,7 @@ uint8_t ntc_res_linear_value(uint8_t ntc_value)
         	// read_input_times =1;
 
         	display_ntc_temp_value(disp_ntc_value[1]);
-        	HAL_Delay(400);
+        	osDelay(50);//HAL_Delay();
         	 return disp_ntc_value[1];
 
         }
@@ -1419,7 +1419,7 @@ uint8_t ntc_res_linear_value(uint8_t ntc_value)
         	 // read_input_times =1;
 
               display_ntc_temp_value(disp_ntc_value[0]);
-              HAL_Delay(400);
+              osDelay(50);//HAL_Delay(400);
 
         	  return  disp_ntc_value[0]  ;
 
@@ -1433,7 +1433,7 @@ uint8_t ntc_res_linear_value(uint8_t ntc_value)
           // read_input_times =1;
 
              display_ntc_temp_value(disp_ntc_value[1]);
-             HAL_Delay(400);
+              osDelay(50);//HAL_Delay(400);
 
            return disp_ntc_value[1];
 
@@ -1446,7 +1446,7 @@ uint8_t ntc_res_linear_value(uint8_t ntc_value)
         	 disp_ntc_value[0]= disp_ntc_value[0] - 1 ;
 
              display_ntc_temp_value(disp_ntc_value[0]);
-             HAL_Delay(400);
+              osDelay(50);//HAL_Delay(400);
 
         //	read_input_times =1;
 
