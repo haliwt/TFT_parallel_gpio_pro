@@ -123,8 +123,8 @@ static void vTaskRunPro(void *pvParameters)
         power_key_long_conter = 0;
         Power_Off_Process_Handler();
       }
-      USART_Cmd_Error_Handler();
-      vTaskDelay(50);
+     // USART_Cmd_Error_Handler();
+      vTaskDelay(40);
   }
 	
 }
@@ -140,7 +140,7 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_sound_flag,key_power_long_sound_flag;
@@ -385,6 +385,8 @@ static void vTaskMsgPro(void *pvParameters)
               Wifi_Fast_Led_Blink();
 
               TFT_Disp_Timer_Split_Symbol();
+
+              Temperature_Ptc_Pro_Handler();
               
          }
 

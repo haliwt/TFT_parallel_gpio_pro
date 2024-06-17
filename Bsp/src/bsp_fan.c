@@ -49,8 +49,9 @@ void RunMain_And_Interval_Handler(void)
           if(gctl_t.gTimer_maian_run_fun >0 ){
 
               gctl_t.gTimer_maian_run_fun=0;
-            
-              Device_Action_No_Wifi_Power_On_Handler();
+             if(gpro_t.interval_stop_run_flag==0){
+                Device_Action_No_Wifi_Power_On_Handler();
+             }
 
           }
           if(gctl_t.gTimer_ctl_fan_adc_times > 12 ){

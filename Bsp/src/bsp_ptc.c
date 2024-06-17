@@ -223,8 +223,10 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                      if(wifi_t.smartphone_app_power_on_flag==0){
                           update_data_flag++;
                           gctl_t.ptc_flag = 1;
+                          if(gpro_t.interval_stop_run_flag ==0){
     					  Ptc_On();
     				      LED_PTC_ICON_ON();
+                          }
 
                          
                          if(update_down_init != update_down){
@@ -283,9 +285,12 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 
                         
                     
-                         gctl_t.ptc_flag = 1;//run_t.gDry = 1;
+                        gctl_t.ptc_flag = 1;//run_t.gDry = 1;
+                        if(gpro_t.interval_stop_run_flag ==0){
         		         Ptc_On();
         			     LED_PTC_ICON_ON();
+
+                        }
 
                          if(update_down_init != update_down){
                             update_down_init = update_down;

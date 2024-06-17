@@ -383,18 +383,18 @@ static void TFT_Pocess_Command_Handler(void)
 	     TimeTimer_Pro_Handler();
 			
 
-		gpro_t.run_process_step=pro_set_temperature;
+		gpro_t.run_process_step=pro_disp_wifi_led;//pro_set_temperature;
 
 
-    case pro_set_temperature:
-
-      
-	   Temperature_Ptc_Pro_Handler();
-		
-       
-      gpro_t.run_process_step=pro_disp_wifi_led;
-
-	break;
+//    case pro_set_temperature:
+//
+//      
+//	   Temperature_Ptc_Pro_Handler();
+//		
+//       
+//      gpro_t.run_process_step=pro_disp_wifi_led;
+//
+//	break;
 
 	case pro_disp_wifi_led: //4
 	 
