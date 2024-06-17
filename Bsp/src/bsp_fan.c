@@ -44,6 +44,8 @@ void RunMain_And_Interval_Handler(void)
 		
 		     Fan_Run();
 			 Device_Action_No_Wifi_Handler();
+             gpro_t.gTimer_run_total =0; //repeat begin counter works timing how much? reach is 2 hours?
+             
              
 	      }
           if(gctl_t.gTimer_maian_run_fun >0 ){
