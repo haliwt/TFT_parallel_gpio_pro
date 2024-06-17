@@ -51,7 +51,7 @@ void Ptc_OnOff_Handler(void)
 void Temperature_Ptc_Pro_Handler(void)
 {
   
-   static uint8_t error_flag,error_ptc,error_fan;
+   static uint8_t error_flag,error_ptc,error_fan,thefirst_time_adc;
    switch(gctl_t.ptc_warning){
 
 		  case ptc_no_warning:
@@ -65,8 +65,21 @@ void Temperature_Ptc_Pro_Handler(void)
              else if(gctl_t.disp_ntc_res_flag == 1 && gctl_t.gTimer_ctl_ptc_adc_times > 0){
                      gctl_t.gTimer_ctl_ptc_adc_times=0;
 
-             		Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,2);
-             		Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
+                     if(thefirst_time_adc ==0){
+
+                         thefirst_time_adc++;
+
+                         Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,20);
+
+                         Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
+
+                     }
+                     else{
+
+                 		Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,2);
+                 		Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
+
+                    }
              } 
              else if(gctl_t.disp_ntc_res_flag > 1){
 

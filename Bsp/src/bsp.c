@@ -326,6 +326,7 @@ static void TFT_Pocess_Command_Handler(void)
 	    gpro_t.gTimer_pro_update_dht11_data=60;
         gpro_t.gTimer_read_humidity_value = 30;
         gctl_t.disp_ntc_res_flag  = 0 ;
+        gpro_t.gTimer_run_total=0;
 
         //wifi of ref
 	    wifi_t.gTimer_get_beijing_time=0;
@@ -483,15 +484,7 @@ void PowerOnOff_Init_Ref_Fun(void)
 
         }
 
-       
-		
-//       Device_Action_No_Wifi_Power_On_Handler(); 
-//	  Power_On_Init();
-//	
-//      gpro_t.run_process_step=pro_disp_dht11_value;
-//	  Fan_Run();
-		
-}
+ }
 
 static void power_on_init_set_ref(void)
 {
@@ -501,7 +494,7 @@ static void power_on_init_set_ref(void)
 		    TFT_Display_WorksTime_Voice();
 	    }
 		  else{
-         Donot_Disp_CountDown_60s();
+            Donot_Disp_CountDown_60s();
           TFT_Display_PowerOn_WorksTime_Init();
 		    }
 
