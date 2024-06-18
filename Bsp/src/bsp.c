@@ -284,6 +284,7 @@ void Power_Off_Special_Fun(void)
     gpro_t.power_off_flag=1;
            
      gpro_t.gPower_On = power_off;  
+     gpro_t.run_process_step=0xff;
  }
 
 void Power_On_Special_Fun(void)

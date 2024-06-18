@@ -1155,6 +1155,7 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 		}  	 
 }  
 #endif 
+
  void TFT_Disp_Fan_Leasefiness_RunIcon(uint16_t x,uint16_t y,uint8_t num)
 {
    uint16_t temp, t, tbit,mode;
@@ -1164,16 +1165,23 @@ void TFT_Disp_Fan_RunIcon(uint16_t x,uint16_t y,uint8_t num,uint8_t bc)
 
 	for(t = 0; t < 1984; t++)	/*遍历打印所有像素点到LCD */
 	{   
-	
+	    if(gpro_t.gPower_On == power_on){
+               mode =1;
+               return ;
+        }
 		temp = font_1_leafiness_icon[t]; 
 		
 		for(tbit = 0; tbit < 8; tbit++)	/* 打印一个像素点到液晶 */
 		{	
 			
-			
+			if(gpro_t.gPower_On == power_on){
+               mode =1;
+               return ;
+            }
 			if(temp & 0x80)	color =  BLACK;//WHITE;
 			else if(0 == mode)	color = GBLUE;//BLUE;//WHITE;//BLACK;
 			else color = BLACK;
+            
 			TFT_DrawPoint(x, y,color );
 			
 			temp <<= 1;			
