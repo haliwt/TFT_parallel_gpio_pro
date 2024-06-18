@@ -290,12 +290,16 @@ void Power_Off_Special_Fun(void)
 void Power_On_Special_Fun(void)
 {
        buzzer_sound();	
+       
        DISABLE_INT();
        LCD_Clear(BLACK);
        ENABLE_INT();
-	   Donot_Disp_CountDown_60s();
-	   HAL_Delay(50);
+       
+	 //  Donot_Disp_CountDown_60s();
+	 //  HAL_Delay(50);
        power_on_init_set_ref();
+
+     
        gpro_t.gPower_On = power_on;   
   
        gpro_t.run_process_step=0;
@@ -542,13 +546,13 @@ static void Power_On_Init(void)
    gctl_t.gSet_timer_hours =0;
 
 //works time
-    if(wifi_link_net_state()==0){
+    if(wifi_link_net_state()==0 || gctl_t.get_beijing_time_success ==0){
 		 gctl_t.disp_works_hours =0;
 	     gctl_t.disp_works_minutes=0;
 	     gctl_t.gTimer_ctl_disp_works_time_second=0;
 
      }
-     else{
+     else {
        gctl_t.power_on_dis_work_time =0;
 
      }
