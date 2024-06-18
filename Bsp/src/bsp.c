@@ -234,7 +234,6 @@ void PowerOff_Ref_Fun(void)
        //  LCD_Clear(BLACK);
 	     gctl_t.fan_continuce_flag =1;
 		 //clear control falg
-        gpro_t.run_process_step=0;
         gpro_t.set_timer_timing_success = 0;
         
        
@@ -480,10 +479,12 @@ void PowerOnOff_Init_Ref_Fun(void)
 	    
      }
      else{//POWER OFF
-
+           
+            
             gpro_t.power_off_flag=1;
 	        gpro_t.gPower_On = power_off; 
             PowerOff_Ref_Fun();
+            gpro_t.run_process_step=0xff;
 
 
         }
