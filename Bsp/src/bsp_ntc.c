@@ -252,7 +252,7 @@ static uint16_t Get_Adc_Average(uint32_t ch,uint8_t times)
 *****************************************************************/
 void Get_Ntc_Resistance_Temperature_Voltage(uint32_t channel,uint8_t times)
 {
-    static uint8_t the_first_cunter;
+    static uint8_t the_first_cunter,read_adc_value;
 	uint16_t adcx,temp_vlue;
 	
 	adcx = Get_Adc_Average(channel,times);
@@ -284,9 +284,19 @@ void Get_Ntc_Resistance_Temperature_Voltage(uint32_t channel,uint8_t times)
 
 	Calculate_Speicial_Temperature_Value(disp_temp_degree);
     
-     disp_value = ntc_res_linear_value(ntc_t.temperature_value);
+   
 
-     if(disp_value ==0)disp_value= disp_ntc_value[0];
+     if(read_adc_value ==0){
+        read_adc_value++;
+        disp_value = ntc_t.temperature_value; //disp_value= disp_ntc_value[0];
+        disp_ntc_value[0]= ntc_t.temperature_value;
+
+     }
+     else{
+
+        disp_value = ntc_res_linear_value(ntc_t.temperature_value);
+
+     }
 	 
 	 display_ntc_temp_value(disp_value);
 
