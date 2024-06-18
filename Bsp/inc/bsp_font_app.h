@@ -63,6 +63,7 @@ void TFT_Disp_Fan_Leasefiness2_RunIcon(uint16_t x,uint16_t y,uint8_t num);
 void TFT_donotDisp_Chinese_WorkTime_23_23(uint16_t x,uint16_t y,uint8_t num);
 
 
+void TFT_Disp_CountDown_Time_48_48_onBlack(uint16_t x,uint16_t y,uint8_t sel,uint8_t num);
 
 #endif 
 

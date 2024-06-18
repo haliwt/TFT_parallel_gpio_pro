@@ -706,6 +706,90 @@ void TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(uint16_t x,uint16_t y,uint8_t sel
 		}  
 
 }
+/****************************************************************************************
+	*
+	*Function  Name :void TFT_Disp_Temp_24_24_onBlack(uint16_t x,uint16_t y,uint8_t num)
+	*Function:
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+****************************************************************************************/
+void TFT_Disp_CountDown_Time_48_48_onBlack(uint16_t x,uint16_t y,uint8_t sel,uint8_t num)
+{
+    
+	  
+		uint8_t temp, t,tbit;
+		uint8_t x0=x;
+	   
+		static uint16_t color;
+		
+	
+		//for(t = 0; t < 144; t++)	/*遍历打印所有像素点到LCD */
+		for(t = 0; t < 116; t++)
+		{	
+		    if(gpro_t.gPower_On == power_on){
+
+                sel = 1;
+                return ;
+
+            }
+			//temp = font4848_works_time_value[num][t]; 
+			temp = font_pic_time_value[num][t];
+			
+			
+			for(tbit = 0; tbit < 8; tbit++) /* 打印一个像素点到液晶 */
+			{	
+				
+               if(gpro_t.gPower_On == power_on){
+
+                  sel = 1;
+                  return ;
+
+                }
+
+
+
+                if(temp & 0x80){ //display of backgroud color is "black" picture of words is "black"->0x00, background is "white" ->0xff
+					
+					color =BLACK; // WHITE;
+	
+				}
+				else if(sel==0 && gpro_t.gPower_On == power_off){ //display of words of color is "white"
+					
+					  color = WHITE;//BLACK;
+					
+               }
+			   else color = BLACK; //don't display words ,all color is backgroud black.
+				
+				TFT_DrawPoint(x, y,color);
+				
+				temp <<= 1; 		
+				//y++; // 垂直扫描
+				x++;//水平扫描
+	
+				if(x >= LCD_Width){
+						gpro_t.lcd_over_width_flag =1;
+						return; /* 超区域了 */
+	
+				}
+				
+				if((x - x0) == 26){//
+					x = x0;
+					y++;
+					
+					if(y >= LCD_Height){
+					gpro_t.lcd_over_height_flag=1;
+					return; 	/* 超区域了 */
+	
+					 }
+	 
+					break;
+				}
+			}	 
+		}  
+
+}
+
 /****************************************************************************************************
 	*
 	*Function Name:void TFT_Disp_Pic_Warnign_Words(uint16_t x,uint16_t y,uint8_t sel,uint8_t num)

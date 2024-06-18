@@ -1230,8 +1230,8 @@ void TFT_Disp_CountDown_60s(uint8_t idata)
 	//TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(80,190,0,minute_flag);
 	//TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(114,190,0,second_flag);
 	
-    TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(130,180,0,minute_flag);
-    TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(164,180,0,second_flag);
+    TFT_Disp_CountDown_Time_48_48_onBlack(130,180,0,minute_flag);
+    TFT_Disp_CountDown_Time_48_48_onBlack(164,180,0,second_flag);
 
 
 }
