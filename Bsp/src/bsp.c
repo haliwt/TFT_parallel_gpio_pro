@@ -152,7 +152,7 @@ void PowerOn_Process_Handler(void)
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
         osDelay(100);
-		wifi_t.runCommand_order_lable= wifi_get_beijing_timing_data;
+		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		 
 		  

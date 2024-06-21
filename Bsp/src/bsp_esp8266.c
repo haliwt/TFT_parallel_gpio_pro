@@ -83,7 +83,7 @@ void Auto_SmartPhone_TryToLink_TencentCloud(void)
 		wifi_t.first_power_on_link_net ++;
 
 		if(wifi_link_net_state()==1){
-			wifi_t.runCommand_order_lable= wifi_get_beijing_timing_data;//04
+			wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;//04
 	    }
 
 	}
@@ -151,7 +151,7 @@ void SmartPhone_TryToLink_TencentCloud(void)
 		wifi_t.first_power_on_link_net ++;
 
 		if(wifi_link_net_state()==1){
-			wifi_t.runCommand_order_lable= wifi_get_beijing_timing_data;//04
+			wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;//04
 	    }
 
 	}
@@ -355,7 +355,7 @@ void SmartPhone_LinkTencent_Cloud(void)
 	     if(wifi_link_net_state()==1){
 			   
 				wifi_t.get_rx_beijing_time_enable=0;
-			    wifi_t.runCommand_order_lable = wifi_get_beijing_timing_data;
+			    wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data;
                 
 				
 			}

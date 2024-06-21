@@ -116,7 +116,7 @@ static void vTaskRunPro(void *pvParameters)
       if(gpro_t.gPower_On == power_on){
 
          PowerOn_Process_Handler();
-         
+         TFT_Disp_Timer_Split_Symbol();
     
 
       }
@@ -399,7 +399,7 @@ static void vTaskMsgPro(void *pvParameters)
           }
         
          
-         TFT_Disp_Timer_Split_Symbol();
+        
          
          }
              
