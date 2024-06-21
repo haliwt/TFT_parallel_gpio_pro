@@ -209,5 +209,8 @@ void GetNTP_Times(void);
 
 void Wifi_Pro_Runing_Init(void);
 
+void GetBeijing_Time(void);
+
+
 #endif 
 

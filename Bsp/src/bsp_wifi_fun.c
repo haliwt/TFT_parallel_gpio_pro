@@ -112,3 +112,10 @@ void Wifi_Pro_Runing_Init(void)
 }
 
 
+void GetBeijing_Time(void)
+{
+
+
+
+}
+
