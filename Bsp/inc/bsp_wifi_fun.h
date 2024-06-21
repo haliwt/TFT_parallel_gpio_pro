@@ -19,7 +19,7 @@ typedef enum _wifi_state_t{
 	wifi_subscriber_form_tencent_data,//3
 	wifi_publish_dht11_delay,//4
 	wifi_subscriber_form_tencent_cloud_cmd,//5
-	wifi_publish_update_tencent_cloud_data,//6
+	wifi_get_beijing_timing_data,//6
 	wifi_auto_to_link_cloud,//7
 	wifi_atuo_link_cloud_ref,//8
 	wifi_auto_repeat_link_cloud,//9
@@ -209,7 +209,7 @@ void GetNTP_Times(void);
 
 void Wifi_Pro_Runing_Init(void);
 
-void GetBeijing_Time(void);
+void  GetBeijing_Time_Fun(void);
 
 
 #endif 
