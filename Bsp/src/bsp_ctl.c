@@ -480,7 +480,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
       LED_WIFI_ICON_ON();
 
    }
-
+  Fan_Run();
   switch(wifi_t.smartphone_app_power_on_flag){
 
 

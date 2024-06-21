@@ -350,6 +350,7 @@ static void TFT_Pocess_Command_Handler(void)
 	   if(gpro_t.gTimer_pro_disp_temphum > 5){
            
 		   gpro_t.gTimer_pro_disp_temphum=0;
+            
 
 		     Update_DHT11_Value();
             TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);

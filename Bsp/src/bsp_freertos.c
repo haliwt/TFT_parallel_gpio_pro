@@ -117,6 +117,7 @@ static void vTaskRunPro(void *pvParameters)
 
          PowerOn_Process_Handler();
          TFT_Disp_Timer_Split_Symbol();
+         
     
 
       }
@@ -125,8 +126,11 @@ static void vTaskRunPro(void *pvParameters)
         power_key_long_conter = 0;
         Power_Off_Process_Handler();
       }
-     // USART_Cmd_Error_Handler();
-      vTaskDelay(50);
+      USART_Cmd_Error_Handler();
+     if(gpro_t.gPower_On == power_on){
+     Temperature_Ptc_Pro_Handler();
+     }
+      vTaskDelay(40);
   }
 	
 }
@@ -386,7 +390,7 @@ static void vTaskMsgPro(void *pvParameters)
               Wifi_Fast_Led_Blink();
 
              
-              Temperature_Ptc_Pro_Handler();
+            // 
               
          }
 

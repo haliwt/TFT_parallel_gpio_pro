@@ -205,11 +205,11 @@ void wifiUpdate_SetTimeValue(uint8_t tv);
 void wifiUpdate_SetTemperatureValue(uint8_t temp);
 
 
-void GetNTP_Times(void);
 
-void Wifi_Pro_Runing_Init(void);
 
-void GetBeijing_Time(void);
+
+
+
 
 
 #endif 
