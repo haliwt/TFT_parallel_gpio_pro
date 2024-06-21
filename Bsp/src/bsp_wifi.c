@@ -377,7 +377,7 @@ static void RunWifi_Command_Handler(void)
 	case 1:  //link is OK
 	   // Wifi_Rx_Auto_Link_Net_Handler();
 	    Wifi_Link_Tencent_Net_State();
-        osDelay(200);
+        HAL_Delay(50);
         
 		wifi_t.get_rx_auto_repeat_net_enable=0;
 		wifi_t.gTimer_publish_dht11=0;

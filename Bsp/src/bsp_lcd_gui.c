@@ -750,7 +750,7 @@ void TFT_Disp_Timer_Split_Symbol(void)
 		  }
 		 #endif 
 
-		 if(gpro_t.gTimer_pro_time_split_symbol > 1 &&  gpro_t.gTimer_pro_time_split_symbol < 4){
+		 if(gpro_t.gTimer_pro_time_split_symbol < 2){
              
            
              //.TFT_Disp_Time_Split_Symbol(160,173,0); //时间分割符号,turn on
@@ -760,7 +760,7 @@ void TFT_Disp_Timer_Split_Symbol(void)
                 TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
 			  }
 		 }
-		 else if(gpro_t.gTimer_pro_time_split_symbol > 3  &&  gpro_t.gTimer_pro_time_split_symbol < 6){
+		 else if(gpro_t.gTimer_pro_time_split_symbol > 1  &&  gpro_t.gTimer_pro_time_split_symbol < 4){
                
 			if(split_times == 1){
 		       
@@ -769,11 +769,11 @@ void TFT_Disp_Timer_Split_Symbol(void)
 		        TFT_Disp_Time_Split_Symbol(140,173,1); //时间分割符号 turn off
 			  }
 		 }
-         else if(gpro_t.gTimer_pro_time_split_symbol > 5){
+         else if(gpro_t.gTimer_pro_time_split_symbol > 3){
 
-        
+            split_times=0;
 		   gpro_t.gTimer_pro_time_split_symbol=0;
-            TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
+           // TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
 
          }
 
