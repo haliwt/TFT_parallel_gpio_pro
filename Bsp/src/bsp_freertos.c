@@ -95,8 +95,7 @@ static void vTaskRunPro(void *pvParameters)
    {
 
 
-      
-      if(power_sound_flag==0){
+     if(power_sound_flag==0){
                power_sound_flag++;
                VOICE_OUTPUT_SOUND_ENABLE();
                buzzer_sound();
@@ -117,19 +116,17 @@ static void vTaskRunPro(void *pvParameters)
 
          PowerOn_Process_Handler();
          TFT_Disp_Timer_Split_Symbol();
-         
-    
-
-      }
+       }
       else if(gpro_t.gPower_On == power_off){
         mode_key_long_conter  =0;
         power_key_long_conter = 0;
         Power_Off_Process_Handler();
       }
-      USART_Cmd_Error_Handler();
+     
      if(gpro_t.gPower_On == power_on){
-     Temperature_Ptc_Pro_Handler();
+        Temperature_Ptc_Pro_Handler();
      }
+      USART_Cmd_Error_Handler();
       vTaskDelay(40);
   }
 	
@@ -537,7 +534,7 @@ static void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
                  "vTaskRunPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskRunPro);  /* 任务句柄  */
