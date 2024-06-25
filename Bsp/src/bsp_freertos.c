@@ -116,7 +116,7 @@ static void vTaskRunPro(void *pvParameters)
 
          PowerOn_Process_Handler();
          TFT_Disp_Timer_Split_Symbol();
-       }
+      }
       else if(gpro_t.gPower_On == power_off){
         mode_key_long_conter  =0;
         power_key_long_conter = 0;

@@ -322,7 +322,7 @@ static void TFT_Pocess_Command_Handler(void)
 
 
 	 case 0:
-
+        
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
@@ -342,6 +342,7 @@ static void TFT_Pocess_Command_Handler(void)
 	
       gpro_t.run_process_step=pro_disp_dht11_value;
 	  Fan_Run();
+      LED_Power_Key_On();
 	 
 	 break;
 
@@ -518,6 +519,7 @@ static void power_on_init_set_ref(void)
          LED_Mode_Key_On();
 	     LED_Power_Key_On();
 		 TFT_BACKLIGHT_ON();
+         
 
 
 }

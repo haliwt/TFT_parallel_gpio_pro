@@ -127,14 +127,14 @@ void Breath_Led(void)
         led_k++;
         
         
-        if(led_k <50 && dec_led_flag==1){
+        if(led_k <25 && dec_led_flag==1){
             i++;
          if(switch_flag ==1 || i > 4){
             switch_flag =0;
           
             //LED_POWER_OFF();
             LED_Power_Key_Off();
-            flag = Delay(49-i);
+            flag = Delay(25-i);
            
           }
           if(flag ==1){
@@ -151,7 +151,7 @@ void Breath_Led(void)
             }
           
         }
-        else if(led_k < 50 && dec_led_flag==0){
+        else if(led_k < 25 && dec_led_flag==0){
             i++;
          if(switch_flag ==1 || i < 10){
             switch_flag =0;
@@ -162,14 +162,14 @@ void Breath_Led(void)
             flag = Delay(30-i);
         #endif 
             LED_Power_Key_On();;
-            flag = Delay(49-i);
+            flag = Delay(25-i);
             
     
           }
           if(flag ==1){
             flag =0;
           
-               if(j< 40){
+               if(j< 25){
                //LED_POWER_OFF();
 
                 LED_Power_Key_Off();
@@ -193,16 +193,9 @@ void Breath_Led(void)
             }
          }
         
-        if(led_k > 49 && dec_led_flag==0){
+        if(led_k > 25 && dec_led_flag==0){
     
-        
-    
-    //          z++; 
-    //      if(z<20){
-    //         LED_POWER_OFF();
-    //         
-    //      }
-    //      else{
+     
         
             led_k=0;
              i=0;
@@ -212,7 +205,7 @@ void Breath_Led(void)
          //  }
             
           }
-          else if(led_k>49 && dec_led_flag==1){
+          else if(led_k>25 && dec_led_flag==1){
             
          
            
@@ -221,17 +214,6 @@ void Breath_Led(void)
         
              dec_led_flag=0;
             
-    //        if(z<20){
-    //         // LED_POWER_OFF();
-    //         LED_Power_On();
-    //         }
-    //         else{
-    //       
-    //      led_k=0;
-    //         i=0;
-    //         z=0;
-    //         dec_led_flag=0;
-    //        }
         }
 
 }
