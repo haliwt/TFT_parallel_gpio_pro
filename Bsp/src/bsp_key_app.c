@@ -235,7 +235,7 @@ void ADD_Key_Fun(void)
 	
     if(disp_temp_value ==1){
 		disp_temp_value =0;
-    TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
+        TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
 
     }
     if(timer_timing_flag ==1){
