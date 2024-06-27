@@ -334,11 +334,11 @@ void TFT_LCD_Init(void)
     LCD_Write_Data(0xA0); //横屏
 
  
-    LCD_Write_Cmd(0xa0);
+   // LCD_Write_Cmd(0xa0);
     /* RGB 5-6-5-bit格式  */
     LCD_Write_Cmd(0x3A);
-    LCD_Write_Data(0x65);//0x063
-     LCD_Clear(BLACK);
+    LCD_Write_Data(0x55);//0x063
+    // LCD_Clear(BLACK);
     /* porch 设置 */
     LCD_Write_Cmd(0xB2);
     LCD_Write_Data(0x0C);//< Back porch in normal mode
@@ -347,27 +347,11 @@ void TFT_LCD_Init(void)
     LCD_Write_Data(0x33);//< Back and front porch in idle mode
     LCD_Write_Data(0x33);//< Back and front porch in partial mode
 
-#if 0
-LCD_Write_Cmd(0x36);     
- LCD_Write_Data( 0x00);   
-
- LCD_Write_Cmd(0x3A);     
- LCD_Write_Data(0x06);   
-
- LCD_Write_Cmd(0xB2);     
- LCD_Write_Data(0x0C);   
- LCD_Write_Data(0x0C);   
- LCD_Write_Data(0x00);   
- LCD_Write_Data(0x33);   
- LCD_Write_Data(0x33);  
-
-#endif 
-
  LCD_Write_Cmd(0xB7);     
- LCD_Write_Data(0x06);   
+ LCD_Write_Data(0x56);   
 
  LCD_Write_Cmd(0xBB);     
- LCD_Write_Data(0x30);   
+ LCD_Write_Data(0x20);   
 
  LCD_Write_Cmd(0xC0);     
  LCD_Write_Data(0x2C);   
@@ -378,12 +362,12 @@ LCD_Write_Cmd(0x36);
  LCD_Write_Cmd(0xC3);     
  LCD_Write_Data(0x0F);   
 
+ LCD_Write_Cmd(0xC4);     
+ LCD_Write_Data(0x20); 
+
  LCD_Write_Cmd(0xC6);     
  LCD_Write_Data(0x0F);   
-
- LCD_Write_Cmd(0xD0);     
- LCD_Write_Data(0xA7);   
-
+ 
  LCD_Write_Cmd(0xD0);     
  LCD_Write_Data(0xA4);   
  LCD_Write_Data(0xA1);   
@@ -393,41 +377,43 @@ LCD_Write_Data(0xA1);
 
  LCD_Write_Cmd(0xE0);
  LCD_Write_Data(0xF0);
- LCD_Write_Data(0x02);
- LCD_Write_Data(0x07);
- LCD_Write_Data(0x05);
-LCD_Write_Data(0x06);
- LCD_Write_Data(0x14);
- LCD_Write_Data(0x2F);
- LCD_Write_Data(0x54);
- LCD_Write_Data(0x46);
+ LCD_Write_Data(0x00);
+ LCD_Write_Data(0x06);
+ LCD_Write_Data(0x06);
+LCD_Write_Data(0x05);
+ LCD_Write_Data(0x30);
+ LCD_Write_Data(0x44);
+ LCD_Write_Data(0x48);
  LCD_Write_Data(0x38);
- LCD_Write_Data(0x13);
  LCD_Write_Data(0x11);
- LCD_Write_Data(0x2E);
- LCD_Write_Data(0x35);
+ LCD_Write_Data(0x10);
+ LCD_Write_Data(0x34);
 
  LCD_Write_Cmd(0xE1);
  LCD_Write_Data(0xF0);
- LCD_Write_Data(0x08);
- LCD_Write_Data(0x0C);
- LCD_Write_Data(0x0C);
- LCD_Write_Data(0x09);
- LCD_Write_Data(0x05);
+ LCD_Write_Data(0x0A);
+ LCD_Write_Data(0x0E);
+ LCD_Write_Data(0x0D);
+ LCD_Write_Data(0x0B);
+ LCD_Write_Data(0x27);
  LCD_Write_Data(0x2F);
- LCD_Write_Data(0x43);
- LCD_Write_Data(0x46);
- LCD_Write_Data(0x36);
- LCD_Write_Data(0x10);
+ LCD_Write_Data(0x44);
+ LCD_Write_Data(0x47);
+ LCD_Write_Data(0x35);
+ LCD_Write_Data(0x12);
  LCD_Write_Data(0x12);
  LCD_Write_Data(0x2C);
  LCD_Write_Data(0x32);
+
+  LCD_Write_Cmd(0x35);     
+  LCD_Write_Data(0x00);
 
  LCD_Write_Cmd(0x21);     
 
  LCD_Write_Cmd(0x29);    
 
  LCD_Write_Cmd(0x2C);  
+
 
 
 
