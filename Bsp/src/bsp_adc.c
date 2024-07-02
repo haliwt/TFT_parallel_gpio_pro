@@ -95,7 +95,7 @@ static void Judge_PTC_Temperature_Value(uint16_t adc_ptc)
 {
   
 	
-  if(adc_ptc < 220 || adc_ptc == 220){  //114degree :220  //106 degree :264
+  if(adc_ptc < 215 || adc_ptc == 215){  //115 degree : oct->215  
 
          gctl_t.ptc_warning =1;
 

@@ -798,7 +798,7 @@ void TFT_Disp_Temp_Value(uint8_t bc,uint8_t temp_value)
    temp_unit= temp_value%10; 
 
 
-   if(temp_decade > 3){ //WT.EDIT ADD ITEM 2024.06.26
+   if(temp_value > 38){ //WT.EDIT ADD ITEM 2024.06.26
     
 
     #if NORMAL_DISPLAY
@@ -810,7 +810,7 @@ void TFT_Disp_Temp_Value(uint8_t bc,uint8_t temp_value)
     #endif 
 
 
-    #if NORMAL_DISPLA
+    #if NORMAL_DISPLAY
     TFT_Disp_Numbers_Pic_413(63,40,bc,temp_unit);//63 -> 60
     #else 
     TFT_MainDisp_Numbers_Pic_354(59,40,bc,temp_unit);  
@@ -837,7 +837,7 @@ void TFT_Disp_Temp_Value(uint8_t bc,uint8_t temp_value)
        	  refresh_two = temp_unit;
     	 
        //__disable_irq();
-       #if NORMAL_DISPLA
+       #if NORMAL_DISPLAY
        TFT_Disp_Numbers_Pic_413(63,40,bc,temp_unit);//63 -> 60
        #else 
        TFT_MainDisp_Numbers_Pic_354(59,40,bc,temp_unit);  
