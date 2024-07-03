@@ -115,7 +115,7 @@ static void vTaskRunPro(void *pvParameters)
       if(gpro_t.gPower_On == power_on){
 
          PowerOn_Process_Handler();
-         TFT_Disp_Timer_Split_Symbol();
+         //
       }
       else if(gpro_t.gPower_On == power_off){
         mode_key_long_conter  =0;
@@ -386,6 +386,8 @@ static void vTaskMsgPro(void *pvParameters)
            
               Wifi_Fast_Led_Blink();
 
+              TFT_Disp_Timer_Split_Symbol();
+
              
             // 
               
@@ -534,7 +536,7 @@ static void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
                  "vTaskRunPro",   		/* 任务名    */
-                 256,             		/* 任务栈大小，单位word，也就是4字节 */
+                 128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskRunPro);  /* 任务句柄  */

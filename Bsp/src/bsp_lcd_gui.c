@@ -570,10 +570,11 @@ void TFT_DonnotDisp_Works_Time(void)
 			   
      }
      
-     if(wifi_link_net_state()==1){
-	    gctl_t.save_time_hours[2] = gctl_t.gTimer_ctl_disp_works_time_second;
-
-      }
+//     if(wifi_link_net_state()==1 ){
+//       
+//	    gctl_t.save_time_hours[2] = gctl_t.gTimer_ctl_disp_works_time_second;
+//
+//      }
 
 }
 
@@ -756,7 +757,7 @@ void TFT_Disp_Timer_Split_Symbol(void)
              //.TFT_Disp_Time_Split_Symbol(160,173,0); //时间分割符号,turn on
             
 			 if(split_times  == 0){
-				 split_times++;
+				 split_times=1;
                 TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
 			  }
 		 }
@@ -773,7 +774,7 @@ void TFT_Disp_Timer_Split_Symbol(void)
 
             split_times=0;
 		   gpro_t.gTimer_pro_time_split_symbol=0;
-           // TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
+           
 
          }
 
