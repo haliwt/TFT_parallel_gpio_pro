@@ -319,7 +319,6 @@ static void vTaskMsgPro(void *pvParameters)
             key_power_sound_flag++;
             PowerOnOff_Init_Ref_Fun();
          }
-            
          if(gpro_t.gPower_On==power_on){
                  
               
