@@ -102,7 +102,6 @@ static void vTaskRunPro(void *pvParameters)
       
          }
 
-      bsp_run_iwdg();
       bsp_run_Idle();
       
      
@@ -115,6 +114,7 @@ static void vTaskRunPro(void *pvParameters)
       if(gpro_t.gPower_On == power_on){
 
          PowerOn_Process_Handler();
+         TimeTimer_Pro_Handler();
          //
       }
       else if(gpro_t.gPower_On == power_off){

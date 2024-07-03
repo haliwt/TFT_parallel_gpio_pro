@@ -49,6 +49,13 @@ void bsp_Init(void)
 **********************************************************************************************************/
 void bsp_run_iwdg(void)
 {
+   
+}
+
+
+void bsp_run_Idle(void)
+{
+
    static uint8_t power_on_first;
 
     if(power_on_first ==0){
@@ -62,11 +69,7 @@ void bsp_run_iwdg(void)
          
   
     }
-}
 
-
-void bsp_run_Idle(void)
-{
 
    if(gpro_t.gPower_On == power_on){
    if(gpro_t.disp_works_timer_timing_mode_item == timer_time || gpro_t.disp_works_timer_timing_mode_item ==timer_set_time){
@@ -370,27 +373,19 @@ static void TFT_Pocess_Command_Handler(void)
 
 	    RunMain_And_Interval_Handler();
 	  
-	   gpro_t.run_process_step=pro_disp_works_time;
+	   gpro_t.run_process_step=pro_disp_wifi_led;
 	 break;
 
-	 case pro_disp_works_time: //display works times and timer timing .
-
-	
-	     TimeTimer_Pro_Handler();
-			
-
-		gpro_t.run_process_step=pro_disp_wifi_led;//pro_set_temperature;
-
-
-//    case pro_set_temperature:
+//	 case pro_disp_works_time: //display works times and timer timing .
 //
-//      
-//	   Temperature_Ptc_Pro_Handler();
-//		
-//       
-//      gpro_t.run_process_step=pro_disp_wifi_led;
+//	
+//	     TimeTimer_Pro_Handler();
+//			
 //
-//	break;
+//		gpro_t.run_process_step=pro_disp_wifi_led;//pro_set_temperature;
+//
+//    break;
+
 
 	case pro_disp_wifi_led: //4
 	 
