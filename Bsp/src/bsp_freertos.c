@@ -117,17 +117,17 @@ static void vTaskRunPro(void *pvParameters)
          
          //
       }
-      else if(gpro_t.gPower_On == power_off){
-        mode_key_long_conter  =0;
-        power_key_long_conter = 0;
-        Power_Off_Process_Handler();
-      }
+//      else if(gpro_t.gPower_On == power_off){
+//        mode_key_long_conter  =0;
+//        power_key_long_conter = 0;
+//        Power_Off_Process_Handler();
+//      }
      
      if(gpro_t.gPower_On == power_on){
         Temperature_Ptc_Pro_Handler();
      }
       USART_Cmd_Error_Handler();
-      vTaskDelay(40);
+      vTaskDelay(100);// 40
   }
 	
 }
@@ -143,7 +143,7 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_sound_flag,key_power_long_sound_flag;
@@ -393,6 +393,11 @@ static void vTaskMsgPro(void *pvParameters)
              
             // 
               
+         }
+        else if(gpro_t.gPower_On == power_off){
+            mode_key_long_conter  =0;
+            power_key_long_conter = 0;
+            Power_Off_Process_Handler();
          }
 
          if(v_t.sound_rx_data_success_flag == 1 ){
