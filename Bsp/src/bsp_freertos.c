@@ -114,7 +114,7 @@ static void vTaskRunPro(void *pvParameters)
       if(gpro_t.gPower_On == power_on){
 
          PowerOn_Process_Handler();
-         TimeTimer_Pro_Handler();
+         
          //
       }
       else if(gpro_t.gPower_On == power_off){
@@ -387,6 +387,8 @@ static void vTaskMsgPro(void *pvParameters)
               Wifi_Fast_Led_Blink();
 
               TFT_Disp_Timer_Split_Symbol();
+
+              TimeTimer_Pro_Handler();
 
              
             // 
