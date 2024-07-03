@@ -114,8 +114,8 @@ static void vTaskRunPro(void *pvParameters)
       if(gpro_t.gPower_On == power_on){
 
          PowerOn_Process_Handler();
-         
-         //
+         Temperature_Ptc_Pro_Handler();
+       
       }
 //      else if(gpro_t.gPower_On == power_off){
 //        mode_key_long_conter  =0;
@@ -123,11 +123,9 @@ static void vTaskRunPro(void *pvParameters)
 //        Power_Off_Process_Handler();
 //      }
      
-     if(gpro_t.gPower_On == power_on){
-        Temperature_Ptc_Pro_Handler();
-     }
+    
       USART_Cmd_Error_Handler();
-      vTaskDelay(100);// 40
+      vTaskDelay(60);// 40
   }
 	
 }
@@ -382,6 +380,8 @@ static void vTaskMsgPro(void *pvParameters)
                   }
                 }
 
+          
+
               WIFI_LED_Blink();
            
               Wifi_Fast_Led_Blink();
@@ -391,7 +391,7 @@ static void vTaskMsgPro(void *pvParameters)
               TimeTimer_Pro_Handler();
 
              
-            // 
+            
               
          }
         else if(gpro_t.gPower_On == power_off){

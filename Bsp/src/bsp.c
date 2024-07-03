@@ -458,7 +458,8 @@ void PowerOnOff_Init_Ref_Fun(void)
   if(gpro_t.gPower_On == power_off){
           
           power_on_init_set_ref();
-          gpro_t.gPower_On = power_on;   
+          gpro_t.gPower_On = power_on;  
+  
           gpro_t.run_process_step=0;
 	    
      }
@@ -500,6 +501,10 @@ static void power_on_init_set_ref(void)
          LED_Mode_Key_On();
 	     LED_Power_Key_On();
 		 TFT_BACKLIGHT_ON();
+
+         gpro_t.disp_works_timer_timing_mode_item = works_time ;
+
+         
          
 
 
