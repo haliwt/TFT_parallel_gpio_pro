@@ -115,6 +115,7 @@ static void vTaskRunPro(void *pvParameters)
 
          PowerOn_Process_Handler();
          Temperature_Ptc_Pro_Handler();
+          Wifi_Fast_Led_Blink();
        
       }
 //      else if(gpro_t.gPower_On == power_off){
@@ -526,6 +527,7 @@ static void vTaskStart(void *pvParameters)
 
      }
 
+   
     
      
       vTaskDelay(20);

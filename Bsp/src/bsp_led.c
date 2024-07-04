@@ -68,7 +68,7 @@ static uint8_t  Delay(int16_t count)
 }
 
 
-void Power_On_Led_Init(void)
+void power_on_action_led_init(void)
 {
 
   
@@ -76,15 +76,22 @@ void Power_On_Led_Init(void)
 	LED_WIFI_ICON_ON()  ;             
 
 	//PTC ICON LED
-	LED_PTC_ICON_ON() ;               
+	LED_PTC_ICON_ON() ;  
+    Ptc_On();
+    gctl_t.ptc_flag =1;
 
 
 	//KILL ICON LED
-	LED_KILL_ICON_ON()  ;             
+	LED_KILL_ICON_ON()  ; 
+    Plasma_On();
+    gctl_t.plasma_flag = 1;
+
 
 
 	//ULTRSONIC ICO LED
-	LED_RAT_ICON_ON()  ;           
+	LED_RAT_ICON_ON()  ; 
+    Ultrasonic_Pwm_Output();
+    gctl_t.ultrasonic_flag = 1;
 
 
 }
@@ -96,15 +103,21 @@ void Power_Off_Led(void)
 	LED_WIFI_ICON_OFF()	;			  
 
 	//PTC ICON LED
-	LED_PTC_ICON_OFF() ; 			  
+	LED_PTC_ICON_OFF() ; 	
+    Ptc_Off();
+    gctl_t.ptc_flag =0;
 
 
 	//KILL ICON LED
-	LED_KILL_ICON_OFF()	;			  
+	LED_KILL_ICON_OFF()	;
+    Plasma_Off();
+    gctl_t.plasma_flag = 0;
 
 
 	//ULTRSONIC ICO LED
-	LED_RAT_ICON_OFF()  ;		   
+	LED_RAT_ICON_OFF()  ;	
+    Ultrasonic_Pwm_Stop();
+    gctl_t.ultrasonic_flag = 0;
 
 
 

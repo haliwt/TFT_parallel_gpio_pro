@@ -376,18 +376,7 @@ static void TFT_Pocess_Command_Handler(void)
 	   gpro_t.run_process_step=pro_disp_wifi_led;
 	 break;
 
-//	 case pro_disp_works_time: //display works times and timer timing .
-//
-//	
-//	     TimeTimer_Pro_Handler();
-//			
-//
-//		gpro_t.run_process_step=pro_disp_wifi_led;//pro_set_temperature;
-//
-//    break;
-
-
-	case pro_disp_wifi_led: //4
+    case pro_disp_wifi_led: //4
 	 
        if(wifi_link_net_state() ==1){
 	      LED_WIFI_ICON_ON();
@@ -490,7 +479,7 @@ static void power_on_init_set_ref(void)
 
        
          if(wifi_t.smartphone_app_power_on_flag==0){
-		       Power_On_Led_Init();
+		       power_on_action_led_init();
          }
          
         Update_DHT11_Value();
@@ -661,10 +650,16 @@ void WIFI_LED_Blink(void)
 
         LED_WIFI_ICON_ON();
         }
-        else if(gpro_t.gTimer_pro_wifi_led > 2){
+        else if(gpro_t.gTimer_pro_wifi_led > 2 && gpro_t.gTimer_pro_wifi_led < 5){
 
         gpro_t.gTimer_pro_wifi_led=0;
         LED_WIFI_ICON_OFF();
+        }
+        else if(gpro_t.gTimer_pro_wifi_led > 4){
+
+            gpro_t.gTimer_pro_wifi_led=0;
+             LED_WIFI_ICON_ON();
+
         }
         }
 

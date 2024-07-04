@@ -44,7 +44,7 @@ void LED_Net_On(void);
 void LED_Net_Off(void);
 
 
-void Power_On_Led_Init(void);
+void power_on_action_led_init(void);
 
 
 void Power_Off_Led(void);

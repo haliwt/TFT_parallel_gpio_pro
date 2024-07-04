@@ -279,6 +279,7 @@ void Wifi_SoftAP_Config_Handler(void)
 		
 
 
+       
 
 	 case wifi_set_tcdevreg://dynamic register
 
@@ -293,7 +294,7 @@ void Wifi_SoftAP_Config_Handler(void)
              wifi_t.wifi_config_net_lable=wifi_set_tcsap;
          }
 
-
+          
 	 break;
 
 
@@ -317,7 +318,7 @@ void Wifi_SoftAP_Config_Handler(void)
 			 wifi_t.wifi_uart_counter=0;
 			 wifi_t.wifi_config_net_lable=0xff;
 		  }
-		
+		 
 			
 	 break;
 
@@ -362,6 +363,7 @@ void SmartPhone_LinkTencent_Cloud(void)
 		 }
 
 	   }
+    
     free(device_submassage);
 
 }
