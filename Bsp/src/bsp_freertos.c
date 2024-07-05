@@ -96,16 +96,13 @@ static void vTaskRunPro(void *pvParameters)
 
 
      if(power_sound_flag==0){
-               power_sound_flag++;
-               VOICE_OUTPUT_SOUND_ENABLE();
-               buzzer_sound();
-      
-         }
+       power_sound_flag++;
+       VOICE_OUTPUT_SOUND_ENABLE();
+       buzzer_sound();
+     }
 
       bsp_run_Idle();
       
-     
-    
       MainBoard_Self_Inspection_PowerOn_Fun();
     
       WIFI_Process_Handler();
@@ -125,8 +122,8 @@ static void vTaskRunPro(void *pvParameters)
 //      }
      
     
-      USART_Cmd_Error_Handler();
-      vTaskDelay(60);// 40
+ //     USART_Cmd_Error_Handler();
+      vTaskDelay(100);// 40
   }
 	
 }
@@ -142,7 +139,7 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_sound_flag,key_power_long_sound_flag;

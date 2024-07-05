@@ -454,11 +454,12 @@ void PowerOnOff_Init_Ref_Fun(void)
      }
      else{//POWER OFF
            
-            
+           
             gpro_t.power_off_flag=1;
 	        gpro_t.gPower_On = power_off; 
             PowerOff_Ref_Fun();
-            gpro_t.run_process_step=0xff;
+            //gpro_t.run_process_step=0xff;
+            gpro_t.run_process_step=0;
 
 
         }
@@ -639,7 +640,14 @@ void Wifi_Fast_Led_Blink(void)
 
 
 
-
+/**********************************************************************************************************
+    **
+    *Function Name:void Power_Key_Detected(void)
+    *Function : 
+    *Input Ref:lightNum--LED ,filterNum -filter number, unionNum - smart menu number
+    *Return Ref:NO
+    *
+*********************************************************************************************************/
 void WIFI_LED_Blink(void)
 {
 

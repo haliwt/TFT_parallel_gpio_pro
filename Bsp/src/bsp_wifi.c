@@ -126,7 +126,10 @@ static void RunWifi_Command_Handler(void)
 		
 			wifi_t.get_rx_beijing_time_enable=0;
 
-			 wifi_t.runCommand_order_lable = wifi_auto_to_link_cloud;
+            wifi_t.gTimer_auto_detected_net_state_times =0; //
+            wifi_t.gTimer_get_beijing_time =0;
+
+			 wifi_t.runCommand_order_lable = wifi_auto_to_link_cloud; //wifi_auto_to_link_cloud
 		   
 		 }
        }
@@ -204,7 +207,7 @@ static void RunWifi_Command_Handler(void)
                wifi_t.gTimer_get_beijing_time=0;
                wifi_t.runCommand_order_lable=  wifi_auto_to_link_cloud;//7
 
-               wifi_t.gTimer_auto_detected_net_state_times =290;
+              // wifi_t.gTimer_auto_detected_net_state_times =290;
 
             }
 	
