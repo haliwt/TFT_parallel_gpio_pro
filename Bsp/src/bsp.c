@@ -93,219 +93,6 @@ void bsp_run_Idle(void)
 void PowerOn_Process_Handler(void)
 {
 	
- 
-	if(gpro_t.buzzer_sound_flag ==1){
-		gpro_t.buzzer_sound_flag=0;
-		Buzzer_KeySound();
-	}
-	
-
-	if(gpro_t.gPower_On == power_on){
-	
-
-	TFT_Pocess_Command_Handler();
-
-   }
-	
-	
-
-}
-
-/*****************************************************************
- * 
- * Function Name : void Power_Off_Handler(void)
- * Function : handle power off function 
- * Input Ref:No
- * Return Ref:NO
- * 
-******************************************************************/
- void Power_Off_Process_Handler(void)
- {   
- 
-	if(gpro_t.power_off_flag == 1){
-		gpro_t.power_off_flag ++;
-	      
-        DISABLE_INT();
-        LCD_Clear(BLACK);
-        TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
-
-        ENABLE_INT();
-	    gpro_t.gTimer_countdown_one_minute =90;
-        TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
-        Device_NoAction_Power_Off();
-     
-		
-	 if(wifi_link_net_state() ==1){
-	
-        wifi_t.link_net_tencent_data_flag=1;
-		gpro_t.power_off_flag++;
-		MqttData_Publish_PowerOff_Ref();
-        osDelay(100);
-		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
-	     
-		 
-		  
-	}
-
-    if(wifi_link_net_state() ==1   && gpro_t.power_off_flag==3){
-		gpro_t.power_off_flag++;
-		
-        Subscriber_Data_FromCloud_Handler();
-        HAL_Delay(100);
-	  
-	
-    }
-
-    }
-    
-	if(wifi_link_net_state() ==1  ){
-		
-       TFT_DonnotDisp_Works_Time();
-		
-    }
-
-    if(gctl_t.fan_continuce_flag ==1){
-
-	    if(gpro_t.gTimer_countdown_one_minute   > 0 || gpro_t.gTimer_countdown_one_minute==0){
-            Fan_Run();
-           
-		}
-		else{
-			gctl_t.fan_continuce_flag++;
-            TFT_BACKLIGHT_OFF();
-            Fan_Stop();
-      
-           
-		}
-    }
-
-
-    if(gctl_t.fan_continuce_flag==1){
-
-       TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
-
-    }
-    else if(gctl_t.fan_continuce_flag==2){
-        gctl_t.fan_continuce_flag++;
-
-        LCD_Clear(BLACK);
-
-
-    }
-      
- 
-
-	gctl_t.ptc_warning=0;
-	gctl_t.fan_warning =0;
-	wifi_t.repeat_login_tencent_cloud_init_ref=0;
-	
-
-	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
-	
-	//Power_Off_Retain_Beijing_Time();
-	
-	Breath_Led();
-	
-}
-
-/*****************************************************************
- * 
- * Function Name : void PowerOff_Ref_Fun(void)
- * Function : handle power off function 
- * Input Ref:No
- * Return Ref:NO
- * 
-******************************************************************/
-void PowerOff_Ref_Fun(void)
-{
- 
-	   
-       //  LCD_Clear(BLACK);
-	     gctl_t.fan_continuce_flag =1;
-		 //clear control falg
-        gpro_t.set_timer_timing_success = 0;
-        
-       
-		//wifi ref 
-        wifi_t.link_net_tencent_data_flag=1;
-        wifi_t.smartphone_app_power_on_flag=0;
-        wifi_t.power_off_step=0; 
-        
-
-        //display ptc temperature value 
-        gctl_t.gSet_temperature_value_item = disp_ptc_temp_value_item;
-        gctl_t.ptc_flag = 0;
-        gctl_t.plasma_flag = 0;
-	    gctl_t.ultrasonic_flag =0;
-        gctl_t.set_ptc_temp_value_success =0;
-        gctl_t.manual_operation_ptc_flag = ptc_manual_on;
-        
-        //main process ref
-  
-		gpro_t.gTimer_pro_wifi_fast_led=0;
-    gpro_t.disp_works_timer_timing_mode_item = timer_countdown; //display count down timing .
-	   
-
-        Power_Off_Fun();
-		    LED_Mode_Key_Off();
-
-   
-
-}
-      
-/******************************************************************************
-	*
-	*Function Name:void Power_Off_Special_Fun(void)
-	*Funcion: speical of power key function
-	*Input Ref:NO
-	*Return Ref:NO
-	*
-******************************************************************************/
-void Power_Off_Special_Fun(void)
-{
-
-  
-    buzzer_sound();
-    DISABLE_INT();
-     LCD_Clear(BLACK);
-     ENABLE_INT();
-    PowerOff_Ref_Fun();
-    gpro_t.power_off_flag=1;
-           
-     gpro_t.gPower_On = power_off;  
-     gpro_t.run_process_step=0xff;
- }
-
-void Power_On_Special_Fun(void)
-{
-       buzzer_sound();	
-       
-       DISABLE_INT();
-       LCD_Clear(BLACK);
-       ENABLE_INT();
-       
-	 //  Donot_Disp_CountDown_60s();
-	 //  HAL_Delay(50);
-       power_on_init_set_ref();
-
-     
-       gpro_t.gPower_On = power_on;   
-  
-       gpro_t.run_process_step=0;
-
-
-}
-/******************************************************************************
-	*
-	*Function Name:void TFT_Pocess_Command_Handler(void)
-	*Funcion: display of TFT lcd 
-	*Input Ref:NO
-	*Return Ref:NO
-	*
-******************************************************************************/
-static void TFT_Pocess_Command_Handler(void)
-{
-  if(power_on_state() == power_on){
   
     switch(gpro_t.run_process_step){
 
@@ -434,12 +221,190 @@ static void TFT_Pocess_Command_Handler(void)
     default:
     break;
    	}
-   }
+ }
   
+/*****************************************************************
+ * 
+ * Function Name : void Power_Off_Handler(void)
+ * Function : handle power off function 
+ * Input Ref:No
+ * Return Ref:NO
+ * 
+******************************************************************/
+ void Power_Off_Process_Handler(void)
+ {   
+ 
+	if(gpro_t.power_off_flag == 1){
+		gpro_t.power_off_flag ++;
+	      
+        DISABLE_INT();
+       // LCD_Clear(BLACK);
+        TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
+
+        ENABLE_INT();
+	    gpro_t.gTimer_countdown_one_minute =90;
+        TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
+        Device_NoAction_Power_Off();
+     
+		
+	 if(wifi_link_net_state() ==1){
+	
+        wifi_t.link_net_tencent_data_flag=1;
+		gpro_t.power_off_flag++;
+		MqttData_Publish_PowerOff_Ref();
+        HAL_Delay(100);
+		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+	     
+		 
+		  
+	}
+
+    if(wifi_link_net_state() ==1   && gpro_t.power_off_flag==3){
+		gpro_t.power_off_flag++;
+		
+        Subscriber_Data_FromCloud_Handler();
+        HAL_Delay(100);
+	  
+	
+    }
+
+    gctl_t.ptc_warning=0;
+	gctl_t.fan_warning =0;
+	wifi_t.repeat_login_tencent_cloud_init_ref=0;
+	
+
+	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
+	
+
+    }
+    
+	if(wifi_link_net_state() ==1  ){
+		
+       TFT_DonnotDisp_Works_Time();
+		
+    }
+
+    if(gctl_t.fan_continuce_flag ==1){
+
+	    if(gpro_t.gTimer_countdown_one_minute   > 0 || gpro_t.gTimer_countdown_one_minute==0){
+            Fan_Run();
+           
+		}
+		else{
+			gctl_t.fan_continuce_flag++;
+            TFT_BACKLIGHT_OFF();
+            Fan_Stop();
+            LCD_Clear(BLACK);
+           
+		}
+    }
+
+
+    if(gctl_t.fan_continuce_flag==1){
+
+       TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
+
+    }
    
+    Breath_Led();
+	
 }
 
+/*****************************************************************
+ * 
+ * Function Name : void PowerOff_Ref_Fun(void)
+ * Function : handle power off function 
+ * Input Ref:No
+ * Return Ref:NO
+ * 
+******************************************************************/
+void PowerOff_Ref_Fun(void)
+{
+ 
+	   
+       //  LCD_Clear(BLACK);
+	     gctl_t.fan_continuce_flag =1;
+		 //clear control falg
+        gpro_t.set_timer_timing_success = 0;
+        
+       
+		//wifi ref 
+        wifi_t.link_net_tencent_data_flag=1;
+        wifi_t.smartphone_app_power_on_flag=0;
+        wifi_t.power_off_step=0; 
+        
 
+        //display ptc temperature value 
+        gctl_t.gSet_temperature_value_item = disp_ptc_temp_value_item;
+        gctl_t.ptc_flag = 0;
+        gctl_t.plasma_flag = 0;
+	    gctl_t.ultrasonic_flag =0;
+        gctl_t.set_ptc_temp_value_success =0;
+        gctl_t.manual_operation_ptc_flag = ptc_manual_on;
+        
+        //main process ref
+  
+		gpro_t.gTimer_pro_wifi_fast_led=0;
+    gpro_t.disp_works_timer_timing_mode_item = timer_countdown; //display count down timing .
+	   
+
+        Power_Off_Fun();
+		    LED_Mode_Key_Off();
+
+   
+
+}
+      
+/******************************************************************************
+	*
+	*Function Name:void Power_Off_Special_Fun(void)
+	*Funcion: speical of power key function
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
+void Power_Off_Special_Fun(void)
+{
+
+  
+    buzzer_sound();
+    DISABLE_INT();
+     LCD_Clear(BLACK);
+     ENABLE_INT();
+    PowerOff_Ref_Fun();
+    gpro_t.power_off_flag=1;
+           
+     gpro_t.gPower_On = power_off;  
+     gpro_t.run_process_step=0xff;
+ }
+
+void Power_On_Special_Fun(void)
+{
+       buzzer_sound();	
+       
+       DISABLE_INT();
+       LCD_Clear(BLACK);
+       ENABLE_INT();
+       
+	 //  Donot_Disp_CountDown_60s();
+	 //  HAL_Delay(50);
+       power_on_init_set_ref();
+
+     
+       gpro_t.gPower_On = power_on;   
+  
+       gpro_t.run_process_step=0;
+
+
+}
+/******************************************************************************
+	*
+	*Function Name:void TFT_Pocess_Command_Handler(void)
+	*Funcion: display of TFT lcd 
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
 void PowerOnOff_Init_Ref_Fun(void)
 {
    
@@ -531,6 +496,30 @@ static void Power_On_Init(void)
 	  gctl_t.ptc_flag = 1;
       gctl_t.plasma_flag = 1;
 	  gctl_t.ultrasonic_flag =1;
+
+
+     //WIFI ICON LED
+	LED_WIFI_ICON_ON()  ;             
+
+	//PTC ICON LED
+	LED_PTC_ICON_ON() ;  
+    Ptc_On();
+    gctl_t.ptc_flag =1;
+
+
+	//KILL ICON LED
+	LED_KILL_ICON_ON()  ; 
+    Plasma_On();
+    gctl_t.plasma_flag = 1;
+
+
+
+	//ULTRSONIC ICO LED
+	LED_RAT_ICON_ON()  ; 
+    Ultrasonic_Pwm_Output();
+    gctl_t.ultrasonic_flag = 1;
+
+      
   }
    
    gctl_t.gSet_temperature_value =40;

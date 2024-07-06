@@ -162,7 +162,7 @@ typedef struct{
  
 
    //buzzer
-   uint8_t buzzer_sound_flag;
+
   
    //time
  

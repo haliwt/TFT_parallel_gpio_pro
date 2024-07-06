@@ -112,7 +112,7 @@ static void vTaskRunPro(void *pvParameters)
 
          PowerOn_Process_Handler();
          Temperature_Ptc_Pro_Handler();
-          Wifi_Fast_Led_Blink();
+         Wifi_Fast_Led_Blink();
        
       }
 //      else if(gpro_t.gPower_On == power_off){
@@ -391,7 +391,7 @@ static void vTaskMsgPro(void *pvParameters)
             
               
          }
-        else if(gpro_t.gPower_On == power_off){
+         else if(gpro_t.gPower_On == power_off){
             mode_key_long_conter  =0;
             power_key_long_conter = 0;
             Power_Off_Process_Handler();
@@ -424,16 +424,11 @@ static void vTaskStart(void *pvParameters)
 {
    //BaseType_t xResult;
    ///const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
-  
-  
-
     while(1)
     {
 		/* 按键扫描 */
 		//bsp_KeyScan();
     if(KEY_POWER_VALUE() == KEY_DOWN){
-
-
         while(KEY_POWER_VALUE() == KEY_DOWN && power_key_long_conter < 2965500){
 
                power_key_long_conter++;
@@ -463,10 +458,8 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN){
-
-         
-
-         while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500){
+      
+       while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500){
 
                mode_key_long_conter++;
                if(mode_key_long_conter > 2965000){
