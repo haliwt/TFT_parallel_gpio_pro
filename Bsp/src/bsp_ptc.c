@@ -56,20 +56,18 @@ void Temperature_Ptc_Pro_Handler(void)
 
 		  case ptc_no_warning:
 
-		   if(gctl_t.gTimer_ctl_ptc_adc_times > 4  && gctl_t.disp_ntc_res_switch_normal_ptc_counter ==0){
+		   if(gctl_t.gTimer_ctl_ptc_adc_times > 9  && gctl_t.disp_ntc_res_switch_normal_ptc_counter ==0){
               gctl_t.gTimer_ctl_ptc_adc_times =0;
 
 			    Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,20); //Modify :2023.09.03 Get_PTC_Temperature_Voltage(ADC_CHANNEL_1,10);
 	        
              }
-             else if(gctl_t.disp_ntc_res_switch_normal_ptc_counter == 1 && gctl_t.gTimer_ctl_ptc_adc_times > 4){
+             else if(gctl_t.disp_ntc_res_switch_normal_ptc_counter == 1 && gctl_t.gTimer_ctl_ptc_adc_times > 9){
                      gctl_t.gTimer_ctl_ptc_adc_times=0;
 
-                 
+                Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,20);
 
-                         Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,20);
-
-                        Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
+                 Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
 
                     
              } 
@@ -164,7 +162,7 @@ void Temperature_Ptc_Pro_Handler(void)
 		 break;
 	}
 
-   SetPtc_TempComare_Value();
+  // SetPtc_TempComare_Value();
 }
 
 

@@ -799,13 +799,13 @@ void TFT_Disp_Temp_Value(uint8_t bc,uint8_t temp_value)
    temp_unit= temp_value%10; 
 
 
-   if(temp_value > 38){ //WT.EDIT ADD ITEM 2024.06.26
+   if(temp_decade > 3){ //WT.EDIT ADD ITEM 2024.06.26
     
 
     #if NORMAL_DISPLAY
-    TFT_Disp_Numbers_Pic_413(5,40,bc,temp_decade); //间隔58
+        TFT_Disp_Numbers_Pic_413(5,40,bc,temp_decade); //间隔58
     #else 
-    TFT_MainDisp_Numbers_Pic_354(5,40,bc,temp_decade);
+        TFT_MainDisp_Numbers_Pic_354(5,40,bc,temp_decade);
 
 
     #endif 

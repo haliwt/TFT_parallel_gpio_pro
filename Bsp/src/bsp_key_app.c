@@ -167,7 +167,7 @@ void Mode_Key_Config_Fun_Handler(void)
 void ADD_Key_Fun(void)
 {
 
- static uint8_t disp_temp_value,timer_timing_flag;
+
  if(power_on_state()==power_on){
 
 	if(gctl_t.ptc_warning ==0 && ptc_error_state() ==0){
@@ -192,7 +192,7 @@ void ADD_Key_Fun(void)
 
              gpro_t.gTimer_pro_temp_delay=0; //don't display temperature sensor of value .
         
-			disp_temp_value =1;
+			gpro_t.disp_key_set_temp_value =1;
 			//TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);	
 			
 		break;
@@ -213,8 +213,8 @@ void ADD_Key_Fun(void)
 			}
 
 		
-			timer_timing_flag=1;
-		 
+	
+		    gpro_t.disp_key_set_timer_timing = 1;
 			
 
 		break;
@@ -233,17 +233,17 @@ void ADD_Key_Fun(void)
 		}	
 	}
 	
-    if(disp_temp_value ==1){
-		disp_temp_value =0;
-        TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
-
-    }
-    if(timer_timing_flag ==1){
-		timer_timing_flag=0;
-	  TFT_Disp_Set_TimerTime(0);
-
-
-    }
+//    if(disp_temp_value ==1){
+//		disp_temp_value =0;
+//        TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
+//
+//    }
+//    else if(timer_timing_flag ==1){
+//		timer_timing_flag=0;
+//	  TFT_Disp_Set_TimerTime(0);
+//
+//
+//    }
 
  }
    
@@ -260,7 +260,7 @@ void ADD_Key_Fun(void)
 ************************************************************************/
 void DEC_Key_Fun(void)
 {
-    static uint8_t disp_temp_value,timer_timing_flag;
+   
 	if(power_on_state() ==power_on){
 	   	if(gctl_t.ptc_warning ==0 && ptc_error_state() ==0 ){
 	   	
@@ -278,7 +278,7 @@ void DEC_Key_Fun(void)
 			 gpro_t.gTimer_pro_set_tem_value_blink =0;
 			 gctl_t.gSet_temperature_value_item = disp_do_setting_ptc_value_item;
              gpro_t.gTimer_pro_temp_delay=0; //don't display temperature sensor of value by add and dec key set 
-             disp_temp_value =1;
+             gpro_t.disp_key_set_temp_value =1;
 	        
 			
 	        
@@ -299,7 +299,7 @@ void DEC_Key_Fun(void)
 					
 				}
 		
-		     timer_timing_flag=1;
+		        gpro_t.disp_key_set_timer_timing = 1;
 			 	
 			//TFT_Disp_Set_TimerTime(0);
 			break;
@@ -316,17 +316,17 @@ void DEC_Key_Fun(void)
 	
 	}
 
-    	if(disp_temp_value ==1){
-		disp_temp_value =0;
-    		TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
-
-    	}
-	    if(timer_timing_flag ==1){
-		   timer_timing_flag=0;
-	     TFT_Disp_Set_TimerTime(0);
-
-  
-       }
+//    	if(gpro_t.disp_key_set_temp_value ==1){
+//		     gpro_t.disp_key_set_temp_value =0;
+//    		TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
+//
+//    	}
+//	    else if(   gpro_t.disp_key_set_timer_timing  ==1){
+//		      gpro_t.disp_key_set_timer_timing =0;
+//	     TFT_Disp_Set_TimerTime(0);
+//
+//  
+//       }
        
 }
 

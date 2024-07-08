@@ -115,6 +115,7 @@ static void vTaskRunPro(void *pvParameters)
 
          PowerOn_Process_Handler();
          Temperature_Ptc_Pro_Handler();
+         SetPtc_TempComare_Value();
          Wifi_Fast_Led_Blink();
        
       }
@@ -142,7 +143,7 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_long_sound_flag;
@@ -273,7 +274,7 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue & ADD_DEC_COMBIN_KEY_12) != 0){
 
-                 buzzer_sound();
+              //   buzzer_sound();
                 add_dec_combin=1;
                 gpro_t.gTimer_exit_mode_long_key=0;
                 gctl_t.disp_ntc_res_switch_normal_ptc_counter ++;
@@ -360,17 +361,35 @@ static void vTaskMsgPro(void *pvParameters)
 
 
                 }
-                else if(key_dec_sound_flag==2){
-                     key_dec_sound_flag++;
-                   DEC_Key_Fun();
+                else if(key_dec_sound_flag==2 || key_add_sound_flag==2){
+                     if(key_dec_sound_flag==2){
+                         key_dec_sound_flag++;
+                         DEC_Key_Fun();
 
-                }
-                else if(key_add_sound_flag==2){
+                      }
 
-                     key_add_sound_flag++;
+                    if(key_add_sound_flag==2){
 
-                     ADD_Key_Fun();
+                       key_add_sound_flag++;
 
+                        ADD_Key_Fun();
+
+
+                     }
+
+                    if(gpro_t.disp_key_set_temp_value ==1){
+                		   gpro_t.disp_key_set_temp_value =0;
+                    		TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
+
+                    }
+                	else if(gpro_t.disp_key_set_timer_timing  ==1){
+                		      gpro_t.disp_key_set_timer_timing =0;
+                	  TFT_Disp_Set_TimerTime(0);
+
+                  
+                   }
+
+                
                 }
                 else if(key_power_long_sound_flag == 2){
                      key_power_long_sound_flag ++;
@@ -408,6 +427,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                   if(add_dec_combin==1){
                      add_dec_combin =0;
+                     buzzer_sound();
                     add_dec_combin_counter =0;
                      if(gctl_t.disp_ntc_res_switch_normal_ptc_counter ==0){
                         donot_display_ntc_temp_value();

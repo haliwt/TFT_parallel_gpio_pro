@@ -158,6 +158,10 @@ typedef struct{
    uint8_t run_process_step;
    uint8_t key_power_be_pressed_flag ;
    uint8_t power_off_flag;
+
+   //add and dec key
+   uint8_t  disp_key_set_temp_value;
+   uint8_t  disp_key_set_timer_timing;
    
  
 
@@ -179,6 +183,7 @@ typedef struct{
    //modke key
   
    uint8_t mode_key_run_item_step;
+   
   
   //temperature 
      uint8_t set_temperature_value_flag;
