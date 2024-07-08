@@ -79,6 +79,8 @@ void Get_PTC_Temperature_Voltage(uint32_t channel,uint8_t times)
 	#endif 
 
 	 Judge_PTC_Temperature_Value(ptc_temp_voltage);
+
+     
 }
 
 

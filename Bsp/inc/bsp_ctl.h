@@ -71,7 +71,7 @@ typedef struct _bsp_ctl{
 
    //ntc resistance 
    uint16_t ntc_res_read_adc_value;
-   uint8_t disp_ntc_res_flag ;
+   uint8_t disp_ntc_res_switch_normal_ptc_counter ;
 
    
  

@@ -331,10 +331,10 @@ void Judge_NTC_Temperature_Value(uint16_t adc_ptc)
       
 
 		Publish_Data_Warning(ptc_temp_warning,warning);
-		HAL_Delay(200);  
+		osDelay(200);//HAL_Delay(200);  
         
 		MqttData_Publish_SetPtc(0);
-		HAL_Delay(200);  
+		osDelay(200);//HAL_Delay(200);  
 		
 		Buzzer_Ptc_Error_Sound();
 		
@@ -1389,8 +1389,24 @@ static uint8_t timer_hundred_hours,timer_decade_hours,timer_unit_hours;
 }
 
   
+/***********************************************************************************************
+	*
+	*Function Name:void TFT_Display_WorksTime(void)
+	*Function : display of works time value 
+	*Input: NO
+	*Return: NO 
+	*
+*************************************************************************************************/
+void donot_display_ntc_temp_value(void)
+{
 
+    TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(100,120,1,1);
+	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(136,120,1,1);
+	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(172,120,1,1);
+}
 
+/***************************************************************************************
+****************************************************************************************/
 
 uint8_t ntc_res_linear_value(uint8_t ntc_value)
 {

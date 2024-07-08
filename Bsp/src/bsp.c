@@ -105,7 +105,7 @@ void PowerOn_Process_Handler(void)
 	  
 	    gpro_t.gTimer_pro_update_dht11_data=60;
         gpro_t.gTimer_read_humidity_value = 30;
-        gctl_t.disp_ntc_res_flag  = 0 ;
+        gctl_t.disp_ntc_res_switch_normal_ptc_counter  = 0 ;
         gpro_t.gTimer_run_total=0;
 
         //wifi of ref

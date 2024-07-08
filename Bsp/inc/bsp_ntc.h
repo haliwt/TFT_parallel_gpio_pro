@@ -29,6 +29,7 @@ uint8_t ntc_res_linear_value(uint8_t ntc_value);
 
 void Judge_NTC_Temperature_Value(uint16_t adc_ptc);
 
+void donot_display_ntc_temp_value(void);
 
 
 #endif 

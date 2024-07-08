@@ -183,19 +183,24 @@ static void vTaskMsgPro(void *pvParameters)
 			   	 key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
                  }
                  power_key_long_conter =0;
+                 mode_key_long_conter = 0;
+                 add_dec_combin_counter=0;
 
             }
             else if((ulValue & POWER_LONG_KEY_11) != 0){
 
               if(gpro_t.gPower_On==power_on){
 
-                //gpro_t.key_power_be_pressed_flag =2;
                 key_power_long_sound_flag =1;
 
               }
+               add_dec_combin_counter=0;
+               mode_key_long_conter = 0;
             }
             else if((ulValue &  POWER_OFF_4) != 0){
-
+                mode_key_long_conter = 0;
+                add_dec_combin_counter=0;
+                power_key_long_conter =0;
          
                 Power_Off_Special_Fun(); //void Power_On_Special_Fun(void)
 
@@ -203,8 +208,11 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue &  POWER_ON_5) != 0){
             
-                
+                 mode_key_long_conter = 0;
+                 power_key_long_conter =0;
+                 add_dec_combin_counter=0;
                  Power_On_Special_Fun();
+                
             
             
             }
@@ -219,6 +227,8 @@ static void vTaskMsgPro(void *pvParameters)
                     }
                     
                       mode_key_long_conter=0;
+                      power_key_long_conter =0;
+                      add_dec_combin_counter=0;
 
                     
 
@@ -236,7 +246,9 @@ static void vTaskMsgPro(void *pvParameters)
             else if((ulValue & DEC_KEY_2) != 0){
 
                  if(gpro_t.gPower_On==power_on){
-
+                      power_key_long_conter=0;
+                      mode_key_long_conter = 0;
+                    
                        key_dec_sound_flag=1;
 
                    }
@@ -245,6 +257,9 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue & ADD_KEY_3) != 0){
                 if(gpro_t.gPower_On==power_on){
+                      power_key_long_conter=0;
+                      mode_key_long_conter = 0;
+                    
                        key_add_sound_flag=1;
 
                     }           
@@ -260,9 +275,16 @@ static void vTaskMsgPro(void *pvParameters)
 
                  buzzer_sound();
                 add_dec_combin=1;
-               gpro_t.gTimer_exit_mode_long_key=0;
-                gctl_t.disp_ntc_res_flag ++;
+                gpro_t.gTimer_exit_mode_long_key=0;
+                gctl_t.disp_ntc_res_switch_normal_ptc_counter ++;
+                if(gctl_t.disp_ntc_res_switch_normal_ptc_counter > 1){
+                   gctl_t.disp_ntc_res_switch_normal_ptc_counter =0;
+
+                }
                 gctl_t.gTimer_ctl_ptc_adc_times =20;
+                power_key_long_conter=0;
+                mode_key_long_conter = 0;
+                     
                 
                
             }
@@ -387,6 +409,10 @@ static void vTaskMsgPro(void *pvParameters)
                   if(add_dec_combin==1){
                      add_dec_combin =0;
                     add_dec_combin_counter =0;
+                     if(gctl_t.disp_ntc_res_switch_normal_ptc_counter ==0){
+                        donot_display_ntc_temp_value();
+
+                     }
 
 
                   }
