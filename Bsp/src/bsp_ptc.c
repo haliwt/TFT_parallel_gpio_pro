@@ -197,7 +197,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 
 					LED_PTC_ICON_OFF();
 
-                      update_down++;
+                    update_down++;
                     
                     times_counter = 1;
 
@@ -327,8 +327,11 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                      osDelay(200);//HAL_Delay(200);
                 }
 			   gpro_t.gTimer_pro_disp_temphum = 0;
-               gpro_t.gTimer_pro_temp_delay = 12;//at once display temperature of sensor dht11 of value.
+               gpro_t.gTimer_pro_temp_delay = 100;//at once display temperature of sensor dht11 of value.
                gctl_t.gSet_temperature_value_item= dsip_set_ptc_temp_value_item;
+               gctl_t.manual_operation_ptc_flag=0; //WT.EDIT 2024.07.08
+                update_data_flag++;
+                update_down++;
                
 
 		   }

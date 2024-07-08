@@ -1016,30 +1016,21 @@ static void smartphone_app_timer_power_on_handler(void)
 
 	if(app_step==1){
 	    app_step=0;
-		  buzzer_sound();
+		 // buzzer_sound();
 		 //Device_Action_Publish_Handler();
 		if(gpro_t.gPower_On == power_off){
         wifi_t.link_net_tencent_data_flag =3; //has been publish and subscription of data
         wifi_t.smartphone_app_power_on_flag=1;
         wifi_t.smartphone_app_power_on_timer_flag = 1;
-          
+        gpro_t.set_timer_timing_success=0;
        // smartphone_power_on_handler();
 
       }
       else if(gpro_t.gPower_On == power_on){
-            wifi_t.smartphone_app_power_on_flag=1;
-               //gpro_t.run_process_step=1;
+            gpro_t.set_timer_timing_success=0;
+
+        }
      }
-
-        //MqttData_Publish_Update_Data();
-        //osDelay(200);//
-
-        gpro_t.set_timer_timing_success=0;
-		
-		 
-
-
-	  }
 }
 /*******************************************************************************
 **

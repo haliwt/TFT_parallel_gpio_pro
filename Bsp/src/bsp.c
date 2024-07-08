@@ -6,7 +6,7 @@ uint8_t led_blink_times;
 uint8_t update_step;
 uint8_t fan_continuce_run_flag;
 
-static void power_on_init_set_ref(void);
+//static void power_on_init_set_ref(void);
 
 static void TFT_Pocess_Command_Handler(void);
 
@@ -432,8 +432,15 @@ void PowerOnOff_Init_Ref_Fun(void)
         }
 
  }
-
-static void power_on_init_set_ref(void)
+/******************************************************************************
+	*
+	*Function Name:void power_on_init_set_ref(void)
+	*Funcion: display of TFT lcd 
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
+void power_on_init_set_ref(void)
 {
   
   if(wifi_link_net_state() ==1){
@@ -523,6 +530,11 @@ static void Power_On_Init(void)
 
       
   }
+  else{
+     MqttData_Publish_Update_Data();
+
+  }
+ 
    
    gctl_t.gSet_temperature_value =40;
 
@@ -541,6 +553,7 @@ static void Power_On_Init(void)
      }
      else {
        gctl_t.power_on_dis_work_time =0;
+       
 
      }
     

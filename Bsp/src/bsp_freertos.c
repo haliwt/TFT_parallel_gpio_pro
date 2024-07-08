@@ -204,11 +204,14 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue &  POWER_ON_APP_6) != 0){
 
-               key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
-                           
+            
+               key_power_sound_flag =1;
+              
                power_key_long_conter =0;
                mode_key_long_conter = 0;
                add_dec_combin_counter=0;
+               
+                wifi_t.smartphone_app_power_on_timer_flag=2;
 
 
 
@@ -337,6 +340,7 @@ static void vTaskMsgPro(void *pvParameters)
                   key_power_long_sound_flag ++;
 
               }
+          
              
             buzzer_sound();
 
@@ -344,8 +348,16 @@ static void vTaskMsgPro(void *pvParameters)
           //run_main_board_process();
          if(key_power_sound_flag==2){
             key_power_sound_flag++;
-            
-            PowerOnOff_Init_Ref_Fun();
+            if(wifi_t.smartphone_app_power_on_timer_flag==2){
+
+                 power_on_init_set_ref();
+                 gpro_t.gPower_On = power_on;  
+  
+                 gpro_t.run_process_step=0;
+            }
+            else{
+               PowerOnOff_Init_Ref_Fun();
+            }
             
          }
          if(gpro_t.gPower_On==power_on){
@@ -411,8 +423,10 @@ static void vTaskMsgPro(void *pvParameters)
 		           power_on_action_led_init();
                  }
                  else{
-                     MqttData_Publish_Update_Data();
-                     osDelay(200);//
+                    // MqttData_Publish_Update_Data();
+                     
+                     //osDelay(200);//
+                    // wifi_t.smartphone_app_power_on_flag=0;
 
 
                  }
@@ -588,7 +602,7 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(wifi_t.smartphone_app_power_on_timer_flag==1){
-          wifi_t.smartphone_app_power_on_timer_flag =0;
+          wifi_t.smartphone_app_power_on_timer_flag=0;
 
             xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
 	          POWER_ON_APP_6 ,            /* 设置目标任务事件标志位bit0  */
