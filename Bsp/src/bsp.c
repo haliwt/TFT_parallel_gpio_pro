@@ -98,7 +98,7 @@ void PowerOn_Process_Handler(void)
 
 
 	 case 0:
-        
+        DISABLE_INT();
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
@@ -119,6 +119,8 @@ void PowerOn_Process_Handler(void)
       gpro_t.run_process_step=pro_disp_dht11_value;
 	  Fan_Run();
       LED_Power_Key_On();
+
+      ENABLE_INT();
 	 
 	 break;
 
@@ -437,11 +439,11 @@ static void power_on_init_set_ref(void)
   if(wifi_link_net_state() ==1){
 		    Donot_Disp_CountDown_60s();
 		    TFT_Display_WorksTime_Voice();
-	    }
-		  else{
+	}
+   else{
             Donot_Disp_CountDown_60s();
-          TFT_Display_PowerOn_WorksTime_Init();
-		    }
+            TFT_Display_PowerOn_WorksTime_Init();
+	 }
 
        
          if(wifi_t.smartphone_app_power_on_flag==0){

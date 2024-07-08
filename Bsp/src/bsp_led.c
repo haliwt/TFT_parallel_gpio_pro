@@ -73,7 +73,9 @@ void power_on_action_led_init(void)
 
   
 	//WIFI ICON LED
-	LED_WIFI_ICON_ON()  ;             
+	//LED_WIFI_ICON_ON()  ;
+
+    Fan_Run();
 
 	//PTC ICON LED
 	LED_PTC_ICON_ON() ;  

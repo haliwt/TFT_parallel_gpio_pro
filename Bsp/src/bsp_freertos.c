@@ -56,6 +56,9 @@ uint32_t power_key_long_conter;
 
 uint32_t add_dec_combin_counter;
 
+uint8_t key_power_sound_flag;
+
+
 
 
 
@@ -142,7 +145,7 @@ static void vTaskMsgPro(void *pvParameters)
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为500ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
-    static uint8_t key_mode_long_sound_flag,key_power_sound_flag,key_power_long_sound_flag;
+    static uint8_t key_mode_long_sound_flag,key_power_long_sound_flag;
     static uint8_t add_dec_combin;
 	
     while(1)
@@ -315,7 +318,9 @@ static void vTaskMsgPro(void *pvParameters)
           //run_main_board_process();
          if(key_power_sound_flag==2){
             key_power_sound_flag++;
+            
             PowerOnOff_Init_Ref_Fun();
+            
          }
          if(gpro_t.gPower_On==power_on){
                  
@@ -353,6 +358,16 @@ static void vTaskMsgPro(void *pvParameters)
                 }
 
               Mode_Key_Config_Fun_Handler();
+
+              
+               if(key_power_sound_flag==3){
+                      key_power_sound_flag++;
+
+                 if(wifi_t.smartphone_app_power_on_flag==0){
+		           power_on_action_led_init();
+                 }
+
+               }
 
                if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 3 ||  key_mode_long_sound_flag==3 ||  add_dec_combin==1)){
 
@@ -394,6 +409,7 @@ static void vTaskMsgPro(void *pvParameters)
          else if(gpro_t.gPower_On == power_off){
             mode_key_long_conter  =0;
             power_key_long_conter = 0;
+            key_power_sound_flag=0;
             Power_Off_Process_Handler();
          }
 
