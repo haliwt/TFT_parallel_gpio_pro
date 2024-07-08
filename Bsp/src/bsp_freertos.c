@@ -114,7 +114,7 @@ static void vTaskRunPro(void *pvParameters)
          }
          PowerOn_Process_Handler();
          Temperature_Ptc_Pro_Handler();
-         SetPtc_TempComare_Value();
+        
          Wifi_Fast_Led_Blink();
        
       }
@@ -478,6 +478,8 @@ static void vTaskMsgPro(void *pvParameters)
               TFT_Disp_Timer_Split_Symbol();
 
               TimeTimer_Pro_Handler();
+
+               SetPtc_TempComare_Value();
 
              
             
