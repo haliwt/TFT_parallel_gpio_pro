@@ -59,7 +59,7 @@ uint32_t add_dec_combin_counter;
 
 uint8_t key_power_sound_flag;
 
-
+uint16_t   app_power_on_counter;
 
 
 
@@ -105,21 +105,24 @@ static void vTaskRunPro(void *pvParameters)
        buzzer_sound();
      }
 
-      bsp_run_Idle();
-      
-      MainBoard_Self_Inspection_PowerOn_Fun();
-    
-      WIFI_Process_Handler();
-
-    
+     
       if(gpro_t.gPower_On == power_on){
 
+         if(wifi_t.smartphone_app_power_on_flag==1){
+
+              app_power_on_counter++;
+         }
          PowerOn_Process_Handler();
          Temperature_Ptc_Pro_Handler();
          SetPtc_TempComare_Value();
          Wifi_Fast_Led_Blink();
        
       }
+      bsp_run_Idle();
+      
+      MainBoard_Self_Inspection_PowerOn_Fun();
+    
+      WIFI_Process_Handler();
       vTaskDelay(100);// 40
   }
 	
@@ -211,7 +214,7 @@ static void vTaskMsgPro(void *pvParameters)
                mode_key_long_conter = 0;
                add_dec_combin_counter=0;
                
-                wifi_t.smartphone_app_power_on_timer_flag=2;
+                
 
 
 
@@ -348,16 +351,28 @@ static void vTaskMsgPro(void *pvParameters)
           //run_main_board_process();
          if(key_power_sound_flag==2){
             key_power_sound_flag++;
-            if(wifi_t.smartphone_app_power_on_timer_flag==2){
 
-                 power_on_init_set_ref();
-                 gpro_t.gPower_On = power_on;  
+              if(wifi_t.smartphone_app_power_on_timer_flag==1){
+                    wifi_t.smartphone_app_power_on_timer_flag++;
+                   if(gpro_t.gPower_On == power_off){
+                    power_on_init_set_ref();
+                    gpro_t.gPower_On = power_on;  
   
-                 gpro_t.run_process_step=0;
-            }
-            else{
+                     gpro_t.run_process_step=0;
+                    }
+                    else{
+                       Device_Action_No_Wifi_Handler();
+                  
+                   }
+
+                    key_power_sound_flag=6;
+
+              }
+              else{
                PowerOnOff_Init_Ref_Fun();
-            }
+
+              }
+            
             
          }
          if(gpro_t.gPower_On==power_on){
@@ -422,14 +437,7 @@ static void vTaskMsgPro(void *pvParameters)
                  if(wifi_t.smartphone_app_power_on_flag==0){
 		           power_on_action_led_init();
                  }
-                 else{
-                    // MqttData_Publish_Update_Data();
-                     
-                     //osDelay(200);//
-                    // wifi_t.smartphone_app_power_on_flag=0;
-
-
-                 }
+                
 
                }
 
@@ -601,14 +609,14 @@ static void vTaskStart(void *pvParameters)
              }
 
      }
-     else if(wifi_t.smartphone_app_power_on_timer_flag==1){
-          wifi_t.smartphone_app_power_on_timer_flag=0;
-
-            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-	          POWER_ON_APP_6 ,            /* 设置目标任务事件标志位bit0  */
-	          eSetBits);   
-
-     }
+//     else if(wifi_t.smartphone_app_power_on_timer_flag==1){
+//          wifi_t.smartphone_app_power_on_timer_flag=0;
+//
+//            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+//	          POWER_ON_APP_6 ,            /* 设置目标任务事件标志位bit0  */
+//	          eSetBits);   
+//
+//     }
 
    
     
@@ -627,7 +635,7 @@ static void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
                  "vTaskRunPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 156,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskRunPro);  /* 任务句柄  */

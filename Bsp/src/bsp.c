@@ -531,7 +531,10 @@ static void Power_On_Init(void)
       
   }
   else{
-     MqttData_Publish_Update_Data();
+   //  MqttData_Publish_Update_Data();
+     Fan_Run();
+     Device_Action_No_Wifi_Handler();
+
 
   }
  
