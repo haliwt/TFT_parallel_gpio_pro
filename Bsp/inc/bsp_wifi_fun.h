@@ -140,6 +140,8 @@ typedef struct _WIFI_FUN{
 	uint8_t get_beijing_time_success ;
 
     uint8_t link_net_tencent_data_flag;
+
+    uint8_t smartphone_app_power_on_timer_flag ;
     
 
 	//auto link net

@@ -570,16 +570,10 @@ void Json_Parse_Command_Fun(void)
 	case OPEN_OFF_ITEM:
 
        
-		 
-		   //	buzzer_sound();
-		 	MqttData_Publish_SetOpen(0);  
-			HAL_Delay(200);//350
-
-            wifi_t.esp8266_login_cloud_success=1;
-			
-			//gpro_t.power_off_flag=1;
-			//gpro_t.gPower_On = power_off; //WT.EDIT 2024.02.20
-			PowerOff_Handler();
+		wifi_t.esp8266_login_cloud_success=1;
+		App_PowerOff_Handler();
+        MqttData_Publish_SetOpen(0);  
+	    osDelay(200);//HAL_Delay(200);//350
             
 		
 	    wifi_t.gTimer_auto_detected_net_state_times=0; //don't need check wifi if has or not
@@ -588,15 +582,13 @@ void Json_Parse_Command_Fun(void)
 	  break;
 
 	  case OPEN_ON_ITEM:
-      //	buzzer_sound();
-		//gpro_t.gPower_On = power_on;   
-    
-        //gpro_t.run_process_step=0;
-		//wifi_t.esp8266_login_cloud_success=1;
-		
+   
+		wifi_t.esp8266_login_cloud_success=1;
+	
 		MqttData_Publish_SetOpen(1);  
-		HAL_Delay(200);//300
-		PowerOn_Handler();
+		osDelay(200);//HAL_Delay(200);//300
+		App_PowerOn_Handler();
+		
 		
 
 		gctl_t.ptc_warning =0;
@@ -974,7 +966,7 @@ void Wifi_Rx_Beijing_Time_Handler(void)
 *****************************************************************************/
 static void smartphone_app_timer_power_on_handler(void)
 {
-
+   //BaseType_t xHigherPriorityTaskWoken = pdFALSE;
    static uint8_t app_step;
 
 
@@ -1024,45 +1016,31 @@ static void smartphone_app_timer_power_on_handler(void)
 
 	if(app_step==1){
 	    app_step=0;
-		buzzer_sound();
-
-		//Device_Action_Publish_Handler();
+		  buzzer_sound();
+		 //Device_Action_Publish_Handler();
 		if(gpro_t.gPower_On == power_off){
-		   //gpro_t.gPower_On = power_on;
-          // gpro_t.run_process_step=0;
-          // gpro_t.power_off_flag = 1;
-           PowerOn_Handler();
-           wifi_t.link_net_tencent_data_flag =3; //has been publish and subscription of data
+        wifi_t.link_net_tencent_data_flag =3; //has been publish and subscription of data
+        wifi_t.smartphone_app_power_on_flag=1;
+        wifi_t.smartphone_app_power_on_timer_flag = 1;
+          
+       // smartphone_power_on_handler();
 
-          }
-          else if(gpro_t.gPower_On == power_on){
+      }
+      else if(gpro_t.gPower_On == power_on){
+            wifi_t.smartphone_app_power_on_flag=1;
+               //gpro_t.run_process_step=1;
+     }
 
-           gpro_t.run_process_step=1;
+        //MqttData_Publish_Update_Data();
+        //osDelay(200);//
 
-
-          }
-    
         gpro_t.set_timer_timing_success=0;
 		
-		wifi_t.smartphone_app_power_on_flag=1;
-       
+		 
 
-       // MqttData_Publis_App_PowerOn_Ref(0x01,gctl_t.plasma_flag,gctl_t.ptc_flag,gctl_t.ultrasonic_flag);
-		
-		//HAL_Delay(300);//
-
-         MqttData_Publish_Update_Data();
-		 HAL_Delay(200);
 
 	  }
-
-
-    
 }
-      
-
-
-
 /*******************************************************************************
 **
 *Function Name:void Subscribe_Rx_IntHandler(void)

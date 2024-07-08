@@ -251,9 +251,6 @@ void TFT_Display_WorksTime(void)
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,0,temp_decade_minutes);
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,0,temp_unit_minutes);
 
-	
-
-
 	}
 
 }

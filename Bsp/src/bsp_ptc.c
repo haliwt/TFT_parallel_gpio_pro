@@ -315,7 +315,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 			  
 
                TFT_Disp_Only_Temp_Numbers(1,gctl_t.gSet_temperature_value); //don't     display number
-               HAL_Delay(300);
+               osDelay(300);//HAL_Delay(300);
                TFT_Disp_Only_Temp_Numbers(0,gctl_t.gSet_temperature_value); //don't     display number
 			 
 			   gctl_t.manual_operation_ptc_flag= 0; //
@@ -324,7 +324,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 			
                if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                    HAL_Delay(200);
+                     osDelay(200);//HAL_Delay(200);
                 }
 			   gpro_t.gTimer_pro_disp_temphum = 0;
                gpro_t.gTimer_pro_temp_delay = 12;//at once display temperature of sensor dht11 of value.

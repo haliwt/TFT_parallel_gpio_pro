@@ -253,9 +253,11 @@ static void voice_cmd_fun(uint8_t cmd)
 
 	  }
 	  else{
-	  	  gpro_t.gPower_On = power_on;
+	  	 // gpro_t.gPower_On = power_on;
+
 		  voice_send_power_on_cmd();
-          PowerOn_Handler();
+         
+          App_PowerOn_Handler();
           
 	  }
 
@@ -271,7 +273,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
         voice_send_power_off_cmd();
       
-        PowerOff_Handler();
+        App_PowerOff_Handler();
 		
 		
     }

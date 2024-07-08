@@ -8,10 +8,10 @@ void freeRTOS_Handler(void);
 
 
 
-void PowerOff_Handler(void);
+void App_PowerOff_Handler(void);
 
 
-void PowerOn_Handler(void);
+void App_PowerOn_Handler(void);
 
 
 

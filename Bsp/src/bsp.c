@@ -667,3 +667,21 @@ void WIFI_LED_Blink(void)
 }
 
 
+
+void smartphone_power_on_handler(void)
+{
+         DISABLE_INT();
+         power_on_init_set_ref();
+
+          LCD_Clear(BLACK);
+         ENABLE_INT();
+        
+          gpro_t.gPower_On = power_on;  
+  
+          gpro_t.run_process_step=0;
+
+          portYIELD();
+
+
+}
+
