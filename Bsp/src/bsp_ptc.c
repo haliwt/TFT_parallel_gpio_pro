@@ -237,7 +237,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 			}
             
           }
-
+          gpro_t.disp_temp_or_set_tmp_switch_flag = 1;
          break;
 
 
@@ -300,7 +300,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                    
 
               }
-				 
+			gpro_t.disp_temp_or_set_tmp_switch_flag = 2; 
           break;
 
 		   case disp_do_setting_ptc_value_item:
@@ -336,7 +336,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 
 		   }
 
-       
+            gpro_t.disp_temp_or_set_tmp_switch_flag = 0;
 		   break;
             
 

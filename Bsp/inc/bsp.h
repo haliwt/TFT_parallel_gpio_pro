@@ -163,6 +163,7 @@ typedef struct{
    //add and dec key
    uint8_t  disp_key_set_temp_value;
    uint8_t  disp_key_set_timer_timing;
+   uint8_t disp_temp_or_set_tmp_switch_flag ;
    
  
 
