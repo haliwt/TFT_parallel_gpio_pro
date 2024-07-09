@@ -317,7 +317,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                TFT_Disp_Only_Temp_Numbers(1,gctl_t.gSet_temperature_value); //don't     display number
                osDelay(300);//HAL_Delay(300);
                TFT_Disp_Only_Temp_Numbers(0,gctl_t.gSet_temperature_value); //don't     display number
-			 
+			   osDelay(300);
 			   gctl_t.manual_operation_ptc_flag= 0; //
                gctl_t.set_ptc_temp_value_success = 1;
                

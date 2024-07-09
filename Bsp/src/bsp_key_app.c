@@ -183,7 +183,7 @@ void ADD_Key_Fun(void)
 
             gpro_t.gTimer_pro_disp_temphum = 0; //don't display sensor realy temperature value .
 			gctl_t.gSet_temperature_value ++;
-			if( gctl_t.gSet_temperature_value < 20)gctl_t.gSet_temperature_value=20;
+			if( gctl_t.gSet_temperature_value < 20)gctl_t.gSet_temperature_value=40; //20 has bug .
 			
             if(gctl_t.gSet_temperature_value > 40) gctl_t.gSet_temperature_value= 20;
 
@@ -273,7 +273,7 @@ void DEC_Key_Fun(void)
 	          gpro_t.gTimer_pro_disp_temphum = 0; //don't display sensor realy temperature value .
 			 gctl_t.gSet_temperature_value--;
 			if( gctl_t.gSet_temperature_value<20)  gctl_t.gSet_temperature_value=40;
-	        if( gctl_t.gSet_temperature_value >40) gctl_t.gSet_temperature_value=20;//40
+	        if( gctl_t.gSet_temperature_value >40) gctl_t.gSet_temperature_value=20;//40 has a bug.
    
 			 gpro_t.gTimer_pro_set_tem_value_blink =0;
 			 gctl_t.gSet_temperature_value_item = disp_do_setting_ptc_value_item;
