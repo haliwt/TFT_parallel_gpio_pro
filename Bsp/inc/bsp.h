@@ -34,7 +34,7 @@
 #include "bsp_usart.h"
 #include "bsp_lcd_gui.h"
 #include "bsp_wifi.h"
-#include "bsp_image.h"
+//#include "bsp_image.h"
 #include "bsp_tft_font.h"
 #include "bsp_font.h"
 #include "bsp_font_app.h"

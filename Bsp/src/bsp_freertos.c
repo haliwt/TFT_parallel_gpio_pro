@@ -479,7 +479,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               TimeTimer_Pro_Handler();
 
-               SetPtc_TempComare_Value();
+              SetPtc_TempComare_Value();
 
              
             

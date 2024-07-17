@@ -1014,17 +1014,9 @@ static void smartphone_app_timer_power_on_handler(void)
 			 gctl_t.plasma_flag=0;
         }
 
-		
-     
-      }
-
-     
-    }
-   
-
-   
-
-	if(app_step==1){
+		   }
+     }
+    if(app_step==1){
 	    app_step=0;
 		 // buzzer_sound();
 
