@@ -268,7 +268,7 @@ static void voice_cmd_fun(uint8_t cmd)
 	case voice_power_off:
 
 	if(gpro_t.gPower_On == power_on){
-		gpro_t.gPower_On = power_off;
+		//gpro_t.gPower_On = power_off; //画蛇添足
 
 
         voice_send_power_off_cmd();
