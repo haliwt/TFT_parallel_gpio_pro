@@ -212,6 +212,13 @@ void ADD_Key_Fun(void)
 
 			}
 
+             #if UNIT_TIMER_TIMING_TEST
+                gctl_t.gSet_timer_hours  =0;
+                gctl_t.gSet_timer_minutes=5;
+
+                 
+              #endif 
+
 		
 	
 		    gpro_t.disp_key_set_timer_timing = 1;
@@ -233,17 +240,7 @@ void ADD_Key_Fun(void)
 		}	
 	}
 	
-//    if(disp_temp_value ==1){
-//		disp_temp_value =0;
-//        TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
-//
-//    }
-//    else if(timer_timing_flag ==1){
-//		timer_timing_flag=0;
-//	  TFT_Disp_Set_TimerTime(0);
-//
-//
-//    }
+
 
  }
    
@@ -279,10 +276,9 @@ void DEC_Key_Fun(void)
 			 gctl_t.gSet_temperature_value_item = disp_do_setting_ptc_value_item;
              gpro_t.gTimer_pro_temp_delay=0; //don't display temperature sensor of value by add and dec key set 
              gpro_t.disp_key_set_temp_value =1;
-	        
-			
-	        
-			break;
+
+           
+	        break;
 
 			case mode_key_set_timer_value: //timer timing set "decrease -down"
 			   
@@ -298,6 +294,13 @@ void DEC_Key_Fun(void)
 				   gctl_t.gSet_timer_hours  =24;//gpro_t.dispTime_hours --;
 					
 				}
+
+             #if UNIT_TIMER_TIMING_TEST
+                gctl_t.gSet_timer_hours  =0;
+                gctl_t.gSet_timer_minutes=5;
+
+                 
+              #endif 
 		
 		        gpro_t.disp_key_set_timer_timing = 1;
 			 	
@@ -316,17 +319,7 @@ void DEC_Key_Fun(void)
 	
 	}
 
-//    	if(gpro_t.disp_key_set_temp_value ==1){
-//		     gpro_t.disp_key_set_temp_value =0;
-//    		TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
-//
-//    	}
-//	    else if(   gpro_t.disp_key_set_timer_timing  ==1){
-//		      gpro_t.disp_key_set_timer_timing =0;
-//	     TFT_Disp_Set_TimerTime(0);
-//
-//  
-//       }
+
        
 }
 

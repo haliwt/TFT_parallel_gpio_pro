@@ -237,7 +237,7 @@ void PowerOn_Process_Handler(void)
  {   
  
 	if(gpro_t.power_off_flag == 1){
-		gpro_t.power_off_flag ++;
+		
 	      
         DISABLE_INT();
        // LCD_Clear(BLACK);
@@ -254,18 +254,16 @@ void PowerOn_Process_Handler(void)
         wifi_t.link_net_tencent_data_flag=1;
 		gpro_t.power_off_flag++;
 		MqttData_Publish_PowerOff_Ref();
-        HAL_Delay(100);
+        osDelay(50);//HAL_Delay(100);
 		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
-		 
-		  
-	}
+		}
 
     if(wifi_link_net_state() ==1   && gpro_t.power_off_flag==3){
 		gpro_t.power_off_flag++;
 		
         Subscriber_Data_FromCloud_Handler();
-        HAL_Delay(100);
+        osDelay(50); //HAL_Delay(100);
 	  
 	
     }
@@ -276,7 +274,12 @@ void PowerOn_Process_Handler(void)
 	
 
 	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
-	
+
+    gpro_t.gTimer_power_off_send_data_tencent=0;
+
+    gctl_t.fan_continuce_flag =1;
+
+    gpro_t.power_off_flag ++;
 
     }
     
@@ -309,6 +312,16 @@ void PowerOn_Process_Handler(void)
     }
    
     Breath_Led();
+
+    if(wifi_link_net_state() ==1 && gpro_t.gTimer_power_off_send_data_tencent    > 34){
+
+       gpro_t.gTimer_power_off_send_data_tencent =0;
+	
+       MqttData_Publish_PowerOff_Ref();
+       osDelay(100);;
+	   wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+	     
+	 }
 	
 }
 
@@ -432,6 +445,18 @@ void PowerOnOff_Init_Ref_Fun(void)
         }
 
  }
+
+
+void power_off_handler(void)
+{
+
+    gpro_t.power_off_flag=1;
+    gpro_t.gPower_On = power_off; 
+    PowerOff_Ref_Fun();
+    //gpro_t.run_process_step=0xff;
+    gpro_t.run_process_step=0;
+
+}
 /******************************************************************************
 	*
 	*Function Name:void power_on_init_set_ref(void)

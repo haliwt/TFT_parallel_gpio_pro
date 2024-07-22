@@ -99,7 +99,14 @@ void TimeTimer_Pro_Handler(void)
 		if(gpro_t.gTimer_pro_set_long_key_tims > 2){
             gpro_t.gTimer_pro_set_long_key_tims =0;  
             
-		    if(gctl_t.gSet_timer_hours >0 ){
+            #if UNIT_TIMER_TIMING_TEST   
+            
+            if(gctl_t.gSet_timer_minutes >0 ){
+
+            #else 
+                if(gctl_t.gSet_timer_hours >0 ){
+
+            #endif 
            
             gpro_t.disp_works_timer_timing_mode_item= timer_time;
             gpro_t.set_timer_timing_success = 1;

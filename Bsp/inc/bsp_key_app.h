@@ -2,6 +2,7 @@
 #define __BSP_KEY_APP_H
 #include "main.h"
 
+#define UNIT_TIMER_TIMING_TEST        1
 
 
 void PowerOn_LongKey_Fun(void);

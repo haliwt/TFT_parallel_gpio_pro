@@ -1072,19 +1072,8 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 
                if(strstr((const char*)wifi_t.data,"+TCSAP:WIFI_CONNECT_SUCCESS")){
               		wifi_t.soft_ap_config_success=1;
-					
-//                    wifi_t.auto_link_login_tencent_cloud_flag=0;
-//			        
-//					wifi_t.gTimer_auto_detected_net_state_times=0;
-//					wifi_t.repeat_login_tencent_cloud_init_ref=0; //init hardware 
-//					wifi_t.esp8266_login_cloud_success=1;
-//					wifi_t.linking_tencent_cloud_doing=0; //release this flag.
-//					wifi_t.soft_ap_config_flag=0;
-               	}
-
-			
-            else{
-				  if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
+				}
+               else if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
 
 				     wifi_t.repeat_login_tencent_cloud_init_ref=0;
 	                 wifi_t.esp8266_login_cloud_success=1;
@@ -1096,9 +1085,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 				  wifi_t.gTimer_auto_detected_net_state_times=0;
 				  
 			  }
-
-				  
-		   		if(strstr((char*)wifi_t.wifi_temp_data,"+CME ERROR:208")){
+              else if(strstr((char*)wifi_t.wifi_temp_data,"+CME ERROR:208")){
 						
 					   
 						   wifi_t.esp8266_login_cloud_success =0;
@@ -1109,11 +1096,15 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 						   wifi_t.get_rx_beijing_time_enable=0;
 					   
 		   
-				 }
+			   }
+              else if(strstr((char*)wifi_t.wifi_temp_data,"+TCPRDINFOSET:1,\"EHQB1P53IH\"")){ //WT.EDIT 2024.07.22
+
+                     wifi_t.soft_ap_config_success=1;
+
+              }
            
            }
-		  }
-		  else{
+		   else{
 
 		     if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
 			 	
@@ -1127,8 +1118,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 				  wifi_t.soft_ap_config_flag=0;
 				  wifi_t.gTimer_auto_detected_net_state_times=0;
 			  }
-
-			  if(strstr((char*)wifi_t.wifi_temp_data,"+CME ERROR:208")){
+              else if(strstr((char*)wifi_t.wifi_temp_data,"+CME ERROR:208")){
 				
 			
 				wifi_t.esp8266_login_cloud_success =0;

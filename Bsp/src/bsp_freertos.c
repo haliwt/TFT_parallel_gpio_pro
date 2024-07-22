@@ -139,11 +139,11 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(100); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_long_sound_flag;
-    static uint8_t add_dec_combin;
+    static uint8_t add_dec_combin,key_power_off_sound_flag ;
 	
     while(1)
     {
@@ -215,17 +215,15 @@ static void vTaskMsgPro(void *pvParameters)
                add_dec_combin_counter=0;
                
                 
-
-
-
             }
             else if((ulValue &  POWER_OFF_4) != 0){
 
-                key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
-                              
+                //key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
+                  key_power_off_sound_flag =1;           
                   power_key_long_conter =0;
                   mode_key_long_conter = 0;
                   add_dec_combin_counter=0;
+                  gpro_t.gPower_On = power_off;
 
 
             }
@@ -305,7 +303,7 @@ static void vTaskMsgPro(void *pvParameters)
        
         
        if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 || key_mode_short_sound_flag == 1 || key_mode_long_sound_flag ==1 \
-           || key_power_sound_flag ==1 || key_power_long_sound_flag==1){
+           || key_power_sound_flag ==1 || key_power_long_sound_flag==1 || key_power_off_sound_flag ==1){
 
 
              if(key_power_sound_flag == 1){
@@ -315,37 +313,52 @@ static void vTaskMsgPro(void *pvParameters)
                 LCD_Clear(BLACK);
                 ENABLE_INT();
 
+                buzzer_sound();
+
               }
               else if(key_mode_short_sound_flag== 1){
 
                 key_mode_short_sound_flag  ++;
+                buzzer_sound();
     
 
               }
               else if(key_mode_long_sound_flag == 1){
 
                    key_mode_long_sound_flag++;
+                   buzzer_sound();
 
+
+              }
+              else if(key_power_off_sound_flag ==1){
+                  key_power_off_sound_flag ++;
+                   DISABLE_INT();
+                   LCD_Clear(BLACK);
+                   ENABLE_INT();
+                  buzzer_sound();
 
               }
               else if(key_dec_sound_flag == 1){
                  key_dec_sound_flag++;
+                 buzzer_sound();
 
               }
               else if(key_add_sound_flag ==1){
                 
                   key_add_sound_flag++;
+                  buzzer_sound();
 
 
               }
               else if(key_power_long_sound_flag ==1){
 
                   key_power_long_sound_flag ++;
+                  buzzer_sound();
 
               }
           
              
-            buzzer_sound();
+            
 
         }
           //run_main_board_process();
@@ -366,6 +379,13 @@ static void vTaskMsgPro(void *pvParameters)
                    }
 
                     key_power_sound_flag=6;
+
+              }
+              else if(gpro_t.gPower_On == power_off && key_power_off_sound_flag==2){
+                key_power_off_sound_flag++;
+
+                power_off_handler();
+
 
               }
               else{
@@ -611,14 +631,7 @@ static void vTaskStart(void *pvParameters)
              }
 
      }
-//     else if(wifi_t.smartphone_app_power_on_timer_flag==1){
-//          wifi_t.smartphone_app_power_on_timer_flag=0;
-//
-//            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-//	          POWER_ON_APP_6 ,            /* 设置目标任务事件标志位bit0  */
-//	          eSetBits);   
-//
-//     }
+
 
    
     

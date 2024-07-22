@@ -316,11 +316,20 @@ void Wifi_SoftAP_Config_Handler(void)
 			 wifi_t.soft_ap_config_flag =1;
 			 wifi_t.linking_tencent_cloud_doing =1; //enable usart2 receive wifi  data
 			 wifi_t.wifi_uart_counter=0;
-			 wifi_t.wifi_config_net_lable=0xff;
+			 wifi_t.wifi_config_net_lable=wifi_inquire_register_codes; //WT.EDIT 2024.07.22//wifi_t.wifi_config_net_lable=0xff;
 		  }
 		 
 			
 	 break;
+
+     case wifi_inquire_register_codes: //WT.EDIT 2024.07.22
+	   if(wifi_t.gTimer_login_tencent_times > 3){
+         wifi_t.gTimer_login_tencent_times=0;
+		 wifi_t.wifi_uart_counter=0;
+        HAL_UART_Transmit(&huart2, "AT+TCPRDINFOSET?\r\n", strlen("AT+TCPRDINFOSET?\r\n"), 0xffff); //动
+        wifi_t.wifi_config_net_lable=0xff;//
+
+        }
 
 	}
   free(device_massage);
@@ -337,9 +346,7 @@ void Wifi_SoftAP_Config_Handler(void)
 void SmartPhone_LinkTencent_Cloud(void)
 {
    
-    uint8_t *device_submassage;
-
-    device_submassage = (uint8_t *)malloc(128);
+   
 
 
 	if(wifi_t.soft_ap_config_success==1){
@@ -364,7 +371,7 @@ void SmartPhone_LinkTencent_Cloud(void)
 
 	   }
     
-    free(device_submassage);
+ 
 
 }
 
@@ -380,8 +387,8 @@ void wifi_Disconnect_Fun(void)
 void Get_BeiJing_Time_Cmd(void)
 {
 
-  HAL_UART_Transmit(&huart2, "AT+CIPSNTPCFG=1,8,\"cn.ntp.org.cn\",\"ntp.sjtu.edu.cn\"\r\n", strlen("AT+CIPSNTPCFG=1,800,\"cn.ntp.org.cn\",\"ntp.sjtu.edu.cn\"\r\n"), 0xffff);//开始连接
-
+  //HAL_UART_Transmit(&huart2, "AT+CIPSNTPCFG=1,8,\"cn.ntp.org.cn\",\"ntp.sjtu.edu.cn\"\r\n", strlen("AT+CIPSNTPCFG=1,800,\"cn.ntp.org.cn\",\"ntp.sjtu.edu.cn\"\r\n"), 0xffff);//开始连接
+  HAL_UART_Transmit(&huart2, "AT+CIPSNTPCFG=1,8\r\n", strlen("AT+CIPSNTPCFG=1,8\r\n"), 5000);//开
 }
 
 void Get_Beijing_Time(void)
