@@ -187,7 +187,7 @@ void Update_Dht11_Totencent_Value(void)
 	Dht11_Read_TempHumidity_Handler(&DHT11);
 
 	MqttData_Publis_ReadTempHum(gctl_t.dht11_temp_value,gctl_t.dht11_hum_value);
-    osDelay(20);
+    osDelay(300);
 
 }
 

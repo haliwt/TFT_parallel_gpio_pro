@@ -738,10 +738,10 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
 	 ENABLE_INT();
 	//  taskEXIT_CRITICAL();
-//	__HAL_UART_CLEAR_NEFLAG(&huart2);
-//	__HAL_UART_CLEAR_FEFLAG(&huart2);
+	__HAL_UART_CLEAR_NEFLAG(&huart2);
+	__HAL_UART_CLEAR_FEFLAG(&huart2);
 	__HAL_UART_CLEAR_OREFLAG(&huart2);
-//	__HAL_UART_CLEAR_TXFECF(&huart2);
+	__HAL_UART_CLEAR_TXFECF(&huart2);
 
       HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
 	}

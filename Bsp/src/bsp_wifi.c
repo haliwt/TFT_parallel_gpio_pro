@@ -279,7 +279,7 @@ static void RunWifi_Command_Handler(void)
     case wifi_from_down_data_cmd:
 
       Subscriber_Data_FromCloud_Handler(); //WT.EDIT 2024.07.22
-      osDelay(200);
+      HAL_Delay(100);//osDelay(200);
 
        wifi_t.auto_link_login_tencent_cloud_flag = 1;
 
