@@ -338,7 +338,7 @@ void TFT_LCD_Init(void)
     /* RGB 5-6-5-bit格式  */
     LCD_Write_Cmd(0x3A);
     LCD_Write_Data(0x55);//0x063
-    // LCD_Clear(BLACK);
+    LCD_Clear(BLACK);     //WT.EDIT 2024.07.23
     /* porch 设置 */
     LCD_Write_Cmd(0xB2);
     LCD_Write_Data(0x0C);//< Back porch in normal mode

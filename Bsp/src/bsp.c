@@ -482,10 +482,13 @@ void power_on_init_set_ref(void)
   if(wifi_link_net_state() ==1){
 		    Donot_Disp_CountDown_60s();
 		    TFT_Display_WorksTime_Voice();
+            LED_WIFI_ICON_ON(); //WT.EDIT 2024.07.23
+             
 	}
    else{
             Donot_Disp_CountDown_60s();
             TFT_Display_PowerOn_WorksTime_Init();
+             LED_WIFI_ICON_OFF();//WT.EDIT 2024.07.23
 	 }
 
        
@@ -505,7 +508,7 @@ void power_on_init_set_ref(void)
          gpro_t.disp_works_timer_timing_mode_item = works_time ;
          if(gctl_t.get_beijing_time_success == 1){
 
-            
+             LED_WIFI_ICON_ON(); //WT.EDIT 2024.07.23
 
             gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
             gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
