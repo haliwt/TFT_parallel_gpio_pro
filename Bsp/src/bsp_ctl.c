@@ -701,7 +701,9 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
 void Device_NoAction_Power_Off(void)
 {
 	
-	Ptc_Off();
+    LED_WIFI_ICON_OFF();
+
+    Ptc_Off();
 	LED_PTC_ICON_OFF();
 	
 	Plasma_Off();

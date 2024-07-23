@@ -20,9 +20,10 @@ typedef enum _wifi_state_t{
 	wifi_publish_dht11_delay,//4
 	wifi_subscriber_form_tencent_cloud_cmd,//5
 	wifi_publish_update_tencent_cloud_data,//6
+	wifi_from_down_data_cmd,
 	wifi_auto_to_link_cloud,//7
 	wifi_atuo_link_cloud_ref,//8
-	wifi_auto_repeat_link_cloud,//9
+	wifi_auto_repeat_check_link_net_state,//9
 	wifi_tencent_publish_dht11_data,//10
 	wifi_get_beijing_time,//11
 	wifi_disconnect,//12
@@ -86,7 +87,7 @@ typedef struct _WIFI_FUN{
 	uint8_t link_tencent_step_counter;
 	uint8_t link_beijing_times_flag;
 	uint8_t auto_linknet_flag;
-	uint8_t three_times_link_beijing;
+	
     //esp8266 up ref
 
 	uint8_t runCommand_order_lable;
@@ -167,7 +168,7 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_main_pro_times;
 
 
-    uint8_t gTimer_counter_repeat_link_net;
+  
     uint8_t gTimer_auto_detected_net;
 	
     uint16_t gTimer_get_beijing_time;

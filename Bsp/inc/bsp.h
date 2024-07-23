@@ -65,6 +65,9 @@
 #define __STM33G030C8T6_BSP_VERSION		"1.0"
 
 
+#define UNIT_TESTING        1
+
+
 
 #define  USE_FreeRTOS      1
 
@@ -164,6 +167,8 @@ typedef struct{
    uint8_t  disp_key_set_temp_value;
    uint8_t  disp_key_set_timer_timing;
    uint8_t disp_temp_or_set_tmp_switch_flag ;
+
+   uint8_t power_on_or_off_flag;
    
  
 
@@ -282,10 +287,11 @@ void Power_On_Special_Fun(void);
 
 
 
-void smartphone_power_on_handler(void);
+
 
 
 void power_on_init_set_ref(void);
+void power_off_init_set_ref(void);
 
 
 #endif 

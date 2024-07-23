@@ -14,8 +14,6 @@ void TimerTiming_Init(void)
    Dis_pWorks_Timer_Timing_Handler(disp_works_timer_timing_fun);
 }
 
-
-
 /*******************************************************************************************************
     **
     *Function Name:void TimeTimer_Pro_Handler(void)
@@ -57,13 +55,22 @@ void TimeTimer_Pro_Handler(void)
 		
 			gctl_t.gTimer_ctl_set_timer_time_senconds =0;
 
-			gctl_t.gSet_timer_minutes --;
+            #if UNIT_TESTING
+
+                gctl_t.gSet_timer_minutes = gctl_t.gSet_timer_minutes - 20;
+
+
+            #else
+
+			    gctl_t.gSet_timer_minutes --;
+
+            #endif 
 
            // gctl_t.gSet_timer_minutes = gctl_t.gSet_timer_minutes - 20;
 
 			if(gctl_t.gSet_timer_minutes <0){
-			gctl_t.gSet_timer_minutes =59;
-			 gctl_t.gSet_timer_hours --;
+			    gctl_t.gSet_timer_minutes =59;
+			    gctl_t.gSet_timer_hours --;
 			
 			}
 
@@ -72,9 +79,7 @@ void TimeTimer_Pro_Handler(void)
 			 gpro_t.run_process_step=0xf0;
              App_PowerOff_Handler();
 
-                 
-
-			}
+            }
             else{
 			TFT_Disp_Set_TimerTime(0);
 
@@ -99,14 +104,10 @@ void TimeTimer_Pro_Handler(void)
 		if(gpro_t.gTimer_pro_set_long_key_tims > 2){
             gpro_t.gTimer_pro_set_long_key_tims =0;  
             
-            #if UNIT_TIMER_TIMING_TEST   
-            
-            if(gctl_t.gSet_timer_minutes >0 ){
+         
+             if(gctl_t.gSet_timer_hours >0 ){
 
-            #else 
-                if(gctl_t.gSet_timer_hours >0 ){
-
-            #endif 
+       
            
             gpro_t.disp_works_timer_timing_mode_item= timer_time;
             gpro_t.set_timer_timing_success = 1;
@@ -120,7 +121,7 @@ void TimeTimer_Pro_Handler(void)
             TFT_Disp_Chinese_Timer_23_23(TIMER_X2,TIMER_Y,2);//“时”
             TFT_Disp_Chinese_Timer_23_23(TIMER_X3,TIMER_Y,3);//“间”
             TFT_Only_Disp_Set_Timer_Blink();
-            HAL_Delay(200);
+            osDelay(200);//HAL_Delay(200);
             TFT_Disp_Onley_Set_TimerTime_Value();
 
            }

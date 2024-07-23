@@ -212,16 +212,7 @@ void ADD_Key_Fun(void)
 
 			}
 
-             #if UNIT_TIMER_TIMING_TEST
-                gctl_t.gSet_timer_hours  =0;
-                gctl_t.gSet_timer_minutes=5;
-
-                 
-              #endif 
-
-		
-	
-		    gpro_t.disp_key_set_timer_timing = 1;
+           gpro_t.disp_key_set_timer_timing = 1;
 			
 
 		break;
@@ -293,14 +284,7 @@ void DEC_Key_Fun(void)
 
 				   gctl_t.gSet_timer_hours  =24;//gpro_t.dispTime_hours --;
 					
-				}
-
-             #if UNIT_TIMER_TIMING_TEST
-                gctl_t.gSet_timer_hours  =0;
-                gctl_t.gSet_timer_minutes=5;
-
-                 
-              #endif 
+				} 
 		
 		        gpro_t.disp_key_set_timer_timing = 1;
 			 	
