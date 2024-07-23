@@ -321,10 +321,10 @@ void PowerOn_Process_Handler(void)
        gpro_t.gTimer_power_off_send_data_tencent =0;
 	
        MqttData_Publish_PowerOff_Ref();
-       osDelay(100);
+       osDelay(200);
       
 	   Subscriber_Data_FromCloud_Handler(); //WT.EDIT 2024.07.22
-       osDelay(100);
+       osDelay(200);
 
        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     

@@ -448,6 +448,7 @@ static void RunWifi_Command_Handler(void)
                 gctl_t.gTimer_ctl_disp_works_time_second =   gctl_t.save_time_hours[2];
 
                 gctl_t.get_beijing_time_success = 1; //WT.2024.04.25
+               
 
                 wifi_t.auto_link_login_tencent_cloud_flag = 1; //WT.EDIT.2024.06.13
 
