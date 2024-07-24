@@ -18,6 +18,7 @@ void USART_Cmd_Error_Handler(void)
 {
  
 	   uint32_t temp;
+     #if 0
        if(gctl_t.gTimer_ctl_usart1_error > 6 ){ //9
 			
 			gctl_t.gTimer_ctl_usart1_error=0;
@@ -29,10 +30,11 @@ void USART_Cmd_Error_Handler(void)
 			 // UART_Start_Receive_IT(&huart1,inputBuf,1);
 			
 	  }
-
-	 if(gctl_t.gTimer_ctl_usart2_error >8){
+    #endif 
+	 if(gctl_t.gTimer_ctl_usart2_error >5){
 	  	gctl_t.gTimer_ctl_usart2_error=0;
 
+         
            __HAL_UART_CLEAR_OREFLAG(&huart2);
         
 
@@ -110,12 +112,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         
        gctl_t.gTimer_ctl_usart1_error++; 
 	   gctl_t.gTimer_ctl_usart2_error++; 
+       gctl_t.gTimer_ctl_wifi_state++;
 
   
-        
-	  
-	
-	  //wifi timer 
+       //wifi timer 
 
 	    wifi_t.gTimer_auto_detected_net++;
 	
