@@ -336,7 +336,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 
 		   }
 
-            gpro_t.disp_temp_or_set_tmp_switch_flag = 0;
+            gpro_t.disp_temp_or_set_tmp_switch_flag = 3;
 		   break;
             
 

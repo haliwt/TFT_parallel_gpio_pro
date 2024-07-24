@@ -479,7 +479,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                      }
 
-                    if(gpro_t.disp_key_set_temp_value ==1){
+                    if(gpro_t.disp_key_set_temp_value ==1){ //add and dec of key input number on TFT screen
                 		 gpro_t.disp_key_set_temp_value =0;
                         TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
 
