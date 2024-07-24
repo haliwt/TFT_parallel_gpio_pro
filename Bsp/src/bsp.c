@@ -506,8 +506,8 @@ void power_on_init_set_ref(void)
 
              LED_WIFI_ICON_ON(); //WT.EDIT 2024.07.23
 
-            gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
-            gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
+            //gctl_t.disp_works_hours = gctl_t.save_time_hours[0] ;
+            //gctl_t.disp_works_minutes  = gctl_t.save_time_hours[1]  ;
 		  }
           else{
 
