@@ -22,6 +22,7 @@ typedef enum _wifi_state_t{
 	wifi_publish_update_tencent_cloud_data,//6
 	wifi_from_down_data_cmd,
 	wifi_auto_to_link_cloud,//7
+	wifi_again_link_net_init,
 	wifi_atuo_link_cloud_ref,//8
 	wifi_auto_repeat_check_link_net_state,//9
 	wifi_tencent_publish_dht11_data,//10
@@ -94,7 +95,7 @@ typedef struct _WIFI_FUN{
 	uint8_t has_been_login_flag;
     uint8_t soft_ap_config_flag;
     uint8_t get_rx_beijing_time_enable;
-	uint8_t auto_link_login_tencent_cloud_flag;
+	
 
 	
 	//wifi
