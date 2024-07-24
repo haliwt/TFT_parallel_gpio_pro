@@ -110,7 +110,7 @@ typedef struct _WIFI_FUN{
 	
 	uint8_t wifi_uart_counter;
 	uint8_t tencent_cloud_command_power_on;
-	uint8_t get_rx_auto_repeat_net_enable;
+
 	
 	//
 	uint8_t response_wifi_signal_label;

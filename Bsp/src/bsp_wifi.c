@@ -184,7 +184,7 @@ static void RunWifi_Command_Handler(void)
 	      Subscriber_Data_FromCloud_Handler();
 		 wifi_t.gTimer_publish_dht11=0;
 	     wifi_t.gTimer_get_beijing_time =0;
-	     wifi_t.get_rx_auto_repeat_net_enable=0;
+	
 		 wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	   }
 
@@ -195,12 +195,13 @@ static void RunWifi_Command_Handler(void)
 
 	case wifi_publish_update_tencent_cloud_data://06
 
-	if(wifi_t.gTimer_get_beijing_time > 100 && wifi_t.get_rx_auto_repeat_net_enable==0){
+	if(wifi_t.gTimer_get_beijing_time > 100){
         
             if(wifi_link_net_state()==1){
 
                 wifi_t.gTimer_get_beijing_time=0;
     		    link_net_beijing_time_flag = 1;
+             
                 gpro_t.gTimer_pro_update_dht11_data =0; //disable publish to data to tencent .
 
             }
@@ -263,7 +264,7 @@ static void RunWifi_Command_Handler(void)
 
       if(wifi_link_net_state()==1){
         //wifi_t.runCommand_order_lable= wifi_auto_repeat_check_link_net_state;//09
-         
+     
          wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data;
        }
        else{
@@ -299,7 +300,7 @@ static void RunWifi_Command_Handler(void)
     	    Wifi_Link_Tencent_Net_State();
           
             
-    		wifi_t.get_rx_auto_repeat_net_enable=0;
+
     		wifi_t.gTimer_publish_dht11=0;
             wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data; //06 
     		wifi_t.gTimer_auto_detected_net_state_times=0;  
@@ -318,25 +319,47 @@ static void RunWifi_Command_Handler(void)
 
 		wifi_t.gTimer_auto_detected_net_state_times=0;
 
+    
+
          if(wifi_link_net_state()==0){
-           auto_det_flag=1;
-           auto_repeat_link_netware_fun();
+            auto_det_flag=1;
+            wifi_t.wifi_uart_counter=0;
            
-         }
-          wifi_t.runCommand_order_lable= wifi_again_link_net_init;//06
+          
+           
+          }
+          else{
+
+             auto_det_flag=0;
+             wifi_t.runCommand_order_lable= wifi_again_link_net_init;//06
+
+          }
+         // wifi_t.runCommand_order_lable= wifi_again_link_net_init;//06
        }
+
+       if( auto_det_flag==1){
+           auto_det_flag++;
+
+           auto_repeat_link_netware_fun();
+           wifi_t.runCommand_order_lable= wifi_again_link_net_init;//06
+
+      }
+
+      
        
      break;
 
 
      case wifi_again_link_net_init:
        if(wifi_link_net_state()==1){
+        auto_det_flag=0;
+        
 
-          auto_det_flag=0 ;
+       
 		wifi_t.wifi_uart_counter=0; //clear USART2 counter is zero
 		  
 		
-		 wifi_t.get_rx_auto_repeat_net_enable=0;
+
          wifi_t.linking_tencent_cloud_doing = 0;
 
           if(power_on_state() == power_on){
@@ -497,14 +520,17 @@ static void auto_repeat_link_netware_fun(void)
 {
 
   
-  if(auto_det_flag==1){
-        //Buzzer_KeySound();
+ 
       
 		//InitWifiModule_Hardware();//InitWifiModule();
         auto_repeat_init_link_net();
         //SmartPhone_TryToLink_TencentCloud();
         auto_repeat_tencnet_net();
-  }
+  
+}
+
+#if 0
+
 
     if(wifi_link_net_state()==1){
 
@@ -535,19 +561,30 @@ static void auto_repeat_link_netware_fun(void)
 	
    
 }
-
+#endif 
 
 void Wifi_Rx_Auto_Link_Net_Handler(void)
 {
 
    
 	   strncpy((char *)wifi_t.auto_det_data, (const char *)wifi_t.wifi_data,150);
-	   wifi_t.get_rx_auto_repeat_net_enable =1;
-
-
 	
-	   
-	   if(strstr((const char*)wifi_t.auto_det_data,"QTTSTATE:0")){
+
+
+	  if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
+			 	
+                 
+		  wifi_t.esp8266_login_cloud_success=1;
+	      wifi_t.repeat_login_tencent_cloud_init_ref=0;
+		
+          wifi_t.linking_tencent_cloud_doing=0;
+         
+	
+
+		  wifi_t.soft_ap_config_flag=0;
+		  wifi_t.gTimer_auto_detected_net_state_times=0;
+	  }
+	  else if(strstr((const char*)wifi_t.auto_det_data,"QTTSTATE:0")){
 
 			 wifi_t.esp8266_login_cloud_success=0;
              wifi_t.gTimer_auto_detected_net_state_times=0;
@@ -587,13 +624,16 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
 static void auto_repeat_init_link_net(void)
 {
 	    WIFI_IC_DISABLE();
-		HAL_Delay(1000);
 		//HAL_Delay(1000);
 		//HAL_Delay(1000);
+		//HAL_Delay(1000);
+		osDelay(1000);
 		WIFI_IC_ENABLE();
 		//at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
 		at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
-		HAL_Delay(1000);
+		//HAL_Delay(1000);
+		osDelay(1000);
+        osDelay(1000);
 
 
 
@@ -606,9 +646,13 @@ static void auto_repeat_tencnet_net(void)
 			wifi_t.wifi_uart_counter=0;
 	        wifi_t.soft_ap_config_flag =0;
 	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
-		    HAL_Delay(1000);
-			HAL_Delay(1000);
-			HAL_Delay(1000);
+		    //HAL_Delay(1000);
+			///HAL_Delay(1000);
+			///HAL_Delay(1000);
+			
+            osDelay(1000);
+            osDelay(1000);
+            osDelay(1000);
 		
 		
 		 
