@@ -292,6 +292,7 @@ static void RunWifi_Command_Handler(void)
 
 
     case wifi_auto_repeat_check_link_net_state://09
+    
          if(gctl_t.gTimer_ctl_wifi_state > 1){
             gctl_t.gTimer_ctl_wifi_state =0;
     	    gpro_t.gTimer_pro_update_dht11_data=0;
@@ -361,14 +362,7 @@ static void RunWifi_Command_Handler(void)
              wifi_t.runCommand_order_lable=  wifi_auto_to_link_cloud;
          }
 
-       
-
-		
-
-	
-
-
-	break;
+    break;
 
 	
 

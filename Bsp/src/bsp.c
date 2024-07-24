@@ -434,8 +434,6 @@ void PowerOnOff_Init_Ref_Fun(void)
   if(gpro_t.gPower_On == power_off){
           
          // gpro_t.gPower_On = power_on;  
-         
-         // power_on_init_set_ref();
 
           gpro_t.power_on_or_off_flag = power_on;
         
@@ -445,9 +443,7 @@ void PowerOnOff_Init_Ref_Fun(void)
    }
    else if(gpro_t.gPower_On == power_on){//POWER OFF
            
-           
             gpro_t.power_off_flag=1;
-	       // gpro_t.gPower_On = power_off; 
             gpro_t.run_process_step=0;
             Power_Off_Fun();
             gpro_t.power_on_or_off_flag = power_off;
@@ -488,7 +484,7 @@ void power_on_init_set_ref(void)
    else{
             Donot_Disp_CountDown_60s();
             TFT_Display_PowerOn_WorksTime_Init();
-             LED_WIFI_ICON_OFF();//WT.EDIT 2024.07.23
+           
 	 }
 
        
@@ -522,8 +518,8 @@ void power_on_init_set_ref(void)
 
           }
 
-         
-         
+         gctl_t.gSet_temperature_value=40;
+         gpro_t.run_process_step=0;
 
 
 }
@@ -565,8 +561,8 @@ static void Power_On_Init(void)
 	  gctl_t.ultrasonic_flag =1;
 
 
-     //WIFI ICON LED
-	LED_WIFI_ICON_ON()  ;             
+    if(wifi_link_net_state()==1)
+	    LED_WIFI_ICON_ON()  ;             
 
 	//PTC ICON LED
 	LED_PTC_ICON_ON() ;  

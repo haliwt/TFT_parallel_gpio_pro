@@ -72,28 +72,29 @@ void power_on_action_led_init(void)
 {
 
   
-	//WIFI ICON LED
-	//LED_WIFI_ICON_ON()  ;
-
+	 gctl_t.ptc_flag =1;
+     gctl_t.plasma_flag = 1;
+     gctl_t.ultrasonic_flag = 1;
+   
     Fan_Run();
 
 	//PTC ICON LED
 	LED_PTC_ICON_ON() ;  
     Ptc_On();
-    gctl_t.ptc_flag =1;
+   
 
 
 	//KILL ICON LED
 	LED_KILL_ICON_ON()  ; 
     Plasma_On();
-    gctl_t.plasma_flag = 1;
+   
 
 
 
 	//ULTRSONIC ICO LED
 	LED_RAT_ICON_ON()  ; 
     Ultrasonic_Pwm_Output();
-    gctl_t.ultrasonic_flag = 1;
+   
 
 
 }

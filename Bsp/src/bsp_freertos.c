@@ -59,7 +59,7 @@ uint32_t add_dec_combin_counter;
 
 uint8_t key_power_sound_flag;
 
-uint16_t   app_power_on_counter;
+
 
 
 
@@ -101,17 +101,16 @@ static void vTaskRunPro(void *pvParameters)
 
      if(power_sound_flag==0){
        power_sound_flag++;
-       VOICE_OUTPUT_SOUND_ENABLE();
+      
        buzzer_sound();
+       HAL_Delay(100);
+       VOICE_OUTPUT_SOUND_ENABLE();
      }
 
      
-      if(gpro_t.gPower_On == power_on){
+      if(gpro_t.gPower_On == power_on && (key_power_sound_flag !=3)){
 
-         if(wifi_t.smartphone_app_power_on_flag==1){
-
-              app_power_on_counter++;
-         }
+      
          PowerOn_Process_Handler();
          Temperature_Ptc_Pro_Handler();
         
@@ -397,23 +396,23 @@ static void vTaskMsgPro(void *pvParameters)
 
 
          if(key_power_sound_flag==3){
-                      key_power_sound_flag++;
+            key_power_sound_flag++;
 
-                      if(gpro_t.power_on_or_off_flag == power_on){
-                           gpro_t.gPower_On = power_on;
-                           power_on_init_set_ref();
+            if(gpro_t.power_on_or_off_flag == power_on){
+            gpro_t.gPower_On = power_on;
+            power_on_init_set_ref();
 
-                       }
-                       else{
+            }
+            else{
 
-                         gpro_t.gPower_On = power_off;
+                gpro_t.gPower_On = power_off;
 
 
-                       }
+            }
 
-                 if(wifi_t.smartphone_app_power_on_flag==0 && gpro_t.gPower_On == power_on){
-		           power_on_action_led_init();
-                 }
+            if(wifi_t.smartphone_app_power_on_flag==0 && gpro_t.gPower_On == power_on){
+                power_on_action_led_init();
+            }
                 
 
           }
