@@ -122,10 +122,7 @@ static void RunWifi_Command_Handler(void)
 		    gpro_t.wifi_led_fast_blink_flag=0; //fast blink wifi of dication led
 			wifi_t.esp8266_login_cloud_success =0; //link tencent cloud flag 
 
-		
-			wifi_t.gTimer_auto_detected_net_state_times=0;
-		
-			wifi_t.get_rx_beijing_time_enable=0;
+             wifi_t.get_rx_beijing_time_enable=0;
 
             wifi_t.gTimer_auto_detected_net_state_times =0; //
             wifi_t.gTimer_get_beijing_time =0;
@@ -146,7 +143,7 @@ static void RunWifi_Command_Handler(void)
 
         wifi_t.gTimer_auto_detected_net_state_times =0;
         wifi_t.gTimer_linking_tencent_duration=0;
-     
+        wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
       
         wifi_t.gTimer_get_beijing_time =0;
         wifi_t.gTimer_publish_dht11=0; 
@@ -201,11 +198,12 @@ static void RunWifi_Command_Handler(void)
 
                 wifi_t.gTimer_get_beijing_time=0;
     		    link_net_beijing_time_flag = 1;
-             
+                wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
                 gpro_t.gTimer_pro_update_dht11_data =0; //disable publish to data to tencent .
 
             }
             else{
+               wifi_t.linking_tencent_cloud_doing  =1; //receive from tencent command state .
                wifi_t.gTimer_get_beijing_time=0;
                wifi_t.runCommand_order_lable=  wifi_auto_to_link_cloud;//7
 
@@ -242,7 +240,7 @@ static void RunWifi_Command_Handler(void)
          if(alternate_flag == 1){
 		  
 			wifi_t.link_beijing_times_flag =1;
-			wifi_t.gTimer_auto_detected_net_state_times =0;
+			
 		
 			wifi_t.get_rx_beijing_time_enable=0;//disenable get beijing timing
 		
@@ -268,7 +266,7 @@ static void RunWifi_Command_Handler(void)
          wifi_t.runCommand_order_lable = wifi_publish_update_tencent_cloud_data;
        }
        else{
-
+         wifi_t.linking_tencent_cloud_doing  =1; //receive from tencent command state .
         wifi_t.runCommand_order_lable=  wifi_auto_to_link_cloud;
        }
 
@@ -277,10 +275,10 @@ static void RunWifi_Command_Handler(void)
 	break;
 
 
-    case wifi_from_down_data_cmd:
+    case wifi_from_down_data_cmd: //7
 
       Subscriber_Data_FromCloud_Handler(); //WT.EDIT 2024.07.22
-      osDelay(200);
+      //osDelay(200);
 
      
 
@@ -292,7 +290,7 @@ static void RunWifi_Command_Handler(void)
     break;
 
 
-    case wifi_auto_repeat_check_link_net_state://09
+    case wifi_auto_repeat_check_link_net_state://11
     
          if(gctl_t.gTimer_ctl_wifi_state > 1){
             gctl_t.gTimer_ctl_wifi_state =0;
@@ -313,7 +311,7 @@ static void RunWifi_Command_Handler(void)
 
     
 
-    case wifi_auto_to_link_cloud: //0x07
+    case wifi_auto_to_link_cloud: //0x08
 	
 	if(wifi_t.gTimer_auto_detected_net_state_times > 180){
 
@@ -323,14 +321,16 @@ static void RunWifi_Command_Handler(void)
 
          if(wifi_link_net_state()==0){
             auto_det_flag=1;
+            wifi_t.linking_tencent_cloud_doing  =1; //receive from tencent command state .
             wifi_t.wifi_uart_counter=0;
            
-          
+      
            
           }
           else{
 
              auto_det_flag=0;
+             wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
              wifi_t.runCommand_order_lable= wifi_again_link_net_init;//06
 
           }
@@ -355,7 +355,7 @@ static void RunWifi_Command_Handler(void)
         auto_det_flag=0;
         
 
-       
+        wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
 		wifi_t.wifi_uart_counter=0; //clear USART2 counter is zero
 		  
 		
@@ -390,7 +390,7 @@ static void RunWifi_Command_Handler(void)
 	
 
 
-	case wifi_get_beijing_time://8
+	case wifi_get_beijing_time://13
 
 
 	wifi_t.linking_tencent_cloud_doing =0;
@@ -514,14 +514,10 @@ static void RunWifi_Command_Handler(void)
 ********************************************************************************/
 static void auto_repeat_link_netware_fun(void)
 {
-
-  
- 
-      
-		//InitWifiModule_Hardware();//InitWifiModule();
-        auto_repeat_init_link_net();
-        //SmartPhone_TryToLink_TencentCloud();
-        auto_repeat_tencnet_net();
+    //InitWifiModule_Hardware();//InitWifiModule();
+    auto_repeat_init_link_net();
+    //SmartPhone_TryToLink_TencentCloud();
+    auto_repeat_tencnet_net();
   
 }
 
@@ -583,21 +579,21 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
 	  else if(strstr((const char*)wifi_t.auto_det_data,"QTTSTATE:0")){
 
 			 wifi_t.esp8266_login_cloud_success=0;
-             wifi_t.gTimer_auto_detected_net_state_times=0;
+             
 		   
 				  
 	    }
 		else if(strstr((const char*)wifi_t.auto_det_data,"+TCMQTTRECONNECTING")){
 
 			 wifi_t.esp8266_login_cloud_success=0;
-             wifi_t.gTimer_auto_detected_net_state_times=0;
+        
 		    
 				  
 	    }
 		else if(strstr((const char*)wifi_t.auto_det_data,"ONNECTING")){
 
 			 wifi_t.esp8266_login_cloud_success=0;
-             wifi_t.gTimer_auto_detected_net_state_times=0;
+        
 		   
 				  
 	    }
@@ -611,7 +607,7 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
        
          wifi_t.wifi_uart_counter=0;
 		
-         wifi_t.gTimer_auto_detected_net_state_times=0;
+      
 		
     
 }

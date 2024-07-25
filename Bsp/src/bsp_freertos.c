@@ -124,7 +124,7 @@ static void vTaskRunPro(void *pvParameters)
       WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
-      vTaskDelay(100);////100// 40
+      vTaskDelay(70);////100// 40
   }
 	
 }
@@ -532,6 +532,7 @@ static void vTaskMsgPro(void *pvParameters)
                Voice_Decoder_Handler();
          
           }
+          
         }
              
     }
@@ -729,7 +730,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	//  taskEXIT_CRITICAL();
 	//__HAL_UART_CLEAR_NEFLAG(&huart2);
 	//__HAL_UART_CLEAR_FEFLAG(&huart2);
-	//__HAL_UART_CLEAR_OREFLAG(&huart2);
+	__HAL_UART_CLEAR_OREFLAG(&huart2);
 	//__HAL_UART_CLEAR_TXFECF(&huart2);
 
       HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);

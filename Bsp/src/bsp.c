@@ -182,6 +182,16 @@ void PowerOn_Process_Handler(void)
 		  
       // handler of wifi 
 	  case pro_wifi_publish_init: //7
+
+      if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 10){
+
+            gpro_t.gTimer_get_data_from_tencent_data =0;
+
+            Subscriber_Data_FromCloud_Handler();
+            osDelay(200);//HAL_Delay(200)
+
+      }
+        
 		
 
         if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
@@ -329,6 +339,12 @@ void PowerOn_Process_Handler(void)
        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 	 }
+     else if(wifi_link_net_state() ==1){
+
+
+        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+
+     }
 	
 }
 
