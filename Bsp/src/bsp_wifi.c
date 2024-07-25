@@ -125,7 +125,7 @@ static void RunWifi_Command_Handler(void)
             wifi_t.gTimer_get_beijing_time =0;
              gpro_t.gTimer_pro_update_dht11_data=0; //WT.EDIT don't data to tencent .
 
-			 wifi_t.runCommand_order_lable = wifi_auto_to_link_cloud; //wifi_auto_to_link_cloud
+			
 		   
 		 }
        }
@@ -412,13 +412,7 @@ void wifi_get_beijint_time_handler(void)
 
                get_beijing_flag = 10;
                wifi_t.linking_tencent_cloud_doing  =1; //receive from tencent command state .
-
-               
-               wifi_t.runCommand_order_lable=  wifi_auto_to_link_cloud;//7
-
-               wifi_t.gTimer_auto_detected_net_state_times =290;
-
-            }
+             }
 	
        }
 
@@ -607,8 +601,10 @@ void wifi_get_beijint_time_handler(void)
        }
 
      
+     if(wifi_link_net_state()==1){
+          get_beijing_flag = 0;
 
-      
+       }
        
      break;
 

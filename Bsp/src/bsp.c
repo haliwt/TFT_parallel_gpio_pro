@@ -338,15 +338,10 @@ void PowerOn_Process_Handler(void)
 	   Subscriber_Data_FromCloud_Handler(); //WT.EDIT 2024.07.22
        osDelay(200);
 
-       wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+      
 	     
 	 }
-     else if(wifi_link_net_state() ==1){
-
-
-        wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
-
-     }
+   
 	
 }
 

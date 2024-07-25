@@ -20,15 +20,8 @@ typedef enum _wifi_state_t{
 	wifi_publish_dht11_delay,//4
 	wifi_subscriber_form_tencent_cloud_cmd,//5
 	wifi_publish_update_tencent_cloud_data,//6
-	wifi_from_down_data_cmd,//7
-	wifi_auto_to_link_cloud,//8
-	wifi_again_link_net_init,//9
-	wifi_atuo_link_cloud_ref,//10
-	wifi_auto_repeat_check_link_net_state,//11
-	wifi_tencent_publish_dht11_data,//12
-	wifi_get_beijing_time,//13
-	wifi_disconnect,//14
-	wifi_null//13
+	
+	
 
 
 }wifi_state_t;
