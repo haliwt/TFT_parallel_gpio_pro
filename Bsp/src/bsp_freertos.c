@@ -121,7 +121,9 @@ static void vTaskRunPro(void *pvParameters)
       
       MainBoard_Self_Inspection_PowerOn_Fun();
     
-      WIFI_Process_Handler();
+     
+      wifi_get_beijint_time_handler();
+       WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
       vTaskDelay(70);////100// 40

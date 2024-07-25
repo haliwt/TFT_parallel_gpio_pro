@@ -782,7 +782,7 @@ void TFT_Disp_Timer_Split_Symbol(void)
 void TFT_Disp_Temp_Value(uint8_t bc,uint8_t temp_value)
 {
 
-  static uint8_t temp_unit,temp_decade,refresh_one=0xff,refresh_two=0xff;
+  static uint8_t temp_unit,temp_decade;
 
    temp_decade = temp_value /10;
 

@@ -99,7 +99,7 @@ typedef struct _bsp_ctl{
    uint8_t gTimer_maian_run_fun;
    uint8_t gTimer_ctl_usart1_error ;
    uint8_t gTimer_ctl_usart2_error;
-   uint8_t gTimer_ctl_wifi_state;
+
 
 
 

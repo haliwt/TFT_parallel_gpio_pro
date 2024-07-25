@@ -111,7 +111,8 @@ void PowerOn_Process_Handler(void)
         //wifi of ref
 	    wifi_t.gTimer_get_beijing_time=0;
         wifi_t.get_rx_beijing_time_enable=0;
-
+        wifi_t.gTimer_auto_detected_net_state_times=0;
+         
         
 	  Device_Action_No_Wifi_Power_On_Handler(); 
 	  Power_On_Init();
@@ -183,12 +184,13 @@ void PowerOn_Process_Handler(void)
       // handler of wifi 
 	  case pro_wifi_publish_init: //7
 
-      if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 10){
+      if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 12){
 
             gpro_t.gTimer_get_data_from_tencent_data =0;
 
             Subscriber_Data_FromCloud_Handler();
             osDelay(200);//HAL_Delay(200)
+          //  wifi_auto_detected_handler();
 
       }
         
@@ -369,7 +371,7 @@ void PowerOff_Ref_Fun(void)
 		//wifi ref 
         wifi_t.link_net_tencent_data_flag=1;
         wifi_t.smartphone_app_power_on_flag=0;
-        wifi_t.power_off_step=0; 
+      
         
 
         //display ptc temperature value 

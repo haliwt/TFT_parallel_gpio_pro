@@ -55,44 +55,37 @@ typedef struct _WIFI_FUN{
     uint8_t data[512];
 	uint8_t auto_det_data[150];
     uint8_t  data_size;
-    uint8_t flag;
-	uint8_t wifi_RunState;
-	uint8_t esp8266_smartphone_flag;
-	uint8_t esp8266_link_cloud_flag;
+
+
+	
+	
 	uint8_t soft_ap_config_success;
 	uint8_t esp8266_login_cloud_success;
 
-	uint8_t subscribe_cloud_success;
-	uint8_t power_off_step;
+
     uint8_t usart2_dataBuf[1];
 
-    uint8_t link_tencent_thefirst_times;
 	
-	
-	uint8_t esp8266_dynamic_reg_flag;
-    uint8_t subscribe_flag;
-	uint8_t subscribe_rx_flag;
-    uint8_t subscribe_rxCloud_flag;
-	uint8_t esp8266_data_rx_success;
-	uint8_t rx_data_success ;
+   uint8_t rx_data_success ;
 	uint8_t  rx_counter ;
 	uint8_t  rx_data_state;
-	uint8_t getCloudValue_unit ;
-	uint8_t getCloudValue_decade;
-	uint8_t rx_data_len;
-	uint8_t rx_data_name_len;
+	
+	
+	
 	uint8_t linking_tencent_cloud_doing;
-    uint8_t cmp_flag;
-	uint8_t send_tencent_cloud_data_lable;
-    uint8_t subscrible_receive_data_label;
+
+
+
 	uint8_t link_tencent_step_counter;
 	uint8_t link_beijing_times_flag;
-	uint8_t auto_linknet_flag;
+
+
+    uint8_t start_again_link_net_flag;
 	
     //esp8266 up ref
 
 	uint8_t runCommand_order_lable;
-	uint8_t has_been_login_flag;
+
     uint8_t soft_ap_config_flag;
     uint8_t get_rx_beijing_time_enable;
 	

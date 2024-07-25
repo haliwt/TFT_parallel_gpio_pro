@@ -22,6 +22,7 @@ uint8_t login_cloud_counter;
    *Return Ref:NO
    *
 ********************************************************************************/
+#if 0
 void Receive_Data_FromCloud_Data(int type, char *str)
 {
    uint8_t   iNameLen = 0;
@@ -51,7 +52,7 @@ void Receive_Data_FromCloud_Data(int type, char *str)
 
    
    }
-
+#endif 
  /*******************************************************************************
 **
 *Function Name:void Publish_Data_ToCloud(void)
