@@ -122,7 +122,7 @@ static void vTaskRunPro(void *pvParameters)
       MainBoard_Self_Inspection_PowerOn_Fun();
     
      
-      wifi_get_beijint_time_handler();
+    //  wifi_get_beijint_time_handler();
        WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
@@ -515,6 +515,8 @@ static void vTaskMsgPro(void *pvParameters)
 
               SetPtc_TempComare_Value();
 
+               wifi_get_beijint_time_handler();
+
               
 
              
@@ -662,7 +664,7 @@ static void AppTaskCreate (void)
 
 	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
                  "vTaskRunPro",   		/* 任务名    */
-                 156,             		/* 任务栈大小，单位word，也就是4字节 */
+                 128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  1,               		/* 任务优先级*/
                  &xHandleTaskRunPro);  /* 任务句柄  */

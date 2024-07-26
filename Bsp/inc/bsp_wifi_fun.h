@@ -45,7 +45,7 @@ typedef struct usart
 typedef struct _WIFI_FUN{
 	
 
-    uint8_t data[512];
+    //uint8_t data[512];
 	uint8_t auto_det_data[150];
     uint8_t  data_size;
 
@@ -86,7 +86,7 @@ typedef struct _WIFI_FUN{
 	
 	//wifi
 	unsigned char wifi_data[150]; 
-	uint8_t  wifi_temp_data[150]; 
+	//uint8_t  wifi_temp_data[150]; 
  
 	
   
@@ -153,15 +153,17 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_wifi_power_on_detect ;
 	uint8_t gTimer_wifi_counter_link_beijing_times ;
 	uint8_t gTimer_main_pro_times;
+    uint8_t gTimer_auto_detected_net_state_times;
+    uint8_t gTimer_auto_link_net_time;
+
+ 
 
 
   
     uint8_t gTimer_auto_detected_net;
 	
     uint16_t gTimer_get_beijing_time;
-	uint16_t gTimer_auto_detected_net_state_times;
-
- 
+	
     
   
 	
