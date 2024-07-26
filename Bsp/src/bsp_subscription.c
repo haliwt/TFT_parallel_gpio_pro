@@ -96,7 +96,7 @@ void Subscribe_Rx_Interrupt_Handler(void)
 
       case 0:
       
-         if((wifi_t.usart2_dataBuf[0]== 'p')  ||wifi_t.usart2_dataBuf[0]=='E' || wifi_t.usart2_dataBuf[0] =='T')//hex :54 - "T" -fixed
+         if((wifi_t.usart2_dataBuf[0]== 'p')  ||wifi_t.usart2_dataBuf[0]=='E' || wifi_t.usart2_dataBuf[0] =='T' || wifi_t.usart2_dataBuf[0] =='D' )//hex :54 - "T" -fixed
             wifi_t.rx_data_state=1; //=1
           else{
                wifi_t.rx_counter=0;
@@ -105,7 +105,7 @@ void Subscribe_Rx_Interrupt_Handler(void)
             
          break;
       case 1: //#1
-             if((wifi_t.usart2_dataBuf[0]== 'a')||wifi_t.usart2_dataBuf[0]=='R' || wifi_t.usart2_dataBuf[0] =='C')  //hex :4B - "K" -fixed
+             if((wifi_t.usart2_dataBuf[0]== 'a')||wifi_t.usart2_dataBuf[0]=='R' || wifi_t.usart2_dataBuf[0] =='C'|| wifi_t.usart2_dataBuf[0] =='I')  //hex :4B - "K" -fixed
             wifi_t.rx_data_state=2; //=1
          else{
             wifi_t.rx_data_state =0;
@@ -114,7 +114,7 @@ void Subscribe_Rx_Interrupt_Handler(void)
          break;
             
         case 2:
-            if((wifi_t.usart2_dataBuf[0]== 'r')||wifi_t.usart2_dataBuf[0]=='R' || wifi_t.usart2_dataBuf[0] =='M')    //hex :4B - "K" -fixed
+            if((wifi_t.usart2_dataBuf[0]== 'r')||wifi_t.usart2_dataBuf[0]=='R' || wifi_t.usart2_dataBuf[0] =='M' || wifi_t.usart2_dataBuf[0] =='S')    //hex :4B - "K" -fixed
             wifi_t.rx_data_state=3; //=1
          else{
            wifi_t.rx_data_state =0;
@@ -124,7 +124,7 @@ void Subscribe_Rx_Interrupt_Handler(void)
         break;
         
         case 3:
-            if((wifi_t.usart2_dataBuf[0]== 'a')  ||wifi_t.usart2_dataBuf[0]=='O' || wifi_t.usart2_dataBuf[0] =='Q')  //hex :4B - "K" -fixed
+            if((wifi_t.usart2_dataBuf[0]== 'a')  ||wifi_t.usart2_dataBuf[0]=='O' || wifi_t.usart2_dataBuf[0] =='Q' || wifi_t.usart2_dataBuf[0] =='C')  //hex :4B - "K" -fixed
             wifi_t.rx_data_state=4; //=1
          else{
             wifi_t.rx_data_state =0;
@@ -134,7 +134,7 @@ void Subscribe_Rx_Interrupt_Handler(void)
         break;
 
       case 4:
-       if((wifi_t.usart2_dataBuf[0]== 'm') ||wifi_t.usart2_dataBuf[0]=='R' || wifi_t.usart2_dataBuf[0] =='T')   //hex :4B - "K" -fixed
+       if((wifi_t.usart2_dataBuf[0]== 'm') ||wifi_t.usart2_dataBuf[0]=='R' || wifi_t.usart2_dataBuf[0] =='T'|| wifi_t.usart2_dataBuf[0] =='O')   //hex :4B - "K" -fixed
          wifi_t.rx_data_state=5; //=1
          else{
            wifi_t.rx_data_state=0;
@@ -145,8 +145,19 @@ void Subscribe_Rx_Interrupt_Handler(void)
 
       
       case 5:
-       if((wifi_t.usart2_dataBuf[0]== 's')||wifi_t.usart2_dataBuf[0]==':' || wifi_t.usart2_dataBuf[0] =='T')    //hex :4B - "K" -fixed
-         wifi_t.rx_data_state=6; //=1
+       if((wifi_t.usart2_dataBuf[0]== 's')||wifi_t.usart2_dataBuf[0]==':' || wifi_t.usart2_dataBuf[0] =='T' || wifi_t.usart2_dataBuf[0] =='N'){    //hex :4B - "K" -fixed
+
+         if(wifi_t.usart2_dataBuf[0] =='N'){
+            wifi_t.esp8266_login_cloud_success =0;
+            gctl_t.get_beijing_time_success = 0;
+            wifi_t.rx_data_state =0;
+            wifi_t.rx_counter=0;
+
+         }
+         else
+           wifi_t.rx_data_state=6; //=1
+
+        }
          else{
            wifi_t.rx_data_state =0;
             wifi_t.rx_counter=0;

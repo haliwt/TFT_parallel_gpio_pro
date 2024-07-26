@@ -311,25 +311,23 @@ static void auto_repeat_init_link_net(void)
         WIFI_IC_ENABLE();
 
         if(auto_link_net_flag==0){
-        
+         auto_link_net_flag++;
+         wifi_t.gTimer_auto_link_net_time=0;
 		at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-        wifi_t.gTimer_auto_link_net_time =0;
-        auto_link_net_flag++;
-
-        }
-
-        if(auto_link_net_flag==1 && wifi_t.gTimer_auto_link_net_time > 1){
-
-             wifi_t.wifi_uart_counter=0;
-	        wifi_t.soft_ap_config_flag =0;
-	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
-		    auto_link_net_flag ++;
-            wifi_t.gTimer_auto_link_net_time=0;
+        HAL_Delay(500);
+          wifi_t.wifi_uart_counter=0;
+	      wifi_t.soft_ap_config_flag =0;
+            
+	     HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 3000);//开始连接
+         HAL_Delay(500);
+           
+            
+            
 		
 	    }
 
-        if(wifi_t.gTimer_auto_link_net_time > 1 && auto_link_net_flag==2){
-
+        if(wifi_t.gTimer_auto_link_net_time > 2 && auto_link_net_flag==1){
+            wifi_t.gTimer_auto_link_net_time=0;
             auto_link_net_flag=0 ;
             get_beijing_flag = 12;
 
