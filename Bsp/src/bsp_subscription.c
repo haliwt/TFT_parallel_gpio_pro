@@ -1037,16 +1037,16 @@ static void smartphone_app_timer_power_on_handler(void)
 void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 {
     
-          strcpy((char *)wifi_t.auto_det_data, (const char *)wifi_t.wifi_data);
-          wifi_t.data_size = wifi_t.wifi_uart_counter;
+         // strcpy((char *)wifi_t.auto_det_data, (const char *)wifi_t.wifi_data);
+         // wifi_t.data_size = wifi_t.wifi_uart_counter;
 
 
 		   if(wifi_t.soft_ap_config_flag==1){
 
-               if(strstr((const char*)wifi_t.auto_det_data,"+TCSAP:WIFI_CONNECT_SUCCESS")){
+               if(strstr((const char*)wifi_t.wifi_data,"+TCSAP:WIFI_CONNECT_SUCCESS")){
               		wifi_t.soft_ap_config_success=1;
 				}
-               else if(strstr((const char*)wifi_t.auto_det_data,"+TCMQTTCONN:OK")){
+               else if(strstr((const char*)wifi_t.wifi_data,"+TCMQTTCONN:OK")){
 
 				     wifi_t.repeat_login_tencent_cloud_init_ref=0;
 	                 wifi_t.esp8266_login_cloud_success=1;
@@ -1058,7 +1058,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 				  wifi_t.gTimer_auto_detected_net_state_times=0;
 				  
 			  }
-              else if(strstr((char*)wifi_t.auto_det_data,"+CME ERROR:208")){
+              else if(strstr((char*)wifi_t.wifi_data,"+CME ERROR:208")){
 						
 					       wifi_t.linking_tencent_cloud_doing=0; //release this flag. usart
 						   wifi_t.esp8266_login_cloud_success =0;
@@ -1070,16 +1070,16 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 					   
 		   
 			   }
-              else if(strstr((char*)wifi_t.auto_det_data,"+TCPRDINFOSET:1,\"EHQB1P53IH\"")){ //WT.EDIT 2024.07.22
-
-                   //  wifi_t.soft_ap_config_success=1;
-
-              }
+//              else if(strstr((char*)wifi_t.wifi_data,"+TCPRDINFOSET:1,\"EHQB1P53IH\"")){ //WT.EDIT 2024.07.22
+//
+//                  
+//
+//              }
            
            }
 		   else{
 
-		     if(strstr((const char*)wifi_t.auto_det_data,"+TCMQTTCONN:OK")){
+		     if(strstr((const char*)wifi_t.wifi_data,"+TCMQTTCONN:OK")){
 			 	
                  
 				  wifi_t.esp8266_login_cloud_success=1;
@@ -1091,7 +1091,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 				  wifi_t.soft_ap_config_flag=0;
 				  wifi_t.gTimer_auto_detected_net_state_times=0;
 			  }
-              else if(strstr((char*)wifi_t.auto_det_data,"+CME ERROR:208")){
+              else if(strstr((char*)wifi_t.wifi_data,"+CME ERROR:208")){
 				
 			
 				wifi_t.esp8266_login_cloud_success =0;
@@ -1103,7 +1103,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 			
 
 			  }
-              else  if(strstr((char*)wifi_t.auto_det_data,"+TCMQTTCONN:FAIL,202")){
+              else  if(strstr((char*)wifi_t.wifi_data,"+TCMQTTCONN:FAIL,202")){
 
                         wifi_t.esp8266_login_cloud_success =0;
                           
@@ -1112,7 +1112,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
                           
                       wifi_t.get_rx_beijing_time_enable=0;
               }
-              else  if(strstr((char*)wifi_t.auto_det_data,"+TCMQTTDISCON")){
+              else  if(strstr((char*)wifi_t.wifi_data,"+TCMQTTDISCON")){
           
                       wifi_t.esp8266_login_cloud_success =0;
                        wifi_t.get_rx_beijing_time_enable=0;

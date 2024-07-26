@@ -226,6 +226,7 @@ static void RunWifi_Command_Handler(void)
 	*Return Ref:NO
 	*
 ********************************************************************************/
+#if 0
 void Wifi_Rx_Auto_Link_Net_Handler(void)
 {
 
@@ -301,7 +302,7 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
     
 }
 
-
+#endif 
 static void auto_repeat_init_link_net(void)
 {
 	    

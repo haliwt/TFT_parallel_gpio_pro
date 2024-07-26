@@ -46,7 +46,7 @@ typedef struct _WIFI_FUN{
 	
 
     //uint8_t data[512];
-	uint8_t auto_det_data[150];
+	//uint8_t auto_det_data[150];
     uint8_t  data_size;
 
 

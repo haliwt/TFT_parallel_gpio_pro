@@ -192,6 +192,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
          wifi_t.gTimer_get_beijing_time=0;
 		 //at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
 		  at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
+          HAL_Delay(1000); //WT.EDIT 2024.07.26
 
 		}
 
