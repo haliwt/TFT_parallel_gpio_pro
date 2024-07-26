@@ -103,7 +103,7 @@ static void RunWifi_Command_Handler(void)
    case wifi_link_tencent_cloud: //01
 
 	if(power_on_state() == power_on){
-     
+        wifi_t.gTimer_get_beijing_time=0;
 		Wifi_SoftAP_Config_Handler();
 
 		SmartPhone_LinkTencent_Cloud();
@@ -113,6 +113,7 @@ static void RunWifi_Command_Handler(void)
 	if(wifi_link_net_state()==0){
 		if(wifi_t.gTimer_linking_tencent_duration < 166 ){
 		   gctl_t.get_beijing_time_success = 0; 
+           wifi_t.gTimer_get_beijing_time=0;
           
 		   wifi_t.runCommand_order_lable = wifi_link_tencent_cloud;
 		}
