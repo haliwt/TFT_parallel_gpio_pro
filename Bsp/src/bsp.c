@@ -285,12 +285,6 @@ void PowerOn_Process_Handler(void)
 
     }
     
-	if(wifi_link_net_state() ==1  ){
-		
-       TFT_DonnotDisp_Works_Time();
-		
-    }
-
     if(gctl_t.fan_continuce_flag ==1){
 
 	    if(gpro_t.gTimer_countdown_one_minute   > 0 || gpro_t.gTimer_countdown_one_minute==0){

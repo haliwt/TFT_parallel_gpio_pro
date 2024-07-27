@@ -592,7 +592,8 @@ void wifi_get_beijint_time_handler(void)
 
            // if(auto_link_net_flag==0){
             
-    		at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
+    		//at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
+    		at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
             HAL_Delay(1000);
             wifi_t.gTimer_auto_link_net_time =0;
             auto_link_net_flag=1;

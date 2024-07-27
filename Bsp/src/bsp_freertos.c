@@ -516,7 +516,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               SetPtc_TempComare_Value();
 
-               wifi_get_beijint_time_handler();
+               
 
               
 
@@ -537,6 +537,8 @@ static void vTaskMsgPro(void *pvParameters)
                Voice_Decoder_Handler();
          
           }
+
+         wifi_get_beijint_time_handler();
           
         }
              
