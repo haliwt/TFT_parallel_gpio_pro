@@ -103,7 +103,7 @@ static void RunWifi_Command_Handler(void)
    case wifi_link_tencent_cloud: //01
 
 	if(power_on_state() == power_on){
-        wifi_t.gTimer_get_beijing_time=0;
+     
 		Wifi_SoftAP_Config_Handler();
 
 		SmartPhone_LinkTencent_Cloud();
@@ -113,7 +113,6 @@ static void RunWifi_Command_Handler(void)
 	if(wifi_link_net_state()==0){
 		if(wifi_t.gTimer_linking_tencent_duration < 166 ){
 		   gctl_t.get_beijing_time_success = 0; 
-           wifi_t.gTimer_get_beijing_time=0;
           
 		   wifi_t.runCommand_order_lable = wifi_link_tencent_cloud;
 		}
@@ -226,7 +225,6 @@ static void RunWifi_Command_Handler(void)
 	*Return Ref:NO
 	*
 ********************************************************************************/
-#if 0
 void Wifi_Rx_Auto_Link_Net_Handler(void)
 {
 
@@ -302,7 +300,7 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
     
 }
 
-#endif 
+
 static void auto_repeat_init_link_net(void)
 {
 	    
@@ -312,23 +310,25 @@ static void auto_repeat_init_link_net(void)
         WIFI_IC_ENABLE();
 
         if(auto_link_net_flag==0){
-         auto_link_net_flag++;
-         wifi_t.gTimer_auto_link_net_time=0;
+        
 		at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-        HAL_Delay(500);
-          wifi_t.wifi_uart_counter=0;
-	      wifi_t.soft_ap_config_flag =0;
-            
-	     HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 3000);//开始连接
-         HAL_Delay(500);
-           
-            
-            
+        wifi_t.gTimer_auto_link_net_time =0;
+        auto_link_net_flag++;
+
+        }
+
+        if(auto_link_net_flag==1 && wifi_t.gTimer_auto_link_net_time > 1){
+
+             wifi_t.wifi_uart_counter=0;
+	        wifi_t.soft_ap_config_flag =0;
+	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
+		    auto_link_net_flag ++;
+            wifi_t.gTimer_auto_link_net_time=0;
 		
 	    }
 
-        if(wifi_t.gTimer_auto_link_net_time > 2 && auto_link_net_flag==1){
-            wifi_t.gTimer_auto_link_net_time=0;
+        if(wifi_t.gTimer_auto_link_net_time > 1 && auto_link_net_flag==2){
+
             auto_link_net_flag=0 ;
             get_beijing_flag = 12;
 

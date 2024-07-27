@@ -189,17 +189,14 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		if(wifi_t.link_tencent_step_counter==driver_esp8266_step_2){
 		 wifi_t.link_tencent_step_counter=driver_esp8266_step_3;
 		 wifi_t.gTimer_login_tencent_times=0;
-         wifi_t.gTimer_get_beijing_time=0;
 		 //at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
 		  at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-          HAL_Delay(1000); //WT.EDIT 2024.07.26
 
 		}
 
         if(wifi_t.gTimer_login_tencent_times > 0){
 		   WIFI_IC_ENABLE();
 		  wifi_t.gTimer_login_tencent_times=0;
-          wifi_t.gTimer_get_beijing_time=0;
 
           wifi_t.link_tencent_step_counter=driver_esp8266_step_4;
 
@@ -257,7 +254,6 @@ void Wifi_SoftAP_Config_Handler(void)
 				wifi_t.gTimer_login_tencent_times=0;
 				wifi_t.wifi_config_net_lable =wifi_set_softap;
 				ic_id = HAL_GetUIDw0();
-                wifi_t.gTimer_get_beijing_time=0;
 
 
 			}
@@ -274,7 +270,7 @@ void Wifi_SoftAP_Config_Handler(void)
 				wifi_t.gTimer_login_tencent_times=0;
             sprintf((char *)device_massage, "AT+TCPRDINFOSET=1,\"%s\",\"%s\",\"UYIJIA01-%d\"\r\n", PRODUCT_ID, DEVICE_SECRET,ic_id);
 			usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
-            wifi_t.gTimer_get_beijing_time=0;
+
 			}
 			if(wifi_t.gTimer_login_tencent_times > 6){
 	  		
@@ -299,7 +295,7 @@ void Wifi_SoftAP_Config_Handler(void)
              wifi_t.wifi_config_net_lable=wifi_set_tcsap;
          }
 
-          wifi_t.gTimer_get_beijing_time=0;
+          
 	 break;
 
 
@@ -323,7 +319,7 @@ void Wifi_SoftAP_Config_Handler(void)
 			 wifi_t.wifi_uart_counter=0;
 			 wifi_t.wifi_config_net_lable=wifi_inquire_register_codes; //WT.EDIT 2024.07.22//wifi_t.wifi_config_net_lable=0xff;
 		  }
-		 wifi_t.gTimer_get_beijing_time=0;
+		 
 			
 	 break;
 
@@ -331,13 +327,11 @@ void Wifi_SoftAP_Config_Handler(void)
 	   if(wifi_t.gTimer_login_tencent_times > 3){
          wifi_t.gTimer_login_tencent_times=0;
 		 wifi_t.wifi_uart_counter=0;
-         wifi_t.gTimer_get_beijing_time=0;
         HAL_UART_Transmit(&huart2, "AT+TCPRDINFOSET?\r\n", strlen("AT+TCPRDINFOSET?\r\n"), 0xffff); //动
         wifi_t.wifi_config_net_lable=0xff;//
 
         }
-       wifi_t.gTimer_get_beijing_time=0;
-           
+
 	}
   free(device_massage);
 }
@@ -354,7 +348,7 @@ void SmartPhone_LinkTencent_Cloud(void)
 {
    
    
-   wifi_t.gTimer_get_beijing_time=0;
+
 
 	if(wifi_t.soft_ap_config_success==1){
 

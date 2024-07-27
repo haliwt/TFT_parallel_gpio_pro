@@ -296,7 +296,7 @@ void PowerOn_Process_Handler(void)
 			gctl_t.fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-            LCD_Clear(BLACK);
+          //  LCD_Clear(BLACK);
            
 		}
     }
