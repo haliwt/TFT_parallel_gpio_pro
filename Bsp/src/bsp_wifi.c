@@ -10,6 +10,9 @@ static void RunWifi_Command_Handler(void);
 
 static void auto_repeat_init_link_net(void);
 
+static void auto_link_tencent_net_handler(void);
+
+
 
 uint16_t test_counter;
 uint8_t auto_link_net_flag;
@@ -306,21 +309,34 @@ static void auto_repeat_init_link_net(void)
 
         WIFI_IC_ENABLE();
 
-        if(auto_link_net_flag==0){
+       // if(auto_link_net_flag==0){
         
 		at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
+        HAL_Delay(1000);
         wifi_t.gTimer_auto_link_net_time =0;
-        auto_link_net_flag++;
+        auto_link_net_flag=1;
 
-        }
+}
 
-        if(auto_link_net_flag==1 && wifi_t.gTimer_auto_link_net_time > 1){
 
-             wifi_t.wifi_uart_counter=0;
-	        wifi_t.soft_ap_config_flag =0;
-	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
-		    auto_link_net_flag ++;
+
+static void auto_link_tencent_net_handler(void)
+{
+
+        
+
+      if(wifi_t.gTimer_auto_link_net_time > 2){
+
+
             wifi_t.gTimer_auto_link_net_time=0;
+            wifi_t.wifi_uart_counter=0;
+	        wifi_t.soft_ap_config_flag =0;
+      
+	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
+
+            auto_link_net_flag =2;
+            HAL_Delay(1000);
+           
 		
 	    }
 
@@ -328,20 +344,12 @@ static void auto_repeat_init_link_net(void)
 
             auto_link_net_flag=0 ;
             get_beijing_flag = 12;
-
+           
         }
 		
 		
         
-		
-    
-
-
-
 }
-
-
-
 
 /********************************************************************************
 	*
@@ -576,8 +584,28 @@ void wifi_get_beijint_time_handler(void)
 
 
      case 11:
+         if(wifi_link_net_state()==0 && gpro_t.wifi_led_fast_blink_flag==0){
 
-         auto_repeat_init_link_net();
+            wifi_t.linking_tencent_cloud_doing =1;
+
+            WIFI_IC_ENABLE();
+
+           // if(auto_link_net_flag==0){
+            
+    		at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
+            HAL_Delay(1000);
+            wifi_t.gTimer_auto_link_net_time =0;
+            auto_link_net_flag=1;
+
+            get_beijing_flag = 12;
+
+         }
+         else {
+
+             get_beijing_flag = 10;
+
+
+         }
         
                
 
@@ -585,6 +613,34 @@ void wifi_get_beijint_time_handler(void)
 
 
      case 12:
+
+        if(wifi_t.gTimer_auto_link_net_time > 2){
+
+
+            wifi_t.gTimer_auto_link_net_time=0;
+            wifi_t.wifi_uart_counter=0;
+	        wifi_t.soft_ap_config_flag =0;
+            DISABLE_INT();
+	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
+            ENABLE_INT();
+            auto_link_net_flag =2;
+            HAL_Delay(1000);
+           
+		
+	    }
+
+        if(wifi_t.gTimer_auto_link_net_time > 1 && auto_link_net_flag==2){
+
+            auto_link_net_flag=0 ;
+            get_beijing_flag = 13;
+           
+        }
+
+
+     break;
+
+
+     case 13:
        if(wifi_link_net_state()==1){
        
         

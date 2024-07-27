@@ -667,7 +667,7 @@ static void AppTaskCreate (void)
                  "vTaskRunPro",   		/* 任务名    */
                  128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 1,               		/* 任务优先级*/
+                 1,               		/* 任务优先级最低*/
                  &xHandleTaskRunPro);  /* 任务句柄  */
 
 
@@ -676,7 +676,7 @@ static void AppTaskCreate (void)
                  "vTaskMsgPro",   		/* 任务名    */
                  128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,               		/* 任务优先级*/
+                 2,               		/* 任务优先级次子*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
 	
 	
@@ -684,7 +684,7 @@ static void AppTaskCreate (void)
                  "vTaskStart",   		/* 任务名    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 3,              		/* 任务优先级*/
+                 3,              		/* 任务优先级最高*/
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
