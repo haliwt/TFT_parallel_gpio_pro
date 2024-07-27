@@ -72,12 +72,9 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
                 HAL_Delay(200);
 
           }
-
-
-
-           Subscriber_Data_FromCloud_Handler();
-            HAL_Delay(200);
-		  wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+          Subscriber_Data_FromCloud_Handler();
+          HAL_Delay(200);
+		
 	     
 		 
 		  

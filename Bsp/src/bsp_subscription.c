@@ -1127,7 +1127,7 @@ void clear_rx_copy_data(void)
 {
    uint8_t i;
 
-   if( wifi_t.once_rx_data_done == 1){
+   if( wifi_t.once_rx_data_done == 1 && wifi_link_net_state() == 0){
 
       wifi_t.once_rx_data_done ++;
 
