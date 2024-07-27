@@ -69,11 +69,11 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
         
           if(gpro_t.gPower_On == power_off) {
 		     MqttData_Publish_PowerOff_Ref();
-                HAL_Delay(200);
+               osDelay(200);
 
           }
           Subscriber_Data_FromCloud_Handler();
-          HAL_Delay(200);
+          osDelay(200);
 		
 	     
 		 
