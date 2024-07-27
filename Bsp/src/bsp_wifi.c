@@ -1,16 +1,14 @@
 #include "bsp.h"
 
 
-uint8_t counter,power_on_det_net ;
+
 
 uint8_t get_beijing_flag, beijing_step;
 
 
 static void RunWifi_Command_Handler(void);
 
-static void auto_repeat_init_link_net(void);
 
-static void auto_link_tencent_net_handler(void);
 
 
 
@@ -44,10 +42,7 @@ void WIFI_Process_Handler(void)
 **********************************************************************/
 void MainBoard_Self_Inspection_PowerOn_Fun(void)
 {
-  // static uint8_t counter, power_on_det_net;
-
-
-   
+   static uint8_t power_on_dc_power,counter;
 	if(counter < 2 && wifi_link_net_state()==0){
 		
       Auto_InitWifiModule_Hardware();//InitWifiModule();
@@ -60,9 +55,10 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
        }
        
     }
-    if(wifi_link_net_state()==1    && power_on_det_net ==0){
-             power_on_det_net++;
-             counter++;
+    if(wifi_link_net_state()==1    && power_on_dc_power ==0){
+              power_on_dc_power++;
+   
+             counter= 5;
              
            wifi_t.linking_tencent_cloud_doing = 0;
 
@@ -70,13 +66,13 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
            wifi_t.link_net_tencent_data_flag=1;
           // gpro_t.power_off_flag =1;
         
-          if(gpro_t.gPower_On == power_off) {
+          if(gpro_t.gPower_On == power_off){
 		     MqttData_Publish_PowerOff_Ref();
-               osDelay(200);
+               HAL_Delay(300);
 
           }
           Subscriber_Data_FromCloud_Handler();
-          osDelay(200);
+          HAL_Delay(200);
 		
 	     
 		 
@@ -301,55 +297,7 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
 }
 
 
-static void auto_repeat_init_link_net(void)
-{
-	    
-        
-        wifi_t.linking_tencent_cloud_doing =1;
 
-        WIFI_IC_ENABLE();
-
-       // if(auto_link_net_flag==0){
-        
-		at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-        HAL_Delay(1000);
-        wifi_t.gTimer_auto_link_net_time =0;
-        auto_link_net_flag=1;
-
-}
-
-
-
-static void auto_link_tencent_net_handler(void)
-{
-
-        
-
-      if(wifi_t.gTimer_auto_link_net_time > 2){
-
-
-            wifi_t.gTimer_auto_link_net_time=0;
-            wifi_t.wifi_uart_counter=0;
-	        wifi_t.soft_ap_config_flag =0;
-      
-	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
-
-            auto_link_net_flag =2;
-            HAL_Delay(1000);
-           
-		
-	    }
-
-        if(wifi_t.gTimer_auto_link_net_time > 1 && auto_link_net_flag==2){
-
-            auto_link_net_flag=0 ;
-            get_beijing_flag = 12;
-           
-        }
-		
-		
-        
-}
 
 /********************************************************************************
 	*
@@ -363,8 +311,17 @@ void wifi_get_beijint_time_handler(void)
 {
 
   static uint8_t alternate_flag;
+  if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 5){
+       
+                   gpro_t.gTimer_get_data_from_tencent_data =0;
+       
+                   Subscriber_Data_FromCloud_Handler();
+                   osDelay(200);//HAL_Delay(200)
+                 //  wifi_auto_detected_handler();
+       
+    }
 
-   switch(get_beijing_flag){
+    switch(get_beijing_flag){
 
 
    case 0:

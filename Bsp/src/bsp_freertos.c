@@ -518,12 +518,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                
 
-              
-
-             
-            
-              
-         }
+          }
          else if(gpro_t.gPower_On == power_off){
             mode_key_long_conter  =0;
             power_key_long_conter = 0xff;
