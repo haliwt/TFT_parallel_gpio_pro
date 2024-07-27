@@ -84,6 +84,9 @@ void Json_Parse_Command_Fun(void);
 
 void Wifi_Rx_Link_Net_InputInfo_Handler(void);
 
+void clear_rx_copy_data(void);
+
+
 
 #endif 
 

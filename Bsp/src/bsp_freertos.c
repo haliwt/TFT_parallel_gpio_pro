@@ -126,6 +126,7 @@ static void vTaskRunPro(void *pvParameters)
        WIFI_Process_Handler();
 
       USART_Cmd_Error_Handler();
+      clear_rx_copy_data();
       vTaskDelay(70);////100// 40
   }
 	

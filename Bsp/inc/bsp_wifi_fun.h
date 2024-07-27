@@ -46,7 +46,8 @@ typedef struct _WIFI_FUN{
 	
 
     //uint8_t data[512];
-	uint8_t auto_det_data[150];
+	uint8_t auto_det_data[100];
+    uint8_t wifi_data[100]; 
     uint8_t  data_size;
 
 
@@ -81,12 +82,14 @@ typedef struct _WIFI_FUN{
 
     uint8_t soft_ap_config_flag;
     uint8_t get_rx_beijing_time_enable;
+
+    uint8_t once_rx_data_done ;
 	
 
 	
 	//wifi
-	unsigned char wifi_data[150]; 
-	//uint8_t  wifi_temp_data[150]; 
+	
+ 
  
 	
   
