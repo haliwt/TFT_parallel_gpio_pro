@@ -325,7 +325,7 @@ void wifi_get_beijint_time_handler(void)
 
 
   
-  if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 5){
+  if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 9){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
        

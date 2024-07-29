@@ -262,7 +262,7 @@ void PowerOn_Process_Handler(void)
 
 	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
 
-    gpro_t.gTimer_power_off_send_data_tencent=0;
+
 
     gctl_t.fan_continuce_flag =1;
 
@@ -275,7 +275,7 @@ void PowerOn_Process_Handler(void)
 
 	    if(gpro_t.gTimer_countdown_one_minute   > 0 || gpro_t.gTimer_countdown_one_minute==0){
             Fan_Run();
-            gpro_t.gTimer_power_off_send_data_tencent=0;
+            gpro_t.gTimer_get_data_from_tencent_data=0;
            
 		}
 		else{
@@ -314,16 +314,9 @@ void PowerOn_Process_Handler(void)
    
     Breath_Led();
 
-    if(wifi_link_net_state() ==1 && gpro_t.gTimer_power_off_send_data_tencent    > 10){
+ 
 
-       gpro_t.gTimer_power_off_send_data_tencent =0;
-	
-       MqttData_Publish_PowerOff_Ref();
-       osDelay(200);
-      
-    }
-
-   if(wifi_link_net_state() ==1  ){
+   if(wifi_link_net_state() ==1 ){
 		
        TFT_DonnotDisp_Works_Time();
 		

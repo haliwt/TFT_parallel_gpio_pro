@@ -920,6 +920,11 @@ static void smartphone_app_timer_power_on_handler(void)
 
 
         }
+        else{
+            wifi_t.smartphone_app_power_on_flag=0;
+
+
+        }
 		
 		
          wifi_t.esp8266_login_cloud_success=1;

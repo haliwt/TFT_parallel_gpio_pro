@@ -238,7 +238,7 @@ typedef struct{
   uint8_t gTimer_exit_mode_long_key;
   uint8_t gTimer_read_humidity_value;
   uint8_t  gTimer_fan_run_one_minute;
-  uint8_t  gTimer_power_off_send_data_tencent; 
+
   uint8_t gTimer_get_data_from_tencent_data;
   int8_t gTimer_countdown_one_minute;
   
