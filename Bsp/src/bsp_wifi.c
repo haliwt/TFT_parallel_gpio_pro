@@ -314,7 +314,7 @@ void wifi_get_beijint_time_handler(void)
 
     static uint8_t alternate_flag;
 
-      if(wifi_t.get_rx_beijing_time_enable==0){
+     if(wifi_t.get_rx_beijing_time_enable==0){
     
          Tencent_Cloud_Rx_Handler();
     	 Json_Parse_Command_Fun();
