@@ -322,6 +322,12 @@ void PowerOn_Process_Handler(void)
        osDelay(200);
       
     }
+
+   if(wifi_link_net_state() ==1  ){
+		
+       TFT_DonnotDisp_Works_Time();
+		
+    }
    
 	
 }

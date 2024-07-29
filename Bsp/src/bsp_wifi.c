@@ -27,10 +27,12 @@ void WIFI_Process_Handler(void)
 {
   	//
     RunWifi_Command_Handler();
-    if(wifi_t.get_rx_beijing_time_enable==0){
-     Tencent_Cloud_Rx_Handler();
-	 Json_Parse_Command_Fun();
-    }
+//    if(wifi_t.get_rx_beijing_time_enable==0){
+//    
+//     Tencent_Cloud_Rx_Handler();
+//	 Json_Parse_Command_Fun();
+//   
+//    }
 }
 /**********************************************************************
 	*
@@ -310,7 +312,19 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
 void wifi_get_beijint_time_handler(void)
 {
 
-  static uint8_t alternate_flag;
+    static uint8_t alternate_flag;
+
+      if(wifi_t.get_rx_beijing_time_enable==0){
+    
+         Tencent_Cloud_Rx_Handler();
+    	 Json_Parse_Command_Fun();
+  
+      }
+
+
+
+
+  
   if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 5){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
@@ -318,6 +332,9 @@ void wifi_get_beijint_time_handler(void)
                    Subscriber_Data_FromCloud_Handler();
                    osDelay(200);//HAL_Delay(200)
                  //  wifi_auto_detected_handler();
+                 if(gpro_t.gPower_On == power_on){
+                     LED_WIFI_ICON_ON();
+                  }
        
     }
 
@@ -335,6 +352,7 @@ void wifi_get_beijint_time_handler(void)
      
     		    get_beijing_flag = 1;
                 beijing_step =1;
+                alternate_flag++;
                 wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
                 gpro_t.gTimer_pro_update_dht11_data =0; //disable publish to data to tencent .
 
@@ -369,8 +387,8 @@ void wifi_get_beijint_time_handler(void)
        }
 	   else{
 
-          alternate_flag++;
-         if(alternate_flag == 0){
+          
+         if(alternate_flag == 1){
 		  
 			wifi_t.link_beijing_times_flag =1;
 			
@@ -382,7 +400,6 @@ void wifi_get_beijint_time_handler(void)
 
         }
 		else{
-              
               alternate_flag=0;
                gpro_t.gTimer_pro_update_dht11_data=0;
 			   get_beijing_flag = 6;

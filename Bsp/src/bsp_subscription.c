@@ -205,22 +205,21 @@ void Subscribe_Rx_Interrupt_Handler(void)
 
             if(wifi_t.usart2_dataBuf[0]=='}' || wifi_t.usart2_dataBuf[0]==0x0A) //0x7D='}', 0x0A = line feed // end
             {
-            wifi_t.rx_data_success=1;
-            wifi_t.rx_data_state=0;
-            wifi_t.received_data_from_tencent_cloud = wifi_t.rx_counter;
-            wifi_t.rx_counter=0;
+                wifi_t.rx_data_success=1;
+                wifi_t.rx_data_state=0;
+                wifi_t.received_data_from_tencent_cloud = wifi_t.rx_counter;
+                wifi_t.rx_counter=0;
 
 
             }
-            else 
-            wifi_t.rx_data_state=9; 
+           
          }
          else{
-			wifi_t.rx_data_success=0;
+			      //wifi_t.rx_data_success=0;
 
             wifi_t.rx_data_state =0;
             wifi_t.rx_counter=0;
-			wifi_t.received_data_from_tencent_cloud =0;
+			      wifi_t.received_data_from_tencent_cloud =0;
 
          }
        

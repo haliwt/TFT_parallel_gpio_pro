@@ -529,7 +529,7 @@ void TFT_DonnotDisp_Works_Time(void)
 {
 
    
-	if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==0){
+	if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==0 && gpro_t.gPower_On == power_on){
 		   gctl_t.gTimer_ctl_disp_works_time_second =0;
 		   gctl_t.disp_works_minutes++;
 		   if(gctl_t.disp_works_minutes>59){
