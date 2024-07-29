@@ -407,7 +407,7 @@ void Device_Action_No_Wifi_Handler(void)
 {
 
 
- //  Fan_Run();
+   Fan_Run();
 
    if(wifi_link_net_state() == 1){
       LED_WIFI_ICON_ON();

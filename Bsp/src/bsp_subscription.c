@@ -304,81 +304,6 @@ void Subscribe_Rx_Interrupt_Handler(void)
     
 
 }
- 
-/*******************************************************************************
-**
-*Function Name:void Subscribe_Rx_IntHandler(void)
-*Function: interrupt USART2 receive data fun
-*Input Ref: +TCMQTTCONN:OK
-*Return Ref:NO
-*
-********************************************************************************/
-#if 0
-void Wifi_Rx_InputInfo_Handler(void)
-{
-    
-          strcpy((char *)wifi_t.data, (const char *)wifi_t.wifi_data);
-          wifi_t.data_size = wifi_t.wifi_uart_counter;
-
-
-		   if(wifi_t.soft_ap_config_flag==1){
-
-               if(strstr((const char*)wifi_t.data,"+TCSAP:WIFI_CONNECT_SUCCESS")){
-              		wifi_t.soft_ap_config_success=1;
-					
-                   
-			        
-					wifi_t.gTimer_auto_detected_net_state_times=0;
-					wifi_t.repeat_login_tencent_cloud_init_ref=0; //init hardware 
-					wifi_t.esp8266_login_cloud_success=1;
-					wifi_t.linking_tencent_cloud_doing=0; //release this flag.
-					wifi_t.soft_ap_config_flag=0;
-               	}
-
-			
-            else{
-				  if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
-
-				     wifi_t.repeat_login_tencent_cloud_init_ref=0;
-	                 wifi_t.esp8266_login_cloud_success=1;
-				  
-              
-				  //link to tencent cloud is success .
-	              wifi_t.linking_tencent_cloud_doing=0; //release this flag. usart
-				
-				  wifi_t.soft_ap_config_flag=0;
-				  wifi_t.gTimer_auto_detected_net_state_times=0;
-				  
-			  }
-           
-           }
-		  }
-		  else{
-
-		     if(strstr((const char*)wifi_t.data,"+TCMQTTCONN:OK")){
-			 	
-                 
-				  wifi_t.esp8266_login_cloud_success=1;
-			      wifi_t.repeat_login_tencent_cloud_init_ref=0;
-				
-	              wifi_t.linking_tencent_cloud_doing=0;
-				 
-              
-		
-				  wifi_t.soft_ap_config_flag=0;
-				  wifi_t.gTimer_auto_detected_net_state_times=0;
-			  }
-
-
-
-		  }
-       
-         wifi_t.wifi_uart_counter=0;
-         
-        
-            
-}
-#endif 
 /*******************************************************************************
     **
     *Function Name:void Tencent_Cloud_Rx_Handler(void)
@@ -394,9 +319,8 @@ void Tencent_Cloud_Rx_Handler(void)
 
     if(wifi_t.rx_data_success==1){
          wifi_t.rx_data_success=0;
-         //wifi_t.set_beijing_time_flag =0; //WT.EDIT 2023.06.12
          wifi_t.link_beijing_times_flag =0;
-		 // wifi_t.get_rx_beijing_time_enable=0; //enable beijing times
+		
 	
      if(wifi_t.received_data_from_tencent_cloud > 22){ //36
 	    wifi_t.received_data_from_tencent_cloud=0;
@@ -407,10 +331,7 @@ void Tencent_Cloud_Rx_Handler(void)
 	  
         strncpy((char*)TCMQTTRCVPUB,(char *)wifi_t.wifi_data,40);
 
-       
-	    
-	
-	}
+    }
 	else{
 
 
@@ -945,23 +866,23 @@ static void smartphone_app_timer_power_on_handler(void)
 
 	   app_step=1;
    
-	 if(wifi_t.smartphone_app_power_on_flag==1){
+	 //if(wifi_t.smartphone_app_power_on_flag==1){
 
-	 if(strstr((char *)TCMQTTRCVPUB,"ptc\":1")){
+	  if(strstr((char *)TCMQTTRCVPUB,"ptc\":1")){
 			
 			gctl_t.ptc_flag=1;
 		}
-		else if(strstr((char *)TCMQTTRCVPUB,"ptc\":0")){
+		else{ //if(strstr((char *)TCMQTTRCVPUB,"ptc\":0")){
 			
 			gctl_t.ptc_flag=0;
 		}
 
-	 if(strstr((char *)TCMQTTRCVPUB,"sonic\":1")){
+	    if(strstr((char *)TCMQTTRCVPUB,"sonic\":1")){
 
 			 gctl_t.ultrasonic_flag=1;
 
 		}
-        else if(strstr((char *)TCMQTTRCVPUB,"sonic\":0")){
+        else{ // if(strstr((char *)TCMQTTRCVPUB,"sonic\":0")){
 
              gctl_t.ultrasonic_flag=0;
 
@@ -970,45 +891,40 @@ static void smartphone_app_timer_power_on_handler(void)
 		if(strstr((char *)TCMQTTRCVPUB,"Anion\":1")){
 			 gctl_t.plasma_flag=1;
         }
-		else if(strstr((char *)TCMQTTRCVPUB,"Anion\":0")){
+		else{  // if(strstr((char *)TCMQTTRCVPUB,"Anion\":0")){
 			 gctl_t.plasma_flag=0;
         }
 
-		}
-      
-       if(strstr((char *)TCMQTTRCVPUB,"open\":1")){
+		
+        if(strstr((char *)TCMQTTRCVPUB,"open\":1")){
             wifi_t.smartphone_app_power_on_flag=1;
-         }
-     }
+        }
+    }
     if(app_step==1){
 	    app_step=0;
-		 // buzzer_sound();
 
-    #if 0
-	
-      //wifi_t.link_net_tencent_data_flag =3; //has been publish and subscription of data
-        wifi_t.smartphone_app_power_on_flag=1;
-        MqttData_Publish_Update_Data();
-       // osDelay(20);//HAL_Delay(20);
-        wifi_t.smartphone_app_power_on_timer_flag=1;
-        gpro_t.set_timer_timing_success=0;
-        App_PowerOn_Handler();
 
-        #endif 
-        wifi_t.esp8266_login_cloud_success=1;
+        if(gpro_t.gPower_On == power_off){
+
+        
         wifi_t.smartphone_app_power_on_flag=1;
         wifi_t.smartphone_app_power_on_timer_flag=1;
 	
 		//MqttData_Publish_SetOpen(1);  
         MqttData_Publish_Update_Data();
-		osDelay(200);//HAL_Delay(200);//300
+		HAL_Delay(200);//300
 		App_PowerOn_Handler();
-		
-		
-
-		gctl_t.ptc_warning =0;
+        gctl_t.ptc_warning =0;
 		gctl_t.fan_warning =0;
 		wifi_t.gTimer_auto_detected_net_state_times=0;//don't need check wifi if has or not
+
+
+        }
+		
+		
+         wifi_t.esp8266_login_cloud_success=1;
+
+		
 		
     }
     

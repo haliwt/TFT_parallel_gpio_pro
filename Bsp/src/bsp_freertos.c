@@ -87,7 +87,7 @@ void freeRTOS_Handler(void)
 *	功能说明: 使用函数xTaskNotifyWait接收任务vTaskTaskUserIF发送的事件标志位设置
 *	形    参: pvParameters 是在创建该任务时传递的形参
 *	返 回 值: 无
-*   优 先 级: 3  
+*   优 先 级: 1  
 *********************************************************************************************************
 */
 static void vTaskRunPro(void *pvParameters)
@@ -137,7 +137,7 @@ static void vTaskRunPro(void *pvParameters)
 *	功能说明: 使用函数xTaskNotifyWait接收任务vTaskTaskUserIF发送的事件标志位设置
 *	形    参: pvParameters 是在创建该任务时传递的形参
 *	返 回 值: 无
-*   优 先 级: 3  
+*   优 先 级: 2  
 *********************************************************************************************************
 */
 static void vTaskMsgPro(void *pvParameters)
@@ -341,6 +341,10 @@ static void vTaskMsgPro(void *pvParameters)
                    ENABLE_INT();
                   buzzer_sound();
 
+                  power_off_init_set_ref();
+                  power_off_handler();
+
+
               }
               else if(key_dec_sound_flag == 1){
                  key_dec_sound_flag++;
@@ -362,33 +366,17 @@ static void vTaskMsgPro(void *pvParameters)
               }
           
           }
-          //run_main_board_process();
-         if(key_power_sound_flag==2){
+
+           
+          if(key_power_sound_flag==2){//run_main_board_process();
            
 
-              if(wifi_t.smartphone_app_power_on_timer_flag==1){
-                    wifi_t.smartphone_app_power_on_timer_flag++;
-                   if(gpro_t.gPower_On == power_off){
-                    power_on_init_set_ref();
-                    gpro_t.gPower_On = power_on;  
-  
-                     gpro_t.run_process_step=0;
-                    }
-                    else{
-                       Device_Action_No_Wifi_Handler();
-                  
-                   }
-
-                    key_power_sound_flag=6;
-
-              }
-              else if(gpro_t.gPower_On == power_off && key_power_off_sound_flag==2){
-                key_power_off_sound_flag++;
-                power_off_init_set_ref();
-                power_off_handler();
-
-
-              }
+              if(wifi_t.smartphone_app_power_on_flag==1){
+                    wifi_t.smartphone_app_power_on_flag++;
+                    gpro_t.power_on_or_off_flag = power_on;
+                    gpro_t.run_process_step=0;
+               
+               }
               else{
                PowerOnOff_Init_Ref_Fun();
 
@@ -402,8 +390,14 @@ static void vTaskMsgPro(void *pvParameters)
             key_power_sound_flag++;
 
             if(gpro_t.power_on_or_off_flag == power_on){
-            gpro_t.gPower_On = power_on;
-            power_on_init_set_ref();
+               gpro_t.gPower_On = power_on;
+               power_on_init_set_ref();
+               if(wifi_t.smartphone_app_power_on_flag==2){
+                   wifi_t.smartphone_app_power_on_flag++;
+                   Device_Action_No_Wifi_Handler(); //smart phone app is power on .
+
+               }
+            
 
             }
             else{
@@ -545,7 +539,7 @@ static void vTaskMsgPro(void *pvParameters)
 *	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
 *	形    参: pvParameters 是在创建该任务时传递的形参
 *	返 回 值: 无
-*   优 先 级: 4  
+*   优 先 级: 3  
 **********************************************************************************************************/
 static void vTaskStart(void *pvParameters)
 {
