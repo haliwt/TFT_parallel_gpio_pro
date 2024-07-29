@@ -98,6 +98,7 @@ void PowerOn_Process_Handler(void)
 
 
 	 case 0:
+         gpro_t.run_process_step=pro_disp_dht11_value;
         DISABLE_INT();
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
@@ -122,6 +123,7 @@ void PowerOn_Process_Handler(void)
       LED_Power_Key_On();
 
       ENABLE_INT();
+       gpro_t.run_process_step=pro_disp_dht11_value;
 	 
 	 break;
 
