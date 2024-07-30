@@ -120,10 +120,7 @@ static void vTaskRunPro(void *pvParameters)
       bsp_run_Idle();
       
       MainBoard_Self_Inspection_PowerOn_Fun();
-    
-    
- 
-       WIFI_Process_Handler();
+      WIFI_Process_Handler();
 
     
       clear_rx_copy_data();
@@ -145,7 +142,7 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(40); /* 设置最大等待时间为50ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_long_sound_flag;
@@ -522,6 +519,7 @@ static void vTaskMsgPro(void *pvParameters)
           }
 
          wifi_get_beijint_time_handler();
+        
           
         }
              
@@ -659,7 +657,7 @@ static void AppTaskCreate (void)
 
     xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
                  "vTaskMsgPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  2,               		/* 任务优先级次子*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
