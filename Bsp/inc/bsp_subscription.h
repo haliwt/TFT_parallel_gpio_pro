@@ -2,6 +2,8 @@
 #define __BSP_SUBSCRIPTION_H_
 #include "main.h"
 
+#define DEBUG_WIFI_TEST     0
+
 typedef enum DISPLAY_STATE_T{
    
     WIFI_POWER_ON = 0x80,
@@ -86,6 +88,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void);
 
 void clear_rx_copy_data(void);
 
+void detection_net_link_state_handler(void);
 
 
 #endif 

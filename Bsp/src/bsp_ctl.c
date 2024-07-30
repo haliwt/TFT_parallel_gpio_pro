@@ -774,11 +774,33 @@ void Device_Action_Led_OnOff_Handler(void)
 
    }
 
+  if(wifi_link_net_state() == 1 && gpro_t.wifi_led_fast_blink_flag==0){
+
+    LED_WIFI_ICON_ON();
+
+  }
+
 
 
 }
 
 
+/*****************************************************************************
+ * 
+ * Function Name: void disp_led_on_of_state(void)
+ * Function:
+ * Input Ref: NO
+ * Return Ref: NO
+ * 
+*****************************************************************************/
+void disp_all_led_on_off_state(void)
+{
+   if(gctl_t.gTime_all_led_on_off > 0){
+      gctl_t.gTime_all_led_on_off=0;
 
+       Device_Action_Led_OnOff_Handler();
+
+    }
+}
 
 

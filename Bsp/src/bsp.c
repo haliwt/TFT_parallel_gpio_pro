@@ -99,7 +99,7 @@ void PowerOn_Process_Handler(void)
 
 	 case 0:
          gpro_t.run_process_step=pro_disp_dht11_value;
-        DISABLE_INT();
+       // DISABLE_INT();
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
@@ -122,7 +122,7 @@ void PowerOn_Process_Handler(void)
 	  Fan_Run();
       LED_Power_Key_On();
 
-      ENABLE_INT();
+    //  ENABLE_INT();
        gpro_t.run_process_step=pro_disp_dht11_value;
 	 
 	 break;
@@ -178,19 +178,13 @@ void PowerOn_Process_Handler(void)
 		  ModeKey_Select_Default_LedOnOff();
             
 		}
-		
-
-	  gpro_t.run_process_step=pro_wifi_publish_init;
+	   gpro_t.run_process_step=pro_wifi_publish_init;
 	 break; 
 		  
       // handler of wifi 
 	  case pro_wifi_publish_init: //7
 
-      
-        
-		
-
-        if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
+      if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
               // wifi_t.link_net_tencent_data_flag ++;
 		   
 		     //MqttData_Publish_SetOpen(0x01);
@@ -199,16 +193,9 @@ void PowerOn_Process_Handler(void)
 		    MqttData_Publish_Update_Data();
 		    HAL_Delay(200);
             
-           
-            
+       }
 
-		}
-
-
-     
-
-	 
-	   gpro_t.run_process_step=pro_check_time_out;
+      gpro_t.run_process_step=pro_check_time_out;
 
 	 break;
 
