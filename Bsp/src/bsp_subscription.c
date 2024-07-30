@@ -471,7 +471,7 @@ void Json_Parse_Command_Fun(void)
         wifi_t.net_smart_phone_power_on_flag = 1; //WT.EDIT 2024.07.30 
 	
 		MqttData_Publish_SetOpen(1);  
-		osDelay(200);//HAL_Delay(200);//300
+		HAL_Delay(200);//300
 		App_PowerOn_Handler();
 		
 		
@@ -957,6 +957,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 
                if(strstr((const char*)wifi_t.wifi_data,"+TCSAP:WIFI_CONNECT_SUCCESS")){
               		wifi_t.soft_ap_config_success=1;
+                     wifi_t.serch_for_wifi_flag = 0;
 				}
                else if(strstr((const char*)wifi_t.wifi_data,"+TCMQTTCONN:OK")){
 
@@ -967,6 +968,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 	              wifi_t.linking_tencent_cloud_doing=0; //release this flag. usart
 				
 				  wifi_t.soft_ap_config_flag=0;
+                   wifi_t.serch_for_wifi_flag = 0;
 				  wifi_t.gTimer_auto_detected_net_state_times=0;
 				  
 			  }
@@ -997,7 +999,11 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
            }
 		   else{
 
-		     if(strstr((const char*)wifi_t.wifi_data,"+TCMQTTCONN:OK")){
+            if(strstr((const char*)wifi_t.wifi_data,"+TCSAP:WIFI_CONNECT_SUCCESS") && wifi_t.soft_ap_config_success==0){
+              		wifi_t.soft_ap_config_success=1;
+                    wifi_t.serch_for_wifi_flag = 0;
+			}
+            else if(strstr((const char*)wifi_t.wifi_data,"+TCMQTTCONN:OK")){
 			 	
                  
 				  wifi_t.esp8266_login_cloud_success=1;

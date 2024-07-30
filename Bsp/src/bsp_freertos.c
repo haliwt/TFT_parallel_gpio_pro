@@ -129,7 +129,7 @@ static void vTaskRunPro(void *pvParameters)
       clear_rx_copy_data();
       detection_net_link_state_handler();
       //USART_Cmd_Error_Handler();
-      vTaskDelay(80);//70//100// 40
+      vTaskDelay(30);//70//100// 40
   }
 	
 }

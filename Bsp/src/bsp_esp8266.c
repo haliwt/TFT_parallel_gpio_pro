@@ -309,6 +309,8 @@ void Wifi_SoftAP_Config_Handler(void)
 		 	wifi_t.link_tencent_step_counter =driver_esp8266_step_8;
 			  wifi_t.gTimer_login_tencent_times=0;
 
+            wifi_t.soft_ap_config_flag =1;
+
 	        sprintf((char *)device_massage, "AT+TCSAP=\"UYIJIA01-%d\"\r\n",ic_id);
             usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
            }
@@ -318,7 +320,7 @@ void Wifi_SoftAP_Config_Handler(void)
 		   
 			 wifi_t.gTimer_login_tencent_times = 0;
 
-			 wifi_t.soft_ap_config_flag =1;
+			
 			 wifi_t.linking_tencent_cloud_doing =1; //enable usart2 receive wifi  data
 			 wifi_t.wifi_uart_counter=0;
 			 wifi_t.wifi_config_net_lable=wifi_inquire_register_codes; //WT.EDIT 2024.07.22//wifi_t.wifi_config_net_lable=0xff;

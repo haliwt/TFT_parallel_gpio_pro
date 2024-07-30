@@ -1,16 +1,8 @@
 #include "bsp.h"
 
 
-
-
 uint8_t get_beijing_flag, beijing_step;
-
-
 static void RunWifi_Command_Handler(void);
-
-
-
-
 
 uint16_t test_counter;
 uint8_t auto_link_net_flag;
