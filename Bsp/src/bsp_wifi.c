@@ -19,8 +19,13 @@ void WIFI_Process_Handler(void)
 {
   	
     RunWifi_Command_Handler();
+
     
-    if(wifi_t.net_smart_phone_power_on_flag == 1){
+}
+
+void smart_phone_power_on_to_tencent_data(void)
+{
+    if(wifi_t.net_smart_phone_power_on_flag == 1 ){
          wifi_t.net_smart_phone_power_on_flag ++ ;
 
           MqttData_Publish_Update_Data();
@@ -28,6 +33,7 @@ void WIFI_Process_Handler(void)
 
 
     }
+
 
 }
 /**********************************************************************
@@ -296,14 +302,20 @@ void wifi_get_beijint_time_handler(void)
    if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 9){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
+            
        
                    Subscriber_Data_FromCloud_Handler();
                    osDelay(200);//HAL_Delay(200)
                  //  wifi_auto_detected_handler();
                  if(gpro_t.gPower_On == power_on){
                      LED_WIFI_ICON_ON();
+                     
                   }
-       
+
+//                 property_topic_publish();
+//                 osDelay(50);
+               
+                 
     }
 
     switch(get_beijing_flag){

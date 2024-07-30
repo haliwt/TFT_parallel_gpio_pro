@@ -115,18 +115,21 @@ static void vTaskRunPro(void *pvParameters)
          Temperature_Ptc_Pro_Handler();
         
          Wifi_Fast_Led_Blink();
+
+         WIFI_Process_Handler();
+         detection_net_link_state_handler();
+          //update data to tencent cloud.
+          send_data_to_tencent_handler();
+         
        
       }
       bsp_run_Idle();
-      
+     
       MainBoard_Self_Inspection_PowerOn_Fun();
-      WIFI_Process_Handler();
-
-    
       clear_rx_copy_data();
-      detection_net_link_state_handler();
+      
       //USART_Cmd_Error_Handler();
-      vTaskDelay(30);//70//100// 40
+      vTaskDelay(40);//30 //70//100// 40
   }
 	
 }
@@ -502,6 +505,8 @@ static void vTaskMsgPro(void *pvParameters)
             //  WIFI_Process_Handler();
             
              disp_all_led_on_off_state();
+
+             smart_phone_power_on_to_tencent_data();
 
          }
          else if(gpro_t.gPower_On == power_off){
