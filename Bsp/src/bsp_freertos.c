@@ -58,6 +58,7 @@ uint32_t power_key_long_conter;
 uint32_t add_dec_combin_counter;
 
 uint8_t key_power_sound_flag;
+uint8_t mode_key_pressed_counter;
 
 
 
@@ -142,7 +143,7 @@ static void vTaskRunPro(void *pvParameters)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为50ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_long_sound_flag;
@@ -234,18 +235,20 @@ static void vTaskMsgPro(void *pvParameters)
                        key_mode_short_sound_flag =1;
 
                     }
-                    
+                     
                       mode_key_long_conter=0;
                       power_key_long_conter =0;
                       add_dec_combin_counter=0;
+                      buzzer_sound();
                  }
                
             }
             else if((ulValue & MODE_LONG_KEY_10) != 0){
                 
                 if(gpro_t.gPower_On==power_on){
-                           
+                    mode_key_long_conter=0;       
                     key_mode_long_sound_flag = 1;
+                    
                     
                  }
            }
@@ -317,14 +320,23 @@ static void vTaskMsgPro(void *pvParameters)
               else if(key_mode_short_sound_flag== 1){
 
                 key_mode_short_sound_flag  ++;
-                buzzer_sound();
+                mode_key_long_conter=0;
+                if(mode_key_pressed_counter == 0){
+                    // buzzer_sound();
+
+                 }
     
 
               }
               else if(key_mode_long_sound_flag == 1){
 
                    key_mode_long_sound_flag++;
-                   buzzer_sound();
+                   mode_key_long_conter=0;
+                   if(mode_key_pressed_counter ==1){
+                      
+                     // buzzer_sound();
+                      mode_key_pressed_counter =0;
+                   }
 
 
               }
@@ -412,7 +424,7 @@ static void vTaskMsgPro(void *pvParameters)
                   if(key_power_long_sound_flag ==3){
                       power_key_long_conter =0; //clear power key loong flag .
                      key_power_long_sound_flag  = 0;
-
+                       
 
                   }
                    
@@ -449,7 +461,7 @@ static void vTaskMsgPro(void *pvParameters)
                 }
                 else if(key_mode_long_sound_flag==2){
                     key_mode_long_sound_flag ++;
-
+                    mode_key_long_conter=0;
                     Mode_Key_Long_Fun();
 
 
@@ -508,15 +520,13 @@ static void vTaskMsgPro(void *pvParameters)
 
               disp_all_led_on_off_state();
 
-               PowerOn_Process_Handler();
-               Temperature_Ptc_Pro_Handler();
+              PowerOn_Process_Handler();
+              Temperature_Ptc_Pro_Handler();
         
-              
-       
-               detection_net_link_state_handler();
+             detection_net_link_state_handler();
 
           
-                WIFI_Process_Handler();
+             WIFI_Process_Handler();
    
 
           }
@@ -534,13 +544,13 @@ static void vTaskMsgPro(void *pvParameters)
          
           }
 
-          wifi_get_beijint_time_handler();
+         wifi_get_beijint_time_handler();
          bsp_run_Idle();
       
          MainBoard_Self_Inspection_PowerOn_Fun();
     
          USART_Cmd_Error_Handler();
-          clear_rx_copy_data();
+         clear_rx_copy_data();
           
         }
              
@@ -558,6 +568,8 @@ static void vTaskStart(void *pvParameters)
 {
    //BaseType_t xResult;
    ///const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为500ms */
+
+ 
     while(1)
     {
 		/* 按键扫描 */
@@ -593,24 +605,26 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN){
       
-       while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500){
+       while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500 && mode_key_pressed_counter==0){
 
-               mode_key_long_conter++;
-               if(mode_key_long_conter > 2950000){
-                   mode_key_long_conter = 2965900;
+         mode_key_long_conter++;
+         if(mode_key_long_conter > 2950000){
+                  mode_key_pressed_counter = 1;
+                  mode_key_long_conter = 2965900;
                
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_LONG_KEY_10,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+               buzzer_sound();
 
-                }
+           }
 
 
          }
-         
-         if(mode_key_long_conter < 2950000 ){
+       
+         if(mode_key_long_conter < 2950000 &&  mode_key_pressed_counter==0  ){
             
-           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
@@ -620,7 +634,7 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_UP){
         
-          
+          mode_key_long_conter=0;
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
@@ -629,7 +643,7 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN && KEY_ADD_VALUE() == KEY_UP){
           
-       
+              mode_key_long_conter =0;
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
