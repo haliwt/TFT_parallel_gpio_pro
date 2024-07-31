@@ -124,19 +124,24 @@ static void vTaskRunPro(void *pvParameters)
           smart_phone_power_on_to_tencent_data();
         
           WIFI_Process_Handler();
+
+          
+         //update data to tencent cloud.
+          if(gpro_t.gTimer_pro_update_dht11_data > 11  && wifi_link_net_state() ==1){
+              gpro_t.gTimer_pro_update_dht11_data=0;
+      
+               Update_Dht11_Totencent_Value();
+      
+          }
        
       }
       bsp_run_Idle();
       
       MainBoard_Self_Inspection_PowerOn_Fun();
     
-     
-    //  wifi_get_beijint_time_handler();
-       WIFI_Process_Handler();
-
       USART_Cmd_Error_Handler();
       clear_rx_copy_data();
-        wifi_get_beijint_time_handler();
+     
       vTaskDelay(30);////100// 40
   }
 	
@@ -526,7 +531,7 @@ static void vTaskMsgPro(void *pvParameters)
          
           }
 
-       
+          wifi_get_beijint_time_handler();
           
         }
              

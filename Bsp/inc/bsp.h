@@ -123,6 +123,7 @@ typedef enum{
 
   pro_init,
   pro_disp_dht11_value,
+  pro_disp_humidity,
   pro_run_main_fun,
   pro_disp_works_time,
   pro_set_temperature,

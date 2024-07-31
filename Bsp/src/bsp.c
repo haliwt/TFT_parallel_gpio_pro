@@ -98,7 +98,8 @@ void PowerOn_Process_Handler(void)
 
 
 	 case 0:
-       // DISABLE_INT();
+   
+       
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
@@ -121,7 +122,7 @@ void PowerOn_Process_Handler(void)
 	  Fan_Run();
       LED_Power_Key_On();
 
-     // ENABLE_INT();
+
 	 
 	 break;
 
@@ -132,11 +133,16 @@ void PowerOn_Process_Handler(void)
 		   gpro_t.gTimer_pro_disp_temphum=0;
             
 
-		     Update_DHT11_Value();
+		    Update_DHT11_Value();
             TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
            
            
        }
+        gpro_t.run_process_step=pro_disp_humidity;
+      break;
+
+
+      case pro_disp_humidity :
 
       if(gpro_t.gTimer_read_humidity_value > 10){
 
@@ -149,17 +155,11 @@ void PowerOn_Process_Handler(void)
 
 
       
-       //update data to tencent cloud.
-	   if(gpro_t.gTimer_pro_update_dht11_data > 34  && wifi_link_net_state() ==1){
-		   gpro_t.gTimer_pro_update_dht11_data=0;
-
-			Update_Dht11_Totencent_Value();
-
-	   }
-
+    
 
 
 	 gpro_t.run_process_step=pro_run_main_fun;
+     break;
 	   
 	case pro_run_main_fun: //02
 	

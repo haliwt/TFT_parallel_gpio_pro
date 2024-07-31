@@ -151,7 +151,7 @@ static void RunWifi_Command_Handler(void)
 	if(wifi_link_net_state()==1   && power_on_state() == power_on ){
         gpro_t.wifi_led_fast_blink_flag=0;
         wifi_t.get_rx_beijing_time_enable=0;
-        wifi_t.runCommand_order_lable = wifi_tencent_publish_init_data;
+      
 
         wifi_t.gTimer_auto_detected_net_state_times =0;
         wifi_t.gTimer_linking_tencent_duration=0;
@@ -166,36 +166,25 @@ static void RunWifi_Command_Handler(void)
         osDelay(200);//HAL_Delay(200);
 
         wifi_t.link_net_tencent_data_flag = 1;
+
+         wifi_t.runCommand_order_lable = wifi_subscriber_form_tencent_data;
     }
     
 	break;
 
 
-	case wifi_tencent_publish_init_data://02
-
-       if(wifi_t.gTimer_publish_dht11 >10 && gpro_t.gPower_On == power_on ){
-	 
-	       //MqttData_Publish_Update_Data();//Publish_Data_ToTencent_Initial_Data();
-		   wifi_t.gTimer_publish_dht11=0;
-		   wifi_t.gTimer_get_beijing_time =0;
-	       wifi_t.runCommand_order_lable = wifi_subscriber_form_tencent_data;
-
-       }
-
-
-    break;
 
 			
      case wifi_subscriber_form_tencent_data: //03
 
-	   if( wifi_t.gTimer_publish_dht11 >12 ){
+	
 
-	      Subscriber_Data_FromCloud_Handler();
+	     Subscriber_Data_FromCloud_Handler();
 		 wifi_t.gTimer_publish_dht11=0;
 	     wifi_t.gTimer_get_beijing_time =0;
 	
 		 wifi_t.runCommand_order_lable= 0xff;
-	   }
+	   
 
 
 	break;
@@ -203,7 +192,7 @@ static void RunWifi_Command_Handler(void)
 
 
    
-   default:
+      default:
 
 	   break;
 	 
@@ -326,7 +315,7 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
 void wifi_get_beijint_time_handler(void)
 {
 
-    static uint8_t alternate_flag;
+    static uint8_t alternate_flag,flag_switch;
 
      if(wifi_t.get_rx_beijing_time_enable==0){
     
@@ -342,13 +331,19 @@ void wifi_get_beijint_time_handler(void)
   if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 9){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
-       
+                   flag_switch++;
                    Subscriber_Data_FromCloud_Handler();
                    osDelay(200);//HAL_Delay(200)
                  //  wifi_auto_detected_handler();
                  if(gpro_t.gPower_On == power_on){
                      LED_WIFI_ICON_ON();
                   }
+                 if(flag_switch > 1){
+                    flag_switch=0;
+                
+                
+
+                 }
        
     }
 

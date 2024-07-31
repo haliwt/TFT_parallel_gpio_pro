@@ -981,7 +981,8 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 			   }
               else if(strstr((char*)wifi_t.wifi_data,"+TCPRDINFOSET:1,\"EHQB1P53IH\"")){ //WT.EDIT 2024.07.22
 
-                     //wifi_t.soft_ap_config_success=1;
+                     wifi_t.serch_for_wifi_flag=1;
+                     wifi_t.gTime_link_time_start =0;
 
               }
            
