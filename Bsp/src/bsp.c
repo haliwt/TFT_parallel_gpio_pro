@@ -97,38 +97,41 @@ void PowerOn_Process_Handler(void)
     switch(gpro_t.run_process_step){
 
 
-	 case 0:
-   
-       
-        gpro_t.power_off_flag = 1;
-        gpro_t.disp_works_timer_timing_mode_item = works_time;
-	    gpro_t.gTimer_pro_disp_temphum = 0; //
-	  
-	    gpro_t.gTimer_pro_update_dht11_data=60;
-        gpro_t.gTimer_read_humidity_value = 30;
-        gctl_t.disp_ntc_res_switch_normal_ptc_counter  = 0 ;
-        gpro_t.gTimer_run_total=0;
+    case 0:
 
-        //wifi of ref
-	    wifi_t.gTimer_get_beijing_time=0;
-        wifi_t.get_rx_beijing_time_enable=0;
-        wifi_t.gTimer_auto_detected_net_state_times=0;
-         
-        
-	  Device_Action_No_Wifi_Power_On_Handler(); 
-	  Power_On_Init();
-	
-      gpro_t.run_process_step=pro_disp_dht11_value;
-	  Fan_Run();
-      LED_Power_Key_On();
+    
+       gpro_t.run_process_step =1;
+    
+     
+       gpro_t.power_off_flag = 1;
+       gpro_t.disp_works_timer_timing_mode_item = works_time;
+       gpro_t.gTimer_pro_disp_temphum = 0; //
+    
+       gpro_t.gTimer_pro_update_dht11_data=60;
+       gpro_t.gTimer_read_humidity_value = 30;
+       gctl_t.disp_ntc_res_switch_normal_ptc_counter  = 0 ;
+       gpro_t.gTimer_run_total=0;
+    
+       //wifi of ref
+       wifi_t.gTimer_get_beijing_time=0;
+       wifi_t.get_rx_beijing_time_enable=0;
+       wifi_t.gTimer_auto_detected_net_state_times=0;
+    
+    
+       Power_On_Init();
+    
+    
+       Fan_Run();
+       LED_Power_Key_On();
 
 
-	 
-	 break;
+    break;
 
-	 case pro_disp_dht11_value: //1 //display works time + "temperature value " + "humidity value"
 
-	   if(gpro_t.gTimer_pro_disp_temphum > 5){
+    case 1:
+
+
+    if(gpro_t.gTimer_pro_disp_temphum > 5){
            
 		   gpro_t.gTimer_pro_disp_temphum=0;
             
@@ -138,38 +141,50 @@ void PowerOn_Process_Handler(void)
            
            
        }
-        gpro_t.run_process_step=pro_disp_humidity;
-      break;
+
+      gpro_t.run_process_step=2;
+
+    break;
 
 
-      case pro_disp_humidity :
+	
 
-      if(gpro_t.gTimer_read_humidity_value > 10){
+     case 2:
+
+     if(gpro_t.gTimer_read_humidity_value > 10){
 
            gpro_t.gTimer_read_humidity_value=0;
 
-          TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
+            TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
+           }
 
-
-       }
-
-
-      
-    
-
-
-	 gpro_t.run_process_step=pro_run_main_fun;
+        gpro_t.run_process_step=3;
      break;
-	   
-	case pro_run_main_fun: //02
+
+
+     case 3:
+
+         if(gpro_t.gTimer_pro_update_dht11_data > 11  && wifi_link_net_state() ==1){
+              gpro_t.gTimer_pro_update_dht11_data=0;
+      
+               Update_Dht11_Totencent_Value();
+      
+          }
+
+     gpro_t.run_process_step=4;
+
+     break;
+
+
+   case 4: //02
 	
 
 	    RunMain_And_Interval_Handler();
 	  
-	   gpro_t.run_process_step=pro_disp_wifi_led;
+	   gpro_t.run_process_step=5;
 	 break;
 
-    case pro_disp_wifi_led: //4
+    case 5: //4
 	 
        if(wifi_link_net_state() ==1){
 	      LED_WIFI_ICON_ON();
@@ -178,17 +193,15 @@ void PowerOn_Process_Handler(void)
 		}
 		
 
-	  gpro_t.run_process_step=pro_wifi_publish_init;
+	  gpro_t.run_process_step=6;
 	 break; 
 		  
       // handler of wifi 
-	  case pro_wifi_publish_init: //7
+	  case 6: //7
 
       
         
-		
-
-        if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
+	if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
               // wifi_t.link_net_tencent_data_flag ++;
 		   
 		     //MqttData_Publish_SetOpen(0x01);
@@ -206,11 +219,11 @@ void PowerOn_Process_Handler(void)
      
 
 	 
-	   gpro_t.run_process_step=pro_check_time_out;
+	   gpro_t.run_process_step=7;
 
 	 break;
 
-	  case pro_check_time_out:
+	  case 7:
 		
 	    if(gpro_t.gTimer_run_total > 119){ //120 minutes
               gpro_t.gTimer_run_total =0;
@@ -218,10 +231,10 @@ void PowerOn_Process_Handler(void)
         
               gpro_t.interval_stop_run_flag  =1 ;
              
-             gpro_t.run_process_step=pro_run_main_fun;
+             gpro_t.run_process_step=1;
        }
        else{
-         gpro_t.run_process_step=pro_disp_dht11_value;
+         gpro_t.run_process_step=1;
 
        }
 
@@ -231,7 +244,43 @@ void PowerOn_Process_Handler(void)
     break;
    	}
  }
+
+void power_up_initialize_data(void)
+{
+   if(gpro_t.run_process_step==0){
+
+    gpro_t.run_process_step =pro_run_main_fun;
+
   
+    gpro_t.power_off_flag = 1;
+    gpro_t.disp_works_timer_timing_mode_item = works_time;
+    gpro_t.gTimer_pro_disp_temphum = 0; //
+
+    gpro_t.gTimer_pro_update_dht11_data=60;
+    gpro_t.gTimer_read_humidity_value = 30;
+    gctl_t.disp_ntc_res_switch_normal_ptc_counter  = 0 ;
+    gpro_t.gTimer_run_total=0;
+
+    //wifi of ref
+    wifi_t.gTimer_get_beijing_time=0;
+    wifi_t.get_rx_beijing_time_enable=0;
+    wifi_t.gTimer_auto_detected_net_state_times=0;
+
+
+    Power_On_Init();
+
+
+    Fan_Run();
+    LED_Power_Key_On();
+
+    }
+
+   
+         
+       
+
+
+}
 /*****************************************************************
  * 
  * Function Name : void Power_Off_Handler(void)

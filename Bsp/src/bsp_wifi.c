@@ -338,10 +338,11 @@ void wifi_get_beijint_time_handler(void)
                  if(gpro_t.gPower_On == power_on){
                      LED_WIFI_ICON_ON();
                   }
-                 if(flag_switch > 1){
+                 if(flag_switch > 1 && gpro_t.gPower_On == power_off){
                     flag_switch=0;
-                
-                
+                   // property_topic_publish(); 
+                    Update_Dht11_Totencent_Value();
+                    osDelay(200);//HAL_Delay(200)
 
                  }
        

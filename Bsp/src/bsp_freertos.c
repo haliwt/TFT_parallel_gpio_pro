@@ -33,7 +33,7 @@
 **********************************************************************************************************
 */
 //static void vTaskTaskUserIF(void *pvParameters);
-static void vTaskRunPro(void *pvParameters);
+//static void vTaskRunPro(void *pvParameters);
 static void vTaskMsgPro(void *pvParameters);
 static void vTaskStart(void *pvParameters);
 static void AppTaskCreate (void);
@@ -45,7 +45,7 @@ static void AppTaskCreate (void);
 **********************************************************************************************************
 */
 //static TaskHandle_t xHandleTaskUserIF = NULL;
-static TaskHandle_t xHandleTaskRunPro = NULL;
+//static TaskHandle_t xHandleTaskRunPro = NULL;
 static TaskHandle_t xHandleTaskMsgPro = NULL;
 static TaskHandle_t xHandleTaskStart = NULL;
 
@@ -90,6 +90,7 @@ void freeRTOS_Handler(void)
 *   优 先 级: 1  
 *********************************************************************************************************
 */
+#if 0
 static void vTaskRunPro(void *pvParameters)
 {
 
@@ -99,40 +100,22 @@ static void vTaskRunPro(void *pvParameters)
    {
 
 
-     if(power_sound_flag==0){
-       power_sound_flag++;
-      
-       buzzer_sound();
-       HAL_Delay(100);
-       VOICE_OUTPUT_SOUND_ENABLE();
-     }
+     
 
      
       if(gpro_t.gPower_On == power_on && (key_power_sound_flag !=3)){
 
       
-         PowerOn_Process_Handler();
-         Temperature_Ptc_Pro_Handler();
         
-         Wifi_Fast_Led_Blink();
-       
-         detection_net_link_state_handler();
           //update data to tencent cloud.
 
-          disp_all_led_on_off_state();
+         
 
-          smart_phone_power_on_to_tencent_data();
-        
-          WIFI_Process_Handler();
+      
 
           
-         //update data to tencent cloud.
-          if(gpro_t.gTimer_pro_update_dht11_data > 11  && wifi_link_net_state() ==1){
-              gpro_t.gTimer_pro_update_dht11_data=0;
-      
-               Update_Dht11_Totencent_Value();
-      
-          }
+
+           WIFI_Process_Handler();
        
       }
       bsp_run_Idle();
@@ -146,6 +129,7 @@ static void vTaskRunPro(void *pvParameters)
   }
 	
 }
+#endif 
 /*
 *********************************************************************************************************
 *	函 数 名: vTaskMsgPro
@@ -163,7 +147,7 @@ static void vTaskMsgPro(void *pvParameters)
     static uint8_t key_add_sound_flag,key_dec_sound_flag,key_mode_short_sound_flag;
     static uint8_t key_mode_long_sound_flag,key_power_long_sound_flag;
     static uint8_t add_dec_combin,key_power_off_sound_flag ;
-	
+	static uint8_t power_sound_flag;
     while(1)
     {
 		/*
@@ -183,6 +167,14 @@ static void vTaskMsgPro(void *pvParameters)
 		
 		    注：ulNotifiedValue表示任务vTaskMsgPro的任务控制块里面的变量。		
 		*/
+
+      if(power_sound_flag==0){
+       power_sound_flag++;
+      
+       buzzer_sound();
+       HAL_Delay(100);
+       VOICE_OUTPUT_SOUND_ENABLE();
+     }
 		
 		xResult = xTaskNotifyWait(0x00000000,      
 						          0xFFFFFFFF,      
@@ -512,8 +504,19 @@ static void vTaskMsgPro(void *pvParameters)
 
               SetPtc_TempComare_Value();
 
-            //  WIFI_Process_Handler();
-            
+              smart_phone_power_on_to_tencent_data();
+
+               disp_all_led_on_off_state();
+
+               PowerOn_Process_Handler();
+               Temperature_Ptc_Pro_Handler();
+        
+              
+       
+               detection_net_link_state_handler();
+
+          
+                WIFI_Process_Handler();
    
 
           }
@@ -532,6 +535,12 @@ static void vTaskMsgPro(void *pvParameters)
           }
 
           wifi_get_beijint_time_handler();
+         bsp_run_Idle();
+      
+         MainBoard_Self_Inspection_PowerOn_Fun();
+    
+         USART_Cmd_Error_Handler();
+          clear_rx_copy_data();
           
         }
              
@@ -658,20 +667,20 @@ static void vTaskStart(void *pvParameters)
 static void AppTaskCreate (void)
 {
 
-	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
-                 "vTaskRunPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
-                 NULL,           		/* 任务参数  */
-                 1,               		/* 任务优先级最低*/
-                 &xHandleTaskRunPro);  /* 任务句柄  */
+//	xTaskCreate( vTaskRunPro,     		/* 任务函数  */
+//                 "vTaskRunPro",   		/* 任务名    */
+//                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+//                 NULL,           		/* 任务参数  */
+//                 1,               		/* 任务优先级最低*/
+//                 &xHandleTaskRunPro);  /* 任务句柄  */
 
 
 
     xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
                  "vTaskMsgPro",   		/* 任务名    */
-                 128,             		/* 任务栈大小，单位word，也就是4字节 */
+                 256,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 2,               		/* 任务优先级次子*/
+                 1,               		/* 任务优先级次子*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */
 	
 	
@@ -679,7 +688,7 @@ static void AppTaskCreate (void)
                  "vTaskStart",   		/* 任务名    */
                  128,            		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
-                 3,              		/* 任务优先级最高*/
+                 2,              		/* 任务优先级最高*/
                  &xHandleTaskStart );   /* 任务句柄  */
 }
 
