@@ -506,7 +506,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               smart_phone_power_on_to_tencent_data();
 
-               disp_all_led_on_off_state();
+              disp_all_led_on_off_state();
 
                PowerOn_Process_Handler();
                Temperature_Ptc_Pro_Handler();

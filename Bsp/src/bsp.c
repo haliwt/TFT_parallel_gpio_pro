@@ -215,11 +215,7 @@ void PowerOn_Process_Handler(void)
 
 		}
 
-
-     
-
-	 
-	   gpro_t.run_process_step=7;
+         gpro_t.run_process_step=7;
 
 	 break;
 
