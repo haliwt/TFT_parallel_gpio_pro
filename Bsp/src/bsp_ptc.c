@@ -204,8 +204,9 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                     if(update_init != update_data_flag){
                         update_init = update_data_flag;
 					if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+                        gpro_t.gTimer_get_data_from_tencent_data=0;
     					MqttData_Publish_SetPtc(0);
-    					HAL_Delay(200);
+    					HAL_Delay(100);
 					}
 
                     }
@@ -225,8 +226,9 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                          if(update_down_init != update_down){
                                   update_down_init = update_down;
     	                 if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+                              gpro_t.gTimer_get_data_from_tencent_data =0;
     	                      MqttData_Publish_SetPtc(1);
-    	                      HAL_Delay(200);
+    	                      HAL_Delay(100);
     	                  }
                          }
                          
@@ -261,9 +263,9 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                         update_init = update_data_flag;
                           
                   if(wifi_link_net_state()==1   && wifi_t.link_net_tencent_data_flag ==3){
-                    
+                        gpro_t.gTimer_get_data_from_tencent_data =0;
                       MqttData_Publish_SetPtc(0);
-                      HAL_Delay(200);
+                      HAL_Delay(100);
                    }
 
                   }
@@ -289,8 +291,9 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                             update_down_init = update_down;
 
                          if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+                          gpro_t.gTimer_get_data_from_tencent_data =0;
                           MqttData_Publish_SetPtc(1);
-                          HAL_Delay(200);
+                          HAL_Delay(100);
                          }
 
                         }
@@ -323,8 +326,9 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                
 			
                if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+                    gpro_t.gTimer_get_data_from_tencent_data =0;
                     MqttData_Publis_SetTemp(gctl_t.gSet_temperature_value);
-                     osDelay(200);//HAL_Delay(200);
+                     osDelay(100);//HAL_Delay(200);
                 }
 			   gpro_t.gTimer_pro_disp_temphum = 0;
                gpro_t.gTimer_pro_temp_delay = 100;//at once display temperature of sensor dht11 of value.

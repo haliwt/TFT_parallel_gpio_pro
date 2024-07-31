@@ -972,7 +972,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 					       wifi_t.linking_tencent_cloud_doing=0; //release this flag. usart
 						   wifi_t.esp8266_login_cloud_success =0;
 						
-						
+						   gpro_t.wifi_led_fast_blink_flag=0;   //WT.EDIT .2024.07.31
 						   wifi_t.gTimer_auto_detected_net_state_times=0;
 						
 						   wifi_t.get_rx_beijing_time_enable=0;
@@ -991,7 +991,6 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
                         gpro_t.wifi_led_fast_blink_flag=0;   //WT.EDIT .2024.07.31
                         
                       wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
-                       wifi_t.serch_for_wifi_flag=0;
                       wifi_t.get_rx_beijing_time_enable=0;
               }
            
@@ -1013,15 +1012,11 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
               else if(strstr((char*)wifi_t.wifi_data,"+CME ERROR:208")){
 				
 			
-				wifi_t.esp8266_login_cloud_success =0;
+				 wifi_t.esp8266_login_cloud_success =0;
 			     wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
+			     wifi_t.get_rx_beijing_time_enable=0;
 			
-	
-			
-				wifi_t.get_rx_beijing_time_enable=0;
-			
-
-			  }
+             }
               else  if(strstr((char*)wifi_t.wifi_data,"+TCMQTTCONN:FAIL,202")){
 
                         wifi_t.esp8266_login_cloud_success =0;
