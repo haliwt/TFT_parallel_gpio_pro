@@ -290,7 +290,7 @@ void Wifi_Rx_Auto_Link_Net_Handler(void)
 void wifi_get_beijint_time_handler(void)
 {
 
-    static uint8_t alternate_flag;
+    static uint8_t alternate_flag,send_data;
 
      if(wifi_t.get_rx_beijing_time_enable==0){
     
@@ -302,7 +302,7 @@ void wifi_get_beijint_time_handler(void)
    if(wifi_link_net_state()==1 && gpro_t.gTimer_get_data_from_tencent_data > 9){
        
                    gpro_t.gTimer_get_data_from_tencent_data =0;
-            
+                   send_data ++ ;
        
                    Subscriber_Data_FromCloud_Handler();
                    osDelay(200);//HAL_Delay(200)
@@ -311,9 +311,12 @@ void wifi_get_beijint_time_handler(void)
                      LED_WIFI_ICON_ON();
                      
                   }
+                  if(send_data > 1){
+                     send_data = 0;
+                    send_data_to_tencent_handler();
+                     osDelay(200);
 
-//                 property_topic_publish();
-//                 osDelay(50);
+                  }
                
                  
     }

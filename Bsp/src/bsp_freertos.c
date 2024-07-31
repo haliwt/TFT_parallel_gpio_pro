@@ -119,7 +119,7 @@ static void vTaskRunPro(void *pvParameters)
          WIFI_Process_Handler();
          detection_net_link_state_handler();
           //update data to tencent cloud.
-          send_data_to_tencent_handler();
+        
          
        
       }
