@@ -84,8 +84,6 @@ typedef struct _WIFI_FUN{
     uint8_t get_rx_beijing_time_enable;
 
     uint8_t once_rx_data_done ;
-
-    uint8_t net_smart_phone_power_on_flag;
 	
 
 	
@@ -113,7 +111,6 @@ typedef struct _WIFI_FUN{
     uint8_t power_on_linkwifi;
 	uint8_t power_on_login_tencent_cloud_flag;
 	uint8_t repeat_login_tencent_cloud_init_ref;
-    uint8_t serch_for_wifi_flag;
     
 
 	//fan
@@ -161,14 +158,20 @@ typedef struct _WIFI_FUN{
 	uint8_t gTimer_main_pro_times;
     uint8_t gTimer_auto_detected_net_state_times;
     uint8_t gTimer_auto_link_net_time;
-    uint8_t gTime_link_time_start;
 
  
+
+
+  
     uint8_t gTimer_auto_detected_net;
 	
     uint16_t gTimer_get_beijing_time;
 	
-    uint32_t randomName[1];
+    
+  
+	
+
+	uint32_t randomName[1];
 	
 	
 	

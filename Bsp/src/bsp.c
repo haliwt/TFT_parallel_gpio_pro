@@ -98,8 +98,7 @@ void PowerOn_Process_Handler(void)
 
 
 	 case 0:
-         gpro_t.run_process_step=pro_disp_dht11_value;
-       // DISABLE_INT();
+        DISABLE_INT();
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
@@ -122,8 +121,7 @@ void PowerOn_Process_Handler(void)
 	  Fan_Run();
       LED_Power_Key_On();
 
-    //  ENABLE_INT();
-       gpro_t.run_process_step=pro_disp_dht11_value;
+      ENABLE_INT();
 	 
 	 break;
 
@@ -139,21 +137,6 @@ void PowerOn_Process_Handler(void)
            
            
        }
-        gpro_t.run_process_step=pro_run_main_fun;
-       break;
-
-
-     
-     case pro_run_main_fun: //02
-	
-
-	    RunMain_And_Interval_Handler();
-	  
-	   gpro_t.run_process_step=pro_disp_works_time;
-	 break;
-
-
-     case pro_disp_works_time://3
 
       if(gpro_t.gTimer_read_humidity_value > 10){
 
@@ -163,25 +146,49 @@ void PowerOn_Process_Handler(void)
 
 
        }
-     
-      gpro_t.run_process_step=pro_disp_wifi_led;
 
-      break;
 
-    case pro_disp_wifi_led: //5
+      
+       //update data to tencent cloud.
+	   if(gpro_t.gTimer_pro_update_dht11_data > 34  && wifi_link_net_state() ==1){
+		   gpro_t.gTimer_pro_update_dht11_data=0;
+
+			Update_Dht11_Totencent_Value();
+
+	   }
+
+
+
+	 gpro_t.run_process_step=pro_run_main_fun;
+	   
+	case pro_run_main_fun: //02
+	
+
+	    RunMain_And_Interval_Handler();
+	  
+	   gpro_t.run_process_step=pro_disp_wifi_led;
+	 break;
+
+    case pro_disp_wifi_led: //4
 	 
        if(wifi_link_net_state() ==1){
 	      LED_WIFI_ICON_ON();
 		  ModeKey_Select_Default_LedOnOff();
             
 		}
-	   gpro_t.run_process_step=pro_wifi_publish_init;
+		
+
+	  gpro_t.run_process_step=pro_wifi_publish_init;
 	 break; 
 		  
       // handler of wifi 
 	  case pro_wifi_publish_init: //7
 
-      if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
+      
+        
+		
+
+        if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
               // wifi_t.link_net_tencent_data_flag ++;
 		   
 		     //MqttData_Publish_SetOpen(0x01);
@@ -190,13 +197,20 @@ void PowerOn_Process_Handler(void)
 		    MqttData_Publish_Update_Data();
 		    HAL_Delay(200);
             
-       }
+           
+            
 
-      gpro_t.run_process_step=pro_check_time_out;
+		}
+
+
+     
+
+	 
+	   gpro_t.run_process_step=pro_check_time_out;
 
 	 break;
 
-	  case pro_check_time_out://9
+	  case pro_check_time_out:
 		
 	    if(gpro_t.gTimer_run_total > 119){ //120 minutes
               gpro_t.gTimer_run_total =0;
@@ -278,11 +292,11 @@ void PowerOn_Process_Handler(void)
 
          TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
 
-        if(wifi_link_net_state() ==1){
+          if(wifi_link_net_state() ==1){
 	
         wifi_t.link_net_tencent_data_flag=1;
 		MqttData_Publish_PowerOff_Ref();
-        HAL_Delay(100);
+        osDelay(50);//HAL_Delay(100);
 		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 	     
 		}
@@ -717,14 +731,6 @@ void WIFI_LED_Blink(void)
 
 }
 
-/**********************************************************************************************************
-    **
-    *Function Name: void smart_phone_power_on_return_data_to_tencent_handler(void)
-    *Function : 
-    *Input Ref:NO
-    *Return Ref:NO
-    *
-*********************************************************************************************************/
 
 
 

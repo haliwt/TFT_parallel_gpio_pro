@@ -111,9 +111,8 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         gctl_t.gTimer_ctl_warning_time++;
         gctl_t.gTimer_maian_run_fun++;     //run main board of function .
         
-      // gctl_t.gTimer_ctl_usart1_error++; 
+       gctl_t.gTimer_ctl_usart1_error++; 
 	   gctl_t.gTimer_ctl_usart2_error++; 
-       gctl_t.gTime_all_led_on_off++ ;
     
 
   
@@ -133,7 +132,6 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		wifi_t.gTimer_read_beijing_time ++;
 		wifi_t.gTimer_wifi_counter_link_beijing_times++;
         wifi_t.gTimer_auto_link_net_time++;
-        wifi_t.gTime_link_time_start++;
 
      
       

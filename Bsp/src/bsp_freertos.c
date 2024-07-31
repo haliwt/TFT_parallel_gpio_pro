@@ -18,7 +18,7 @@
 
 #define POWER_OFF_4         (1 << 4)
 #define POWER_ON_5          (1 << 5)
-
+#define POWER_ON_APP_6        (1<< 6)
 #define VOICE_BIT_8         (1 << 8)
 
 //long key define 
@@ -115,21 +115,19 @@ static void vTaskRunPro(void *pvParameters)
          Temperature_Ptc_Pro_Handler();
         
          Wifi_Fast_Led_Blink();
-
-         WIFI_Process_Handler();
-         detection_net_link_state_handler();
-          //update data to tencent cloud.
-        
-         
        
       }
       bsp_run_Idle();
-     
-      MainBoard_Self_Inspection_PowerOn_Fun();
-      clear_rx_copy_data();
       
-      //USART_Cmd_Error_Handler();
-      vTaskDelay(40);//30 //70//100// 40
+      MainBoard_Self_Inspection_PowerOn_Fun();
+    
+     
+    //  wifi_get_beijint_time_handler();
+       WIFI_Process_Handler();
+
+      USART_Cmd_Error_Handler();
+      clear_rx_copy_data();
+      vTaskDelay(30);////100// 40
   }
 	
 }
@@ -207,10 +205,20 @@ static void vTaskMsgPro(void *pvParameters)
                 power_key_long_conter =0;
                 mode_key_long_conter = 0;
                 add_dec_combin_counter=0;
+
+
+
+            }
+            else if((ulValue &  POWER_ON_APP_6) != 0){
+
+            
+               key_power_sound_flag =1;
+              
+               power_key_long_conter =0;
+               mode_key_long_conter = 0;
+               add_dec_combin_counter=0;
+               
                 
-
-
-
             }
             else if((ulValue &  POWER_OFF_4) != 0){
 
@@ -502,13 +510,9 @@ static void vTaskMsgPro(void *pvParameters)
 
               SetPtc_TempComare_Value();
 
-            //  WIFI_Process_Handler();
-            
-             disp_all_led_on_off_state();
+               
 
-             smart_phone_power_on_to_tencent_data();
-
-         }
+          }
          else if(gpro_t.gPower_On == power_off){
             mode_key_long_conter  =0;
             power_key_long_conter = 0xff;
@@ -524,7 +528,6 @@ static void vTaskMsgPro(void *pvParameters)
           }
 
          wifi_get_beijint_time_handler();
-        
           
         }
              
@@ -662,7 +665,7 @@ static void AppTaskCreate (void)
 
     xTaskCreate( vTaskMsgPro,     		/* 任务函数  */
                  "vTaskMsgPro",   		/* 任务名    */
-                 256,             		/* 任务栈大小，单位word，也就是4字节 */
+                 128,             		/* 任务栈大小，单位word，也就是4字节 */
                  NULL,           		/* 任务参数  */
                  2,               		/* 任务优先级次子*/
                  &xHandleTaskMsgPro );  /* 任务句柄  */

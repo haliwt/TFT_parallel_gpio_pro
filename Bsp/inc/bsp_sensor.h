@@ -51,7 +51,6 @@ void Update_DHT11_Value(void);
 void Update_Dht11_Totencent_Value(void);
 
 
-void send_data_to_tencent_handler(void);
 
 
 #endif 

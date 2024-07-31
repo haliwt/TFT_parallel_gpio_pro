@@ -187,20 +187,12 @@ void Update_Dht11_Totencent_Value(void)
 	Dht11_Read_TempHumidity_Handler(&DHT11);
 
 	MqttData_Publis_ReadTempHum(gctl_t.dht11_temp_value,gctl_t.dht11_hum_value);
-    osDelay(100);//HAL_Delay(100);
+    osDelay(300);
 
 }
 
 
 
-void send_data_to_tencent_handler(void)
-{
- if(gpro_t.gTimer_pro_update_dht11_data > 11  && wifi_link_net_state() ==1){
-   gpro_t.gTimer_pro_update_dht11_data=0;
-
-	Update_Dht11_Totencent_Value();
-   }
-}
 
 
 
