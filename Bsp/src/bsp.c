@@ -8,7 +8,7 @@ uint8_t fan_continuce_run_flag;
 
 //static void power_on_init_set_ref(void);
 
-static void TFT_Pocess_Command_Handler(void);
+
 
 
 static void Power_On_Init(void);
@@ -98,7 +98,7 @@ void PowerOn_Process_Handler(void)
 
 
 	 case 0:
-        DISABLE_INT();
+       // DISABLE_INT();
         gpro_t.power_off_flag = 1;
         gpro_t.disp_works_timer_timing_mode_item = works_time;
 	    gpro_t.gTimer_pro_disp_temphum = 0; //
@@ -121,7 +121,7 @@ void PowerOn_Process_Handler(void)
 	  Fan_Run();
       LED_Power_Key_On();
 
-      ENABLE_INT();
+     // ENABLE_INT();
 	 
 	 break;
 

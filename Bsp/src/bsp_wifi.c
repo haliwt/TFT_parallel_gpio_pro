@@ -34,6 +34,20 @@ void WIFI_Process_Handler(void)
 //   
 //    }
 }
+
+void smart_phone_power_on_to_tencent_data(void)
+{
+    if(wifi_t.net_smart_phone_power_on_flag == 1 ){
+         wifi_t.net_smart_phone_power_on_flag ++ ;
+
+          MqttData_Publish_Update_Data();
+		  osDelay(200);//HAL_Delay(200);
+
+
+    }
+
+
+}
 /**********************************************************************
 	*
 	*Functin Name: void MainBoard_Itself_PowerOn_Fun(void)

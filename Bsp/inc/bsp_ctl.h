@@ -63,6 +63,7 @@ typedef struct _bsp_ctl{
    uint8_t timer_timing_words_changed_flag;
    uint8_t timing_words_changed_flag;
    uint8_t get_beijing_time_success;
+   uint8_t gTime_all_led_on_off;
    
    
 
@@ -97,7 +98,7 @@ typedef struct _bsp_ctl{
    uint8_t gTimer_ctl_fan_adc_times ;
    uint8_t gTimer_ctl_warning_time;
    uint8_t gTimer_maian_run_fun;
-   uint8_t gTimer_ctl_usart1_error ;
+ //  uint8_t gTimer_ctl_usart1_error ;
    uint8_t gTimer_ctl_usart2_error;
 
 
@@ -170,6 +171,7 @@ void Device_Action_No_Wifi_Handler(void);
 
 void Device_Action_No_Wifi_Power_On_Handler(void);
 
+void disp_all_led_on_off_state(void);
 
 
 

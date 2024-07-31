@@ -1015,8 +1015,8 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
               else  if(strstr((char*)wifi_t.wifi_data,"+TCMQTTCONN:FAIL,202")){
 
                         wifi_t.esp8266_login_cloud_success =0;
-                          
-                   
+                        gpro_t.wifi_led_fast_blink_flag=0;   //WT.EDIT .2024.07.31
+                        
                       wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
                           
                       wifi_t.get_rx_beijing_time_enable=0;
@@ -1026,6 +1026,13 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
                       wifi_t.esp8266_login_cloud_success =0;
                        wifi_t.get_rx_beijing_time_enable=0;
                         wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
+              }
+              else  if(strstr((char*)wifi_t.wifi_data,"+TCSAP:WIFI_CONNECT_FAILED")){
+          
+                      wifi_t.esp8266_login_cloud_success =0;
+                      wifi_t.get_rx_beijing_time_enable=0;
+                      wifi_t.linking_tencent_cloud_doing=1; //release this flag. usart
+                    
               }
 
 			 
@@ -1054,8 +1061,32 @@ void clear_rx_copy_data(void)
         
        wifi_t.wifi_data[i]=0;
       // wifi_t.auto_det_data[i]=0;
+      }
+    }
+}
+/***********************************************************************
+    *
+    *Function Name:
+    *Function:
+    *Input Ref: NO
+    *Return Ref:NO
+    *
+***********************************************************************/
+void detection_net_link_state_handler(void)
+{
+    
+    if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_t.soft_ap_config_success==0 &&   wifi_t.serch_for_wifi_flag ==1){
 
-     }
- }
+       if(wifi_t.gTime_link_time_start  > 50){
+           wifi_t.gTime_link_time_start =0;
+            wifi_t.serch_for_wifi_flag =0;
+           wifi_t.soft_ap_config_success=1;
+
+       }
+
+
+
+    }
+
 }
 	
