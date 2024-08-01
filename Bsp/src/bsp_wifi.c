@@ -45,6 +45,14 @@ void smart_phone_power_on_to_tencent_data(void)
 
 
     }
+    else if(wifi_t.net_smart_phone_power_on_flag == 2 ){
+         wifi_t.net_smart_phone_power_on_flag ++ ;
+
+          MqttData_Publish_Update_Data();
+		  osDelay(200);//HAL_Delay(200);
+
+
+    }
 
 
 }
