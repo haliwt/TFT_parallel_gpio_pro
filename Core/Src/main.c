@@ -10,7 +10,8 @@
   * DATA: 2024.07.27
   * 1.修改连接上网的速度 。   2. 修改一些bug。
   * DATA: 2024.07.29  by test link wifi net is very success .
-  * 
+  * DATA:2024.08.01  by test compatibility is better link wifi and repeat wifi net .
+  *                  for sample to client
   *
   ******************************************************************************
   */
