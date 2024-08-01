@@ -164,24 +164,12 @@ typedef struct _WIFI_FUN{
     uint8_t gTimer_auto_detected_net_state_times;
     uint8_t gTimer_auto_link_net_time;
     uint8_t gTime_link_time_start;
-
+    uint8_t gTimer_login_tencent_step_3 ;
+    uint8_t gTimer_get_beijing_time;
  
-
-
-  
     uint8_t gTimer_auto_detected_net;
 	
-    uint16_t gTimer_get_beijing_time;
-	
-    
-  
-	
-
-	uint32_t randomName[1];
-	
-	
-	
-		
+     uint32_t randomName[1];
 	
 }WIFI_FUN;
 

@@ -19,6 +19,8 @@ void PowerOn_LongKey_Fun(void)
 
 gpro_t.wifi_led_fast_blink_flag=1;
 
+
+
 //WIFI CONNCETOR process
 wifi_t.link_tencent_step_counter=0;
 wifi_t.esp8266_login_cloud_success =0;
@@ -32,7 +34,7 @@ wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
 gpro_t.gTimer_exit_mode_long_key =0;
            
 			
-			 
+		 
      
 
 }

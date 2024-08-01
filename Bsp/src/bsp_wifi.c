@@ -571,9 +571,10 @@ void wifi_get_beijint_time_handler(void)
          if(wifi_link_net_state()==0 && gpro_t.wifi_led_fast_blink_flag==0){
 
             wifi_t.linking_tencent_cloud_doing =1;
+        
 
             WIFI_IC_ENABLE();
-
+       
            // if(auto_link_net_flag==0){
             
     		//at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
@@ -605,11 +606,13 @@ void wifi_get_beijint_time_handler(void)
             wifi_t.gTimer_auto_link_net_time=0;
             wifi_t.wifi_uart_counter=0;
 	        wifi_t.soft_ap_config_flag =0;
-            DISABLE_INT();
+           // DISABLE_INT();
 	        HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 0xffff);//开始连接
-            ENABLE_INT();
-            auto_link_net_flag =2;
+           /// ENABLE_INT();
             HAL_Delay(1000);
+            //HAL_Delay(1000);
+            auto_link_net_flag =2;
+            //HAL_Delay(1000);
            
 		
 	    }

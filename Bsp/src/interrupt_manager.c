@@ -134,6 +134,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		wifi_t.gTimer_wifi_counter_link_beijing_times++;
         wifi_t.gTimer_auto_link_net_time++;
         wifi_t.gTime_link_time_start++;
+        wifi_t.gTimer_login_tencent_step_3 ++;
 
      
       

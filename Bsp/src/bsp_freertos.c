@@ -84,55 +84,6 @@ void freeRTOS_Handler(void)
 
 /*
 *********************************************************************************************************
-*	函 数 名: vTaskRunPro
-*	功能说明: 使用函数xTaskNotifyWait接收任务vTaskTaskUserIF发送的事件标志位设置
-*	形    参: pvParameters 是在创建该任务时传递的形参
-*	返 回 值: 无
-*   优 先 级: 1  
-*********************************************************************************************************
-*/
-#if 0
-static void vTaskRunPro(void *pvParameters)
-{
-
-   static uint8_t power_sound_flag;
-
-   while(1)
-   {
-
-
-     
-
-     
-      if(gpro_t.gPower_On == power_on && (key_power_sound_flag !=3)){
-
-      
-        
-          //update data to tencent cloud.
-
-         
-
-      
-
-          
-
-           WIFI_Process_Handler();
-       
-      }
-      bsp_run_Idle();
-      
-      MainBoard_Self_Inspection_PowerOn_Fun();
-    
-      USART_Cmd_Error_Handler();
-      clear_rx_copy_data();
-     
-      vTaskDelay(30);////100// 40
-  }
-	
-}
-#endif 
-/*
-*********************************************************************************************************
 *	函 数 名: vTaskMsgPro
 *	功能说明: 使用函数xTaskNotifyWait接收任务vTaskTaskUserIF发送的事件标志位设置
 *	形    参: pvParameters 是在创建该任务时传递的形参
