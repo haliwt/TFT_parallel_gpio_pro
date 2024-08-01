@@ -494,7 +494,7 @@ static void vTaskMsgPro(void *pvParameters)
                Voice_Decoder_Handler();
          
           }
-
+         Wifi_Fast_Led_Blink();
          wifi_get_beijint_time_handler();
          bsp_run_Idle();
       

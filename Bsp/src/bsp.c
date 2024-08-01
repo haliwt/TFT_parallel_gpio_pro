@@ -706,7 +706,8 @@ static void Power_Off_Fun(void)
 void Wifi_Fast_Led_Blink(void)
 {
 
-  if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
+  if(gpro_t.gPower_On == power_on){
+  if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0 ){
     if(gpro_t.gTimer_pro_wifi_led < 166){//2'46s
 
 	if( gpro_t.gTimer_pro_wifi_fast_led < 80 ){ //50ms
@@ -736,6 +737,8 @@ void Wifi_Fast_Led_Blink(void)
       gpro_t.wifi_led_fast_blink_flag=0; 
 
    }
+
+    }
  
 }
 
@@ -752,7 +755,7 @@ void Wifi_Fast_Led_Blink(void)
 void WIFI_LED_Blink(void)
 {
 
-   if(wifi_link_net_state()==0 && gpro_t.gPower_On == power_on){
+   if(wifi_link_net_state()==0 && gpro_t.gPower_On == power_on && gpro_t.wifi_led_fast_blink_flag==0){
        if(gpro_t.mode_key_run_item_step != mode_key_select){
                     
         if(gpro_t.gTimer_pro_wifi_led > 1 && gpro_t.gTimer_pro_wifi_led < 3){
