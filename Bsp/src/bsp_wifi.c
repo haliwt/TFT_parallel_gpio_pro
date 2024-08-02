@@ -25,14 +25,9 @@ uint8_t auto_link_net_flag;
 ********************************************************************************/
 void WIFI_Process_Handler(void)
 {
-  	//
+  	
     RunWifi_Command_Handler();
-//    if(wifi_t.get_rx_beijing_time_enable==0){
-//    
-//     Tencent_Cloud_Rx_Handler();
-//	 Json_Parse_Command_Fun();
-//   
-//    }
+
 }
 
 void smart_phone_power_on_to_tencent_data(void)

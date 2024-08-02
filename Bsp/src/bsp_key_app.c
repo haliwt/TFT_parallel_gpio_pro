@@ -628,7 +628,7 @@ void Mode_Key_Confirm_Fun(void)
             if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                      gpro_t.gTimer_get_data_from_tencent_data =0;
                     MqttData_Publish_SetPlasma(1);
-                    HAL_Delay(100);
+                    osDelay(100);//HAL_Delay(100);
                 }
 		}
      	else{
@@ -638,7 +638,7 @@ void Mode_Key_Confirm_Fun(void)
           if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                     gpro_t.gTimer_get_data_from_tencent_data =0;
                     MqttData_Publish_SetPlasma(0);
-                    HAL_Delay(100);
+                    osDelay(100);//HAL_Delay(100);
                 }
 		}
 		gctl_t.select_main_fun_numbers--;
@@ -656,7 +656,7 @@ void Mode_Key_Confirm_Fun(void)
             if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                   gpro_t.gTimer_get_data_from_tencent_data =0;
                     MqttData_Publish_SetUltrasonic(1);
-                    HAL_Delay(100);
+                    osDelay(100); //HAL_Delay(100);
               }
 			
 			
@@ -668,7 +668,7 @@ void Mode_Key_Confirm_Fun(void)
            if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                    gpro_t.gTimer_get_data_from_tencent_data =0;
                     MqttData_Publish_SetUltrasonic(0);
-                    HAL_Delay(100);
+                     osDelay(100);//HAL_Delay(100);
              }
 		  
 				
