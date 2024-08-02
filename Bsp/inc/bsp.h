@@ -65,7 +65,7 @@
 #define __STM33G030C8T6_BSP_VERSION		"1.0"
 
 
-#define UNIT_TESTING        1
+#define UNIT_TESTING        0
 
 
 
