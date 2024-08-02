@@ -219,101 +219,6 @@ static void RunWifi_Command_Handler(void)
  
 /********************************************************************************
 	*
-	*Functin Name:static void auto_repeat_link_netware_fun(void)
-	*Functin :
-	*Input Ref: NO
-	*Return Ref:NO
-	*
-********************************************************************************/
-
-/********************************************************************************
-	*
-	*Functin Name:void Wifi_Rx_Auto_Link_Net_Handler(void)
-	*Functin :
-	*Input Ref: NO
-	*Return Ref:NO
-	*
-********************************************************************************/
-void Wifi_Rx_Auto_Link_Net_Handler(void)
-{
-
-   
-	   strncpy((char *)wifi_t.auto_det_data, (const char *)wifi_t.wifi_data,150);
-	
-
-
-	  if(strstr((const char*)wifi_t.auto_det_data,"+TCMQTTCONN:OK")){
-			 	
-                 
-		  wifi_t.esp8266_login_cloud_success=1;
-	      wifi_t.repeat_login_tencent_cloud_init_ref=0;
-		
-          wifi_t.linking_tencent_cloud_doing=0;
-          wifi_t.start_again_link_net_flag = 0;
-         
-	
-
-		  wifi_t.soft_ap_config_flag=0;
-		  wifi_t.gTimer_auto_detected_net_state_times=0;
-	  }
-	  else if(strstr((const char*)wifi_t.auto_det_data,"QTTSTATE:0")){
-
-			 wifi_t.esp8266_login_cloud_success=0;
-            
-             
-		   
-				  
-	    }
-		else if(strstr((const char*)wifi_t.auto_det_data,"+TCMQTTRECONNECTING")){
-
-			 wifi_t.esp8266_login_cloud_success=0;
-        
-		    
-				  
-	    }
-		else if(strstr((const char*)wifi_t.auto_det_data,"ONNECTING")){
-
-			 wifi_t.esp8266_login_cloud_success=0;
-        
-		   
-				  
-	    }
-		else if(strstr((const char*)wifi_t.auto_det_data,"QTTSTATE:1")){
-
-		   wifi_t.esp8266_login_cloud_success= 1;
-		   
-
-
-       }
-       else if(strstr((const char*)wifi_t.auto_det_data,"WIFI CONNECTED")){
-
-		   
-		    wifi_t.start_again_link_net_flag = 1;
-
-
-       }
-       else if(strstr((const char*)wifi_t.auto_det_data,"WIFI DISCONNECT")){
-
-		   
-		   
-       }
-       
-       
-       
-       
-       
-         wifi_t.wifi_uart_counter=0;
-		
-      
-		
-    
-}
-
-
-
-
-/********************************************************************************
-	*
 	*Functin Name:void void wifi_get_beijint_time_handler(void)
 	*Functin :
 	*Input Ref: NO
@@ -549,7 +454,7 @@ void wifi_get_beijint_time_handler(void)
          if(wifi_link_net_state()==0){
               get_beijing_flag = 11;
               test_counter++;
-              wifi_t.start_again_link_net_flag = 1;
+          
            
             wifi_t.linking_tencent_cloud_doing  =1; //receive from tencent command state .
             wifi_t.wifi_uart_counter=0;
@@ -583,9 +488,6 @@ void wifi_get_beijint_time_handler(void)
 
             WIFI_IC_ENABLE();
        
-           // if(auto_link_net_flag==0){
-            
-    		//at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
     		at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
             HAL_Delay(1000);
             wifi_t.gTimer_auto_link_net_time =0;

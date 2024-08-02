@@ -1082,7 +1082,7 @@ void detection_net_link_state_handler(void)
     
     if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_t.soft_ap_config_success==0 &&   wifi_t.serch_for_wifi_flag ==1){
 
-       if(wifi_t.gTime_link_time_start  > 50){
+       if(wifi_t.gTime_link_time_start  > 40){
            wifi_t.gTime_link_time_start =0;
             wifi_t.serch_for_wifi_flag =0;
            wifi_t.soft_ap_config_success=1;
@@ -1090,9 +1090,13 @@ void detection_net_link_state_handler(void)
 
        }
 
+     }
 
+     if(wifi_t.gTime_link_time_start  > 45 &&   wifi_t.serch_for_wifi_flag ==1){
 
-    }
+            wifi_t.serch_for_wifi_flag =0;
+
+      }
 
 }
 	

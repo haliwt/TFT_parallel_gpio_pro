@@ -75,7 +75,7 @@ typedef struct _WIFI_FUN{
 	uint8_t link_beijing_times_flag;
 
 
-    uint8_t start_again_link_net_flag;
+   
 	
     //esp8266 up ref
 

@@ -195,9 +195,11 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		if(wifi_t.link_tencent_step_counter==driver_esp8266_step_2){
 		 wifi_t.link_tencent_step_counter=driver_esp8266_step_3;
 		 wifi_t.gTimer_login_tencent_times=0;
+        #if 0
 		 //at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
 		//  at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
         //  HAL_Delay(1000);
+        #endif 
 
 		}
 

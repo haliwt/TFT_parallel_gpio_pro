@@ -19,6 +19,7 @@ void PowerOn_LongKey_Fun(void)
 
 gpro_t.wifi_led_fast_blink_flag=1;
 
+wifi_t.serch_for_wifi_flag =0; //
 
 
 //WIFI CONNCETOR process
@@ -34,9 +35,6 @@ wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒
 gpro_t.gTimer_exit_mode_long_key =0;
            
 			
-		 
-     
-
 }
 
 /******************************************************************************

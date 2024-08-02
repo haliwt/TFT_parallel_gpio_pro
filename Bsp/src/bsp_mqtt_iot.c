@@ -83,8 +83,8 @@ static void Mqtt_Value_update_data(void)
 	sg_info.ptc  = gctl_t.ptc_flag;
 	sg_info.anion =gctl_t.plasma_flag;
 	sg_info.sonic = gctl_t.ultrasonic_flag ;
-    sg_info.find =100 ; //wifi_t.set_wind_speed_value;
-    if(gpro_t.set_timer_timing_success==1){
+    sg_info.find =100 ; //wifi_t.set_wind_speed_value; //s07 do't adjust fan speed .
+    if(gctl_t.set_ptc_temp_value_success ==1){
 	   sg_info.set_temperature = gctl_t.gSet_temperature_value;
      }
      else{
