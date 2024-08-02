@@ -288,6 +288,7 @@ void Power_Off_Special_Fun(void);
 
 void Power_On_Special_Fun(void);
 
+void direct_wifi_led_fast_blink_handler(void);
 
 
 

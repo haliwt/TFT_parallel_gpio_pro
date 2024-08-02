@@ -959,6 +959,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 
 				     wifi_t.repeat_login_tencent_cloud_init_ref=0;
 	                 wifi_t.esp8266_login_cloud_success=1;
+                     gpro_t.wifi_led_fast_blink_flag=0;
 				  
 				  //link to tencent cloud is success .
 	              wifi_t.linking_tencent_cloud_doing=0; //release this flag. usart
@@ -1004,7 +1005,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 			      wifi_t.repeat_login_tencent_cloud_init_ref=0;
 				
 	              wifi_t.linking_tencent_cloud_doing=0;
-			
+			      gpro_t.wifi_led_fast_blink_flag=0;
 		
 				  wifi_t.soft_ap_config_flag=0;
 				  wifi_t.gTimer_auto_detected_net_state_times=0;

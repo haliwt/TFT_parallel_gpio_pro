@@ -318,7 +318,10 @@ static void vTaskMsgPro(void *pvParameters)
               else if(key_power_long_sound_flag ==1){
 
                   key_power_long_sound_flag ++;
+                  PowerOn_LongKey_Fun();
                   buzzer_sound();
+                 direct_wifi_led_fast_blink_handler();
+                  
 
               }
           
@@ -370,9 +373,9 @@ static void vTaskMsgPro(void *pvParameters)
                 
 
           }
-          else if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 3 ||  key_mode_long_sound_flag==3 ||  add_dec_combin==1)){
+          else if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 2 ||  key_mode_long_sound_flag==3 ||  add_dec_combin==1)){
 
-                  if(key_power_long_sound_flag ==3){
+                  if(key_power_long_sound_flag ==2){
                       power_key_long_conter =0; //clear power key loong flag .
                      key_power_long_sound_flag  = 0;
                        
@@ -447,12 +450,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                 
                 }
-                else if(key_power_long_sound_flag == 2){
-                     key_power_long_sound_flag ++;
-
-                      PowerOn_LongKey_Fun();
-
-                }
+              direct_wifi_led_fast_blink_handler();
 
               Mode_Key_Config_Fun_Handler();
 

@@ -742,8 +742,30 @@ void Wifi_Fast_Led_Blink(void)
  
 }
 
+void direct_wifi_led_fast_blink_handler(void)
+{
+
+  if(gpro_t.gPower_On == power_on){
+  if(gpro_t.wifi_led_fast_blink_flag==1){
+    
 
 
+            
+        LED_WIFI_ICON_OFF();
+        osDelay(100);
+
+        LED_WIFI_ICON_ON();
+        osDelay(100); 
+        LED_WIFI_ICON_OFF();
+	     osDelay(100);   
+        LED_WIFI_ICON_ON();
+        osDelay(100); 
+        LED_WIFI_ICON_OFF();
+        osDelay(100);   
+        LED_WIFI_ICON_ON();
+	  }
+}
+  }
 /**********************************************************************************************************
     **
     *Function Name:void Power_Key_Detected(void)
