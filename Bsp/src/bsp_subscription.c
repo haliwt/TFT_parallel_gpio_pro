@@ -493,6 +493,7 @@ void Json_Parse_Command_Fun(void)
 	     LED_PTC_ICON_ON();
          MqttData_Publish_SetPtc(0x01);
 	  	 osDelay(100);//HAL_Delay(100);//350ms
+	  	 
 	     gctl_t.ptc_flag=1;
 		
 		}

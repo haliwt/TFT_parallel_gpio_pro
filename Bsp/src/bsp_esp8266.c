@@ -80,7 +80,7 @@ void Auto_SmartPhone_TryToLink_TencentCloud(void)
 	   wifi_t.gTimer_power_first_link_tencent=0;
        wifi_t.power_on_login_tencent_cloud_flag++;
 	}
-	if(wifi_t.gTimer_power_first_link_tencent >10 &&  wifi_t.power_on_login_tencent_cloud_flag==4){
+	if(wifi_t.gTimer_power_first_link_tencent >3 &&  wifi_t.power_on_login_tencent_cloud_flag==4){
 		wifi_t.gTimer_power_first_link_tencent=0;
 		wifi_t.power_on_login_tencent_cloud_flag++;
 		wifi_t.first_power_on_link_net ++;
