@@ -179,6 +179,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		  wifi_t.link_tencent_step_counter=driver_esp8266_rest;
 		   WIFI_IC_DISABLE();
            HAL_Delay(1000);
+           Wifi_Fast_Led_Blink();
 		   
 	   }
 	
@@ -187,6 +188,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		   wifi_t.link_tencent_step_counter=driver_esp8266_step_2;
 		   WIFI_IC_ENABLE();
 		   HAL_Delay(1000);
+           Wifi_Fast_Led_Blink();
 
 		}
 		//at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
@@ -204,7 +206,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		  wifi_t.gTimer_login_tencent_times=0;
 
           wifi_t.link_tencent_step_counter=driver_esp8266_step_4;
-
+          Wifi_Fast_Led_Blink();
 
 		}
 		
@@ -238,6 +240,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
     case wifi_set_restor:
            wifi_t.gTimer_get_beijing_time=0;
+           Wifi_Fast_Led_Blink();
            ReConnect_Wifi_Net_ATReset_Hardware();//InitWifiModule_Hardware()
 	
 	       if(wifi_t.link_tencent_step_counter==driver_esp8266_step_4){
@@ -248,7 +251,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
 	 case wifi_set_cwmode:
     	    WIFI_IC_ENABLE();
-
+            Wifi_Fast_Led_Blink();
            wifi_t.gTimer_get_beijing_time=0;
 	
 	        if(wifi_t.link_tencent_step_counter==driver_esp8266_step_4){
@@ -272,7 +275,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
 	  case wifi_set_softap:
             WIFI_IC_ENABLE();
-
+            Wifi_Fast_Led_Blink();
             wifi_t.gTimer_get_beijing_time=0;
 			if(wifi_t.link_tencent_step_counter ==driver_esp8266_step_5){
 				wifi_t.link_tencent_step_counter =driver_esp8266_step_6;
@@ -295,7 +298,7 @@ void Wifi_SoftAP_Config_Handler(void)
 	 case wifi_set_tcdevreg://dynamic register 0x03
 
         wifi_t.gTimer_get_beijing_time=0;
-
+         Wifi_Fast_Led_Blink();
 	     if(wifi_t.link_tencent_step_counter ==driver_esp8266_step_6){
 		 	wifi_t.link_tencent_step_counter =driver_esp8266_step_7;
 			 wifi_t.linking_tencent_cloud_doing  =1;
@@ -316,7 +319,7 @@ void Wifi_SoftAP_Config_Handler(void)
 	 case wifi_set_tcsap: //5
 
          wifi_t.gTimer_get_beijing_time=0;
-	 
+	     Wifi_Fast_Led_Blink();
            if(wifi_t.link_tencent_step_counter ==driver_esp8266_step_7){
 		 	wifi_t.link_tencent_step_counter =driver_esp8266_step_8;
 			  wifi_t.gTimer_login_tencent_step_3 =0;
@@ -344,6 +347,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
      case wifi_inquire_register_codes: //0x06//WT.EDIT 2024.07.22
        wifi_t.gTimer_get_beijing_time=0;
+       Wifi_Fast_Led_Blink();
 	   if(wifi_t.gTimer_login_tencent_step_3 > 3 && wifi_t.soft_ap_config_success==0){
          wifi_t.gTimer_login_tencent_step_3=0;
 		 wifi_t.wifi_uart_counter=0;
@@ -374,6 +378,7 @@ void SmartPhone_LinkTencent_Cloud(void)
 
        wifi_t.soft_ap_config_success=0;
 	     wifi_t.gTimer_get_beijing_time=0;
+       Wifi_Fast_Led_Blink();
 	   
 	   HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 5000);//
 	   HAL_Delay(1000);
@@ -388,13 +393,8 @@ void SmartPhone_LinkTencent_Cloud(void)
 			   
 				wifi_t.get_rx_beijing_time_enable=0;
 			    
-                
-				
-			}
-            else{
-              
-
             }
+         
 		 }
 }
 
