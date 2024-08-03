@@ -183,7 +183,9 @@ void ADD_Key_Fun(void)
              gpro_t.gTimer_pro_temp_delay=0; //don't display temperature sensor of value .
         
 			gpro_t.disp_key_set_temp_value =1;
-			//TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);	
+
+            gctl_t.ptc_led_blink_flag = 0; //WT.EDIT .2024.08.03
+			
 			
 		break;
 
@@ -257,6 +259,7 @@ void DEC_Key_Fun(void)
 			 gctl_t.gSet_temperature_value_item = disp_do_setting_ptc_value_item;
              gpro_t.gTimer_pro_temp_delay=0; //don't display temperature sensor of value by add and dec key set 
              gpro_t.disp_key_set_temp_value =1;
+             gctl_t.ptc_led_blink_flag = 0; //WT.EDIT .2024.08.03
 
            
 	        break;

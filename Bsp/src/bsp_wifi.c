@@ -126,12 +126,12 @@ static void RunWifi_Command_Handler(void)
 	}
 	
 	if(wifi_link_net_state()==0){
-		if(wifi_t.gTimer_linking_tencent_duration < 166 ){
+		if(wifi_t.gTimer_linking_tencent_duration < 120){
 		   gctl_t.get_beijing_time_success = 0; 
           
 		   wifi_t.runCommand_order_lable = wifi_link_tencent_cloud;
 		}
-		else if(wifi_link_net_state()==0 && wifi_t.gTimer_linking_tencent_duration >166){
+		else if(wifi_link_net_state()==0 && wifi_t.gTimer_linking_tencent_duration >120){
 		  //auto link wifi net 
 		  	wifi_t.gTimer_linking_tencent_duration=0;
 		    gpro_t.wifi_led_fast_blink_flag=0; //fast blink wifi of dication led
