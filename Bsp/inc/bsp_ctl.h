@@ -64,6 +64,7 @@ typedef struct _bsp_ctl{
    uint8_t timing_words_changed_flag;
    uint8_t get_beijing_time_success;
    uint8_t gTime_all_led_on_off;
+   uint8_t ptc_led_blink_flag;
    
    
 

@@ -39,16 +39,6 @@ gpro_t.gTimer_exit_mode_long_key =0;
 
 /******************************************************************************
 	*
-	*Function Name:void PowerOn_Normal_Key(void)
-	*Funcion: speical of power key function
-	*Input Ref:NO
-	*Return Ref:NO
-	*
-******************************************************************************/
-
-
-/******************************************************************************
-	*
 	*Function Name:static void Mode_Key_Long_Fun(void)
 	*Funcion: speical of mode key fun
 	*Input Ref:NO
@@ -126,7 +116,7 @@ void Mode_Key_Config_Fun_Handler(void)
 
         }
         else{
-           
+            gctl_t.ptc_led_blink_flag = 0; //don't comparison ptc value 
             gctl_t.memory_confimr_key_done = 0;
             gpro_t.mode_key_run_item_step = mode_key_set_temp; //
              
@@ -321,6 +311,7 @@ void Mode_Key_Select_Fun(void)
 
       case ptc_fun:
 
+         gctl_t.ptc_led_blink_flag = 1;
          if(wifi_link_net_state() == 1){
                LED_WIFI_ICON_ON();
 
@@ -358,7 +349,7 @@ void Mode_Key_Select_Fun(void)
    
         
 
-  led_blik: if(plasma_state() == 1){
+            if(plasma_state() == 1){
                    // Plasma_On();
 				LED_KILL_ICON_ON();
 			}
@@ -378,10 +369,10 @@ void Mode_Key_Select_Fun(void)
 
 			// Ultrasonic_Pwm_Stop();
 			LED_RAT_ICON_OFF();
-		}
+		    }
 			
 			
-	    if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
+  led_blik:	   if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
  		      LED_PTC_ICON_ON()  ;  
 		  }
 		  else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){
@@ -437,7 +428,7 @@ void Mode_Key_Select_Fun(void)
 
 
 		
-	 led_blik2:   if(ptc_state()== 1){
+	    if(ptc_state()== 1){
 
 	
 		LED_PTC_ICON_ON();
@@ -463,7 +454,7 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-     if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
+   led_blik2:   if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
 
 		    
 				LED_KILL_ICON_ON() ;   
@@ -519,7 +510,7 @@ void Mode_Key_Select_Fun(void)
 	  }
 	 
 
-	led_blink3:   if(ptc_state()== 1){
+	  if(ptc_state()== 1){
 	
 	   
 		LED_PTC_ICON_ON();
@@ -543,7 +534,7 @@ void Mode_Key_Select_Fun(void)
 	 
 
 
-	if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
+led_blink3: if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
 			LED_RAT_ICON_ON(); 
 	 }
 	 else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){	
@@ -552,7 +543,7 @@ void Mode_Key_Select_Fun(void)
 	  else{
 		   gctl_t.gTimer_ctl_select_led=0;
 		   if(gpro_t.mode_key_run_item_step==mode_key_select)
-		   goto led_blink3;
+		    goto led_blink3;
 
 		}
 
@@ -616,6 +607,8 @@ void Mode_Key_Confirm_Fun(void)
 			if(gctl_t.select_main_fun_numbers==0)gctl_t.select_main_fun_numbers=4;
 		    gctl_t.memory_confimr_key_done = 0;
           }
+
+          gctl_t.ptc_led_blink_flag = 0; //don't comparison ptc tempeature value .
 	  break;
 
 	  case plasma_fun:

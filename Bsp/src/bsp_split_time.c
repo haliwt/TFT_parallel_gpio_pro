@@ -67,6 +67,7 @@ void TimeTimer_Pro_Handler(void)
            // gctl_t.gSet_timer_minutes = gctl_t.gSet_timer_minutes - 20;
 
 			if(gctl_t.gSet_timer_minutes <0){
+                
 			    gctl_t.gSet_timer_minutes =59;
 			    gctl_t.gSet_timer_hours --;
 			

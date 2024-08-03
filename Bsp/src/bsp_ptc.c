@@ -245,6 +245,8 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 
 		   case dsip_set_ptc_temp_value_item:
 
+           if( gctl_t.ptc_led_blink_flag ==0){
+
            if(gpro_t.gTimer_pro_temp_delay > 12   && ptc_error_state()==0 ){
                    gpro_t.gTimer_pro_temp_delay =0;
 
@@ -303,6 +305,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
                    
 
               }
+             }
 			gpro_t.disp_temp_or_set_tmp_switch_flag = 2; 
           break;
 
