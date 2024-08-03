@@ -83,7 +83,7 @@ void Mode_Key_Selection_Func(void)
 ************************************************************************/
 void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 {
-	  if(power_on_state() ==power_on){
+	
 	   if(gctl_t.fan_warning ==0 && ptc_error_state() ==0){
           gpro_t.disp_works_timer_timing_mode_item = timer_set_time; //disp set timer timing value 
 	  	  gpro_t.mode_key_run_item_step = mode_key_set_timer_value;  //key input timer timing value 
@@ -94,7 +94,7 @@ void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 
 	   }
 	  	 
-      }
+      
 }
 
 /******************************************************************************

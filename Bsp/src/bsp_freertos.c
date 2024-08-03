@@ -58,8 +58,8 @@ uint32_t power_key_long_conter;
 uint32_t add_dec_combin_counter;
 
 uint8_t key_power_sound_flag;
-uint8_t mode_key_pressed_counter;
 
+uint8_t key_mode_long_run_flag;
 
 
 
@@ -183,14 +183,14 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
                 
-                    if(key_mode_long_sound_flag != 3){
-                       key_mode_short_sound_flag =1;
+                    if(key_mode_long_run_flag ==0){
+                        
+                     key_mode_short_sound_flag =1;
 
                     }
                      
-                      mode_key_long_conter=0;
-                      power_key_long_conter =0;
-                      add_dec_combin_counter=0;
+                   power_key_long_conter =0;
+                   add_dec_combin_counter=0;
                     
                  }
                
@@ -198,7 +198,7 @@ static void vTaskMsgPro(void *pvParameters)
             else if((ulValue & MODE_LONG_KEY_10) != 0){
                 
                 if(gpro_t.gPower_On==power_on){
-                    mode_key_long_conter=0;       
+                    key_mode_long_run_flag ++ ;
                     key_mode_long_sound_flag = 1;
                     
                      power_key_long_conter =0;
@@ -273,25 +273,25 @@ static void vTaskMsgPro(void *pvParameters)
               else if(key_mode_short_sound_flag== 1){
 
                 key_mode_short_sound_flag  ++;
-                mode_key_long_conter=0;
-                if(mode_key_pressed_counter == 0){
-                     buzzer_sound();
+                if(key_mode_long_run_flag !=1 && key_mode_long_run_flag !=2){
+                  buzzer_sound();
+                  
 
                  }
-    
+                  mode_key_long_conter = 0;
 
               }
               else if(key_mode_long_sound_flag == 1){
 
                    key_mode_long_sound_flag++;
-   
-                   if(mode_key_pressed_counter ==1){
-                      
-                      buzzer_sound();
-                      
-                   }
+                   if(key_mode_long_run_flag == 1){
+                       key_mode_long_run_flag ++;
+                       buzzer_sound();
 
-
+                    }
+                  
+                   
+                      
               }
               else if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
@@ -375,7 +375,7 @@ static void vTaskMsgPro(void *pvParameters)
                 
 
           }
-          else if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 2 ||  add_dec_combin==1)){
+          else if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 2 ||  add_dec_combin==1 )){
 
                   if(key_power_long_sound_flag ==2){
                       power_key_long_conter =0; //clear power key loong flag .
@@ -410,11 +410,11 @@ static void vTaskMsgPro(void *pvParameters)
                 }
                 else if(key_mode_long_sound_flag==2){
                     key_mode_long_sound_flag ++;
+                    
                     Mode_Key_Long_Fun();
-                    mode_key_long_conter =0;
-                    mode_key_pressed_counter =0;
-
-
+                    key_mode_long_run_flag =3;
+                    gpro_t.gTimer_exit_mode_long_key =0;
+                   
                 }
                 else if(key_dec_sound_flag==2 || key_add_sound_flag==2){
                      if(key_dec_sound_flag==2){
@@ -446,28 +446,40 @@ static void vTaskMsgPro(void *pvParameters)
 
                 
                 }
-              direct_wifi_led_fast_blink_handler();
+                else if(key_mode_long_run_flag ==3 &&  gpro_t.gTimer_exit_mode_long_key >0){
+
+                     key_mode_long_run_flag=0; 
+                     mode_key_long_conter =0;
+
+
+                }
+              
 
               Mode_Key_Config_Fun_Handler();
 
               
-              WIFI_LED_Blink();
-           
-              Wifi_Fast_Led_Blink();
-
+            
               TFT_Disp_Timer_Split_Symbol();
+              if(gpro_t.wifi_led_fast_blink_flag==0){
+                 WIFI_LED_Blink();
+                  smart_phone_power_on_to_tencent_data();
+                  
+                  TimeTimer_Pro_Handler();
+                  Temperature_Ptc_Pro_Handler();
+                  PowerOn_Process_Handler();
+             
+               }
+               else{
+                   power_key_long_conter =0;
+                   direct_wifi_led_fast_blink_handler();
+                   Wifi_Fast_Led_Blink();
 
-              TimeTimer_Pro_Handler();
+                }
+              
 
               SetPtc_TempComare_Value();
 
-              smart_phone_power_on_to_tencent_data();
-
-              disp_all_led_on_off_state();
-
-              PowerOn_Process_Handler();
-              Temperature_Ptc_Pro_Handler();
-        
+             disp_all_led_on_off_state();
              detection_net_link_state_handler();
 
           
@@ -489,10 +501,13 @@ static void vTaskMsgPro(void *pvParameters)
          
           }
          Wifi_Fast_Led_Blink();
-         wifi_get_beijint_time_handler();
+         if(gpro_t.wifi_led_fast_blink_flag==0){
+             wifi_get_beijint_time_handler();
+             MainBoard_Self_Inspection_PowerOn_Fun();
+         }
          bsp_run_Idle();
       
-         MainBoard_Self_Inspection_PowerOn_Fun();
+        
     
          USART_Cmd_Error_Handler();
          clear_rx_copy_data();
@@ -550,11 +565,11 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN){
       
-       while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500 && mode_key_pressed_counter==0){
+       while(KEY_MODE_VALUE() == KEY_DOWN && mode_key_long_conter < 2965500 ){
 
          mode_key_long_conter++;
          if(mode_key_long_conter > 2950000){
-                  mode_key_pressed_counter = 1;
+                 
                   mode_key_long_conter = 2965900;
                
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
@@ -567,7 +582,7 @@ static void vTaskStart(void *pvParameters)
 
          }
        
-         if(mode_key_long_conter < 2950000 &&  mode_key_pressed_counter==0  ){
+         if(mode_key_long_conter < 2950000  ){
             
                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
