@@ -444,7 +444,7 @@ void Tencent_Cloud_Rx_Handler(void)
 void Json_Parse_Command_Fun(void)
 {
 
-     uint8_t i;
+    // uint8_t i;
     static uint8_t wind_hundred, wind_decade,wind_unit,temp_decade,temp_unit;
 	
      
@@ -729,125 +729,18 @@ void Json_Parse_Command_Fun(void)
         
         wifi_t.response_wifi_signal_label=0xf0;
 
-		for(i=0;i<20;i++){
-		   wifi_t.wifi_data[i]=0;
-		   
+//		for(i=0;i<20;i++){
+//		   wifi_t.wifi_data[i]=0;
+//		   
 
-        }
+//        }
+       memset(wifi_t.wifi_data,'\0',20);
       
 		
 	}
 
  }
-/***************************************************************************************
-*
-*Function Name:void Wifi_Rx_Beijing_Time_Handler(void)
-*Function: from tencet get beijing times.
-*
-*
-****************************************************************************************/
-void Wifi_Rx_Beijing_Time_Handler(void)
-{
 
-   
-    switch(wifi_t.rx_data_state)
-      {
-      case 0:  //#0
-
-            
-         if(wifi_t.usart2_dataBuf[0]== 0x01 || wifi_t.usart2_dataBuf[0]== 0x02 ||wifi_t.usart2_dataBuf[0]== 0x03 ||wifi_t.usart2_dataBuf[0]== 0x04 
-		 	|| wifi_t.usart2_dataBuf[0]== 0x05 ||wifi_t.usart2_dataBuf[0]== 0x06 ||wifi_t.usart2_dataBuf[0]== 0x07 ||wifi_t.usart2_dataBuf[0]== 0x08 
-		 	|| wifi_t.usart2_dataBuf[0]== 0x09 ||wifi_t.usart2_dataBuf[0]== 0x0a ||wifi_t.usart2_dataBuf[0]== 0x0b ||wifi_t.usart2_dataBuf[0]== 0x0c ){ 
-             wifi_t.rx_data_state=1; //=1
-		  }
-		  else{
-               wifi_t.rx_counter=0;
-              // wifi_t.UART_Flag = 0;
-			   wifi_t.data_size=0;
-               wifi_t.wifi_uart_counter=0;              
-            }
-         break;
-
-	  case 1:
-	  	 if(wifi_t.usart2_dataBuf[0]== ' ')
-		  	 wifi_t.rx_data_state=2; //=1
-		  else{
-		      wifi_t.rx_data_state=0; //=1
-
-          }
-	  	break;
-
-      case 2:
-      
-           wifi_t.real_hours=wifi_t.usart2_dataBuf[0];
-           wifi_t.rx_data_state=3; //=1
-         break;
-
-	  case 3:
-	  	  if(wifi_t.usart2_dataBuf[0]== ':')
-		  	 wifi_t.rx_data_state=4; //=1
-		  else{
-		      wifi_t.rx_data_state=0; //=1
-
-          }
-	  	break;
-      case 4: //#1
-      
-            wifi_t.real_minutes = wifi_t.usart2_dataBuf[0];
-            wifi_t.rx_data_state=5; //=1
-       
-         break;
-
-	  case 5:
-	  	 if(wifi_t.usart2_dataBuf[0]== ':')
-		  	 wifi_t.rx_data_state=6; //=1
-		  else{
-		      wifi_t.rx_data_state=0; //=1
-
-          }
-	  break;
-            
-        case 6:
-           wifi_t.real_seconds = wifi_t.usart2_dataBuf[0];
-           wifi_t.rx_data_state=7; //=1
-           
-           
-        
-        break;
-
-		case 7:
-			if(wifi_t.usart2_dataBuf[0]== ' ')
-		  	 wifi_t.rx_data_state=8; //=1
-		  else{
-		      wifi_t.rx_data_state=0; //=1
-
-          }
-
-		break;
-		  
-		case 8:
-			 if(wifi_t.usart2_dataBuf[0]==20){
-                wifi_t.get_rx_beijing_time_enable=0 ;
-				wifi_t.rx_data_state=0; //=1
-				  
-		     }
-			 
-			
-			
-		break;
-        
-        
-
-        default:
-         
-         
-       break;
-      }
-
-
-
-
-}
 
 /*****************************************************************************
 	*
@@ -1058,7 +951,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 
 void clear_rx_copy_data(void)
 {
-   uint8_t i;
+   //uint8_t i;
    #if 0
    if( wifi_t.once_rx_data_done == 1 && wifi_link_net_state() == 0){
 
