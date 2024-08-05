@@ -124,6 +124,12 @@ static void vTaskMsgPro(void *pvParameters)
        power_sound_flag++;
       
        buzzer_sound();
+      
+       Update_DHT11_Value();
+          
+      TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
+      TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
+      TFT_Display_Handler();
        HAL_Delay(100);
        VOICE_OUTPUT_SOUND_ENABLE();
      }
@@ -396,10 +402,7 @@ static void vTaskMsgPro(void *pvParameters)
                   }
            }
 
-            
-
-
-             if(gpro_t.gPower_On==power_on){
+          if(gpro_t.gPower_On==power_on){
                  
               
                 if(key_mode_short_sound_flag==2){
@@ -456,34 +459,12 @@ static void vTaskMsgPro(void *pvParameters)
               
 
               Mode_Key_Config_Fun_Handler();
-
               
-            
-              TFT_Disp_Timer_Split_Symbol();
-              if(gpro_t.wifi_led_fast_blink_flag==0){
-                 WIFI_LED_Blink();
-                  smart_phone_power_on_to_tencent_data();
-                  
-                  TimeTimer_Pro_Handler();
-                  Temperature_Ptc_Pro_Handler();
-                  PowerOn_Process_Handler();
-             
-               }
-               else{
-                   power_key_long_conter =0;
-                   direct_wifi_led_fast_blink_handler();
-                   Wifi_Fast_Led_Blink();
-
-                }
-              
-
               SetPtc_TempComare_Value();
-
-             disp_all_led_on_off_state();
-             detection_net_link_state_handler();
-
-          
-             WIFI_Process_Handler();
+              wifi_detected_signal_handler(gpro_t.wifi_led_fast_blink_flag);
+              disp_all_led_on_off_state();
+              TFT_Disp_Timer_Split_Symbol();
+            
    
 
          }
@@ -505,10 +486,7 @@ static void vTaskMsgPro(void *pvParameters)
              wifi_get_beijint_time_handler();
              MainBoard_Self_Inspection_PowerOn_Fun();
          }
-         bsp_run_Idle();
-      
         
-    
          USART_Cmd_Error_Handler();
          clear_rx_copy_data();
           

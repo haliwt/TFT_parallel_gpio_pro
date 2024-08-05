@@ -42,6 +42,7 @@
 #include "interrupt_manager.h"
 #include "bsp_key_app.h"
 #include "bsp_ntc.h"
+#include "bsp_freertos_app.h"
 
 
 

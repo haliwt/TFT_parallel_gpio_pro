@@ -1059,7 +1059,7 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 void clear_rx_copy_data(void)
 {
    uint8_t i;
-
+   #if 0
    if( wifi_t.once_rx_data_done == 1 && wifi_link_net_state() == 0){
 
       wifi_t.once_rx_data_done ++;
@@ -1069,6 +1069,10 @@ void clear_rx_copy_data(void)
        wifi_t.wifi_data[i]=0;
       // wifi_t.auto_det_data[i]=0;
       }
+    }
+   #endif 
+   if( wifi_t.once_rx_data_done == 1 && wifi_link_net_state() == 0){
+      memset(wifi_t.wifi_data,'\0',150);
     }
 }
 /***********************************************************************

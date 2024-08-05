@@ -56,22 +56,7 @@ void bsp_run_iwdg(void)
 void bsp_run_Idle(void)
 {
 
-   static uint8_t power_on_first;
-
-    if(power_on_first ==0){
-        
-          power_on_first ++;
-          Update_DHT11_Value();
-          
-          TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
-          TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
-          TFT_Display_Handler();
-         
-  
-    }
-
-
-   if(gpro_t.gPower_On == power_on){
+ if(gpro_t.gPower_On == power_on && gpro_t.wifi_led_fast_blink_flag==0){
    if(gpro_t.disp_works_timer_timing_mode_item == timer_time || gpro_t.disp_works_timer_timing_mode_item ==timer_set_time){
     
      TFT_DonnotDisp_Works_Time();
