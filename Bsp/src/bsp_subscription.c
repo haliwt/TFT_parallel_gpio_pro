@@ -974,7 +974,7 @@ void clear_rx_copy_data(void)
     *Function:
     *Input Ref: NO
     *Return Ref:NO
-    *
+    *-
 ***********************************************************************/
 void detection_net_link_state_handler(void)
 {
