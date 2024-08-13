@@ -95,9 +95,10 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        gpro_t.gTimer_pro_set_long_key_tims++;
        gpro_t.gTimer_read_humidity_value++;
        gpro_t.gTimer_countdown_one_minute--;
-       gpro_t.gTimer_exit_mode_long_key++;
+
      
        gpro_t.gTimer_get_data_from_tencent_data++;
+ 
     
    
         //cotrol timer

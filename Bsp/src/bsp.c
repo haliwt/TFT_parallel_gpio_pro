@@ -2,9 +2,8 @@
 
 PRO_T gpro_t;
 
-uint8_t led_blink_times;
-uint8_t update_step;
-uint8_t fan_continuce_run_flag;
+
+
 
 //static void power_on_init_set_ref(void);
 
@@ -16,7 +15,7 @@ static void Power_On_Init(void);
 static void Power_Off_Fun(void);
 
 
-uint16_t power_off_counter;
+
 
 
 
@@ -753,6 +752,42 @@ void WIFI_LED_Blink(void)
 }
 
 
+void mode_key_adjust_fun(void)
+{
 
+     if(gpro_t.key_mode_be_pressed_flag > 0 && gpro_t.long_key_mode_counter > 56){
+
+         
+        
+                 
+             
+              gpro_t.key_mode_be_pressed_flag=0;
+
+              gpro_t.key_long_mode_flag = 1;
+               gpro_t.long_key_mode_counter =0;
+             
+
+          
+
+
+     }
+     else if( gpro_t.long_key_mode_counter< 56 &&  gpro_t.key_mode_be_pressed_flag > 0 ){
+
+       
+
+               gpro_t.key_mode_be_pressed_flag=0;
+
+               gpro_t.key_short_mode_flag = 1;
+                gpro_t.long_key_mode_counter =0;
+             
+
+     }
+
+
+     
+
+
+
+}
 
 

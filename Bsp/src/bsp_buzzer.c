@@ -5,7 +5,7 @@ void (*buzzer_sound)(void);
 
 
 
-static void Buzzer_KeySound_Off(void);
+//void Buzzer_KeySound_Off(void);
 /*
 *********************************************************************************************************
 *	Function Name: MODH_Poll
@@ -28,12 +28,12 @@ void Buzzer_KeySound(void)
 {
 
   HAL_TIM_PWM_Start(&htim14,TIM_CHANNEL_1);
-  HAL_Delay(20);//50 //60
+  osDelay(20);//HAL_Delay(30);//50 //60
   Buzzer_KeySound_Off();
        
 }
 
-static void Buzzer_KeySound_Off(void)
+void Buzzer_KeySound_Off(void)
 {
   HAL_TIM_PWM_Stop(&htim14,TIM_CHANNEL_1);
 	

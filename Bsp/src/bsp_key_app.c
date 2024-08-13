@@ -32,7 +32,7 @@ wifi_t.gTimer_login_tencent_times=0;
 
 wifi_t.gTimer_linking_tencent_duration=0; //120s -2分7秒
 
-gpro_t.gTimer_exit_mode_long_key =0;
+
            
 			
 }
@@ -50,7 +50,7 @@ void Mode_Key_Long_Fun(void)
    
         Mode_Long_Key_Fun();
 
-       gpro_t.gTimer_exit_mode_long_key = 0;
+  
 
    
 }

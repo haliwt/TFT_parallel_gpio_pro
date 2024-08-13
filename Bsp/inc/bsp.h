@@ -160,10 +160,15 @@ typedef struct{
 
    
 
-  
+   
    uint8_t run_process_step;
    uint8_t key_power_be_pressed_flag ;
    uint8_t power_off_flag;
+   uint8_t key_mode_be_pressed_flag;
+   uint8_t key_long_mode_flag;
+   uint8_t key_short_mode_flag;
+
+   uint16_t long_key_mode_counter;
 
    //add and dec key
    uint8_t  disp_key_set_temp_value;
@@ -237,7 +242,7 @@ typedef struct{
   uint8_t gTimer_wifi_connect_counter;
   uint8_t gTimer_run_time_out;
   uint8_t gTimer_pro_disp_temphum;
-  uint8_t gTimer_exit_mode_long_key;
+
   uint8_t gTimer_read_humidity_value;
   uint8_t  gTimer_fan_run_one_minute;
 
@@ -298,6 +303,10 @@ void power_up_initialize_data(void);
 
 void power_on_init_set_ref(void);
 void power_off_init_set_ref(void);
+
+
+void mode_key_adjust_fun(void);
+
 
 
 #endif 
