@@ -258,9 +258,9 @@ extern PRO_T gpro_t;
 void bsp_Init(void);
 
 
-void bsp_run_Idle(void);
 
-void bsp_run_iwdg(void);
+
+
 
 void PowerOnOff_Init_Ref_Fun(void);
 

@@ -232,6 +232,9 @@ void wifi_get_beijint_time_handler(void)
   
       }
 
+    
+  
+
     switch(get_beijing_flag){
 
      case 0: //WT.EDIT .2024.08.10
@@ -245,6 +248,7 @@ void wifi_get_beijint_time_handler(void)
                  if(gpro_t.gPower_On == power_on){
                      LED_WIFI_ICON_ON();
                   }
+                 
 
                  if(flag_switch == 1){
                     Subscriber_Data_FromCloud_Handler();
@@ -253,9 +257,7 @@ void wifi_get_beijint_time_handler(void)
 
                     
                  }
-
-                 
-                 if(flag_switch >  1 && gpro_t.gPower_On == power_off){
+                else if(flag_switch >  1 && gpro_t.gPower_On == power_off){
                     flag_switch=0;
                     Update_Dht11_Totencent_Value();
                     osDelay(50);//HAL_Delay(200) //WT.EDIT 2024.08.10

@@ -21,7 +21,7 @@ void TimerTiming_Init(void);
 
 void TimeTimer_Pro_Handler(void);
 
-void Display_Precise_Works_Time(void);
+
 
 void Power_Off_Retain_Beijing_Time(void);
 

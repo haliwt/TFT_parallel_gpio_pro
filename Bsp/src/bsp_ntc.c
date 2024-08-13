@@ -1356,7 +1356,7 @@ static uint8_t Calculate_Display_Temperature_Value(const uint16_t *pt,uint8_t ke
 	
 /***********************************************************************************************
 	*
-	*Function Name:void TFT_Display_WorksTime(void)
+	*Function Name:static void display_ntc_temp_value(uint8_t disp)
 	*Function : display of works time value 
 	*Input: NO
 	*Return: NO 
@@ -1391,7 +1391,7 @@ static uint8_t timer_hundred_hours,timer_decade_hours,timer_unit_hours;
   
 /***********************************************************************************************
 	*
-	*Function Name:void TFT_Display_WorksTime(void)
+	*Function Name:void donot_display_ntc_temp_value(void)
 	*Function : display of works time value 
 	*Input: NO
 	*Return: NO 

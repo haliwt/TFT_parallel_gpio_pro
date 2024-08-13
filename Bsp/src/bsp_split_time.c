@@ -31,18 +31,21 @@ void TimeTimer_Pro_Handler(void)
 
    case works_time://1
 
-		if(gctl_t.gTimer_ctl_disp_works_time_second > 59){
-             gctl_t.power_on_dis_work_time = 2;
-			TFT_Display_WorksTime();
-           
-		}
-
+		
+            
 		if(gctl_t.power_on_dis_work_time ==0 && gctl_t.get_beijing_time_success == 1){
 
 			
 			TFT_Only_Disp_Timing();//
 			
 		}
+       
+
+         TFT_Display_WorksTime();
+
+
+
+        
       
 
 	break;
@@ -163,29 +166,7 @@ void TimeTimer_Pro_Handler(void)
 
 }
 
-/*******************************************************************************************************
-    **
-    *Function Name:void Display_Precise_Works_Time(void)
-    *Function :display works or beijing timing value 
-    *Input Ref:NO
-    *Return Ref:NO
-    *
-*********************************************************************************************************/
-void Display_Precise_Works_Time(void)
-{
-	  if(gpro_t.disp_works_timer_timing_mode_item==timer_time){
-	  	    TFT_DonnotDisp_Works_Time();
-	  }
-	  else{
-	    if(gctl_t.gTimer_ctl_disp_works_time_second > 59){
-				  TFT_Display_Precise_WorksTime();
-			}
 
-
-	  }
-
-
-}
 /********************************************************************************
  * 
  * Function Name: void Power_Off_Retain_Beijing_Time(void)

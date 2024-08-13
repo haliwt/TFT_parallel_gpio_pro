@@ -40,31 +40,7 @@ void bsp_Init(void)
 
 }
 
-/*******************************************************************************************************
-*	函 数 名: bsp_Idle
-*	功能说明: 空闲时执行的函数。一般主程序在for和while循环程序体中需要插入 CPU_IDLE() 宏来调用本函数。
-*			 本函数缺省为空操作。用户可以添加喂狗、设置CPU进入休眠模式的功能。
-*	形    参: 无
-*	返 回 值: 无
-**********************************************************************************************************/
-void bsp_run_iwdg(void)
-{
-   
-}
 
-
-void bsp_run_Idle(void)
-{
-
- if(gpro_t.gPower_On == power_on && gpro_t.wifi_led_fast_blink_flag==0){
-   if(gpro_t.disp_works_timer_timing_mode_item == timer_time || gpro_t.disp_works_timer_timing_mode_item ==timer_set_time){
-    
-     TFT_DonnotDisp_Works_Time();
-
-    }
-   }
-
-}
 /*
 *********************************************************************************************************
 *
@@ -346,11 +322,7 @@ void power_up_initialize_data(void)
 
  
 
-   if(wifi_link_net_state() ==1 ){
-		
-       TFT_DonnotDisp_Works_Time();
-		
-    }
+  
    
 	
 }
@@ -390,8 +362,7 @@ void PowerOff_Ref_Fun(void)
         //main process ref
   
 		gpro_t.gTimer_pro_wifi_fast_led=0;
-    gpro_t.disp_works_timer_timing_mode_item = timer_countdown; //display count down timing .
-	   
+	    gpro_t.disp_works_timer_timing_mode_item = works_time;
 
         Power_Off_Fun();
 		    LED_Mode_Key_Off();

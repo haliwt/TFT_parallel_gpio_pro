@@ -353,7 +353,7 @@ static uint8_t times_counter,update_data_flag,update_down,update_init= 0xff,upda
 }
 /***********************************************************************************************
 	*
-	*Function Name:void TFT_Display_WorksTime(void)
+	*Function Name:static void display_high_temp_words(uint8_t disp)
 	*Function : display of works time value 
 	*Input: NO
 	*Return: NO 

@@ -266,7 +266,7 @@ static void vTaskMsgPro(void *pvParameters)
            || key_power_sound_flag ==1 || key_power_long_sound_flag==1 || key_power_off_sound_flag ==1){
 
 
-             if(key_power_sound_flag == 1){
+             if(key_power_sound_flag == 1 && key_mode_short_sound_flag !=1){ //WT.EDIT 2024.08.13
 
                key_power_sound_flag ++;
                 DISABLE_INT();
@@ -284,7 +284,11 @@ static void vTaskMsgPro(void *pvParameters)
                   
 
                  }
+              
                   mode_key_long_conter = 0;
+                  power_key_long_conter =0; //WT.EDIT 2024.08.13 
+                  key_mode_long_sound_flag++; //WT.EDIT 2024.08.13 
+                  key_power_sound_flag ++ ; //WT.EDIT 2024.08.13 
 
               }
               else if(key_mode_long_sound_flag == 1){
@@ -486,7 +490,7 @@ static void vTaskMsgPro(void *pvParameters)
              wifi_get_beijint_time_handler();
              MainBoard_Self_Inspection_PowerOn_Fun();
          }
-        
+         TFT_DonnotDisp_Works_Time();
          USART_Cmd_Error_Handler();
          clear_rx_copy_data();
           
@@ -603,11 +607,7 @@ static void vTaskStart(void *pvParameters)
 
      }
 
-
-   
-    
-     
-      vTaskDelay(20);
+    vTaskDelay(20);
   }
 }
 /**********************************************************************************************************

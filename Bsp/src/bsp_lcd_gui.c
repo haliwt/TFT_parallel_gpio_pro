@@ -166,32 +166,33 @@ void TFT_Display_WorksTime(void)
     static uint8_t temp_decade_hours,temp_unit_hours,temp_decade_minutes,temp_unit_minutes;
 	
 
-    if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==0 && gctl_t.get_beijing_time_success ==0){
+    if(gctl_t.gTimer_ctl_disp_works_time_second > 59 ){
 		   gctl_t.gTimer_ctl_disp_works_time_second =0;
+            gctl_t.power_on_dis_work_time = 2;
 		   gctl_t.disp_works_minutes++;
 		   if(gctl_t.disp_works_minutes>59){
 			   gctl_t.disp_works_minutes=0;
 			   gctl_t.disp_works_hours++;
-			   if(gctl_t.disp_works_hours > 99){
-				   gctl_t.disp_works_hours=0;
-			   }
+
+
+               if(wifi_link_net_state()==0){
+    			   if(gctl_t.disp_works_hours > 99){
+    				   gctl_t.disp_works_hours=0;
+    			   }
+               }
+               else{
+
+               if(gctl_t.disp_works_hours > 23){
+                         gctl_t.disp_works_hours=0;
+                      }
+
+
+               }
 		   }
-	 }
-	 else if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==1){
-			 gctl_t.gTimer_ctl_disp_works_time_second =0;
+	
+	
 
-	          gctl_t.disp_works_minutes++;
-					  if(gctl_t.disp_works_minutes>59){
-						   gctl_t.disp_works_minutes=0;
-						   gctl_t.disp_works_hours++;
-						   if(gctl_t.disp_works_hours > 23){
-							   gctl_t.disp_works_hours=0;
-						   }
-					  }
 
-       }
-
-	if(gpro_t.gPower_On == power_on){
 	temp_decade_hours = gctl_t.disp_works_hours /10;
 	temp_unit_hours = gctl_t.disp_works_hours % 10;
 
@@ -247,13 +248,13 @@ void TFT_Display_WorksTime(void)
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(166,190,0,temp_decade_minutes);
 	TFT_Disp_Pic_WorkTime_Value_48_48_onBlack(200,190,0,temp_unit_minutes);
 
-	}
+    }
 
 }
 
 /***********************************************************************************************
 	*
-	*Function Name:void TFT_Display_WorksTime(void)
+	*Function Name:void TFT_Display_Precise_WorksTime(void)
 	*Function : display of works time value 
 	*Input: NO
 	*Return: NO 
@@ -528,44 +529,56 @@ void TFT_Disp_Onley_Set_TimerTime_Value(void)
 void TFT_DonnotDisp_Works_Time(void)
 {
 
+  if(gpro_t.gPower_On == power_on){
+   if(gpro_t.disp_works_timer_timing_mode_item == timer_time || gpro_t.disp_works_timer_timing_mode_item ==timer_set_time){
    
-	if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==0 && gpro_t.gPower_On == power_on){
+	if(gctl_t.gTimer_ctl_disp_works_time_second > 59 ){
 		   gctl_t.gTimer_ctl_disp_works_time_second =0;
 		   gctl_t.disp_works_minutes++;
 		   if(gctl_t.disp_works_minutes>59){
 			   gctl_t.disp_works_minutes=0;
 			   gctl_t.disp_works_hours++;
-			   if(gctl_t.disp_works_hours > 99){
-				   gctl_t.disp_works_hours=0;
-			   }
-		   }
-	 }
-	 else if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==1){
-			  gctl_t.gTimer_ctl_disp_works_time_second =0;
 
-             gctl_t.disp_works_minutes++;
-			if(gctl_t.disp_works_minutes>59){
-				  gctl_t.disp_works_minutes=0;
-				  gctl_t.disp_works_hours++;
-				 if(gctl_t.disp_works_hours > 23){
+               if(wifi_link_net_state()==0){
+    			   if(gctl_t.disp_works_hours > 99){
+    				   gctl_t.disp_works_hours=0;
+    			   }
+               }
+               else{
+                 if(gctl_t.disp_works_hours > 23){
 					   gctl_t.disp_works_hours=0;
 				   }
-		     }
-              
-			
-           
-			   
-     }
+
+               }
+		   }
+	 }
+	
+
+    }
      
-//     if(wifi_link_net_state()==1 ){
-//       
-//	    gctl_t.save_time_hours[2] = gctl_t.gTimer_ctl_disp_works_time_second;
-//
-//      }
+
+
+    }
+    else if(gpro_t.gPower_On == power_off){
+      if(gctl_t.gTimer_ctl_disp_works_time_second > 59 && wifi_link_net_state()==1){
+                gctl_t.gTimer_ctl_disp_works_time_second =0;
+  
+               gctl_t.disp_works_minutes++;
+              if(gctl_t.disp_works_minutes>59){
+                    gctl_t.disp_works_minutes=0;
+                    gctl_t.disp_works_hours++;
+                   if(gctl_t.disp_works_hours > 23){
+                         gctl_t.disp_works_hours=0;
+                     }
+               }
+                
+              
+             
+                 
+       }
+   }
 
 }
-
-
    
 /********************************************************************************
  * 
