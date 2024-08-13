@@ -755,38 +755,11 @@ void WIFI_LED_Blink(void)
 void mode_key_adjust_fun(void)
 {
 
-     if(gpro_t.key_mode_be_pressed_flag > 0 && gpro_t.long_key_mode_counter > 56){
+  gpro_t.key_mode_be_pressed_flag=0;
 
-         
-        
-                 
-             
-              gpro_t.key_mode_be_pressed_flag=0;
-
-              gpro_t.key_long_mode_flag = 1;
-               gpro_t.long_key_mode_counter =0;
-             
-
-          
-
-
-     }
-     else if( gpro_t.long_key_mode_counter< 56 &&  gpro_t.key_mode_be_pressed_flag > 0 ){
-
-       
-
-               gpro_t.key_mode_be_pressed_flag=0;
-
-               gpro_t.key_short_mode_flag = 1;
-                gpro_t.long_key_mode_counter =0;
-             
-
-     }
-
-
-     
-
-
+  gpro_t.key_short_mode_flag = 1;
+  gpro_t.long_key_mode_counter =0;
+            
 
 }
 
