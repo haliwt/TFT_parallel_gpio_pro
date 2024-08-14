@@ -57,7 +57,7 @@ static void  send_tx_set_timer_value(uint8_t set_temp);
 
 
 uint8_t key;
-int8_t result = 0xff;
+int8_t result_sound = 0xff;
 #if 0
 
 static uint8_t const voice_ctl_value[9]={
@@ -168,7 +168,7 @@ uint8_t key;
 int8_t result;
 
 //uint8_t voice_cmd_flag;
-
+uint8_t voice_cancel_flag;
 
 /***********************************************************
  *  *
@@ -200,40 +200,31 @@ void Voice_Decoder_Handler(void)
 	       key= v_t.voice_data[0] + v_t.voice_data[1]; //key= data4+ data6 = ; //A5 FA 00 81 01 00 21 FB 
 	    
 	
-			result = BinarySearch_Voice_Data(voice_sound_data,key);
+			result_sound = BinarySearch_Voice_Data(voice_sound_data,key);
 			
 	
-	    if(result < 0x10 ){
-		   voice_cmd_fun(result);
+	    if(result_sound < 0x10 ){
+		   voice_cmd_fun(result_sound);
 		
 	
 		}
-		else if(result > 15 && result < 37){ //set temperature value 
+		else if(result_sound > 15 && result_sound< 37){ //set temperature value 
 			   
-			   voice_set_temperature_value(result);
+			   voice_set_temperature_value(result_sound);
 		
 	   }
-	   else if(result > 36 && result <62){ //set timer timing value 
+	   else if(result_sound > 36 && result_sound <62){ //set timer timing value 
 		
 	
-			voice_set_timer_timing_value(result);
-			
-		 }
-	     else if(result==62){
+			voice_set_timer_timing_value(result_sound);
+	   }
+	    else if(result_sound==62){
 
-			
+			//v_t.voice_decoder_hex = 62;
             voice_cancel_timer_timing();
 
 		 }
-
-	   
-
-	   
-
-
 }
-
-
 /***********************************************************************************
  *  *
     *Function Name: static void voice_cmd_fun(uint8_t cmd)
@@ -793,16 +784,16 @@ static void voice_set_timer_timing_value(uint8_t set_hours)
 
 static void voice_cancel_timer_timing(void)
 {
- 	if(gpro_t.gPower_On == power_on){
+    
+    if(gpro_t.gPower_On == power_on){
 
 	     voice_send_function_cmd(0x3F,0xE1);
 
-		 if(gpro_t.disp_works_timer_timing_state()==timer_time){
+		if(gpro_t.set_timer_timing_success==1){ //if(gpro_t.disp_works_timer_timing_state()==timer_time){
 	  
-		     gpro_t.disp_works_timer_timing_mode_item= works_time;
-             gpro_t.set_timer_timing_success = 0; //WT.EDIT 2024.06.13
-		
-			TFT_Display_WorksTime_Voice();
+		   gpro_t.disp_works_timer_timing_mode_item= works_time;
+           gpro_t.set_timer_timing_success = 0; //WT.EDIT 2024.06.13
+	       TFT_Display_WorksTime_Voice(); //WT.EDIT. 2024.08.14 
 	   	}
        }
 	   else{
@@ -810,6 +801,9 @@ static void voice_cancel_timer_timing(void)
            voice_send_turn_on_power_on_cmd();
 		}
 }
+
+ 
+
 /****************************************************************************************
  *  *
     *Function Name: static int8_t BinarySearch_Voice_Data(const uint8_t *pta,uint8_t key)

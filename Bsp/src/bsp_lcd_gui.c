@@ -731,13 +731,13 @@ void TFT_Disp_Voice_Set_TimerTime_Init(void)
 }
 /********************************************************************************
  * 
- * Function Name: void TFT_Disp_Timer_Split_Symbol(void)
+ * Function Name: void tft_disp_time_colon_symbol(void)
  * Function: display timer timing of split symbol
  * Input Ref: display timer ":" symbol 
  * Return Ref:
  * 
 *********************************************************************************/
-void TFT_Disp_Timer_Split_Symbol(void)
+void tft_disp_time_colon_symbol(void)
 {
 	static uint8_t split_times;
     if(gpro_t.gPower_On==power_on){  

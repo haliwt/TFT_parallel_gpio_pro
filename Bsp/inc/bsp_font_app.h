@@ -30,7 +30,7 @@ void TFT_Disp_Temp_Symbol_16_15(uint16_t x,uint16_t y);
 
 void TFT_Disp_Numbers_Pic_413(uint16_t x,uint16_t y,uint8_t bc,uint8_t num);
 
-void TFT_Disp_Timer_Split_Symbol(void);
+void tft_disp_time_colon_symbol(void);
 
 void TFT_Disp_Pic_Warnign_Words(uint16_t x,uint16_t y,uint8_t sel,uint8_t num);
 

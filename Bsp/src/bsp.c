@@ -267,7 +267,8 @@ void power_up_initialize_data(void)
 
 	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
 
-
+    
+    gctl_t.disp_ntc_res_switch_normal_ptc_counter=0;
 
     gctl_t.fan_continuce_flag =1;
 
@@ -513,6 +514,7 @@ void power_on_init_set_ref(void)
 
          gctl_t.gSet_temperature_value=40;
          gpro_t.run_process_step=0;
+         gctl_t.disp_ntc_res_switch_normal_ptc_counter=0;
 
 
 }

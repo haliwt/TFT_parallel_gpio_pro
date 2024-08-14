@@ -458,7 +458,8 @@ static void vTaskMsgPro(void *pvParameters)
               SetPtc_TempComare_Value();
               wifi_detected_signal_handler(gpro_t.wifi_led_fast_blink_flag);
               disp_all_led_on_off_state();
-              TFT_Disp_Timer_Split_Symbol();
+              tft_disp_time_colon_symbol();
+         
             
    
 
@@ -471,9 +472,9 @@ static void vTaskMsgPro(void *pvParameters)
          }
 
          if(v_t.sound_rx_data_success_flag == 1 ){
-               v_t.sound_rx_data_success_flag=0;
+             v_t.sound_rx_data_success_flag=0;
          
-               Voice_Decoder_Handler();
+             Voice_Decoder_Handler();
          
           }
          Wifi_Fast_Led_Blink();

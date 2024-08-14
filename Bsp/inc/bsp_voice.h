@@ -54,6 +54,8 @@ typedef struct{
 	uint8_t rx_enable_voice_output ;
 	uint8_t transOngoingFlag;
 
+
+
 	
 	uint8_t voice_wakeword_counter;
 	

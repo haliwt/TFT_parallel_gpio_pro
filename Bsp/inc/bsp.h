@@ -177,7 +177,7 @@ typedef struct{
 
    uint8_t power_on_or_off_flag;
    
- 
+
 
    //buzzer
 
