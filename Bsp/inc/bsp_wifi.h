@@ -4,8 +4,9 @@
 
 
 
-void WIFI_Process_Handler(void);
 
+
+void RunWifi_Command_Handler(void);
 
 
 

@@ -6,7 +6,7 @@
 uint8_t get_beijing_flag, beijing_step;
 
 
-static void RunWifi_Command_Handler(void);
+
 
 
 
@@ -15,20 +15,7 @@ static void RunWifi_Command_Handler(void);
 uint16_t test_counter;
 uint8_t auto_link_net_flag;
 
-/********************************************************************************
-	*
-	*Functin Name:void WIFI_Process_Handler(void)
-	*Functin :
-	*Input Ref: NO
-	*Return Ref:NO
-	*
-********************************************************************************/
-void WIFI_Process_Handler(void)
-{
-  	
-    RunWifi_Command_Handler();
 
-}
 
 void smart_phone_power_on_to_tencent_data(void)
 {
@@ -108,7 +95,7 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
    *Return Ref:NO
    *
 *********************************************************************************/
-static void RunWifi_Command_Handler(void)
+void RunWifi_Command_Handler(void)
 {
   
 

@@ -339,10 +339,8 @@ static void vTaskMsgPro(void *pvParameters)
               buzzer_sound_flag++;
              
               buzzer_sound();
-          
-           
-              
           }
+          
           if(key_power_sound_flag==2){//run_main_board_process();
            
 
@@ -359,12 +357,6 @@ static void vTaskMsgPro(void *pvParameters)
              key_power_sound_flag++;
             
          }
-
-
-
-         
-        
-
          if(key_power_sound_flag==3){
             key_power_sound_flag++;
 

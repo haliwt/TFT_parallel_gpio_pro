@@ -178,8 +178,17 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		  wifi_t.gTimer_login_tencent_times=0;
 		  wifi_t.link_tencent_step_counter=driver_esp8266_rest;
 		   WIFI_IC_DISABLE();
-           HAL_Delay(1000);
            Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+           HAL_Delay(300);
+           Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+           HAL_Delay(300);
+           Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+           HAL_Delay(300);
+           Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
 		   
 	   }
 	
@@ -187,8 +196,17 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		   wifi_t.gTimer_login_tencent_times=0;
 		   wifi_t.link_tencent_step_counter=driver_esp8266_step_2;
 		   WIFI_IC_ENABLE();
-		   HAL_Delay(1000);
            Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+		   HAL_Delay(300);
+           Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+           HAL_Delay(300);
+           Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+           HAL_Delay(300);
+           Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
 
 		}
 		//at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
