@@ -85,11 +85,13 @@ void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 {
 	
 	   if(gctl_t.fan_warning ==0 && ptc_error_state() ==0){
+          gpro_t.gTimer_pro_set_long_key_tims=0;
           gpro_t.disp_works_timer_timing_mode_item = timer_set_time; //disp set timer timing value 
-	  	  gpro_t.mode_key_run_item_step = mode_key_set_timer_value;  //key input timer timing value 
+	  	  gpro_t.mode_key_run_item_step = mode_key_set_timer_value;  //key input timer timing value  mode_key_set_timer_value
 	      gpro_t.gTimer_pro_set_long_key_tims=0;
 		  gctl_t.timer_timing_words_changed_flag ++;
 		  gctl_t.timing_words_changed_flag++;
+       
 	      TFT_Disp_Set_TimerTime_Init();
 
 	   }

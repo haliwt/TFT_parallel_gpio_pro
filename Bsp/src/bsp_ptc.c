@@ -67,7 +67,11 @@ void Temperature_Ptc_Pro_Handler(void)
 
                 Get_Ntc_Resistance_Temperature_Voltage(ADC_CHANNEL_1,1);
 
+             
+
                  Judge_NTC_Temperature_Value(gctl_t.ntc_res_read_adc_value);
+
+          
 
                     
              } 

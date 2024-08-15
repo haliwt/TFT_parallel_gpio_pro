@@ -111,7 +111,7 @@ void PowerOn_Process_Handler(void)
 
      case 2:
 
-     if(gpro_t.gTimer_read_humidity_value > 10){
+     if(gpro_t.gTimer_read_humidity_value > 6){
 
            gpro_t.gTimer_read_humidity_value=0;
 
@@ -162,18 +162,12 @@ void PowerOn_Process_Handler(void)
       
         
 	if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
-              // wifi_t.link_net_tencent_data_flag ++;
-		   
-		     //MqttData_Publish_SetOpen(0x01);
-		     //HAL_Delay(200);
+          
 		    wifi_t.link_net_tencent_data_flag = 3;  //must is wifi_t.link_net_tencent_data_flag = 3;
 		    MqttData_Publish_Update_Data();
 		    HAL_Delay(200);
             
-           
-            
-
-		}
+       }
 
          gpro_t.run_process_step=7;
 
@@ -230,11 +224,6 @@ void power_up_initialize_data(void)
     LED_Power_Key_On();
 
     }
-
-   
-         
-       
-
 
 }
 /*****************************************************************

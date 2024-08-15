@@ -48,7 +48,7 @@ void RunMain_And_Interval_Handler(void)
              
              
 	      }
-          if(gctl_t.gTimer_maian_run_fun >0 ){
+          if(gctl_t.gTimer_maian_run_fun >4){
 
               gctl_t.gTimer_maian_run_fun=0;
              if(gpro_t.interval_stop_run_flag==0){

@@ -96,7 +96,7 @@ void Get_PTC_Temperature_Voltage(uint32_t channel,uint8_t times)
 static void Judge_PTC_Temperature_Value(uint16_t adc_ptc)
 {
   
-	
+ #if HAINAN
   if(adc_ptc < 215 || adc_ptc == 215){  //115 degree 
          gctl_t.ptc_warning =1;
 
@@ -118,6 +118,7 @@ static void Judge_PTC_Temperature_Value(uint16_t adc_ptc)
 			  
 				
 	   	}
+  #endif 
 }
 
 /*****************************************************************

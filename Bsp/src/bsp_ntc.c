@@ -319,7 +319,7 @@ void Get_Ntc_Resistance_Temperature_Voltage(uint32_t channel,uint8_t times)
 void Judge_NTC_Temperature_Value(uint16_t adc_ptc)
 {
   
-	
+   #if HAINAN
    if(adc_ptc < 215 || adc_ptc == 215){  //115 degree 
 
          gctl_t.ptc_warning =1;
@@ -329,7 +329,7 @@ void Judge_NTC_Temperature_Value(uint16_t adc_ptc)
         Ptc_Off();
 		LED_PTC_ICON_OFF();
       
-
+     
 		Publish_Data_Warning(ptc_temp_warning,warning);
 		osDelay(200);//HAL_Delay(200);  
         
@@ -337,10 +337,14 @@ void Judge_NTC_Temperature_Value(uint16_t adc_ptc)
 		osDelay(200);//HAL_Delay(200);  
 		
 		Buzzer_Ptc_Error_Sound();
+
+       
 		
 			  
 				
 	   	}
+
+   #endif 
 }
 
 /*************************************************************************

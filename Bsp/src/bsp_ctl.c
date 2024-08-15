@@ -792,7 +792,7 @@ void Device_Action_Led_OnOff_Handler(void)
 *****************************************************************************/
 void disp_all_led_on_off_state(void)
 {
-   if(gctl_t.gTime_all_led_on_off > 0){
+   if(gctl_t.gTime_all_led_on_off > 1){
       gctl_t.gTime_all_led_on_off=0;
 
        Device_Action_Led_OnOff_Handler();

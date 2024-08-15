@@ -144,12 +144,13 @@ static void vTaskMsgPro(void *pvParameters)
              
 			if((ulValue & POWER_KEY_0) != 0){
 			
-                if(key_power_long_sound_flag !=3){
+                if(key_power_long_sound_flag !=1 && key_power_long_sound_flag !=2){
 			   	  key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
                  }
                  start_counter_power_key_long_pressed =0;
              
                  add_dec_combin_counter=0;
+             
 
             }
             else if((ulValue & POWER_LONG_KEY_11) != 0){
@@ -160,6 +161,7 @@ static void vTaskMsgPro(void *pvParameters)
 
               }
                add_dec_combin_counter=0;
+           
           
               gpro_t.gTimer_exit_mode_long_key =0;
             }
@@ -170,6 +172,7 @@ static void vTaskMsgPro(void *pvParameters)
                 start_counter_power_key_long_pressed =0;
             
                 add_dec_combin_counter=0;
+                 
                 
             }
             else if((ulValue &  POWER_OFF_4) != 0){
@@ -202,11 +205,8 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
                       start_counter_power_key_long_pressed=0;
-                  
-   
-                       key_dec_sound_flag=1;
-
-                   }
+                      key_dec_sound_flag=1;
+                 }
 
                
             }
@@ -216,6 +216,7 @@ static void vTaskMsgPro(void *pvParameters)
                    
                     
                        key_add_sound_flag=1;
+                     
 
                     }           
                 
@@ -270,10 +271,9 @@ static void vTaskMsgPro(void *pvParameters)
                 LCD_Clear(BLACK);
                 ENABLE_INT();
              
-          
-             
                 buzzer_sound_flag = 1;
                 start_counter_power_key_long_pressed =0;
+               
 
               }
               else if( gpro_t.key_short_mode_flag == 1){ //WT.EDIT 2024.08.13
@@ -286,14 +286,13 @@ static void vTaskMsgPro(void *pvParameters)
                  
              }
               else if(gpro_t.key_long_mode_flag == 1 ){
-
+                   gpro_t.gTimer_pro_set_long_key_tims=0;
                     Mode_Key_Long_Fun();
                      start_counter_power_key_long_pressed =0; //WT.EDIT 2024.08.13 
              
                     gpro_t.key_long_mode_flag ++;
              
-                   
-              }
+               }
               else if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
                    DISABLE_INT();
@@ -322,11 +321,11 @@ static void vTaskMsgPro(void *pvParameters)
 
               }
               else if(key_power_long_sound_flag ==1){
+                  buzzer_sound(); //WT.EDIT 2024.08.15
 
                   key_power_long_sound_flag ++;
                   PowerOn_LongKey_Fun();
-                  
-                  buzzer_sound_flag = 1;
+                
                  direct_wifi_led_fast_blink_handler();
            
 
@@ -414,7 +413,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                 }
                 if(gpro_t.key_short_mode_flag==2){
-                    //key_mode_short_sound_flag++;
+               
                     gpro_t.key_short_mode_flag++;
 
                     Mode_Key_Selection_Func() ;
@@ -455,8 +454,8 @@ static void vTaskMsgPro(void *pvParameters)
 
               Mode_Key_Config_Fun_Handler();
               
-              SetPtc_TempComare_Value();
               wifi_detected_signal_handler(gpro_t.wifi_led_fast_blink_flag);
+              SetPtc_TempComare_Value();
               disp_all_led_on_off_state();
               tft_disp_time_colon_symbol();
          
@@ -546,16 +545,23 @@ static void vTaskStart(void *pvParameters)
           if(gpro_t.long_key_mode_counter > 70 ){
              gpro_t.long_key_mode_counter=0;   
                gpro_t.key_long_mode_flag =1;
+               gpro_t.gTimer_pro_set_long_key_tims=0;
+            
                 buzzer_sound();
                
 
 
           }
              
-     
+    
          xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+           
+
+          
+         
 
     }
     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_UP){
