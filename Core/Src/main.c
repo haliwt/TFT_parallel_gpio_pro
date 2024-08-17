@@ -109,7 +109,7 @@ int main(void)
   
   TFT_BACKLIGHT_OFF();
 
-  TFT_LCD_Init();
+  TFT_LCD_Init();             
   
   HAL_UART_Receive_IT(&huart2,wifi_t.usart2_dataBuf,1);
   

@@ -965,7 +965,7 @@ void clear_rx_copy_data(void)
     }
    #endif 
    if( wifi_t.once_rx_data_done == 1 && wifi_link_net_state() == 0){
-      wifi_t.once_rx_data_done ++;
+      wifi_t.once_rx_data_done ++; //WT.EDIT 2024.08.17
       memset(wifi_t.wifi_data,'\0',150);
     }
 }
