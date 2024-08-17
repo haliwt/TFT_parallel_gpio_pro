@@ -965,6 +965,7 @@ void clear_rx_copy_data(void)
     }
    #endif 
    if( wifi_t.once_rx_data_done == 1 && wifi_link_net_state() == 0){
+      wifi_t.once_rx_data_done ++;
       memset(wifi_t.wifi_data,'\0',150);
     }
 }
@@ -974,7 +975,7 @@ void clear_rx_copy_data(void)
     *Function:
     *Input Ref: NO
     *Return Ref:NO
-    *-
+    *
 ***********************************************************************/
 void detection_net_link_state_handler(void)
 {
