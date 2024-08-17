@@ -295,13 +295,15 @@ static void vTaskMsgPro(void *pvParameters)
                }
               else if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
-                   DISABLE_INT();
+                  // DISABLE_INT(); //WT.EDIT 2024.08.17 
+                  
                    LCD_Clear(BLACK);
-                   ENABLE_INT();
+                   buzzer_sound();//WT.EDIT 2024.08.17 
+                  // ENABLE_INT();//WT.EDIT 2024.08.17 
               
                   power_off_init_set_ref();
                   power_off_handler();
-                  buzzer_sound_flag = 1;
+                 // buzzer_sound_flag = 1;//WT.EDIT 2024.08.17 
                   start_counter_power_key_long_pressed =0;
 
 
@@ -470,12 +472,12 @@ static void vTaskMsgPro(void *pvParameters)
             Power_Off_Process_Handler();
          }
 
-         if(v_t.sound_rx_data_success_flag == 1 ){
+        if(v_t.sound_rx_data_success_flag == 1 ){
              v_t.sound_rx_data_success_flag=0;
          
              Voice_Decoder_Handler();
          
-          }
+         }
          Wifi_Fast_Led_Blink();
          if(gpro_t.wifi_led_fast_blink_flag==0){
              wifi_get_beijint_time_handler();
