@@ -5,7 +5,7 @@
 #define PTC_RES_NTC_DIS     0
 
 
-#define HAINAN       0
+#define HAINAN      1
 
 typedef enum{
    decimals,

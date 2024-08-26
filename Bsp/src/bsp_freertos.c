@@ -296,7 +296,7 @@ static void vTaskMsgPro(void *pvParameters)
               else if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
                   // DISABLE_INT(); //WT.EDIT 2024.08.17 
-                  
+                   start_counter_power_key_long_pressed =0;
                    LCD_Clear(BLACK);
                    buzzer_sound();//WT.EDIT 2024.08.17 
                   // ENABLE_INT();//WT.EDIT 2024.08.17 
@@ -304,7 +304,7 @@ static void vTaskMsgPro(void *pvParameters)
                   power_off_init_set_ref();
                   power_off_handler();
                  // buzzer_sound_flag = 1;//WT.EDIT 2024.08.17 
-                  start_counter_power_key_long_pressed =0;
+                 
 
 
               }
@@ -518,9 +518,14 @@ static void vTaskStart(void *pvParameters)
                if(start_counter_power_key_long_pressed > 2950000){
                    start_counter_power_key_long_pressed = 2965900;
 
-                xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-                            POWER_LONG_KEY_11,            /* 设置目标任务事件标志位bit0  */
-                            eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+               // xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+                          ///  POWER_LONG_KEY_11,            /* 设置目标任务事件标志位bit0  */
+                           /// eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+                    if(gpro_t.gPower_On==power_on){  //WT.DEDIT 2024.08.26
+                       //buzzer_sound();
+                       key_power_long_sound_flag =1;
+
+                     }
 
                 }
 
