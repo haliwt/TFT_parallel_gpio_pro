@@ -445,15 +445,8 @@ static void vTaskMsgPro(void *pvParameters)
                 	else if(gpro_t.disp_key_set_timer_timing  ==1){
                 		      gpro_t.disp_key_set_timer_timing =0;
                 	  TFT_Disp_Set_TimerTime(0);
-
-                  
-                   }
-
-                
+                    }
                 }
-         
-              
-
               Mode_Key_Config_Fun_Handler();
               
               wifi_detected_signal_handler(gpro_t.wifi_led_fast_blink_flag);
@@ -461,10 +454,7 @@ static void vTaskMsgPro(void *pvParameters)
               disp_all_led_on_off_state();
               tft_disp_time_colon_symbol();
          
-            
-   
-
-         }
+        }
          else if(gpro_t.gPower_On == power_off){
      
             start_counter_power_key_long_pressed = 0;

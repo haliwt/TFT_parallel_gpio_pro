@@ -34,15 +34,7 @@ void wifi_detected_signal_handler(uint8_t blink_flag)
 
 
     break;
-
-
-
-
-
-   }
-
-
-
+    }
 }
 /**********************************************************************************************************
 *	函 数 名: void freertos_split_detected_wifi_handler(uint8_t blink_flag)

@@ -72,12 +72,7 @@ void Subscriber_Data_FromCloud_Handler(void)
          sprintf((char *)device_massage,"AT+TCMQTTSUB=\"$thing/down/property/%s/UYIJIA01-%d\",0\r\n", PRODUCT_ID, device_id);
          HAL_UART_Transmit(&huart2, device_massage, strlen((const char *)device_massage), 5000); 
          free(device_massage);
-  
-
-
-
-   
- }
+  }
 /*******************************************************************************
 **
 *Function Name:void Subscribe_Rx_IntHandler(void)
@@ -88,8 +83,6 @@ void Subscriber_Data_FromCloud_Handler(void)
 ********************************************************************************/
 void Subscribe_Rx_Interrupt_Handler(void)
 {
-
-  
     switch(wifi_t.rx_data_state)
       {
  
@@ -215,10 +208,10 @@ void Subscribe_Rx_Interrupt_Handler(void)
            
          }
          else{
-			      wifi_t.rx_data_success=0;
-        wifi_t.rx_data_state =0;
+            wifi_t.rx_data_success=0;
+            wifi_t.rx_data_state =0;
             wifi_t.rx_counter=0;
-			      wifi_t.received_data_from_tencent_cloud =0;
+            wifi_t.received_data_from_tencent_cloud =0;
 
          }
        
@@ -944,8 +937,6 @@ void Wifi_Rx_Link_Net_InputInfo_Handler(void)
 
          wifi_t.once_rx_data_done = 1;
          
-        
-            
 }
 
 
@@ -971,7 +962,7 @@ void clear_rx_copy_data(void)
 }
 /***********************************************************************
     *
-    *Function Name:
+    *Function Name: void detection_net_link_state_handler(void)
     *Function:
     *Input Ref: NO
     *Return Ref:NO

@@ -1,21 +1,8 @@
 #include "bsp.h"
 
-
-
-
 uint8_t get_beijing_flag, beijing_step;
-
-
-
-
-
-
-
-
 uint16_t test_counter;
 uint8_t auto_link_net_flag;
-
-
 
 void smart_phone_power_on_to_tencent_data(void)
 {
@@ -79,14 +66,8 @@ void MainBoard_Self_Inspection_PowerOn_Fun(void)
           }
           Subscriber_Data_FromCloud_Handler();
           HAL_Delay(200);
-		
-	     
-		 
-		  
-	}
- 
-   
-}
+		  }
+ }
 /********************************************************************************
    *
    *Function Name: void Wifi_RunCmd(void)
@@ -218,9 +199,6 @@ void wifi_get_beijint_time_handler(void)
     	 Json_Parse_Command_Fun();
   
       }
-
-    
-  
 
     switch(get_beijing_flag){
 
@@ -545,15 +523,10 @@ void wifi_get_beijint_time_handler(void)
 
      case 13:
        if(wifi_link_net_state()==1){
-       
         
-
         wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
 		wifi_t.wifi_uart_counter=0; //clear USART2 counter is zero
-		  
-		
-
-         wifi_t.linking_tencent_cloud_doing = 0;
+		wifi_t.linking_tencent_cloud_doing = 0;
 
           if(power_on_state() == power_on){
                 MqttData_Publish_Update_Data();//Publish_Data_ToTencent_Initial_Data();
