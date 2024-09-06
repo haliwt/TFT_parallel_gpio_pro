@@ -32,6 +32,7 @@ static void Power_Off_Fun(void);
 void bsp_Init(void)
 {
 
+   dht11_init();
    TimerTiming_Init();
    Buzzer_Sound_Fun_Init();
    gpro_t.disp_works_timer_timing_mode_item = works_time;
@@ -465,24 +466,34 @@ void power_on_init_set_ref(void)
              
 	}
    else{
-            Donot_Disp_CountDown_60s();
+           // Donot_Disp_CountDown_60s(); //WT.EDIT 2024.09.06
             TFT_Display_PowerOn_WorksTime_Init();
-           
+          
 	 }
 
        
          if(wifi_t.smartphone_app_power_on_flag==0){
 		       power_on_action_led_init();
          }
-         
-        Update_DHT11_Value();
-        TFT_Display_PowerOn_Init_Handler();
+
+       do{
        
+        Update_DHT11_Value(); //WT.EDIT 2024.09.06
+         
+        TFT_Display_PowerOn_Init_Handler();
+        
          TFT_Disp_Only_Temp_Numbers(0,gctl_t.dht11_temp_value);
+        
          TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
+
+         }while(0);
+       
          LED_Mode_Key_On();
 	     LED_Power_Key_On();
 		 TFT_BACKLIGHT_ON();
+
+         
+        
 
          gpro_t.disp_works_timer_timing_mode_item = works_time ;
          if(gctl_t.get_beijing_time_success == 1){

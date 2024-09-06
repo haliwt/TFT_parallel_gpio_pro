@@ -308,16 +308,13 @@ void Subscribe_Rx_Interrupt_Handler(void)
 void Tencent_Cloud_Rx_Handler(void)
 {
 
-   
-
-    if(wifi_t.rx_data_success==1){
+   if(wifi_t.rx_data_success==1){
          wifi_t.rx_data_success=0;
          wifi_t.link_beijing_times_flag =0;
 		
 	
      if(wifi_t.received_data_from_tencent_cloud > 22){ //36
 	    wifi_t.received_data_from_tencent_cloud=0;
-		wifi_t.get_rx_beijing_time_enable=0;
 		wifi_t.get_rx_beijing_time_enable=0; //enable beijing times
 		wifi_t.response_wifi_signal_label = APP_TIMER_POWER_ON_REF;
 	   // __HAL_UART_CLEAR_OREFLAG(&huart2);

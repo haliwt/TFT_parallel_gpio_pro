@@ -267,9 +267,9 @@ static void vTaskMsgPro(void *pvParameters)
              if(key_power_sound_flag == 1){ //WT.EDIT 2024.08.13
 
                key_power_sound_flag ++;
-                DISABLE_INT();
+               // DISABLE_INT(); //WT.EDIT 2024.09.05 DISPABLE
                 LCD_Clear(BLACK);
-                ENABLE_INT();
+              //  ENABLE_INT();
              
                 buzzer_sound_flag = 1;
                 start_counter_power_key_long_pressed =0;
@@ -295,11 +295,11 @@ static void vTaskMsgPro(void *pvParameters)
                }
               else if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
-                  // DISABLE_INT(); //WT.EDIT 2024.08.17 
+                  DISABLE_INT(); 
                    start_counter_power_key_long_pressed =0;
                    LCD_Clear(BLACK);
                    buzzer_sound();//WT.EDIT 2024.08.17 
-                  // ENABLE_INT();//WT.EDIT 2024.08.17 
+                  ENABLE_INT();
               
                   power_off_init_set_ref();
                   power_off_handler();
@@ -342,7 +342,7 @@ static void vTaskMsgPro(void *pvParameters)
               buzzer_sound();
           }
           
-          if(key_power_sound_flag==2){//run_main_board_process();
+         if(key_power_sound_flag==2){//run_main_board_process();
            
 
               if(wifi_t.smartphone_app_power_on_flag==1){
@@ -353,17 +353,21 @@ static void vTaskMsgPro(void *pvParameters)
                }
               else{
                PowerOnOff_Init_Ref_Fun();
+              
 
               }
              key_power_sound_flag++;
             
          }
-         if(key_power_sound_flag==3){
-            key_power_sound_flag++;
+         if(key_power_sound_flag==3){ //WT.EDIT 2024.09.05
+         //   key_power_sound_flag++;
 
             if(gpro_t.power_on_or_off_flag == power_on){
                gpro_t.gPower_On = power_on;
                power_on_init_set_ref();
+
+               key_power_sound_flag++;
+              
                if(wifi_t.smartphone_app_power_on_flag==2){
                    wifi_t.smartphone_app_power_on_flag++;
                    Device_Action_No_Wifi_Handler(); //smart phone app is power on .
@@ -375,12 +379,14 @@ static void vTaskMsgPro(void *pvParameters)
             else{
 
                 gpro_t.gPower_On = power_off;
+                key_power_sound_flag++;
 
 
             }
 
             if(wifi_t.smartphone_app_power_on_flag==0 && gpro_t.gPower_On == power_on){
                 power_on_action_led_init();
+                key_power_sound_flag++;
             }
             
 
@@ -689,8 +695,8 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
  //voice sound by USART1
   if(huart->Instance==USART1){
 
-        DISABLE_INT();
-       // taskENTER_CRITICAL();
+       DISABLE_INT();
+       
 
     	switch(state_uart1)
 		{
@@ -821,7 +827,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
 	  
 	}
 	 
-	 ENABLE_INT();
+	ENABLE_INT(); 
 	 //taskEXIT_CRITICAL();
     //  __HAL_UART_CLEAR_NEFLAG(&huart1);
     //  __HAL_UART_CLEAR_FEFLAG(&huart1);

@@ -92,12 +92,15 @@ void Error_Handler(void);
 #define KEY_POWER_Pin GPIO_PIN_11
 #define KEY_POWER_GPIO_Port GPIOB
 #define KEY_POWER_EXTI_IRQn EXTI4_15_IRQn
+
 #define KEY_MODE_Pin GPIO_PIN_12
 #define KEY_MODE_GPIO_Port GPIOB
 #define KEY_MODE_EXTI_IRQn EXTI4_15_IRQn
+
 #define KEY_ADD_Pin GPIO_PIN_13
 #define KEY_ADD_GPIO_Port GPIOB
 #define KEY_ADD_EXTI_IRQn EXTI4_15_IRQn
+
 #define KEY_DEC_Pin GPIO_PIN_14
 #define KEY_DEC_GPIO_Port GPIOB
 #define KEY_DEC_EXTI_IRQn EXTI4_15_IRQn
@@ -110,8 +113,9 @@ void Error_Handler(void);
 #define FAN_CTL_1_GPIO_Port GPIOA
 #define FAN_CTL_2_Pin GPIO_PIN_12
 #define FAN_CTL_2_GPIO_Port GPIOA
-#define TEMP_SENSOR_Pin GPIO_PIN_15
-#define TEMP_SENSOR_GPIO_Port GPIOA
+//dht11 temperature sensor 
+#define TEMP_SENSOR_Pin                         GPIO_PIN_15
+#define TEMP_SENSOR_GPIO_Port                   GPIOA
 
 #define PLASMA_CTL_Pin GPIO_PIN_7
 #define PLASMA_CTL_GPIO_Port GPIOA

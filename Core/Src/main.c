@@ -12,6 +12,9 @@
   * DATA: 2024.07.29  by test link wifi net is very success .
   * DATA:2024.08.01  by test compatibility is better link wifi and repeat wifi net .
   *                  for sample to client
+  * DATA:2024.09.06  repeat ten times power on and power of ,display is stop ,is bug.
+  *                  version :1.92 
+  *                  
   *
   ******************************************************************************
   */

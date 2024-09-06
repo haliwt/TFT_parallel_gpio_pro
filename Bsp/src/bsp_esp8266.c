@@ -394,9 +394,6 @@ void Wifi_SoftAP_Config_Handler(void)
 void SmartPhone_LinkTencent_Cloud(void)
 {
    
-   
- 
-
 	if(wifi_t.soft_ap_config_success==1){
 
        wifi_t.soft_ap_config_success=0;
