@@ -391,10 +391,6 @@ void Mode_Key_Select_Fun(void)
 			
 
 		  }
-
-        
-		
-
       break;
 
 	  case plasma_fun:
@@ -551,14 +547,10 @@ led_blink3: if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
 		    goto led_blink3;
 
 		}
-
-	   
-	  break;
-	  	
-	  }
+        break;
+    }
 }
-   
- /**************************************************************************
+/**************************************************************************
  * 
  * Function Name: void Mode_Key_Confirm_Fun(void)
  * Function : "+" and "-" of key as confirm of key be used to 
@@ -673,8 +665,6 @@ void Mode_Key_Confirm_Fun(void)
 	 }
    
 }
-
-
 /******************************************************************************
 	*
 	*Function Name:static void ModeKey_Select_Default_LedOnOff(void)
