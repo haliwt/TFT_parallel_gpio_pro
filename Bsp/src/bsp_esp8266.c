@@ -178,6 +178,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		  wifi_t.gTimer_login_tencent_times=0;
 		  wifi_t.link_tencent_step_counter=driver_esp8266_rest;
 		   WIFI_IC_DISABLE();
+          #if 0
            Wifi_Fast_Led_Blink();
          
            HAL_Delay(200);
@@ -191,12 +192,24 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
             
             HAL_Delay(200);
 		    Wifi_Fast_Led_Blink();
+           #endif 
+           LED_WIFI_ICON_OFF();
+           osDelay(50);
+           LED_WIFI_ICON_OFF();
+           osDelay(50);
+           LED_WIFI_ICON_ON();
+           osDelay(50);
+           LED_WIFI_ICON_OFF();
+           osDelay(50);
+           LED_WIFI_ICON_ON();
+           Wifi_Fast_Led_Blink();
 	   }
 	
 	   if(wifi_t.gTimer_login_tencent_times > 0 && wifi_t.link_tencent_step_counter==driver_esp8266_rest){
 		   wifi_t.gTimer_login_tencent_times=0;
 		   wifi_t.link_tencent_step_counter=driver_esp8266_step_2;
 		   WIFI_IC_ENABLE();
+           #if 0
            Wifi_Fast_Led_Blink();
       
 		   HAL_Delay(200);
@@ -209,6 +222,17 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
            Wifi_Fast_Led_Blink();
            HAL_Delay(200);
 		   Wifi_Fast_Led_Blink();
+           #endif 
+           LED_WIFI_ICON_OFF();
+           osDelay(50);
+           LED_WIFI_ICON_OFF();
+           osDelay(50);
+           LED_WIFI_ICON_ON();
+           osDelay(50);
+           LED_WIFI_ICON_OFF();
+           osDelay(50);
+           LED_WIFI_ICON_ON();
+           Wifi_Fast_Led_Blink();
           
 
 		}
