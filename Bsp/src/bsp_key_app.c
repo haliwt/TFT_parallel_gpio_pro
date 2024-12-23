@@ -555,17 +555,10 @@ led_blink3: if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
 	   
 	  break;
 	  	
-	  	
-
-   }
-
+	  }
 }
    
-  
-
-
-
-/**************************************************************************
+ /**************************************************************************
  * 
  * Function Name: void Mode_Key_Confirm_Fun(void)
  * Function : "+" and "-" of key as confirm of key be used to 

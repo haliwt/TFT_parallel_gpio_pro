@@ -353,7 +353,7 @@ static void vTaskMsgPro(void *pvParameters)
                
                }
               else{
-               gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
+               
                PowerOnOff_Init_Ref_Fun();
               
 
@@ -366,6 +366,7 @@ static void vTaskMsgPro(void *pvParameters)
 
             if(gpro_t.power_on_or_off_flag == power_on){
                gpro_t.gPower_On = power_on;
+               
                power_on_init_set_ref();
 
                key_power_sound_flag++;

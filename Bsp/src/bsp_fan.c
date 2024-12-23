@@ -11,28 +11,32 @@ void Fan_Run(void)
    if(fan_default != gpro_t.fan_run_the_first_flag){
 
        fan_default = gpro_t.fan_run_the_first_flag ;
-       FAN_CCW_SetHigh(); //brake
        FAN_COM_SetLow(); //PA6
+       FAN_CCW_SetHigh(); //brake
        osDelay(100);
        FAN_CCW_SetLow(); //brake
-        osDelay(100);
-       FAN_CCW_SetHigh(); //brake
-       osDelay(50);
-       FAN_CCW_SetLow(); //brake
        osDelay(100);
-       FAN_CCW_SetHigh(); //brake
-       osDelay(200);
+       //FAN_CCW_SetHigh(); //brake
+//       osDelay(100);
+//       FAN_CCW_SetLow(); //brake
+//       osDelay(100);
+//       FAN_CCW_SetHigh(); //brake
+//       osDelay(100);
+//       FAN_CCW_SetLow(); //brake
+//       osDelay(100);
+        FAN_CCW_SetHigh(); //brake
+        HAL_Delay(1000);
 
    }
-   else{
-    
-   FAN_CCW_SetHigh(); //brake
+  
    FAN_COM_SetLow(); //PA6
-
-   }
+   FAN_CCW_SetHigh(); //brake
+   
+   
+}
 	 
 
-}
+
 
  
 void Fan_Stop(void)

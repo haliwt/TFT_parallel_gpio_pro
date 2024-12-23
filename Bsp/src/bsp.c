@@ -139,9 +139,10 @@ void PowerOn_Process_Handler(void)
 
    case 4: //02
 	
-
-	    RunMain_And_Interval_Handler();
-	  
+        if(gpro_t.gTimer_run_main_action > 5 ){
+          gpro_t.gTimer_run_main_action=0;
+	      RunMain_And_Interval_Handler();
+        }
 	   gpro_t.run_process_step=5;
 	 break;
 
@@ -289,7 +290,7 @@ void power_up_initialize_data(void)
 
          TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
 
-          if(wifi_link_net_state() ==1){
+        if(wifi_link_net_state() ==1){
 	
         wifi_t.link_net_tencent_data_flag=1;
 		MqttData_Publish_PowerOff_Ref();
@@ -421,8 +422,8 @@ void PowerOnOff_Init_Ref_Fun(void)
          // gpro_t.gPower_On = power_on;  
 
           gpro_t.power_on_or_off_flag = power_on;
-        
-  
+          gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
+          
           gpro_t.run_process_step=0;
 	    
    }
@@ -430,6 +431,7 @@ void PowerOnOff_Init_Ref_Fun(void)
            
             gpro_t.power_off_flag=1;
             gpro_t.run_process_step=0;
+         
             Power_Off_Fun();
             gpro_t.power_on_or_off_flag = power_off;
 
