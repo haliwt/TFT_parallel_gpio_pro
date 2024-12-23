@@ -183,6 +183,7 @@ void PowerOn_Process_Handler(void)
               gpro_t.interval_stop_run_flag  =1 ;
              
              gpro_t.run_process_step=1;
+             gpro_t.fan_run_the_first_flag ++ ;//WT.EDIT 2024.12.23
        }
        else{
          gpro_t.run_process_step=1;

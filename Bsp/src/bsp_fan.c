@@ -6,9 +6,30 @@ static void turn_off_fan_function(void);
 
 void Fan_Run(void)
 {
+
+   static uint8_t fan_default = 0xff;
+   if(fan_default != gpro_t.fan_run_the_first_flag){
+
+       fan_default = gpro_t.fan_run_the_first_flag ;
+       FAN_CCW_SetHigh(); //brake
+       FAN_COM_SetLow(); //PA6
+       osDelay(100);
+       FAN_CCW_SetLow(); //brake
+        osDelay(100);
+       FAN_CCW_SetHigh(); //brake
+       osDelay(50);
+       FAN_CCW_SetLow(); //brake
+       osDelay(100);
+       FAN_CCW_SetHigh(); //brake
+       osDelay(200);
+
+   }
+   else{
     
    FAN_CCW_SetHigh(); //brake
    FAN_COM_SetLow(); //PA6
+
+   }
 	 
 
 }

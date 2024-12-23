@@ -181,7 +181,8 @@ typedef struct{
 
    //buzzer
 
-  
+    uint8_t fan_run_the_first_flag;   //WT.EIDI 2024.12.23
+    uint8_t ptc_manual_on_off_flag; //WT.EIDI 2024.12.23
    //time
  
    uint8_t disp_works_timer_timing_mode_item;

@@ -14,6 +14,7 @@
   *                  for sample to client
   * DATA:2024.09.06  repeat ten times power on and power of ,display is stop ,is bug.
   *                  version :1.92 
+  * DATA:2024.12.23  modify the first fun don't run is bug .version:1.93
   *                  
   *
   ******************************************************************************

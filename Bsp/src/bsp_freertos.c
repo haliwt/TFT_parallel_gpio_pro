@@ -349,9 +349,11 @@ static void vTaskMsgPro(void *pvParameters)
                     wifi_t.smartphone_app_power_on_flag++;
                     gpro_t.power_on_or_off_flag = power_on;
                     gpro_t.run_process_step=0;
+                    gpro_t.fan_run_the_first_flag++; //WT.EDIT .2024.12.23
                
                }
               else{
+               gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
                PowerOnOff_Init_Ref_Fun();
               
 
