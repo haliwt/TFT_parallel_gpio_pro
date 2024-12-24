@@ -277,7 +277,8 @@ void power_up_initialize_data(void)
            
 		}
 		else{
-			gctl_t.fan_continuce_flag++;
+			//gctl_t.fan_continuce_flag++;
+			gctl_t.fan_continuce_flag=2; //WT.EIDT 2024.12.24
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
           
@@ -703,9 +704,6 @@ void direct_wifi_led_fast_blink_handler(void)
   if(gpro_t.gPower_On == power_on){
   if(gpro_t.wifi_led_fast_blink_flag==1){
     
-
-
-            
         LED_WIFI_ICON_OFF();
         osDelay(100);
 
@@ -732,27 +730,28 @@ void direct_wifi_led_fast_blink_handler(void)
 void WIFI_LED_Blink(void)
 {
 
+   static uint8_t wifi_led_blink;
    if(wifi_link_net_state()==0 && gpro_t.gPower_On == power_on && gpro_t.wifi_led_fast_blink_flag==0){
        if(gpro_t.mode_key_run_item_step != mode_key_select){
                     
-        if(gpro_t.gTimer_pro_wifi_led > 1 && gpro_t.gTimer_pro_wifi_led < 3){
+        if(gpro_t.gTimer_pro_wifi_led > 1){
+            
+             gpro_t.gTimer_pro_wifi_led=0;
+             wifi_led_blink ++;   //WT.EDIT 2024.12.24
+             if(wifi_led_blink == 1){
+                LED_WIFI_ICON_ON();
+             }
+             else{
+                 wifi_led_blink =0;
 
-        LED_WIFI_ICON_ON();
+                 LED_WIFI_ICON_OFF();
+
+
+             }
         }
-        else if(gpro_t.gTimer_pro_wifi_led > 2 && gpro_t.gTimer_pro_wifi_led < 5){
-
-        gpro_t.gTimer_pro_wifi_led=0;
-        LED_WIFI_ICON_OFF();
-        }
-        else if(gpro_t.gTimer_pro_wifi_led > 4){
-
-            gpro_t.gTimer_pro_wifi_led=0;
-             LED_WIFI_ICON_ON();
-
-        }
-        }
-
+      
     }
+   }
 
 }
 

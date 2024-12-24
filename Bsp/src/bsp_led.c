@@ -137,7 +137,16 @@ void Power_Off_Led(void)
 **************************************************************/
 void Breath_Led(void)
 {
- 
+
+
+
+   LED_Power_Key_On();
+   osDelay(1000);
+   LED_Power_Key_Off();
+   osDelay(1000);
+
+
+    #if 0
      static uint8_t flag,switch_flag,dec_led_flag;
         static uint8_t i,j;
         led_k++;
@@ -231,7 +240,7 @@ void Breath_Led(void)
              dec_led_flag=0;
             
         }
-
+   #endif 
 }
 
 

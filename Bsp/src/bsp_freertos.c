@@ -246,7 +246,7 @@ static void vTaskMsgPro(void *pvParameters)
             }
            
        }
-	   else{
+	   else{  //over times run this below .
 
 
          if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1){
@@ -414,9 +414,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                   }
            }
-                
-         
-          if(gpro_t.gPower_On==power_on){
+           if(gpro_t.gPower_On==power_on){
                 if(buzzer_sound_flag==2){
                     buzzer_sound_flag++;
                    Buzzer_KeySound_Off();

@@ -312,6 +312,9 @@ void DEC_Key_Fun(void)
 *****************************************************************************/
 void Mode_Key_Select_Fun(void)
 {
+
+  static uint8_t ptc_led,plasma_led,rat_led;
+
    switch(gctl_t.select_main_fun_numbers){
 
       case ptc_fun:
@@ -350,11 +353,7 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-   	      
-   
-        
-
-            if(plasma_state() == 1){
+   	      if(plasma_state() == 1){
                    // Plasma_On();
 				LED_KILL_ICON_ON();
 			}
@@ -377,20 +376,28 @@ void Mode_Key_Select_Fun(void)
 		    }
 			
 			
-  led_blik:	   if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
- 		      LED_PTC_ICON_ON()  ;  
-		  }
-		  else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){
- 		     LED_PTC_ICON_OFF() ; 
+  led_blik:	   if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
+                   gctl_t.gTimer_ctl_select_led =0;
+                   ptc_led ++;
+                   if(ptc_led == 1){
+                       LED_PTC_ICON_ON()  ;  
+                   
 
-		  }
-		  else{
-		  	gctl_t.gTimer_ctl_select_led=0;
-			if(gpro_t.mode_key_run_item_step==mode_key_select)
-			   goto led_blik;
-			
+                   }
+                   else{
+                       ptc_led = 0;
+                       LED_PTC_ICON_OFF() ; 
+                       if(gpro_t.mode_key_run_item_step==mode_key_select){
+			           goto led_blik;
 
+                      }
+
+                   }
+
+                 
+ 		     
 		  }
+		 
       break;
 
 	  case plasma_fun:
@@ -455,22 +462,25 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-   led_blik2:   if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
+   led_blik2:   if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
+                       gctl_t.gTimer_ctl_select_led=0;
+                       plasma_led ++;
+                       if(plasma_led ==1){
+    		    
+    				      LED_KILL_ICON_ON() ;   
+                       }
+                       else{
+                        plasma_led =0;
+                        LED_KILL_ICON_OFF() ;
+                       if(gpro_t.mode_key_run_item_step==mode_key_select){
+    				        goto led_blik2;
 
-		    
-				LED_KILL_ICON_ON() ;   
-         	 }
-			 else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){
-				LED_KILL_ICON_OFF() ;
-			 }
-			 else{
-			 	gctl_t.gTimer_ctl_select_led=0;
-				if(gpro_t.mode_key_run_item_step==mode_key_select)
-				goto led_blik2;
+    			       }
 
-			 }
-	  	
-		
+                       }
+                   
+         	      }
+			
 
 	  break;
 
@@ -535,18 +545,23 @@ void Mode_Key_Select_Fun(void)
 	 
 
 
-led_blink3: if(gctl_t.gTimer_ctl_select_led < 20){ //30x10ms=300ms
-			LED_RAT_ICON_ON(); 
-	 }
-	 else if(gctl_t.gTimer_ctl_select_led > 19 && gctl_t.gTimer_ctl_select_led < 41){	
-		   LED_RAT_ICON_OFF();
-	  }
-	  else{
-		   gctl_t.gTimer_ctl_select_led=0;
-		   if(gpro_t.mode_key_run_item_step==mode_key_select)
-		    goto led_blink3;
+led_blink3: if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
+                gctl_t.gTimer_ctl_select_led=0;
+                rat_led ++ ;
+                if(rat_led ==1){
+			          LED_RAT_ICON_ON(); 
+                 }
+                 else{
+                  rat_led =0;
+                  LED_RAT_ICON_OFF();
+                 if(gpro_t.mode_key_run_item_step==mode_key_select){
+		             goto led_blink3;
 
-		}
+                    }
+
+                 }
+	           }
+	
         break;
     }
 }
