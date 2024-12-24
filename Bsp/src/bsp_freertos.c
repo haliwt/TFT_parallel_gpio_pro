@@ -362,11 +362,10 @@ static void vTaskMsgPro(void *pvParameters)
             
          }
          if(key_power_sound_flag==3){ //WT.EDIT 2024.09.05
-         //   key_power_sound_flag++;
 
             if(gpro_t.power_on_or_off_flag == power_on){
                gpro_t.gPower_On = power_on;
-               
+               Fan_Run(); //WT.EDIT 2024.12.024
                power_on_init_set_ref();
 
                key_power_sound_flag++;

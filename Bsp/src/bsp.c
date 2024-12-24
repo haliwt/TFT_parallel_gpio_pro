@@ -82,7 +82,7 @@ void PowerOn_Process_Handler(void)
        Power_On_Init();
     
     
-       Fan_Run();
+     //  Fan_Run(); //WT.EDIT 2024.12.024
        LED_Power_Key_On();
 
 
@@ -265,7 +265,7 @@ void power_up_initialize_data(void)
     gctl_t.fan_continuce_flag =1;
 
     gpro_t.power_off_flag ++;
-   // Power_Off_Fun();
+
 
     }
     
@@ -280,7 +280,7 @@ void power_up_initialize_data(void)
 			gctl_t.fan_continuce_flag++;
             TFT_BACKLIGHT_OFF();
             Fan_Stop();
-          //  LCD_Clear(BLACK);
+          
            
 		}
     }
@@ -584,7 +584,7 @@ static void Power_On_Init(void)
   }
   else{
    //  MqttData_Publish_Update_Data();
-     Fan_Run();
+    // Fan_Run();  //WT.EDIT .2024.12.24
      Device_Action_No_Wifi_Handler();
 
 
