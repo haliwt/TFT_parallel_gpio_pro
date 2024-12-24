@@ -448,7 +448,7 @@ void Json_Parse_Command_Fun(void)
 		App_PowerOff_Handler();
         MqttData_Publish_SetOpen(0);  
 	    osDelay(200);//HAL_Delay(200);//350
-            
+        buzzer_sound();//WT.EDIT 2024.12.24    
 		
 	    wifi_t.gTimer_auto_detected_net_state_times=0; //don't need check wifi if has or not
 		wifi_t.response_wifi_signal_label = 0xff;
