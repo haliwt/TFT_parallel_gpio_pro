@@ -100,6 +100,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
        gpro_t.gTimer_get_data_from_tencent_data++;
        gpro_t.gTimer_exit_mode_long_key++ ;
        gpro_t.gTimer_run_main_action++ ;
+       gpro_t.gTimer_breath_led++;
  
     
    

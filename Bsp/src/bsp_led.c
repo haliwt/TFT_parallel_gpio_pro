@@ -76,7 +76,7 @@ void power_on_action_led_init(void)
      gctl_t.plasma_flag = 1;
      gctl_t.ultrasonic_flag = 1;
    
-    Fan_Run();
+   // Fan_Run(); //WT.EDIT 2024.12.25 Disable.
 
 	//PTC ICON LED
 	LED_PTC_ICON_ON() ;  
@@ -137,14 +137,20 @@ void Power_Off_Led(void)
 **************************************************************/
 void Breath_Led(void)
 {
+  static uint8_t breath_led;
+   if(gpro_t.gTimer_breath_led  > 0){
+     gpro_t.gTimer_breath_led=0;
+     breath_led++;
+     if(breath_led ==1){
+       LED_Power_Key_On();
+     }
+     else{
+       breath_led=0;
+       LED_Power_Key_Off();
+      }
 
-
-
-   LED_Power_Key_On();
-   osDelay(1000);
-   LED_Power_Key_Off();
-   osDelay(1000);
-
+    }
+}
 
     #if 0
      static uint8_t flag,switch_flag,dec_led_flag;
@@ -241,7 +247,7 @@ void Breath_Led(void)
             
         }
    #endif 
-}
+
 
 
 

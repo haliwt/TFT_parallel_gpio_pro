@@ -34,6 +34,7 @@
 #include "bsp_usart.h"
 #include "bsp_lcd_gui.h"
 #include "bsp_wifi.h"
+#include "bsp_poweroff.h"
 //#include "bsp_image.h"
 #include "bsp_tft_font.h"
 #include "bsp_font.h"
@@ -250,6 +251,7 @@ typedef struct{
   uint8_t gTimer_get_data_from_tencent_data;
   uint8_t gTimer_exit_mode_long_key;
   uint8_t gTimer_run_main_action;
+  uint8_t gTimer_breath_led;
 
   
   int8_t gTimer_countdown_one_minute;
@@ -272,20 +274,16 @@ void bsp_Init(void);
 
 
 
-void PowerOnOff_Init_Ref_Fun(void);
 
-void PowerOff_Ref_Fun(void);
-
-
-void power_off_handler(void);
 
 
 void Key_Process_Handler(uint8_t keyvalue);
 void PowerOn_Process_Handler(void);
 
 
+void PowerOnOff_Init_Ref_Fun(void);
 
-void Power_Off_Process_Handler(void);
+
 
 
 
@@ -295,7 +293,7 @@ void Mode_Long_Key_Fun(void);;
 
 void WIFI_LED_Blink(void);
 
-void Power_Off_Special_Fun(void);
+
 
 void Power_On_Special_Fun(void);
 
@@ -307,7 +305,7 @@ void power_up_initialize_data(void);
 
 
 void power_on_init_set_ref(void);
-void power_off_init_set_ref(void);
+
 
 
 void mode_key_adjust_fun(void);

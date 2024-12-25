@@ -67,7 +67,7 @@ void RunMain_And_Interval_Handler(void)
 	      if(fan_2_hours_stop==2){ //8s
 	         fan_2_hours_stop=0;
 		
-		     Fan_Run();
+		     //Fan_Run();  //WT.EDIT .2024.12.25 
 			 Device_Action_No_Wifi_Handler();
              gpro_t.gTimer_run_total =0; //repeat begin counter works timing how much? reach is 2 hours?
              

@@ -407,7 +407,7 @@ void Device_Action_No_Wifi_Handler(void)
 {
 
 
-   Fan_Run();
+  // Fan_Run(); //WT.EDIT 2024.12.25
 
    if(wifi_link_net_state() == 1){
       LED_WIFI_ICON_ON();
@@ -480,7 +480,7 @@ void Device_Action_No_Wifi_Power_On_Handler(void)
       LED_WIFI_ICON_ON();
 
    }
-  Fan_Run();
+ // Fan_Run(); //WT.EDIT. DATA.2024.12.25
   switch(wifi_t.smartphone_app_power_on_flag){
 
 

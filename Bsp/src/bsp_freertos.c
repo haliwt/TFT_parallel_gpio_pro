@@ -119,7 +119,7 @@ static void vTaskMsgPro(void *pvParameters)
 		    注：ulNotifiedValue表示任务vTaskMsgPro的任务控制块里面的变量。		
 		*/
 
-      if(power_sound_flag==0){
+     if(power_sound_flag==0){
        power_sound_flag++;
       
        buzzer_sound();
@@ -151,7 +151,6 @@ static void vTaskMsgPro(void *pvParameters)
              
                  add_dec_combin_counter=0;
              
-
             }
             else if((ulValue & POWER_LONG_KEY_11) != 0){
 
@@ -301,7 +300,7 @@ static void vTaskMsgPro(void *pvParameters)
                    buzzer_sound();//WT.EDIT 2024.08.17 
                   ENABLE_INT();
               
-                  power_off_init_set_ref();
+                 // power_off_init_set_ref();
                   power_off_handler();
                  // buzzer_sound_flag = 1;//WT.EDIT 2024.08.17 
                  
@@ -335,7 +334,7 @@ static void vTaskMsgPro(void *pvParameters)
           
           }
 
-          if(buzzer_sound_flag ==1){
+         if(buzzer_sound_flag ==1){
               
               buzzer_sound_flag++;
              
@@ -365,7 +364,7 @@ static void vTaskMsgPro(void *pvParameters)
 
             if(gpro_t.power_on_or_off_flag == power_on){
                gpro_t.gPower_On = power_on;
-               Fan_Run(); //WT.EDIT 2024.12.024
+               Fan_Run(); //WT.EDIT 2024.12.024,Need 
                power_on_init_set_ref();
               
 
@@ -411,8 +410,6 @@ static void vTaskMsgPro(void *pvParameters)
                         donot_display_ntc_temp_value();
 
                      }
-
-
                   }
            }
            if(gpro_t.gPower_On==power_on){
