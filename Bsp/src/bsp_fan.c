@@ -16,10 +16,10 @@ void Fan_Run(void)
        osDelay(100);
        FAN_CCW_SetLow(); //brake
        osDelay(100);
-       //FAN_CCW_SetHigh(); //brake
-//       osDelay(100);
-//       FAN_CCW_SetLow(); //brake
-//       osDelay(100);
+       FAN_CCW_SetHigh(); //brake
+       osDelay(100);
+       FAN_CCW_SetLow(); //brake
+       osDelay(100);
 //       FAN_CCW_SetHigh(); //brake
 //       osDelay(100);
 //       FAN_CCW_SetLow(); //brake

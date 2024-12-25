@@ -63,7 +63,7 @@ void Mode_Key_Selection_Func(void)
 
     gctl_t.select_main_fun_numbers++; // 0,1,2
     if(gctl_t.select_main_fun_numbers > 3){
-    gctl_t.select_main_fun_numbers = 1;
+      gctl_t.select_main_fun_numbers = 1;
     }
 
     gctl_t.memory_confimr_key_done = 1;
@@ -320,15 +320,7 @@ void Mode_Key_Select_Fun(void)
       case ptc_fun:
 
          gctl_t.ptc_led_blink_flag = 1;
-         if(wifi_link_net_state() == 1){
-               LED_WIFI_ICON_ON();
-
-         }
-         else{
-             LED_WIFI_ICON_OFF();
-         }
-
-		
+  
 		ptc_fun_led_init_flg++;
 		if(ptc_state()== 1){
 
@@ -342,16 +334,17 @@ void Mode_Key_Select_Fun(void)
 
 
 		}
+        if(gpro_t.wifi_led_fast_blink_flag==0){
+    		if(wifi_link_net_state()==1){
 
-		if(wifi_link_net_state()==1){
+    		LED_WIFI_ICON_ON();
+    		}
+    		else{
 
-		LED_WIFI_ICON_ON();
-		}
-		else{
+    		LED_WIFI_ICON_OFF();
 
-		LED_WIFI_ICON_OFF();
-
-		}
+    		}
+        }
 
    	      if(plasma_state() == 1){
                    // Plasma_On();
@@ -376,7 +369,7 @@ void Mode_Key_Select_Fun(void)
 		    }
 			
 			
-  led_blik:	   if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
+  led_blik:	   if(gctl_t.gTimer_ctl_select_led > 19 && gpro_t.wifi_led_fast_blink_flag==0){ //30x10ms=300ms
                    gctl_t.gTimer_ctl_select_led =0;
                    ptc_led ++;
                    if(ptc_led == 1){
@@ -402,15 +395,8 @@ void Mode_Key_Select_Fun(void)
 
 	  case plasma_fun:
 	  	//KILL ICON LED
-
-         if(wifi_link_net_state() == 1){
-               LED_WIFI_ICON_ON();
-
-         }
-         else{
-             LED_WIFI_ICON_OFF();
-         }
-
+          
+   
 		 plasma_fun_led_init_flag ++;
 
 		 if(plasma_state() == 1){
@@ -423,16 +409,18 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-		
-	 if(wifi_link_net_state()==1){
+	 if(gpro_t.wifi_led_fast_blink_flag==0){
+    	 if(wifi_link_net_state()==1){
 
-	 LED_WIFI_ICON_ON();
-	 }
-	 else{
+    	 LED_WIFI_ICON_ON();
+    	 }
+    	 else{
 
-	 LED_WIFI_ICON_OFF();
+    	 LED_WIFI_ICON_OFF();
 
-	 }
+    	 }
+
+     }
 
 
 		
@@ -462,7 +450,7 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-   led_blik2:   if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
+   led_blik2:   if(gctl_t.gTimer_ctl_select_led > 19 && gpro_t.wifi_led_fast_blink_flag==0){ //30x10ms=300ms
                        gctl_t.gTimer_ctl_select_led=0;
                        plasma_led ++;
                        if(plasma_led ==1){
@@ -486,30 +474,28 @@ void Mode_Key_Select_Fun(void)
 
 	  case rat_fun:
 
-       if(wifi_link_net_state() == 1){
-               LED_WIFI_ICON_ON();
+       rat_fun_led_init_flag++;
 
-         }
-         else{
-             LED_WIFI_ICON_OFF();
-         }
-
-	  //ULTRSONIC ICO LED
-	  rat_fun_led_init_flag++;
-
-	  if(ultrasonic_state()==1){
+       if(ultrasonic_state()==1){
 
 	
-		LED_RAT_ICON_OFF();//LED_RAT_ICON_ON();
+		  LED_RAT_ICON_ON();
 
 		}
 		else{
-			
-			LED_RAT_ICON_ON();//LED_RAT_ICON_OFF();
+
+		
+		  LED_RAT_ICON_OFF();
 
 		}
 
-		
+   
+
+	  //ULTRSONIC ICO LED
+	 
+
+     if(gpro_t.wifi_led_fast_blink_flag==0){
+         
       if(wifi_link_net_state()==1){
 
 		LED_WIFI_ICON_ON();
@@ -519,6 +505,8 @@ void Mode_Key_Select_Fun(void)
 		LED_WIFI_ICON_OFF();
 
 	  }
+
+      }
 	 
 
 	  if(ptc_state()== 1){
@@ -545,9 +533,11 @@ void Mode_Key_Select_Fun(void)
 	 
 
 
-led_blink3: if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
-                gctl_t.gTimer_ctl_select_led=0;
-                rat_led ++ ;
+led_blink3: if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+                //gctl_t.gTimer_ctl_select_led=0;
+               
+                osDelay(200);
+                 rat_led ++ ;
                 if(rat_led ==1){
 			          LED_RAT_ICON_ON(); 
                  }
@@ -561,10 +551,84 @@ led_blink3: if(gctl_t.gTimer_ctl_select_led > 19){ //30x10ms=300ms
 
                  }
 	           }
+              
 	
         break;
     }
 }
+/**************************************************************************
+ * 
+ * Function Name: void Mode_Key_Led_InWifi_Blink_Fun(void)
+ * Function : In wifi fast led display key of led blink.
+ * Input Ref:NO
+ * Return Ref:NO
+ * 
+**************************************************************************/
+void Mode_Led_InWifi_Blink_On_Fun(void)
+
+{
+  
+  if(gpro_t.mode_key_run_item_step == mode_key_select){
+  if(gpro_t.gTimer_pro_mode_key_be_select < 4){
+
+   switch(gctl_t.select_main_fun_numbers){
+
+      case ptc_fun:
+
+      LED_PTC_ICON_ON()  ;  
+        break;
+
+	  case plasma_fun:
+	    LED_KILL_ICON_ON() ;   
+      
+       break;
+
+	  case rat_fun:
+        
+        LED_RAT_ICON_ON();
+        osDelay(80);
+                
+      break;
+    }
+   }
+  }
+}
+
+void Mode_Led_InWifi_Blink_Off_Fun(void)
+{
+
+ 
+ if(gpro_t.mode_key_run_item_step == mode_key_select){
+ if(gpro_t.gTimer_pro_mode_key_be_select < 4){
+
+  switch(gctl_t.select_main_fun_numbers){
+
+      case ptc_fun:
+
+ 
+      LED_PTC_ICON_OFF() ; 
+                    
+
+      break;
+
+	  case plasma_fun:
+	  
+        LED_KILL_ICON_OFF() ;
+
+       break;
+
+	  case rat_fun:
+       LED_RAT_ICON_OFF();
+       osDelay(80);
+                
+	
+        break;
+    }
+
+    }
+    }
+}
+
 /**************************************************************************
  * 
  * Function Name: void Mode_Key_Confirm_Fun(void)

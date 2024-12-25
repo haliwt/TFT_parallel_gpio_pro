@@ -25,8 +25,10 @@ void ModeKey_Select_Default_LedOnOff(void);
 
 
 
+void Mode_Led_InWifi_Blink_On_Fun(void);
 
 
+void Mode_Led_InWifi_Blink_Off_Fun(void);
 
 
 #endif 

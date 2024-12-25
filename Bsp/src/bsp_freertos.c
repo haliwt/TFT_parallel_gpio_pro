@@ -367,6 +367,7 @@ static void vTaskMsgPro(void *pvParameters)
                gpro_t.gPower_On = power_on;
                Fan_Run(); //WT.EDIT 2024.12.024
                power_on_init_set_ref();
+              
 
                key_power_sound_flag++;
               
