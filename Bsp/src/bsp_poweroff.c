@@ -14,31 +14,31 @@
  void Power_Off_Process_Handler(void)
  {   
  
-	if(gpro_t.power_off_flag == 1){
-		
-	      
+    if(gpro_t.power_off_flag == 1){
+
+
         DISABLE_INT();
         LCD_Clear(BLACK);
         //TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
 
         ENABLE_INT();
-	    gpro_t.gTimer_countdown_one_minute =90;
+        gpro_t.gTimer_countdown_one_minute =90;
         TFT_Disp_CountDown_60s(gpro_t.gTimer_countdown_one_minute);
         Device_NoAction_Power_Off();
-     
-	gctl_t.ptc_warning=0;
-	gctl_t.fan_warning =0;
-	wifi_t.repeat_login_tencent_cloud_init_ref=0;
-	wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
-    gctl_t.disp_ntc_res_switch_normal_ptc_counter=0;
 
-    gctl_t.fan_continuce_flag =1;
+        gctl_t.ptc_warning=0;
+        gctl_t.fan_warning =0;
+        wifi_t.repeat_login_tencent_cloud_init_ref=0;
+        wifi_t.smartphone_app_power_on_flag=0; //手机定时关机和开机，设置参数的标志位
+        gctl_t.disp_ntc_res_switch_normal_ptc_counter=0;
 
-    gpro_t.power_off_flag ++;
+        gctl_t.fan_continuce_flag =1;
+
+        gpro_t.power_off_flag ++;
 
 
     }
-    
+
     if(gctl_t.fan_continuce_flag ==1){ //power off fan run need run one minute
 
 	    if(gpro_t.gTimer_countdown_one_minute   > 0 || gpro_t.gTimer_countdown_one_minute==0){
@@ -56,23 +56,22 @@
            
 		}
     }
-      if(gpro_t.power_off_flag ==2){
+    
+    if(gpro_t.power_off_flag ==2){
         gpro_t.power_off_flag ++;
         Power_Off_Fun();
 
-         TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
+        TFT_Disp_Fan_Leasefiness_RunIcon(100,30,0);
 
         if(wifi_link_net_state() ==1){
-	
-        wifi_t.link_net_tencent_data_flag=1;
-		MqttData_Publish_PowerOff_Ref();
-        osDelay(50);//HAL_Delay(100);
-		wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
-	     
-		}
 
+            wifi_t.link_net_tencent_data_flag=1;
+            MqttData_Publish_PowerOff_Ref();
+            osDelay(50);//HAL_Delay(100);
+            wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
 
-      }
+        }
+    }
 
     if(gctl_t.fan_continuce_flag==1){
 
@@ -100,8 +99,8 @@ void PowerOff_Ref_Fun(void)
  
 	   
        //  LCD_Clear(BLACK);
-	     gctl_t.fan_continuce_flag =1;
 		 //clear control falg
+        gctl_t.fan_continuce_flag =1;
         gpro_t.set_timer_timing_success = 0;
         
        
@@ -175,7 +174,14 @@ void Power_Off_Special_Fun(void)
      gpro_t.gPower_On = power_off;  
      gpro_t.run_process_step=0xff;
  }
-
+/******************************************************************************
+	*
+	*Function Name:void Power_Off_Special_Fun(void)
+	*Funcion: speical of power key function
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
 void Power_On_Special_Fun(void)
 {
        buzzer_sound();	
@@ -195,6 +201,14 @@ void Power_On_Special_Fun(void)
 
 
 }
+/******************************************************************************
+	*
+	*Function Name:void power_off_handler(void)
+	*Funcion: speical of power key function
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
 void power_off_handler(void)
 {
 

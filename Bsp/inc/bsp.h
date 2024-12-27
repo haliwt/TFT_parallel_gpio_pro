@@ -176,7 +176,7 @@ typedef struct{
    uint8_t  disp_key_set_timer_timing;
    uint8_t disp_temp_or_set_tmp_switch_flag ;
 
-   uint8_t power_on_or_off_flag;
+
    
 
 
@@ -301,7 +301,7 @@ void direct_wifi_led_fast_blink_handler(void);
 
 
 
-void power_up_initialize_data(void);
+
 
 
 void power_on_init_set_ref(void);
@@ -310,6 +310,7 @@ void power_on_init_set_ref(void);
 
 void mode_key_adjust_fun(void);
 
+void wifi_app_power_on_handler(void);
 
 
 #endif 

@@ -240,6 +240,7 @@ static void voice_cmd_fun(uint8_t cmd)
 
     case voice_power_on:
       if(gpro_t.gPower_On == power_on){
+        
           voice_send_has_been_power_on_cmd();
 
 	  }

@@ -137,11 +137,14 @@ void PowerOn_Process_Handler(void)
      break;
 
 
-   case 4: //02
+   case 4: //02,device works two hours have a rest 10 minutes.
 	
         if(gpro_t.gTimer_run_main_action > 5 ){
           gpro_t.gTimer_run_main_action=0;
 	      RunMain_And_Interval_Handler();
+          if(gpro_t.interval_stop_run_flag ==0){//WT.EDIT .2024.12.25 ENABLE FAN RUN 
+             Fan_Run(); //WT.EDIT .2024.12.25 ENABLE FAN RUN 
+          }
         }
 	   gpro_t.run_process_step=5;
 	 break;
@@ -161,15 +164,13 @@ void PowerOn_Process_Handler(void)
       // handler of wifi 
 	  case 6: //7
 
-      
-        
-	if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
+        if(wifi_link_net_state()==1 && wifi_t.smartphone_app_power_on_flag==0 && wifi_t.link_net_tencent_data_flag ==1){ //after send publish datat to tencent .){
           
 		    wifi_t.link_net_tencent_data_flag = 3;  //must is wifi_t.link_net_tencent_data_flag = 3;
 		    MqttData_Publish_Update_Data();
 		    HAL_Delay(200);
             
-       }
+         }
 
          gpro_t.run_process_step=7;
 
@@ -197,43 +198,6 @@ void PowerOn_Process_Handler(void)
     break;
    	}
  }
-
-void power_up_initialize_data(void)
-{
-   if(gpro_t.run_process_step==0){
-
-    gpro_t.run_process_step =pro_run_main_fun;
-
-  
-    gpro_t.power_off_flag = 1;
-    gpro_t.disp_works_timer_timing_mode_item = works_time;
-    gpro_t.gTimer_pro_disp_temphum = 0; //
-
-    gpro_t.gTimer_pro_update_dht11_data=60;
-    gpro_t.gTimer_read_humidity_value = 30;
-    gctl_t.disp_ntc_res_switch_normal_ptc_counter  = 0 ;
-    gpro_t.gTimer_run_total=0;
-
-    //wifi of ref
-    wifi_t.gTimer_get_beijing_time=0;
-    wifi_t.get_rx_beijing_time_enable=0;
-    wifi_t.gTimer_auto_detected_net_state_times=0;
-
-
-    Power_On_Init();
-
-
-    //Fan_Run(); WT.EDIT 2024.12.25
-    LED_Power_Key_On();
-
-    }
-
-}
-
-
-
-      
-
 /******************************************************************************
 	*
 	*Function Name:void TFT_Pocess_Command_Handler(void)
@@ -248,21 +212,40 @@ void PowerOnOff_Init_Ref_Fun(void)
        
   if(gpro_t.gPower_On == power_off){
           
-         // gpro_t.gPower_On = power_on;  
+        
 
-          gpro_t.power_on_or_off_flag = power_on;
+        
+          gpro_t.gPower_On = power_on;
+           Fan_Run(); //WT.EDIT 2024.12.024
+           power_on_init_set_ref();
+
+             
+              
+          if(wifi_t.smartphone_app_power_on_flag==2){
+                   wifi_t.smartphone_app_power_on_flag++;
+                   Device_Action_No_Wifi_Handler(); //smart phone app is power on .
+
+           }
           gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
           
           gpro_t.run_process_step=0;
+
+          if(wifi_t.smartphone_app_power_on_flag==0){
+                power_on_action_led_init();
+              
+           }
+          
 	    
    }
    else if(gpro_t.gPower_On == power_on){//POWER OFF
            
             gpro_t.power_off_flag=1;
             gpro_t.run_process_step=0;
+
+            gpro_t.gPower_On = power_off;
          
             Power_Off_Fun();
-            gpro_t.power_on_or_off_flag = power_off;
+           
 
 
    }
@@ -270,6 +253,24 @@ void PowerOnOff_Init_Ref_Fun(void)
  }
 
 
+void wifi_app_power_on_handler(void)
+{
+    Fan_Run(); //WT.EDIT 2024.12.024
+    power_on_init_set_ref();
+    
+                
+                 
+             if(wifi_t.smartphone_app_power_on_flag==2){
+                      wifi_t.smartphone_app_power_on_flag++;
+                      Device_Action_No_Wifi_Handler(); //smart phone app is power on .
+    
+              }
+             gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
+             
+             gpro_t.run_process_step=0;
+    
+            
+}
 
 /******************************************************************************
 	*
@@ -387,7 +388,7 @@ static void Power_On_Init(void)
   }
   else{
    //  MqttData_Publish_Update_Data();
-    // Fan_Run();  //WT.EDIT .2024.12.24
+  
      Device_Action_No_Wifi_Handler();
 
 
@@ -435,7 +436,7 @@ void Wifi_Fast_Led_Blink(void)
 
  // if(gpro_t.gTimer_pro_wifi_fast_led  > 79 ){ //50ms
         // gpro_t.gTimer_pro_wifi_fast_led=0;
-          osDelay(100); //WT.EDIT 2024.12.25
+          osDelay(50); //WT.EDIT 2024.12.25
           wifi_fast_blink ++ ;
           if(wifi_fast_blink ==1){
 
@@ -472,16 +473,16 @@ void direct_wifi_led_fast_blink_handler(void)
   if(gpro_t.wifi_led_fast_blink_flag==1){
     
         LED_WIFI_ICON_OFF();
-        osDelay(100);
+        osDelay(50);
 
         LED_WIFI_ICON_ON();
-        osDelay(100); 
+        osDelay(50); 
         LED_WIFI_ICON_OFF();
-	     osDelay(100);   
+	     osDelay(50);   
         LED_WIFI_ICON_ON();
-        osDelay(100); 
+        osDelay(50); 
         LED_WIFI_ICON_OFF();
-        osDelay(100);   
+        osDelay(50);   
         LED_WIFI_ICON_ON();
 	  }
 }

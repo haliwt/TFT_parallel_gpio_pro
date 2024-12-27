@@ -11,6 +11,9 @@
 #define FAN_COM_SetLow()             HAL_GPIO_WritePin(FAN_CTL_1_GPIO_Port,FAN_CTL_1_Pin,GPIO_PIN_RESET)    // output low level
 
 
+void startFan_Run(void);
+
+
 void Fan_Run(void);
 
  

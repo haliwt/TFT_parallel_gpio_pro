@@ -57,9 +57,9 @@ uint32_t start_counter_power_key_long_pressed;
 
 uint32_t add_dec_combin_counter;
 
-uint8_t key_power_sound_flag;
+uint8_t key_power_sound_flag,gwifi_key_flag;
 
-
+uint8_t gpower_onoff_key_flag ;
 
 volatile uint8_t buzzer_sound_flag,key_power_long_sound_flag;
 
@@ -142,21 +142,16 @@ static void vTaskMsgPro(void *pvParameters)
 		{
 			/* 接收到消息，检测那个位被按下 */
              
-			if((ulValue & POWER_KEY_0) != 0){
-			
-                if(key_power_long_sound_flag !=1 && key_power_long_sound_flag !=2){
-			   	  key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
-                 }
-                 start_counter_power_key_long_pressed =0;
-             
-                 add_dec_combin_counter=0;
-             
-            }
-            else if((ulValue & POWER_LONG_KEY_11) != 0){
+		  if((ulValue & POWER_LONG_KEY_11) != 0){
 
               if(gpro_t.gPower_On==power_on){
 
                 key_power_long_sound_flag =1;
+                gpower_onoff_key_flag=1;
+                gwifi_key_flag =1;
+                buzzer_sound(); //WT.EDIT 2024.08.15
+              
+                
 
               }
                add_dec_combin_counter=0;
@@ -166,9 +161,9 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue &  POWER_ON_5) != 0){
 
-               key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
+              // key_power_sound_flag =1;//gpro_t.key_power_be_pressed_flag =1;
                             
-                start_counter_power_key_long_pressed =0;
+                gpower_onoff_key_flag =1;
             
                 add_dec_combin_counter=0;
                  
@@ -178,7 +173,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                
                   key_power_off_sound_flag =1;           
-                  start_counter_power_key_long_pressed =0;
+                 // start_counter_power_key_long_pressed =0;
                 
                   add_dec_combin_counter=0;
                   gpro_t.gPower_On = power_off;
@@ -190,7 +185,6 @@ static void vTaskMsgPro(void *pvParameters)
 
                  if(gpro_t.gPower_On==power_on){
                 
-         
                     gpro_t.key_mode_be_pressed_flag=1;
 
                   }
@@ -248,7 +242,54 @@ static void vTaskMsgPro(void *pvParameters)
 	   else{  //over times run this below .
 
 
-         if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1){
+         if(gpower_onoff_key_flag ==1){
+
+             if(KEY_POWER_VALUE() == KEY_UP){
+
+                 gpower_onoff_key_flag++;
+                 if(gwifi_key_flag==1){
+                     gwifi_key_flag++;
+
+                     PowerOn_LongKey_Fun();
+                               
+                     direct_wifi_led_fast_blink_handler();
+
+
+                 }
+                 else{
+                   gpower_onoff_key_flag++;
+                   //buzzer_sound();
+                   buzzer_sound_flag =1;
+                   LCD_Clear(BLACK);
+                   if(wifi_t.smartphone_app_power_on_flag==1){
+                    wifi_t.smartphone_app_power_on_flag++;
+                    gpro_t.gPower_On = power_on;//gpro_t.power_on_or_off_flag = power_on;
+                    gpro_t.run_process_step=0;
+                    gpro_t.fan_run_the_first_flag++; //WT.EDIT .2024.12.23
+                    wifi_app_power_on_handler();
+               
+                   }
+                   else{
+                    PowerOnOff_Init_Ref_Fun();
+
+                   }
+
+                   buzzer_sound_flag =1;
+
+
+                 }
+
+             }
+            
+           }
+
+         if( gpro_t.key_short_mode_flag == 1){ //WT.EDIT 2024.08.13
+
+                gpro_t.key_short_mode_flag  ++;
+                buzzer_sound_flag = 1;
+      
+         }
+         else if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1){
         
              mode_key_adjust_fun();
           }
@@ -258,24 +299,19 @@ static void vTaskMsgPro(void *pvParameters)
 
 
           }
+
+          if(buzzer_sound_flag ==1){
+              
+              buzzer_sound_flag++;
+             
+              buzzer_sound();
+          }
 		         
          if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 ||  gpro_t.key_short_mode_flag == 1  || gpro_t.key_long_mode_flag ==1 \
-           || key_power_sound_flag ==1 || key_power_long_sound_flag==1 || key_power_off_sound_flag ==1){
+            || key_power_long_sound_flag==1 || key_power_off_sound_flag ==1){
 
 
-             if(key_power_sound_flag == 1){ //WT.EDIT 2024.08.13
-
-               key_power_sound_flag ++;
-               // DISABLE_INT(); //WT.EDIT 2024.09.05 DISPABLE
-                LCD_Clear(BLACK);
-              //  ENABLE_INT();
-             
-                buzzer_sound_flag = 1;
-                start_counter_power_key_long_pressed =0;
-               
-
-              }
-              else if( gpro_t.key_short_mode_flag == 1){ //WT.EDIT 2024.08.13
+              if( gpro_t.key_short_mode_flag == 1){ //WT.EDIT 2024.08.13
 
                 gpro_t.key_short_mode_flag  ++;
                 buzzer_sound_flag = 1;
@@ -295,7 +331,7 @@ static void vTaskMsgPro(void *pvParameters)
               else if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
                   DISABLE_INT(); 
-                   start_counter_power_key_long_pressed =0;
+                 
                    LCD_Clear(BLACK);
                    buzzer_sound();//WT.EDIT 2024.08.17 
                   ENABLE_INT();
@@ -310,98 +346,24 @@ static void vTaskMsgPro(void *pvParameters)
               else if(key_dec_sound_flag == 1){
                  key_dec_sound_flag++;
                  buzzer_sound();
-                 start_counter_power_key_long_pressed =0;
+                 
 
               }
               else if(key_add_sound_flag ==1){
                 
                   key_add_sound_flag++;
                   buzzer_sound();
-                  start_counter_power_key_long_pressed =0;
+                  
 
 
               }
-              else if(key_power_long_sound_flag ==1){
-                  buzzer_sound(); //WT.EDIT 2024.08.15
+             }
 
-                  key_power_long_sound_flag ++;
-                  PowerOn_LongKey_Fun();
-                
-                 direct_wifi_led_fast_blink_handler();
-           
-
-              }
           
-          }
-
-         if(buzzer_sound_flag ==1){
-              
-              buzzer_sound_flag++;
-             
-              buzzer_sound();
-          }
           
-         if(key_power_sound_flag==2){//run_main_board_process();
-           
 
-              if(wifi_t.smartphone_app_power_on_flag==1){
-                    wifi_t.smartphone_app_power_on_flag++;
-                    gpro_t.power_on_or_off_flag = power_on;
-                    gpro_t.run_process_step=0;
-                    gpro_t.fan_run_the_first_flag++; //WT.EDIT .2024.12.23
-               
-               }
-              else{
-               
-               PowerOnOff_Init_Ref_Fun();
-              
+            if(gpro_t.gTimer_exit_mode_long_key > 2 && (add_dec_combin==1)){
 
-              }
-             key_power_sound_flag++;
-            
-         }
-         if(key_power_sound_flag==3){ //WT.EDIT 2024.09.05
-
-            if(gpro_t.power_on_or_off_flag == power_on){
-               gpro_t.gPower_On = power_on;
-               Fan_Run(); //WT.EDIT 2024.12.024,Need 
-               power_on_init_set_ref();
-              
-
-               key_power_sound_flag++;
-              
-               if(wifi_t.smartphone_app_power_on_flag==2){
-                   wifi_t.smartphone_app_power_on_flag++;
-                   Device_Action_No_Wifi_Handler(); //smart phone app is power on .
-
-               }
-            
-
-            }
-            else{
-
-                gpro_t.gPower_On = power_off;
-                key_power_sound_flag++;
-
-
-            }
-
-            if(wifi_t.smartphone_app_power_on_flag==0 && gpro_t.gPower_On == power_on){
-                power_on_action_led_init();
-                key_power_sound_flag++;
-            }
-            
-
-          }
-          else if(gpro_t.gTimer_exit_mode_long_key > 1 && (key_power_long_sound_flag  == 2 ||  add_dec_combin==1)){
-
-                  if(key_power_long_sound_flag ==2){
-                      start_counter_power_key_long_pressed =0; //clear power key loong flag .
-                     key_power_long_sound_flag  = 0;
-
-
-                  }
-                   
                   if(add_dec_combin==1){
                      add_dec_combin =0;
                      buzzer_sound();
@@ -412,6 +374,9 @@ static void vTaskMsgPro(void *pvParameters)
                      }
                   }
            }
+
+          
+           /**********************run power on*****************************/
            if(gpro_t.gPower_On==power_on){
                 if(buzzer_sound_flag==2){
                     buzzer_sound_flag++;
@@ -459,7 +424,7 @@ static void vTaskMsgPro(void *pvParameters)
               tft_disp_time_colon_symbol();
          
         }
-         else if(gpro_t.gPower_On == power_off){
+        else if(gpro_t.gPower_On == power_off){
      
             start_counter_power_key_long_pressed = 0;
             key_power_sound_flag=0;
@@ -485,7 +450,8 @@ static void vTaskMsgPro(void *pvParameters)
              
     }
       
- }
+}
+
 /**********************************************************************************************************
 *	函 数 名: vTaskStart
 *	功能说明: 启动任务，也就是最高优先级任务，这里用作按键扫描。
@@ -505,43 +471,27 @@ static void vTaskStart(void *pvParameters)
 		//bsp_KeyScan();
 
 
-    if(KEY_POWER_VALUE() == KEY_DOWN){
-        while(KEY_POWER_VALUE() == KEY_DOWN && start_counter_power_key_long_pressed < 2965500){
+    if(KEY_POWER_VALUE() == KEY_DOWN ){
+        gpro_t.long_key_mode_counter=0;
 
-               start_counter_power_key_long_pressed++;
-               if(start_counter_power_key_long_pressed > 2950000){
-                   start_counter_power_key_long_pressed = 2965900;
+        start_counter_power_key_long_pressed++;
 
-               // xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-                          ///  POWER_LONG_KEY_11,            /* 设置目标任务事件标志位bit0  */
-                           /// eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-                    if(gpro_t.gPower_On==power_on){  //WT.DEDIT 2024.08.26
-                       //buzzer_sound();
-                       key_power_long_sound_flag =1;
-
-                     }
-
-                }
-
-         }
+        if(start_counter_power_key_long_pressed > 60 && gpro_t.gPower_On==power_on){
+          start_counter_power_key_long_pressed =0;
+          gwifi_key_flag =1;
+           buzzer_sound();
 
 
-         if(start_counter_power_key_long_pressed < 2950000 ){
+       }
 
-             
-               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-					 POWER_KEY_0,            /* 设置目标任务事件标志位bit0  */
-					 eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
-
-
-         }
-				                                    
+       gpower_onoff_key_flag =1;
 
 
      }
-     else if(KEY_MODE_VALUE() == KEY_DOWN ){
-      
-           gpro_t.long_key_mode_counter ++ ;
+     else if(KEY_MODE_VALUE() == KEY_DOWN   && KEY_POWER_VALUE() == KEY_UP){
+         
+          gpro_t.long_key_mode_counter ++ ;
+         
 
           if(gpro_t.long_key_mode_counter > 70 ){
              gpro_t.long_key_mode_counter=0;   
@@ -560,9 +510,6 @@ static void vTaskStart(void *pvParameters)
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
            
-
-          
-         
 
     }
     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_UP){

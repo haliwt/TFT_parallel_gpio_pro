@@ -625,10 +625,10 @@ void Json_Parse_Command_Fun(void)
         }
         #endif 
 
-	       wifi_t.response_wifi_signal_label = 0xff;
+	      wifi_t.response_wifi_signal_label = 0xff;
 		  wifi_t.gTimer_auto_detected_net_state_times=0;
 		  
-			 wifi_t.linking_tencent_cloud_doing =0;
+		   wifi_t.linking_tencent_cloud_doing =0;
 	  	break;
 
 	  case TEMPERATURE_ITEM:
@@ -651,8 +651,8 @@ void Json_Parse_Command_Fun(void)
 			 TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
              osDelay(100);
 		}
-      wifi_t.response_wifi_signal_label = 0xff;
-	    wifi_t.gTimer_auto_detected_net_state_times=0;
+       wifi_t.response_wifi_signal_label = 0xff;
+	   wifi_t.gTimer_auto_detected_net_state_times=0;
 			
 			 wifi_t.linking_tencent_cloud_doing =0;
 	  break;
@@ -782,6 +782,8 @@ static void smartphone_app_timer_power_on_handler(void)
 		
         if(strstr((char *)TCMQTTRCVPUB,"open\":1")){
             wifi_t.smartphone_app_power_on_flag=1;
+          
+            
         }
     }
     if(app_step==1){

@@ -371,7 +371,7 @@ void Mode_Key_Select_Fun(void)
 			
   led_blik:	   if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                    //gctl_t.gTimer_ctl_select_led =0;
-                   osDelay(100);
+                   osDelay(50);
                    ptc_led ++;
                    if(ptc_led == 1){
                        LED_PTC_ICON_ON()  ;  
@@ -453,7 +453,7 @@ void Mode_Key_Select_Fun(void)
 
    led_blik2:   if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                        gctl_t.gTimer_ctl_select_led=0;
-                       osDelay(100);
+                       osDelay(50);
                        plasma_led ++;
                        if(plasma_led ==1){
     		    
@@ -538,7 +538,7 @@ void Mode_Key_Select_Fun(void)
 led_blink3: if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                 //gctl_t.gTimer_ctl_select_led=0;
                
-                osDelay(100);
+                osDelay(50);
                  rat_led ++ ;
                 if(rat_led ==1){
 			          LED_RAT_ICON_ON(); 

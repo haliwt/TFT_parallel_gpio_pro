@@ -3,39 +3,48 @@
 
 static void turn_off_fan_function(void);
 
+/********************************************************************************************
+	*
+	*Function Name:void startFan_Run(void)
+	*Function: this if fan start moment of arthmetic
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+********************************************************************************************/
+void startFan_Run(void)
+{
+
+   static uint8_t fan_default = 0xff;
+   if(gctl_t.fan_continuce_flag ==1){
+
+      fan_default = gpro_t.fan_run_the_first_flag ;
+  }
+   else{
+       while(fan_default != gpro_t.fan_run_the_first_flag){
+
+           fan_default = gpro_t.fan_run_the_first_flag ;
+           FAN_COM_SetLow(); //PA6
+           FAN_CCW_SetHigh(); //brake
+           osDelay(500);//osDelay(50);
+           FAN_CCW_SetLow(); //brake
+           osDelay(1000);//osDelay(100);
+           FAN_CCW_SetHigh(); //brake
+       }
+
+   }
+  
+}
+	 
+
 
 void Fan_Run(void)
 {
 
-   static uint8_t fan_default = 0xff;
-   if(fan_default != gpro_t.fan_run_the_first_flag){
-
-       fan_default = gpro_t.fan_run_the_first_flag ;
-       FAN_COM_SetLow(); //PA6
-       FAN_CCW_SetHigh(); //brake
-       osDelay(100);
-       FAN_CCW_SetLow(); //brake
-       osDelay(100);
-       FAN_CCW_SetHigh(); //brake
-       osDelay(100);
-       FAN_CCW_SetLow(); //brake
-       osDelay(100);
-//       FAN_CCW_SetHigh(); //brake
-//       osDelay(100);
-//       FAN_CCW_SetLow(); //brake
-//       osDelay(100);
-        FAN_CCW_SetHigh(); //brake
-        HAL_Delay(1000);
-
-   }
-  
-   FAN_COM_SetLow(); //PA6
-   FAN_CCW_SetHigh(); //brake
+  FAN_COM_SetLow(); //PA6
+  FAN_CCW_SetHigh(); //brake
    
    
 }
-	 
-
 
 
  
@@ -67,7 +76,7 @@ void RunMain_And_Interval_Handler(void)
 	      if(fan_2_hours_stop==2){ //8s
 	         fan_2_hours_stop=0;
 		
-		     //Fan_Run();  //WT.EDIT .2024.12.25 
+		    
 			 Device_Action_No_Wifi_Handler();
              gpro_t.gTimer_run_total =0; //repeat begin counter works timing how much? reach is 2 hours?
              
@@ -90,7 +99,7 @@ void RunMain_And_Interval_Handler(void)
 	   break;
 
 	   case 1:
-          Device_stop_Action_Fun();
+            Device_stop_Action_Fun();
             if(fan_2_hours_stop==0){
 			 	fan_2_hours_stop=1;
                 gpro_t.gTimer_fan_run_one_minute=0;
@@ -112,7 +121,8 @@ void RunMain_And_Interval_Handler(void)
              if(gpro_t.gTimer_run_time_out > 10 ){ //over ten minutes ,resume main function run .
 
                  gpro_t.interval_stop_run_flag=0;
-
+                 gpro_t.gTimer_run_total =0; 
+                 startFan_Run(); //WT.EDIT 2024.12.26
 
              }
 

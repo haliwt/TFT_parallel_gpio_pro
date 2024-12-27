@@ -740,47 +740,27 @@ void TFT_Disp_Voice_Set_TimerTime_Init(void)
 void tft_disp_time_colon_symbol(void)
 {
 	static uint8_t split_times;
-    if(gpro_t.gPower_On==power_on){  
-
-	     #if 0
-          if(  gpro_t.gTimer_pro_time_split_symbol > 1 && gpro_t.gTimer_pro_time_split_symbol< 3){
-             
-              TFT_Disp_Time_Split_Symbol(160,173,0); //时间分割符号,turn on
-		  }
-		  else if(gpro_t.gTimer_pro_time_split_symbol >3 ||  gpro_t.gTimer_pro_time_split_symbol ==3){
-                gpro_t.gTimer_pro_time_split_symbol=0;
-		        TFT_Disp_Time_Split_Symbol(160,173,1); //时间分割符号 turn off
-
-		  }
-		 #endif 
-
-		 if(gpro_t.gTimer_pro_time_split_symbol < 2){
-             
+    if(gpro_t.gPower_On==power_on){ 
+        
+       if(gpro_t.gTimer_pro_time_split_symbol > 0){
+              gpro_t.gTimer_pro_time_split_symbol=0;
            
-             //.TFT_Disp_Time_Split_Symbol(160,173,0); //时间分割符号,turn on
+            split_times ++ ;
             
-			 if(split_times  == 0){
-				 split_times=1;
+			 if(split_times  == 1){
+				
                 TFT_Disp_Time_Split_Symbol(140,173,0); //时间分割符号,turn on
 			  }
-		 }
-		 else if(gpro_t.gTimer_pro_time_split_symbol > 1  &&  gpro_t.gTimer_pro_time_split_symbol < 4){
+		      else{
                
-			if(split_times == 1){
+		
 		       
 				split_times=0;
 				
 		        TFT_Disp_Time_Split_Symbol(140,173,1); //时间分割符号 turn off
 			  }
 		 }
-         else if(gpro_t.gTimer_pro_time_split_symbol > 3){
-
-            split_times=0;
-		   gpro_t.gTimer_pro_time_split_symbol=0;
-           
-
-         }
-
+       
      }
 }
 

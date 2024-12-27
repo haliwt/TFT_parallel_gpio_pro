@@ -76,7 +76,6 @@ void power_on_action_led_init(void)
      gctl_t.plasma_flag = 1;
      gctl_t.ultrasonic_flag = 1;
    
-   // Fan_Run(); //WT.EDIT 2024.12.25 Disable.
 
 	//PTC ICON LED
 	LED_PTC_ICON_ON() ;  
