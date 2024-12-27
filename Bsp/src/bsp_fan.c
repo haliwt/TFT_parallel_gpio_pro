@@ -20,14 +20,18 @@ void startFan_Run(void)
       fan_default = gpro_t.fan_run_the_first_flag ;
   }
    else{
-       while(fan_default != gpro_t.fan_run_the_first_flag){
+       if(fan_default != gpro_t.fan_run_the_first_flag){
 
            fan_default = gpro_t.fan_run_the_first_flag ;
            FAN_COM_SetLow(); //PA6
            FAN_CCW_SetHigh(); //brake
-           osDelay(500);//osDelay(50);
+           osDelay(20);//osDelay(50);
            FAN_CCW_SetLow(); //brake
-           osDelay(1000);//osDelay(100);
+           osDelay(20);//osDelay(100);
+           FAN_CCW_SetHigh(); //brake
+           osDelay(20);//osDelay(50);
+           FAN_CCW_SetLow(); //brake
+           osDelay(20);//osDelay(100);
            FAN_CCW_SetHigh(); //brake
        }
 

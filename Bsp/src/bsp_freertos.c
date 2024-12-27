@@ -255,10 +255,10 @@ static void vTaskMsgPro(void *pvParameters)
                      direct_wifi_led_fast_blink_handler();
 
 
-                 }
-                 else{
+                }
+                else{
                    gpower_onoff_key_flag++;
-                   //buzzer_sound();
+                    start_counter_power_key_long_pressed=0; //WT.EIDT .2024.12.27
                    buzzer_sound_flag =1;
                    LCD_Clear(BLACK);
                    if(wifi_t.smartphone_app_power_on_flag==1){
@@ -491,7 +491,7 @@ static void vTaskStart(void *pvParameters)
      else if(KEY_MODE_VALUE() == KEY_DOWN   && KEY_POWER_VALUE() == KEY_UP){
          
           gpro_t.long_key_mode_counter ++ ;
-         
+          start_counter_power_key_long_pressed=0;
 
           if(gpro_t.long_key_mode_counter > 70 ){
              gpro_t.long_key_mode_counter=0;   
@@ -513,8 +513,8 @@ static void vTaskStart(void *pvParameters)
 
     }
     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_UP){
-        
-        
+        gpro_t.long_key_mode_counter=0;
+         start_counter_power_key_long_pressed=0;
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
@@ -522,8 +522,8 @@ static void vTaskStart(void *pvParameters)
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN && KEY_ADD_VALUE() == KEY_UP){
-          
-           
+            gpro_t.long_key_mode_counter=0;
+            start_counter_power_key_long_pressed=0;
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
@@ -532,7 +532,7 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_DOWN && add_dec_combin_counter <220){
 
-
+        
             add_dec_combin_counter++;
              if(add_dec_combin_counter > 117){
                    add_dec_combin_counter = 230;

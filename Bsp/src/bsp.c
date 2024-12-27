@@ -212,10 +212,7 @@ void PowerOnOff_Init_Ref_Fun(void)
        
   if(gpro_t.gPower_On == power_off){
           
-        
-
-        
-          gpro_t.gPower_On = power_on;
+           gpro_t.gPower_On = power_on;
            Fan_Run(); //WT.EDIT 2024.12.024
            power_on_init_set_ref();
 
