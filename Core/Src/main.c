@@ -14,7 +14,7 @@
   *                  for sample to client
   * DATA:2024.09.06  repeat ten times power on and power of ,display is stop ,is bug.
   *                  version :1.92 
-  * DATA:2024.12.23  modify the first fan don't run is bug .version:1.95,
+  * DATA:2024.12.27  modify the first fan don't run is bug .version:1.95,
   *                  fan run the first is hard work,need continuce track.
   *                  some times easy fan run and some times don't fan run 
   *                  
