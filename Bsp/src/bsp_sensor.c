@@ -25,6 +25,7 @@ uint8_t i2c_flag_1;
 
 uint32_t hum_value;
 uint32_t temp_value;
+double SR;
 
 
 uint8_t  aht30_read_sensor_humidity_value(void)
@@ -62,13 +63,16 @@ static int8_t  aht30_read_sensor_temperature_value(void)
 
   //  uint32_t SR;
 
-    double SR;
+ //   double SR;
         
     int8_t SR_TEMP;
 
     temp_value = ((i2c_read_data[3] <<8 ) | i2c_read_data[4] | ((i2c_read_data[2] & 0x00FF) << 16));
 
-    SR =(double)((temp_value ) /(1<<20));
+     temp_value =  temp_value & 0xFFFFF;
+
+    SR =(double)(temp_value ) /(1<<20);
+
      osDelay(100);
 
      //SR_TEMP = 200* SR-50;
@@ -86,19 +90,17 @@ void get_aht30_sensor_humidity_temperature_value(uint8_t *buf)
 
     aht30_read_ee_i2c_data(buf);
 
-    check_flag ++;
+   
 
-    if(check_flag == 1){
+  
    // gctl_t.dht11_hum_value = 
       aht30_read_sensor_humidity_value();
 
-    }
-    else{
-      check_flag =0;
+  
     //gctl_t.dht11_temp_value = 
      aht30_read_sensor_temperature_value();
 
-     }
+     
     
     
 
