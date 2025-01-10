@@ -233,7 +233,7 @@ static uint16_t Get_Adc_Channel(uint32_t ch)
 static uint16_t Get_Adc_Average(uint32_t ch,uint8_t times)
 {
 	uint32_t temp_val=0;
-	uint8_t t;
+//	uint8_t t;
 	//for(t=0;t<times;t++)
 	//{
 		temp_val=Get_Adc_Channel(ch);

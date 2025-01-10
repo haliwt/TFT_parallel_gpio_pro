@@ -35,6 +35,7 @@
 #include "bsp_lcd_gui.h"
 #include "bsp_wifi.h"
 #include "bsp_poweroff.h"
+#include "bsp_i2c.h"
 //#include "bsp_image.h"
 #include "bsp_tft_font.h"
 #include "bsp_font.h"
