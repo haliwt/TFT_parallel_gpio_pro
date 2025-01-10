@@ -12,7 +12,10 @@ static uint8_t gxhtc3_read_one_byte(uint8_t addr);
 
 static uint8_t gxhtc3_read_continuous_byte(uint8_t addr,uint8_t *pbuf,uint8_t n);
 
-static int8_t aht30_read_sensor_temperature_value(void);
+static void  aht30_read_sensor_temperature_value(void);
+
+static void  aht30_read_sensor_humidity_value(void);
+
 
 static unsigned int hexToDecimal(uint32_t *hexStr);
 
@@ -25,10 +28,10 @@ uint8_t i2c_flag_1;
 
 uint32_t hum_value;
 uint32_t temp_value;
-double SR;
 
 
-uint8_t  aht30_read_sensor_humidity_value(void)
+
+static void  aht30_read_sensor_humidity_value(void)
 {
     
   //  uint32_t hum_value;
@@ -51,19 +54,19 @@ uint8_t  aht30_read_sensor_humidity_value(void)
 
     gctl_t.dht11_hum_value = (uint8_t )(RH *100);
 
-     return value_rh;
+    
 
 }
 
 
-static int8_t  aht30_read_sensor_temperature_value(void)
+static void  aht30_read_sensor_temperature_value(void)
 {
     
   //  uint32_t temp_value;
 
   //  uint32_t SR;
 
- //   double SR;
+    double SR;
         
     int8_t SR_TEMP;
 
@@ -71,14 +74,13 @@ static int8_t  aht30_read_sensor_temperature_value(void)
 
      temp_value =  temp_value & 0xFFFFF;
 
-    SR =(double)(temp_value ) /(1<<20);
-
+     SR =(double)(temp_value ) /(1<<20);
      osDelay(100);
 
-     //SR_TEMP = 200* SR-50;
+    
      gctl_t.dht11_temp_value = (uint8_t)(200* SR-50);
 
-     return SR_TEMP;
+    
 
 }
 
