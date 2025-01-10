@@ -145,7 +145,7 @@ uint8_t EE_IIC_WaitAck(void)
 			return 1;
 		}
 	}
-	EE_IIC_SCL(0); //时钟输出0 	   
+	EE_IIC_SCL(GPIO_PIN_RESET); //时钟输出0 	   
 	return 0;  
 } 
 
@@ -153,10 +153,10 @@ uint8_t EE_IIC_WaitAck(void)
 //发送应答
 void EE_IIC_Ack(void)
 {
-	EE_IIC_SCL(0);
+	EE_IIC_SCL(GPIO_PIN_RESET); //low level
 	EE_SDA_OUT();
 	EE_IIC_SDA(GPIO_PIN_RESET);//EE_IIC_SDA(0);
-	EE_IIC_Delay(1);
+	EE_IIC_Delay(1); 
 	EE_IIC_SCL(GPIO_PIN_SET);//EE_IIC_SCL(1);
 	EE_IIC_Delay(2);
 	EE_IIC_SCL(GPIO_PIN_RESET);//EE_IIC_SCL(0);
@@ -165,13 +165,13 @@ void EE_IIC_Ack(void)
 //发送非应答
 void EE_IIC_NAck(void)
 {
-	EE_IIC_SCL(0);
+	EE_IIC_SCL(GPIO_PIN_RESET);  //low level
 	EE_SDA_OUT();
-	EE_IIC_SDA(1);
+	EE_IIC_SDA(GPIO_PIN_SET);   //high level
 	EE_IIC_Delay(1);
-	EE_IIC_SCL(1);
+	EE_IIC_SCL(GPIO_PIN_SET);  //high level
 	EE_IIC_Delay(1);
-	EE_IIC_SCL(0);
+	EE_IIC_SCL(GPIO_PIN_RESET); //low level
 }					 				     
 
 //发送一个字节	  
@@ -179,15 +179,15 @@ void EE_IIC_SendByte(uint8_t data)
 {                        
     uint8_t t;   
     EE_SDA_OUT(); 	    
-    EE_IIC_SCL(0); //拉低时钟开始数据传输
+    EE_IIC_SCL(GPIO_PIN_RESET); //拉低时钟开始数据传输
     for(t=0;t<8;t++)
     {              
 			EE_IIC_SDA((data&0x80)>>7);//发送数据
         EE_IIC_Delay(1);			
-        EE_IIC_SCL(1);
+        EE_IIC_SCL(GPIO_PIN_SET);  //high level
         data<<=1;
         EE_IIC_Delay(1);
-        EE_IIC_SCL(0);	   
+        EE_IIC_SCL(GPIO_PIN_RESET); //low level	   
     }
     EE_IIC_Delay(1);
 } 	
@@ -196,15 +196,15 @@ static uint8_t i2c_WriteOneByte(uint8_t data)
 {                        
     uint8_t t;   
     EE_SDA_OUT(); 	    
-    EE_IIC_SCL(0); //拉低时钟开始数据传输
+    EE_IIC_SCL(GPIO_PIN_RESET); //拉低时钟开始数据传输
     for(t=0;t<8;t++)
     {              
 	    EE_IIC_SDA((data&0x80)>>7);//发送数据
         EE_IIC_Delay(1);			
-        EE_IIC_SCL(1);
+        EE_IIC_SCL(GPIO_PIN_SET);    //high level
         data<<=1;
         EE_IIC_Delay(1);
-        EE_IIC_SCL(0);	   
+        EE_IIC_SCL(GPIO_PIN_RESET);	  //low level  
     }
     EE_IIC_Delay(1);
 
@@ -226,9 +226,9 @@ uint8_t EE_IIC_ReadByte(uint8_t ack)
 	EE_SDA_IN(); //SDA设置为输入模式 等待接收从机返回数据
     for(i=0;i<8;i++ )
 	{
-        EE_IIC_SCL(0); 
+        EE_IIC_SCL(GPIO_PIN_RESET); //low level
         EE_IIC_Delay(1);
-        EE_IIC_SCL(1);
+        EE_IIC_SCL(GPIO_PIN_SET); //high level
         receive<<=1;
         if(EE_READ_SDA())receive++; //读取从机发送的电平，如果是高，就记录高
         EE_IIC_Delay(1); 
