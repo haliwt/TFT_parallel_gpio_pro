@@ -4,9 +4,16 @@
 #include "main.h"
 
 //#define	EE_ADDR 0xE0//0xa0//EEPROM地址，地址管脚全接地，为0xA0
-#define EE_SCL_PIN              GPIO_PIN_6   //模拟IIC的SCL信号  1.修改引脚即可修改IIC接口
-#define EE_SDA_PIN              GPIO_PIN_7   //模拟IIC的SDA信号
+#define EE_SCL_PIN             GPIO_PIN_6   //模拟IIC的SCL信号  1.修改引脚即可修改IIC接口
+#define EE_SDA_PIN             GPIO_PIN_7   //模拟IIC的SDA信号
 #define EE_I2C_GPIO_Port              GPIOC
+
+typedef enum {
+    LOW = 0,
+    HIGH = 1
+} EEPinState;
+
+// 设置 SCL 引脚为高电平
 
 
 
@@ -16,6 +23,9 @@
 
 static uint8_t  i2c_WriteOneByte(uint8_t data);
 
+uint8_t i2c_connect_flag,ack_flag,i2c_state;
+
+
 void EE_SDA_IN(void) 	//PB11配置成输入  
 {  
     __HAL_RCC_GPIOC_CLK_ENABLE();//GPIO时钟使能
@@ -23,7 +33,7 @@ void EE_SDA_IN(void) 	//PB11配置成输入
 	GPIO_InitStruct.Pin = EE_SDA_PIN;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM  ;//LOW;
   HAL_GPIO_Init(EE_I2C_GPIO_Port, &GPIO_InitStruct);
 } 
 void EE_SDA_OUT(void)//PB11配置成开漏输出
@@ -31,23 +41,23 @@ void EE_SDA_OUT(void)//PB11配置成开漏输出
 	__HAL_RCC_GPIOC_CLK_ENABLE();//GPIO时钟使能
 	GPIO_InitTypeDef GPIO_InitStruct = {0};
 	GPIO_InitStruct.Pin = EE_SDA_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;//GPIO_MODE_OUTPUT_OD;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_MEDIUM  ;//LOW;
   HAL_GPIO_Init(EE_I2C_GPIO_Port, &GPIO_InitStruct);
 	
 }
 
-void EE_SCK_OUT(void) //PB10配置成开漏输出
-{
-	__HAL_RCC_GPIOC_CLK_ENABLE();//GPIO时钟使能
-	GPIO_InitTypeDef GPIO_InitStruct = {0};
-	GPIO_InitStruct.Pin = EE_SCL_PIN;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(EE_I2C_GPIO_Port, &GPIO_InitStruct);
-}
+//void EE_SCK_OUT(void) //PB10配置成开漏输出
+//{
+//	__HAL_RCC_GPIOC_CLK_ENABLE();//GPIO时钟使能
+//	GPIO_InitTypeDef GPIO_InitStruct = {0};
+//	GPIO_InitStruct.Pin = EE_SCL_PIN;
+//  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+//  GPIO_InitStruct.Pull = GPIO_NOPULL;
+//  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+//  HAL_GPIO_Init(EE_I2C_GPIO_Port, &GPIO_InitStruct);
+//}
 
 //读DATA引脚状态
 unsigned char EE_READ_SDA(void)
@@ -69,11 +79,13 @@ void EE_IIC_Delay(uint16_t us)
 	uint16_t j;
 	for(j=0;j<us;j++)
 	{
-        for(int i = 0; i < 20; i++)    
+        for(int i = 0; i < 20; i++)    //for(int i = 0; i < 20; i++)    
         {
             __asm("NOP");//等待1个指令周期，系统主频16M
         }
 	}
+
+  // delay_us(us);
     
 }
 /******************************************************************************
@@ -86,32 +98,32 @@ void EE_IIC_Delay(uint16_t us)
 
 void EE_IIC_Init(void)
 {			
-    EE_SCK_OUT();//CLK引脚配置成输出
+   // EE_SCK_OUT();//CLK引脚配置成输出
     EE_SDA_OUT();//DATA引脚配置成输出
-    EE_IIC_SCL(1);//CLK引脚输出高
-    EE_IIC_SDA(1);//DATA引脚输出高   
+    EE_IIC_SCL(GPIO_PIN_SET);//CLK引脚输出高
+    EE_IIC_SDA(GPIO_PIN_SET);//DATA引脚输出高   
 }
 //开始	
 void EE_IIC_Start(void)
 {
 	EE_SDA_OUT(); //DATA引脚配置成输出
-	EE_IIC_SDA(1);//DATA引脚输出高	
-	EE_IIC_SCL(1);//CLK引脚输出高
+	EE_IIC_SDA(GPIO_PIN_SET);//DATA引脚输出高	
+	EE_IIC_SCL(GPIO_PIN_SET);//CLK引脚输出高
 	EE_IIC_Delay(4);//等待大约40us
- 	EE_IIC_SDA(0); //DATA引脚输出低
+ 	EE_IIC_SDA(GPIO_PIN_RESET); //DATA引脚输出低
 	EE_IIC_Delay(4);//等待大约40us
-	EE_IIC_SCL(0); //CLK引脚输出低，钳住I2C总线，准备发送或接收数据 
+	EE_IIC_SCL(GPIO_PIN_RESET); //CLK引脚输出低，钳住I2C总线，准备发送或接收数据 
 }
 
 //停止	  
 void EE_IIC_Stop(void)
 {
 	EE_SDA_OUT(); //DATA引脚配置成输出
-	EE_IIC_SCL(0);//CLK引脚输出低
-	EE_IIC_SDA(0); //DATA引脚输出低
+	EE_IIC_SCL(GPIO_PIN_RESET);//CLK引脚输出低
+	EE_IIC_SDA(GPIO_PIN_RESET); //DATA引脚输出低
   EE_IIC_Delay(4);//等待大约40us
-	EE_IIC_SCL(1); //CLK引脚输出高
-	EE_IIC_SDA(1); //DATA引脚输出高，发送I2C总线结束信号
+	EE_IIC_SCL(GPIO_PIN_SET); //CLK引脚输出高
+	EE_IIC_SDA(GPIO_PIN_SET); //DATA引脚输出高，发送I2C总线结束信号
   EE_IIC_Delay(4);//等待大约40us							   	
 }
 
@@ -120,9 +132,9 @@ uint8_t EE_IIC_WaitAck(void)
 {
 	uint8_t ucErrTime=0;
 	EE_SDA_IN(); //DATA引脚配置成输入  （从机给一个低电平做为应答） 
-	EE_IIC_SDA(1);
+	EE_IIC_SDA(GPIO_PIN_SET);
 	EE_IIC_Delay(1);	   
-	EE_IIC_SCL(1);
+	EE_IIC_SCL(GPIO_PIN_SET);
 	EE_IIC_Delay(1);//等待约10us 
 	while(EE_READ_SDA())//一直读，直到读取到低电平应答
 	{
@@ -143,11 +155,11 @@ void EE_IIC_Ack(void)
 {
 	EE_IIC_SCL(0);
 	EE_SDA_OUT();
-	EE_IIC_SDA(0);
+	EE_IIC_SDA(GPIO_PIN_RESET);//EE_IIC_SDA(0);
 	EE_IIC_Delay(1);
-	EE_IIC_SCL(1);
+	EE_IIC_SCL(GPIO_PIN_SET);//EE_IIC_SCL(1);
 	EE_IIC_Delay(2);
-	EE_IIC_SCL(0);
+	EE_IIC_SCL(GPIO_PIN_RESET);//EE_IIC_SCL(0);
 }
 
 //发送非应答
@@ -187,7 +199,7 @@ static uint8_t i2c_WriteOneByte(uint8_t data)
     EE_IIC_SCL(0); //拉低时钟开始数据传输
     for(t=0;t<8;t++)
     {              
-			EE_IIC_SDA((data&0x80)>>7);//发送数据
+	    EE_IIC_SDA((data&0x80)>>7);//发送数据
         EE_IIC_Delay(1);			
         EE_IIC_SCL(1);
         data<<=1;
@@ -203,6 +215,7 @@ static uint8_t i2c_WriteOneByte(uint8_t data)
 
 
     }
+    
 } 
 
 
@@ -368,7 +381,7 @@ uint8_t I2C_SendByteToSlave(uint8_t I2C_Addr,uint8_t reg,uint8_t data,uint8_t da
 
 
     
-	//EE_IIC_Stop(); //产生一个停止条件
+	EE_IIC_Stop(); //产生一个停止条件
     
 	return 0;
 }
@@ -378,23 +391,28 @@ uint8_t I2C_SendByteToSlave(uint8_t I2C_Addr,uint8_t reg,uint8_t data,uint8_t da
 
 void aht30_read_ee_i2c_data(uint8_t *buf)
 {
-    uint8_t ack_flag,read_data;
+   // uint8_t read_data;
 
-    I2C_SendByteToSlave(0x70,0xAC,0x33,0X00);//AHT30 sensor
+    i2c_connect_flag = I2C_SendByteToSlave(0x70,0xAC,0x33,0X00);//AHT30 sensor
 	
-    osDelay(80);
-
+    HAL_Delay(100);//osDelay(80);
+    
+    EE_IIC_Start();
     ack_flag = i2c_WriteOneByte(0x71);
 
     if(ack_flag ==0){
 
-        read_data = EE_IIC_ReadByte(1); //state of value
+        i2c_state = EE_IIC_ReadByte(1); //state of value
 
     }
 
- 
+    if(i2c_state >> 8){
 
-    I2C_ReadByteFromSlave(buf);//从0地址读取1字节内容到EEDATA变量
+
+    }
+    else{
+       I2C_ReadByteFromSlave(buf);//从0地址读取1字节内容到EEDATA变量
+    }
 
 }
 

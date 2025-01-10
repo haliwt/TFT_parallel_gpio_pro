@@ -33,6 +33,7 @@ void bsp_Init(void)
 {
 
   // dht11_init();
+   EE_IIC_Init();
    TimerTiming_Init();
    Buzzer_Sound_Fun_Init();
    gpro_t.disp_works_timer_timing_mode_item = works_time;
