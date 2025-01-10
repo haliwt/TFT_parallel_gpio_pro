@@ -200,6 +200,7 @@ typedef struct{
    //modke key
   
    uint8_t mode_key_run_item_step;
+   uint8_t set_wind_speed_value;
    
   
   //temperature 

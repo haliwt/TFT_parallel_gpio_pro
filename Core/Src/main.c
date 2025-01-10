@@ -107,13 +107,14 @@ int main(void)
   MX_USART1_UART_Init();
   MX_USART2_UART_Init();
   
-  MX_TIM14_Init();
+  MX_TIM14_Init(50);
   /* USER CODE BEGIN 2 */
   bsp_Init();
   delay_init(64); 
   bsp_ctl_init();
   Wifi_Init();
   HAL_TIM_Base_Start_IT(&htim17);
+ 
   
   TFT_BACKLIGHT_OFF();
 

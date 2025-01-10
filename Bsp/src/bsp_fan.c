@@ -3,6 +3,57 @@
 
 static void turn_off_fan_function(void);
 
+
+
+static void SetLevel_Fan_PWM(uint8_t levelval);
+
+/********************************************************
+*
+*Function Name:void SetLevel_Fan_PWM(uint8_t levelval)
+*Function: 
+*
+*
+********************************************************/
+static void SetLevel_Fan_PwmDuty(uint8_t levelval)
+{
+     MX_TIM14_Init(levelval);
+	 HAL_TIM_PWM_Start(&htim14,TIM_CHANNEL_1);
+}
+
+void Fan_One_Speed(void)
+{
+   
+   FAN_COM_SetLow(); //PA6
+   FAN_CCW_SetHigh(); //brake
+   SetLevel_Fan_PwmDuty(25);
+
+}
+
+void Fan_Two_Speed(void)
+{
+	
+    FAN_COM_SetLow(); //PA6
+    FAN_CCW_SetHigh(); //brake
+
+    SetLevel_Fan_PwmDuty(40);
+
+
+  
+}
+
+ void Fan_Full_Speed(void)
+{
+    FAN_COM_SetLow(); //PA6
+    FAN_CCW_SetHigh(); //brake
+    SetLevel_Fan_PwmDuty(50);
+
+}
+
+
+
+
+
+
 /********************************************************************************************
 	*
 	*Function Name:void startFan_Run(void)
@@ -46,7 +97,7 @@ void Fan_Run(void)
 
   FAN_COM_SetLow(); //PA6
   FAN_CCW_SetHigh(); //brake
-   
+ 
    
 }
 
@@ -56,6 +107,7 @@ void Fan_Stop(void)
 {
     FAN_CCW_SetLow(); //brake
     FAN_COM_SetLow(); //PA6
+    HAL_TIM_PWM_Stop(&htim14,TIM_CHANNEL_1);
   
     
 }
@@ -200,12 +252,28 @@ static void turn_off_fan_function(void)
 	*Return: NO 
 	*
 *************************************************************************************************/
-void fan_adj_speed_handler(uint8_t speed)
+void fan_adj_speed_handler(void)
 {
 
+    // fan_first_run_fun();
+       
+    if(gpro_t.set_wind_speed_value < 34 ){
+             Fan_One_Speed();
+     }
+     else if(gpro_t.set_wind_speed_value > 33  && gpro_t.set_wind_speed_value < 67 ){
+
+          Fan_Two_Speed();
+
+     }
+     else if(gpro_t.set_wind_speed_value > 66){
+           Fan_Full_Speed();
+
+     }
 
 
 
 }
+
+
 
 

@@ -422,6 +422,7 @@ static void vTaskMsgPro(void *pvParameters)
               SetPtc_TempComare_Value();
               disp_all_led_on_off_state();
               tft_disp_time_colon_symbol();
+              
          
         }
         else if(gpro_t.gPower_On == power_off){

@@ -158,10 +158,10 @@ void MX_TIM3_Init(void)
 
 /* TIM14 init function */
 /* fan adjust of pwm speed 100KHz*/
-void MX_TIM14_Init(void)
+void MX_TIM14_Init(uint8_t duty_pwm)
 {
 
-   /* USER CODE BEGIN TIM14_Init 0 */
+  /* USER CODE BEGIN TIM14_Init 0 */
 
   /* USER CODE END TIM14_Init 0 */
 
@@ -173,7 +173,7 @@ void MX_TIM14_Init(void)
   htim14.Instance = TIM14;
   htim14.Init.Prescaler = 63;
   htim14.Init.CounterMode = TIM_COUNTERMODE_UP;
-  htim14.Init.Period = 249;//499;//65535; F= 1/(499+1)=0.002MHZ=2KHZ ,T=1/2=0.
+  htim14.Init.Period = 49;
   htim14.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
   htim14.Init.AutoReloadPreload = TIM_AUTORELOAD_PRELOAD_DISABLE;
   if (HAL_TIM_Base_Init(&htim14) != HAL_OK)
@@ -185,7 +185,7 @@ void MX_TIM14_Init(void)
     Error_Handler();
   }
   sConfigOC.OCMode = TIM_OCMODE_PWM1;
-  sConfigOC.Pulse = 125; //400
+  sConfigOC.Pulse = duty_pwm;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
   if (HAL_TIM_PWM_ConfigChannel(&htim14, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
@@ -333,21 +333,24 @@ void HAL_TIM_MspPostInit(TIM_HandleTypeDef* timHandle)
   }
   else if(timHandle->Instance==TIM14)
   {
-  /* USER CODE BEGIN TIM3_MspPostInit 0 */
+   /* USER CODE BEGIN TIM14_MspPostInit 0 */
 
-  /* USER CODE END TIM3_MspPostInit 0 */
+  /* USER CODE END TIM14_MspPostInit 0 */
 
-    __HAL_RCC_GPIOB_CLK_ENABLE();
-    /**TIM3 GPIO Configuration
-    PB1     ------> TIM14_CH1
+    __HAL_RCC_GPIOA_CLK_ENABLE();
+    /**TIM14 GPIO Configuration
+    PA4     ------> TIM14_CH1
     */
-    GPIO_InitStruct.Pin = FAN_PWM_Pin;
+    GPIO_InitStruct.Pin = FAN_PWM_Pin;//GPIO_PIN_4;
     GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
     GPIO_InitStruct.Pull = GPIO_NOPULL;
     GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-    GPIO_InitStruct.Alternate = GPIO_AF0_TIM14;
+    GPIO_InitStruct.Alternate = GPIO_AF4_TIM14;
     HAL_GPIO_Init(FAN_PWM_GPIO_Port, &GPIO_InitStruct);
 
+  /* USER CODE BEGIN TIM14_MspPostInit 1 */
+
+  /* USER CODE END TIM14_MspPostInit 1 */
   /* USER CODE BEGIN TIM3_MspPostInit 1 */
 
   /* USER CODE END TIM3_MspPostInit 1 */
