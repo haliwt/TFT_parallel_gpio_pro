@@ -23,6 +23,8 @@ void RunMain_And_Interval_Handler(void);
 
 void Display_Fan_Notworking_Words(uint8_t disp);
 
+void fan_adj_speed_handler(uint8_t speed);
+
 
 #endif
 

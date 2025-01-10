@@ -3,6 +3,7 @@
 #include "main.h"
 
 
+void EE_IIC_Init(void);
 
 
 /* Private function prototypes -----------------------------------------------*/

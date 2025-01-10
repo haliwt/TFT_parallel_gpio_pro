@@ -44,7 +44,7 @@ uint8_t at_send_data(uint8_t* pdata, uint16_t len)
 void Auto_InitWifiModule_Hardware(void)
 {
   
-	WIFI_IC_ENABLE();
+	//WIFI_IC_ENABLE();
 	if(wifi_t.power_on_login_tencent_cloud_flag ==0){
 	   wifi_t.power_on_login_tencent_cloud_flag=1;
 	   wifi_t.gTimer_power_first_link_tencent=0;
@@ -109,7 +109,7 @@ void Auto_SmartPhone_TryToLink_TencentCloud(void)
 void InitWifiModule_Hardware(void)
 {
   
-	WIFI_IC_ENABLE();
+	//WIFI_IC_ENABLE();
 	if(wifi_t.power_on_login_tencent_cloud_flag ==0){
 	   wifi_t.power_on_login_tencent_cloud_flag=1;
 	   wifi_t.gTimer_power_first_link_tencent=0;
@@ -177,7 +177,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 	   if(wifi_t.link_tencent_step_counter==0){
 		  wifi_t.gTimer_login_tencent_times=0;
 		  wifi_t.link_tencent_step_counter=driver_esp8266_rest;
-		   WIFI_IC_DISABLE();
+		  // WIFI_IC_DISABLE();
           #if 0
            Wifi_Fast_Led_Blink();
          
@@ -208,7 +208,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 	   if(wifi_t.gTimer_login_tencent_times > 0 && wifi_t.link_tencent_step_counter==driver_esp8266_rest){
 		   wifi_t.gTimer_login_tencent_times=0;
 		   wifi_t.link_tencent_step_counter=driver_esp8266_step_2;
-		   WIFI_IC_ENABLE();
+		  // WIFI_IC_ENABLE();
            #if 0
            Wifi_Fast_Led_Blink();
       
@@ -249,7 +249,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 		}
 
         if(wifi_t.gTimer_login_tencent_times > 0){
-		   WIFI_IC_ENABLE();
+		  // WIFI_IC_ENABLE();
 		  wifi_t.gTimer_login_tencent_times=0;
 
           wifi_t.link_tencent_step_counter=driver_esp8266_step_4;
@@ -297,7 +297,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
 
 	 case wifi_set_cwmode:
-    	    WIFI_IC_ENABLE();
+    	   // WIFI_IC_ENABLE();
             Wifi_Fast_Led_Blink();
            wifi_t.gTimer_get_beijing_time=0;
 	
@@ -321,7 +321,7 @@ void Wifi_SoftAP_Config_Handler(void)
 	 break;
 
 	  case wifi_set_softap:
-            WIFI_IC_ENABLE();
+           // WIFI_IC_ENABLE();
             Wifi_Fast_Led_Blink();
             wifi_t.gTimer_get_beijing_time=0;
 			if(wifi_t.link_tencent_step_counter ==driver_esp8266_step_5){
@@ -488,7 +488,7 @@ void PowerOn_Self_Auto_Link_Tencent_Cloud(void)
 
 
 	 case wifi_set_cwmode:
-    	    WIFI_IC_ENABLE();
+    	    //WIFI_IC_ENABLE();
          	HAL_UART_Transmit(&huart2, "AT+CWMODE=3\r\n", strlen("AT+CWMODE=3\r\n"), 5000);
      
             HAL_Delay(1000);

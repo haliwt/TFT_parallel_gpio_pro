@@ -74,9 +74,7 @@ void Error_Handler(void);
 #define RX_WIFI_GPIO_Port           GPIOA
 
 
-//WIFI GPIO 
-#define WIFI_EN_Pin                     GPIO_PIN_4
-#define WIFI_EN_GPIO_Port               GPIOA
+
 
 
 //RELAY GPIO
@@ -86,6 +84,15 @@ void Error_Handler(void);
 //BUZZER GPIO
 #define BEEP_PWM_Pin                    GPIO_PIN_1
 #define BEEP_PWM_GPIO_Port              GPIOB
+
+//FAN ADJUST PWM
+#define FAN_PWM_Pin                    GPIO_PIN_4
+#define FAN_PWM_GPIO_Port              GPIOA
+
+//WIFI GPIO 
+//#define WIFI_EN_Pin                     GPIO_PIN_4
+//#define WIFI_EN_GPIO_Port               GPIOA
+
 
 
 //key interrupt gpio
@@ -126,16 +133,16 @@ void Error_Handler(void);
 #define VOICE_TX_Pin GPIO_PIN_9
 #define VOICE_TX_GPIO_Port GPIOA
 
-#define I2C_SCK_Pin                 GPIO_PIN_6
+#define I2C_SCK_Pin                     GPIO_PIN_6
 #define VOICE_BROAD_GPIO_Port           GPIOC
 
 
 #define I2C_SDA_Pin                          GPIO_PIN_7
-#define VOICE_MUTE_GPIO_Port GPIOC
+#define VOICE_MUTE_GPIO_Port                 GPIOC
 
 
-#define VOICE_RX_Pin GPIO_PIN_10
-#define VOICE_RX_GPIO_Port GPIOA
+#define VOICE_RX_Pin                        GPIO_PIN_10
+#define VOICE_RX_GPIO_Port                  GPIOA
 
 //led gpio
 #define LED_KILL_Pin                        GPIO_PIN_0

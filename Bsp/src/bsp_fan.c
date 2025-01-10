@@ -192,4 +192,20 @@ static void turn_off_fan_function(void)
 }
 
 
+/***********************************************************************************************
+	*
+	*Function Name:void fan_adj_speed_handler(void)
+	*Function : display of works time value 
+	*Input: NO
+	*Return: NO 
+	*
+*************************************************************************************************/
+void fan_adj_speed_handler(uint8_t speed)
+{
+
+
+
+
+}
+
 

@@ -469,7 +469,7 @@ void wifi_get_beijint_time_handler(void)
             wifi_t.linking_tencent_cloud_doing =1;
         
 
-            WIFI_IC_ENABLE();
+           // WIFI_IC_ENABLE();
        
     		at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
             HAL_Delay(1000);
