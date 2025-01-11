@@ -130,7 +130,7 @@ static void vTaskMsgPro(void *pvParameters)
       TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
       TFT_Display_Handler();
        HAL_Delay(100);
-       //VOICE_OUTPUT_SOUND_ENABLE();
+      VOICE_OUTPUT_SOUND_ENABLE();
      }
 		
 		xResult = xTaskNotifyWait(0x00000000,      

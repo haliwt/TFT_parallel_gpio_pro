@@ -89,7 +89,7 @@ void RunWifi_Command_Handler(void)
         Wifi_Fast_Led_Blink();
 		Wifi_SoftAP_Config_Handler();
 
-		//SmartPhone_LinkTencent_Cloud();
+		SmartPhone_LinkTencent_Cloud();
 
 	}
 	
@@ -191,7 +191,7 @@ void RunWifi_Command_Handler(void)
 void wifi_get_beijint_time_handler(void)
 {
 
-    static uint8_t alternate_flag,flag_switch;
+    static uint8_t flag_switch;
 
      if(wifi_t.get_rx_beijing_time_enable==0){
     
@@ -209,33 +209,29 @@ void wifi_get_beijint_time_handler(void)
                    gpro_t.gTimer_get_data_from_tencent_data =0;
                    flag_switch++;
 
-               
-                 if(gpro_t.gPower_On == power_on){
-                     LED_WIFI_ICON_ON();
-                  }
-                 
-
-                 if(flag_switch == 1){
+               if(flag_switch > 4 && gpro_t.gPower_On == power_on){
+                    flag_switch =0;
+                    LED_WIFI_ICON_ON();
                     Subscriber_Data_FromCloud_Handler();
-                    osDelay(100);//HAL_Delay(200)
+                    osDelay(30);//HAL_Delay(200)
                     get_beijing_flag = 1;
 
                     
                  }
-                else if(flag_switch >  1 && gpro_t.gPower_On == power_off){
+                else if(flag_switch >  4 && gpro_t.gPower_On == power_off){
                     flag_switch=0;
                     Update_Dht11_Totencent_Value();
-                    osDelay(50);//HAL_Delay(200) //WT.EDIT 2024.08.10
+                    osDelay(30);//HAL_Delay(200) //WT.EDIT 2024.08.10
                     
                      get_beijing_flag = 1;
 
                  }
                  else{ //WT.EDIT 2024.08.10 ADD ITEM
-                     if(flag_switch > 1){
+                     if(flag_switch > 5){
                         flag_switch=0;
                          
-                       get_beijing_flag = 1;
-                     }
+                       }
+                        get_beijing_flag = 1;
 
                  }
        
@@ -248,7 +244,7 @@ void wifi_get_beijint_time_handler(void)
 
    case 1:
 
-        if(wifi_t.gTimer_get_beijing_time > 100){
+        if(wifi_t.gTimer_get_beijing_time > 65){
 
          wifi_t.gTimer_get_beijing_time=0;
         
@@ -256,14 +252,15 @@ void wifi_get_beijint_time_handler(void)
 
      
     		    get_beijing_flag = 2;
+              
            
-                alternate_flag++;
+            
                 wifi_t.linking_tencent_cloud_doing  =0; //receive from tencent command state .
                 gpro_t.gTimer_pro_update_dht11_data =0; //disable publish to data to tencent .
 
             }
             else{
-
+               
                get_beijing_flag = 10;
                wifi_t.linking_tencent_cloud_doing  =1; //receive from tencent command state .
              }
@@ -297,10 +294,9 @@ void wifi_get_beijint_time_handler(void)
        }
 	   else{
 
-          
-         if(alternate_flag == 1){
+    
 		  
-			wifi_t.link_beijing_times_flag =1;
+			wifi_t.link_beijing_times_flag =3;
 			
 		
 			wifi_t.get_rx_beijing_time_enable=0;//disenable get beijing timing
@@ -308,13 +304,8 @@ void wifi_get_beijint_time_handler(void)
 		    get_beijing_flag = 3;
 			beijing_step =0; //WT.EDIT 2024.08.10
 
-        }
-		else{
-              alternate_flag=0;
-               gpro_t.gTimer_pro_update_dht11_data=0;
-			   get_beijing_flag = 6;
+      
 
-		}
 
 	   }
 
@@ -399,12 +390,12 @@ void wifi_get_beijint_time_handler(void)
                 TFT_Display_WorksTime_Voice();
 
                 }
-                get_beijing_flag = 0;
+                get_beijing_flag = 6;
               }
             }
             else{
 
-              get_beijing_flag = 0;
+              get_beijing_flag = 6;
 
             }
             break;

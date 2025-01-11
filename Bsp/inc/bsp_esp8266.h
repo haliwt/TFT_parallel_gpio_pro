@@ -25,12 +25,12 @@
 typedef enum _esp8266_para{
 
 	wifi_set_restor=0x01,
-	wifi_set_cwmode,
-	wifi_set_softap,
-	wifi_set_tcdevreg,
-	wifi_set_tcsap,
-	wifi_inquire_register_codes,
-	wifi_login_tencent,
+	wifi_set_cwmode,//2
+	wifi_set_softap,//3
+	wifi_set_tcdevreg,//4
+	wifi_set_tcsap,//5
+	wifi_inquire_register_codes,//6
+	wifi_login_tencent, //7
 	wifi_link_smartphone
 
 

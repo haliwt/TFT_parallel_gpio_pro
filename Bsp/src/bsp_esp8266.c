@@ -259,7 +259,7 @@ void ReConnect_Wifi_Net_ATReset_Hardware(void)
 void Wifi_SoftAP_Config_Handler(void)
 {
      
-	static uint8_t login_flag;
+	
 	
 	uint8_t *device_massage;
     device_massage = (uint8_t *)malloc(128);
@@ -287,9 +287,14 @@ void Wifi_SoftAP_Config_Handler(void)
            Wifi_Fast_Led_Blink();
 	       at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
 		//  at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-            osDelay(1000);
+            osDelay(300);
+            Wifi_Fast_Led_Blink();
+            osDelay(300);
              Wifi_Fast_Led_Blink();
-            
+             osDelay(300);
+             Wifi_Fast_Led_Blink();
+             osDelay(300);
+              Wifi_Fast_Led_Blink();
             wifi_t.wifi_config_net_lable= wifi_set_cwmode;
 		
 	break;
@@ -302,7 +307,14 @@ void Wifi_SoftAP_Config_Handler(void)
 	
          	HAL_UART_Transmit(&huart2, "AT+CWMODE=3\r\n", strlen("AT+CWMODE=3\r\n"), 5000);
 	        
-            osDelay(1000);
+             Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+          
+            Wifi_Fast_Led_Blink();
+             Wifi_Fast_Led_Blink();
+             
+             Wifi_Fast_Led_Blink();
+             Wifi_Fast_Led_Blink();
 
             Wifi_Fast_Led_Blink();
 			  ic_id = HAL_GetUIDw0();
@@ -321,7 +333,14 @@ void Wifi_SoftAP_Config_Handler(void)
 				
             sprintf((char *)device_massage, "AT+TCPRDINFOSET=1,\"%s\",\"%s\",\"UYIJIA01-%d\"\r\n", PRODUCT_ID, DEVICE_SECRET,ic_id);
 			usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
-           
+            Wifi_Fast_Led_Blink();
+            Wifi_Fast_Led_Blink();
+          
+            Wifi_Fast_Led_Blink();
+             Wifi_Fast_Led_Blink();
+             
+             Wifi_Fast_Led_Blink();
+             Wifi_Fast_Led_Blink();
             wifi_t.wifi_config_net_lable =wifi_set_tcdevreg;
 
 			}
@@ -334,13 +353,20 @@ void Wifi_SoftAP_Config_Handler(void)
 
         wifi_t.gTimer_get_beijing_time=0;
          Wifi_Fast_Led_Blink();
-	     if(wifi_t.gTimer_login_tencent_step_3 > 7){
+	     if(wifi_t.gTimer_login_tencent_step_3 > 5){
             
 		 	wifi_t.gTimer_login_tencent_step_3=0;
 			 wifi_t.linking_tencent_cloud_doing  =1;
 		     
 		     HAL_UART_Transmit(&huart2, "AT+TCDEVREG\r\n", strlen("AT+TCDEVREG\r\n"), 0xffff); //态注册 
-		     osDelay(1000);
+		     osDelay(300);
+            Wifi_Fast_Led_Blink();
+            osDelay(300);
+             Wifi_Fast_Led_Blink();
+             osDelay(300);
+             Wifi_Fast_Led_Blink();
+             osDelay(300);
+              Wifi_Fast_Led_Blink();
               wifi_t.wifi_config_net_lable =wifi_set_tcsap;
 
 	     }
@@ -354,7 +380,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
          wifi_t.gTimer_get_beijing_time=0;
 	     Wifi_Fast_Led_Blink();
-           if(wifi_t.gTimer_login_tencent_step_3 > 7){
+           if(wifi_t.gTimer_login_tencent_step_3 > 5){
 		 	
 			  wifi_t.gTimer_login_tencent_step_3 =0;
               wifi_t.soft_ap_config_flag =1;
@@ -362,8 +388,16 @@ void Wifi_SoftAP_Config_Handler(void)
 
 	        sprintf((char *)device_massage, "AT+TCSAP=\"UYIJIA01-%d\"\r\n",ic_id);
             usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
-            wifi_t.wifi_config_net_lable =wifi_login_tencent;
+            osDelay(300);
+            Wifi_Fast_Led_Blink();
+            osDelay(300);
              Wifi_Fast_Led_Blink();
+             osDelay(300);
+             Wifi_Fast_Led_Blink();
+             osDelay(300);
+              Wifi_Fast_Led_Blink();
+             Wifi_Fast_Led_Blink();
+              wifi_t.wifi_config_net_lable =0xff;
              
            }
 
@@ -381,26 +415,12 @@ void Wifi_SoftAP_Config_Handler(void)
 	   HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 5000);//
 	   osDelay(1000);
        wifi_t.gTimer_login_tencent_times=0;
-       login_flag =1;
+      
+       wifi_t.wifi_config_net_lable = 0xff;
       }
 
     
-
-	   if(wifi_t.gTimer_login_tencent_times >1 &&  login_flag ==1){
-	   	  wifi_t.gTimer_login_tencent_times =0;
-          login_flag++;
-	     if(wifi_link_net_state()==1){
-			   
-				wifi_t.get_rx_beijing_time_enable=0;
-			    
-          }
-
-            wifi_t.wifi_config_net_lable = 0xff;
-         
-		 }
-                   
-
-     break;
+        break;
 
 
 

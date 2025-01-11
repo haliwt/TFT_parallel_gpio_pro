@@ -6,6 +6,7 @@
 //#define	EE_ADDR 0xE0//0xa0//EEPROM地址，地址管脚全接地，为0xA0
 #define EE_SCL_PIN             GPIO_PIN_6   //模拟IIC的SCL信号  1.修改引脚即可修改IIC接口
 #define EE_SDA_PIN             GPIO_PIN_7   //模拟IIC的SDA信号
+
 #define EE_I2C_GPIO_Port              GPIOC
 
 typedef enum {

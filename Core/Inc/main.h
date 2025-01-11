@@ -133,12 +133,21 @@ void Error_Handler(void);
 #define VOICE_TX_Pin GPIO_PIN_9
 #define VOICE_TX_GPIO_Port GPIOA
 
+#define VOICE_MUTE_Pin              GPIO_PIN_15
+#define VOICE_MUTE_GPIO_Port         GPIOB
+
+
+
+
+//I2C SDA ,SCL
+
 #define I2C_SCK_Pin                     GPIO_PIN_6
-#define VOICE_BROAD_GPIO_Port           GPIOC
+#define I2C_SCK_GPIO_Port                 GPIOC
+
 
 
 #define I2C_SDA_Pin                          GPIO_PIN_7
-#define VOICE_MUTE_GPIO_Port                 GPIOC
+#define I2C_SDA_GPIO_Port                 GPIOC
 
 
 #define VOICE_RX_Pin                        GPIO_PIN_10
