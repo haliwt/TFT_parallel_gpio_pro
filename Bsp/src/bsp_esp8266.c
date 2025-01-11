@@ -270,7 +270,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
     case wifi_set_restor:
            wifi_t.gTimer_get_beijing_time=0;
-           Wifi_Fast_Led_Blink();
+          // Wifi_Fast_Led_Blink();
            //ReConnect_Wifi_Net_ATReset_Hardware();//InitWifiModule_Hardware()
         
 		
@@ -306,7 +306,7 @@ void Wifi_SoftAP_Config_Handler(void)
            wifi_t.gTimer_get_beijing_time=0;
 	
          	HAL_UART_Transmit(&huart2, "AT+CWMODE=3\r\n", strlen("AT+CWMODE=3\r\n"), 5000);
-	        
+	        HAL_Delay(300);
              Wifi_Fast_Led_Blink();
             Wifi_Fast_Led_Blink();
           
@@ -328,7 +328,7 @@ void Wifi_SoftAP_Config_Handler(void)
            // WIFI_IC_ENABLE();
             Wifi_Fast_Led_Blink();
             wifi_t.gTimer_get_beijing_time=0;
-			if(wifi_t.gTimer_login_tencent_step_3 > 5){
+			if(wifi_t.gTimer_login_tencent_step_3 > 6){
 				wifi_t.gTimer_login_tencent_step_3 =0;
 				
             sprintf((char *)device_massage, "AT+TCPRDINFOSET=1,\"%s\",\"%s\",\"UYIJIA01-%d\"\r\n", PRODUCT_ID, DEVICE_SECRET,ic_id);
@@ -341,6 +341,7 @@ void Wifi_SoftAP_Config_Handler(void)
              
              Wifi_Fast_Led_Blink();
              Wifi_Fast_Led_Blink();
+             wifi_t.gTimer_login_tencent_step_3 =0;
             wifi_t.wifi_config_net_lable =wifi_set_tcdevreg;
 
 			}
@@ -353,7 +354,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
         wifi_t.gTimer_get_beijing_time=0;
          Wifi_Fast_Led_Blink();
-	     if(wifi_t.gTimer_login_tencent_step_3 > 5){
+	     if(wifi_t.gTimer_login_tencent_step_3 > 6){
             
 		 	wifi_t.gTimer_login_tencent_step_3=0;
 			 wifi_t.linking_tencent_cloud_doing  =1;
@@ -368,6 +369,7 @@ void Wifi_SoftAP_Config_Handler(void)
              osDelay(300);
               Wifi_Fast_Led_Blink();
               wifi_t.wifi_config_net_lable =wifi_set_tcsap;
+              wifi_t.gTimer_login_tencent_step_3=0;
 
 	     }
 		 
@@ -380,7 +382,7 @@ void Wifi_SoftAP_Config_Handler(void)
 
          wifi_t.gTimer_get_beijing_time=0;
 	     Wifi_Fast_Led_Blink();
-           if(wifi_t.gTimer_login_tencent_step_3 > 5){
+           if(wifi_t.gTimer_login_tencent_step_3 > 6){
 		 	
 			  wifi_t.gTimer_login_tencent_step_3 =0;
               wifi_t.soft_ap_config_flag =1;
@@ -397,6 +399,7 @@ void Wifi_SoftAP_Config_Handler(void)
              osDelay(300);
               Wifi_Fast_Led_Blink();
              Wifi_Fast_Led_Blink();
+             wifi_t.gTimer_login_tencent_step_3=0;
               wifi_t.wifi_config_net_lable =0xff;
              
            }
