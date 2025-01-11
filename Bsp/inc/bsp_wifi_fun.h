@@ -92,7 +92,7 @@ typedef struct _WIFI_FUN{
 	
 	//wifi
 	
- 
+    uint8_t adj_speed_flag;
  
 	
   

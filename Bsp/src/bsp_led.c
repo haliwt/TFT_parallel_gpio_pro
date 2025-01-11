@@ -4,7 +4,7 @@
 
 
 
-static uint8_t  Delay(int16_t count);
+//static uint8_t  Delay(int16_t count);
 
 volatile uint32_t led_k,led_i;
 
@@ -48,7 +48,7 @@ void LED_Net_Off(void)
 
 
 
-
+#if 0
 static uint8_t  Delay(int16_t count)
 {
    
@@ -66,7 +66,7 @@ static uint8_t  Delay(int16_t count)
    return 0;
 
 }
-
+#endif 
 
 void power_on_action_led_init(void)
 {

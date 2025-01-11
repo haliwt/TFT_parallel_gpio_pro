@@ -662,7 +662,7 @@ void Json_Parse_Command_Fun(void)
 			buzzer_sound();
 
 		     if(gctl_t.fan_warning ==0){
-
+                wifi_t.adj_speed_flag++;
            		 wind_hundred =wifi_t.wifi_data[7]-0x30;
 	       		 wind_decade=wifi_t.wifi_data[8]-0x30;
                  wind_unit = wifi_t.wifi_data[9]-0x30;

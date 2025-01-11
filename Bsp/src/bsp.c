@@ -78,7 +78,7 @@ void PowerOn_Process_Handler(void)
        wifi_t.gTimer_get_beijing_time=0;
        wifi_t.get_rx_beijing_time_enable=0;
        wifi_t.gTimer_auto_detected_net_state_times=0;
-       gpro_t.set_wind_speed_value=10; //WT.EDIT 2025.01.10
+       wifi_t.set_wind_speed_value=100;//gpro_t.set_wind_speed_value=10; //WT.EDIT 2025.01.10
     
     
        Power_On_Init();

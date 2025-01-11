@@ -3,9 +3,7 @@
 
 static void turn_off_fan_function(void);
 
-
-
-static void SetLevel_Fan_PWM(uint8_t levelval);
+uint8_t adj_speed_flag;
 
 /********************************************************
 *
@@ -22,20 +20,27 @@ static void SetLevel_Fan_PwmDuty(uint8_t levelval)
 
 void Fan_One_Speed(void)
 {
-   
+   static uint8_t fan_one_default = 0xff;
    FAN_COM_SetLow(); //PA6
    FAN_CCW_SetHigh(); //brake
-   SetLevel_Fan_PwmDuty(25);
+   if(fan_one_default != wifi_t.adj_speed_flag){
+      fan_one_default = wifi_t.adj_speed_flag;
+     SetLevel_Fan_PwmDuty(25);
+
+   }
 
 }
 
 void Fan_Two_Speed(void)
 {
-	
+	static uint8_t fan_two_default = 0xff;
+
     FAN_COM_SetLow(); //PA6
     FAN_CCW_SetHigh(); //brake
-
-    SetLevel_Fan_PwmDuty(40);
+   if(fan_two_default != wifi_t.adj_speed_flag){
+      fan_two_default = wifi_t.adj_speed_flag;
+       SetLevel_Fan_PwmDuty(40);
+    }
 
 
   
@@ -43,9 +48,15 @@ void Fan_Two_Speed(void)
 
  void Fan_Full_Speed(void)
 {
+    static uint8_t fan_full_default = 0xff;
+
     FAN_COM_SetLow(); //PA6
     FAN_CCW_SetHigh(); //brake
-    SetLevel_Fan_PwmDuty(50);
+
+    if(fan_full_default != wifi_t.adj_speed_flag){
+      fan_full_default = wifi_t.adj_speed_flag;
+       SetLevel_Fan_PwmDuty(50);
+    }
 
 }
 
@@ -255,17 +266,17 @@ static void turn_off_fan_function(void)
 void fan_adj_speed_handler(void)
 {
 
-    // fan_first_run_fun();
+   
        
-    if(gpro_t.set_wind_speed_value < 34 ){
+    if(wifi_t.set_wind_speed_value < 34 ){
              Fan_One_Speed();
      }
-     else if(gpro_t.set_wind_speed_value > 33  && gpro_t.set_wind_speed_value < 67 ){
+     else if(wifi_t.set_wind_speed_value > 33  && wifi_t.set_wind_speed_value < 67 ){
 
           Fan_Two_Speed();
 
      }
-     else if(gpro_t.set_wind_speed_value > 66){
+     else if(wifi_t.set_wind_speed_value > 66){
            Fan_Full_Speed();
 
      }
