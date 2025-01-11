@@ -81,7 +81,7 @@ void RunWifi_Command_Handler(void)
   
 
     
- 	switch(wifi_t.runCommand_order_lable){
+ 	switch(wifi_t.link_net_step){
 
    case wifi_link_tencent_cloud: //01
 
@@ -89,7 +89,7 @@ void RunWifi_Command_Handler(void)
         Wifi_Fast_Led_Blink();
 		Wifi_SoftAP_Config_Handler();
 
-		SmartPhone_LinkTencent_Cloud();
+		//SmartPhone_LinkTencent_Cloud();
 
 	}
 	
@@ -97,7 +97,7 @@ void RunWifi_Command_Handler(void)
 		if(wifi_t.gTimer_linking_tencent_duration < 120){
 		   gctl_t.get_beijing_time_success = 0; 
           
-		   wifi_t.runCommand_order_lable = wifi_link_tencent_cloud;
+		   wifi_t.link_net_step = wifi_link_tencent_cloud;
 		}
 		else if(wifi_link_net_state()==0 && wifi_t.gTimer_linking_tencent_duration >120){
 		  //auto link wifi net 
@@ -138,7 +138,7 @@ void RunWifi_Command_Handler(void)
 
         wifi_t.link_net_tencent_data_flag = 1;
 
-         wifi_t.runCommand_order_lable = wifi_subscriber_form_tencent_data;
+         wifi_t.link_net_step = wifi_subscriber_form_tencent_data;
     }
     
 	break;
@@ -154,7 +154,7 @@ void RunWifi_Command_Handler(void)
 		 wifi_t.gTimer_publish_dht11=0;
 	     wifi_t.gTimer_get_beijing_time =0;
 	
-		 wifi_t.runCommand_order_lable= 0xff;
+		 wifi_t.link_net_step= 0xff;
 	   
 
 
@@ -451,7 +451,7 @@ void wifi_get_beijint_time_handler(void)
              get_beijing_flag = 0;
 
           }
-         // wifi_t.runCommand_order_lable= wifi_again_link_net_init;//06
+         // wifi_t.link_net_step= wifi_again_link_net_init;//06
        }
 
      

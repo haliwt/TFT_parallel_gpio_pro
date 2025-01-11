@@ -68,7 +68,7 @@
             wifi_t.link_net_tencent_data_flag=1;
             MqttData_Publish_PowerOff_Ref();
             osDelay(50);//HAL_Delay(100);
-            wifi_t.runCommand_order_lable= wifi_publish_update_tencent_cloud_data;
+            wifi_t.link_net_step= wifi_publish_update_tencent_cloud_data;
 
         }
     }

@@ -288,7 +288,7 @@ static void voice_cmd_fun(uint8_t cmd)
 		    wifi_t.link_tencent_step_counter=0;
 			wifi_t.esp8266_login_cloud_success =0;
 			gpro_t.wifi_led_fast_blink_flag=1 ;
-			wifi_t.runCommand_order_lable=wifi_link_tencent_cloud;
+			wifi_t.link_net_step=wifi_link_tencent_cloud;
 			wifi_t.wifi_config_net_lable= wifi_set_restor;
 			wifi_t.gTimer_login_tencent_times=0;
 			wifi_t.gTimer_linking_tencent_duration=0; //166s -2分7秒

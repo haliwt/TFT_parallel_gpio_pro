@@ -79,7 +79,7 @@ typedef struct _WIFI_FUN{
 	
     //esp8266 up ref
 
-	uint8_t runCommand_order_lable;
+	uint8_t link_net_step;
 
     uint8_t soft_ap_config_flag;
     uint8_t get_rx_beijing_time_enable;
