@@ -60,7 +60,7 @@ void bsp_ctl_init(void)
    gctl_t.plasma_flag =1;
    gctl_t.ultrasonic_flag =1;
 
-   gpro_t.mode_key_run_item_step = mode_key_set_temp;
+   gpro_t.mode_key_run_item_step = mode_key_set_temp; //0x01
    
   // UartVarInit();
 

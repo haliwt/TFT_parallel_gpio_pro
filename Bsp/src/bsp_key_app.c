@@ -47,12 +47,7 @@ void PowerOn_LongKey_Fun(void)
 ******************************************************************************/
 void Mode_Key_Long_Fun(void)
 {
-   
-        Mode_Long_Key_Fun();
-
-  
-
-   
+	Mode_Long_Key_Fun();
 }
 
 
@@ -110,7 +105,7 @@ void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 void Mode_Key_Config_Fun_Handler(void)
 {
 
-   if(gpro_t.mode_key_run_item_step == mode_key_select){
+   if(gpro_t.mode_key_run_item_step == mode_key_select){ //mode_key_select = 0x02
 
         if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //exit of rule
 
@@ -201,7 +196,7 @@ void ADD_Key_Fun(void)
 			gctl_t.gSet_timer_hours ++ ;//disp_t.disp_timer_time_hours++ ;//gpro_t.dispTime_minutes = gpro_t.dispTime_minutes + 60;
 			if(gctl_t.gSet_timer_hours  > 24){ //if(gpro_t.dispTime_minutes > 59){
 
-			gctl_t.gSet_timer_hours =0;//gpro_t.dispTime_hours =0;
+			    gctl_t.gSet_timer_hours =0;//gpro_t.dispTime_hours =0;
 
 
 			}

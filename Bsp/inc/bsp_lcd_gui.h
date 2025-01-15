@@ -71,7 +71,7 @@ void TFT_Display_Temp_Symbol(void);
 
 void TFT_Display_Humidity_Symbol(void);
 
-void TFT_Display_WorksTime(void);
+
 void TFT_Only_Disp_Timing(void);
 
 

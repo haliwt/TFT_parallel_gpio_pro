@@ -34,7 +34,8 @@
 #include "bsp_usart.h"
 #include "bsp_lcd_gui.h"
 #include "bsp_wifi.h"
-#include "bsp_poweroff.h"
+#include "bsp_power.h"
+#include "bsp_time.h"
 #include "bsp_i2c.h"
 //#include "bsp_image.h"
 #include "bsp_tft_font.h"
@@ -301,14 +302,7 @@ void Power_On_Special_Fun(void);
 
 void direct_wifi_led_fast_blink_handler(void);
 
-
-
-
-
-
 void power_on_init_set_ref(void);
-
-
 
 void mode_key_adjust_fun(void);
 

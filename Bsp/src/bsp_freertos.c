@@ -320,7 +320,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                  
              }
-              else if(gpro_t.key_long_mode_flag == 1 ){
+             else if(gpro_t.key_long_mode_flag == 1 ){
                    gpro_t.gTimer_pro_set_long_key_tims=0;
                     Mode_Key_Long_Fun();
                      start_counter_power_key_long_pressed =0; //WT.EDIT 2024.08.13 
@@ -491,49 +491,57 @@ static void vTaskStart(void *pvParameters)
      }
      else if(KEY_MODE_VALUE() == KEY_DOWN   && KEY_POWER_VALUE() == KEY_UP){
          
-          gpro_t.long_key_mode_counter ++ ;
+         
           start_counter_power_key_long_pressed=0;
 
-          if(gpro_t.long_key_mode_counter > 70 ){
+      
+             gpro_t.long_key_mode_counter ++ ;
+
+          if(gpro_t.long_key_mode_counter > 70  ){
              gpro_t.long_key_mode_counter=0;   
                gpro_t.key_long_mode_flag =1;
                gpro_t.gTimer_pro_set_long_key_tims=0;
             
                 buzzer_sound();
-               
-
-
           }
              
     
-         xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
-           
+       
+        
 
     }
     else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_UP){
         gpro_t.long_key_mode_counter=0;
-         start_counter_power_key_long_pressed=0;
+        start_counter_power_key_long_pressed=0;
+
+       
           xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                          ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
                          eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+         
 
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN && KEY_ADD_VALUE() == KEY_UP){
             gpro_t.long_key_mode_counter=0;
             start_counter_power_key_long_pressed=0;
+            
               xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
                               DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
                               eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+
+            
 
 
      }
      else if(KEY_ADD_VALUE() == KEY_DOWN && KEY_DEC_VALUE() == KEY_DOWN && add_dec_combin_counter <220){
 
-        
+         
             add_dec_combin_counter++;
              if(add_dec_combin_counter > 117){
                    add_dec_combin_counter = 230;
@@ -543,6 +551,7 @@ static void vTaskStart(void *pvParameters)
                             eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
              }
+            
 
      }
 
