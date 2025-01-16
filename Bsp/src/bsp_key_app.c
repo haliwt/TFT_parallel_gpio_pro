@@ -312,9 +312,9 @@ void Mode_Key_Select_Fun(void)
 
       case ptc_fun:
 
-         gctl_t.ptc_led_blink_flag = 1;
+        // gctl_t.ptc_led_blink_flag = 1;
   
-		ptc_fun_led_init_flg++;
+		ptc_fun_led_init_flg=1;
 		if(ptc_state()== 1){
 
 
@@ -362,7 +362,7 @@ void Mode_Key_Select_Fun(void)
 		    }
 			
 			
-  led_blik:	   if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+  led_blik:	   if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                    //gctl_t.gTimer_ctl_select_led =0;
                    osDelay(40);
                    ptc_led ++;
@@ -375,7 +375,7 @@ void Mode_Key_Select_Fun(void)
                        ptc_led = 0;
                        LED_PTC_ICON_OFF() ; 
                        if(gpro_t.mode_key_run_item_step==mode_key_select){
-			           goto led_blik;
+			          // goto led_blik;
 
                       }
 
@@ -391,7 +391,7 @@ void Mode_Key_Select_Fun(void)
 	  	//KILL ICON LED
           
    
-		 plasma_fun_led_init_flag ++;
+		 plasma_fun_led_init_flag =2;
 
 		 if(plasma_state() == 1){
                    // Plasma_On();
@@ -444,7 +444,7 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-   led_blik2:   if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+   led_blik2:   if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                       // gctl_t.gTimer_ctl_select_led=0;
                        osDelay(40);
                        plasma_led ++;
@@ -456,7 +456,7 @@ void Mode_Key_Select_Fun(void)
                         plasma_led =0;
                         LED_KILL_ICON_OFF() ;
                        if(gpro_t.mode_key_run_item_step==mode_key_select){
-    				        goto led_blik2;
+    				       // goto led_blik2;
 
     			       }
 
@@ -469,7 +469,7 @@ void Mode_Key_Select_Fun(void)
 
 	  case rat_fun:
 
-       rat_fun_led_init_flag++;
+       rat_fun_led_init_flag=3;
 
        if(ultrasonic_state()==1){
 
@@ -528,19 +528,21 @@ void Mode_Key_Select_Fun(void)
 	 
 
 
-led_blink3: if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+led_blink3: if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                 //gctl_t.gTimer_ctl_select_led=0;
                
-                osDelay(50);
+                
                  rat_led ++ ;
                 if(rat_led ==1){
 			          LED_RAT_ICON_ON(); 
+                      osDelay(40);
                  }
                  else{
                   rat_led =0;
                   LED_RAT_ICON_OFF();
+                   osDelay(40);
                  if(gpro_t.mode_key_run_item_step==mode_key_select){
-		             goto led_blink3;
+		             //goto led_blink3;
 
                     }
 
