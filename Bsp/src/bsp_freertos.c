@@ -129,7 +129,7 @@ static void vTaskMsgPro(void *pvParameters)
       TFT_Disp_Temp_Value(0,gctl_t.dht11_temp_value);
       TFT_Disp_Humidity_Value(gctl_t.dht11_hum_value);
       TFT_Display_Handler();
-       HAL_Delay(100);
+      HAL_Delay(100);
       VOICE_OUTPUT_SOUND_ENABLE();
      }
 		
@@ -273,8 +273,8 @@ static void vTaskMsgPro(void *pvParameters)
                     PowerOnOff_Init_Ref_Fun();
 
                    }
-
-                   buzzer_sound_flag =1;
+                   Buzzer_KeySound();
+                  // buzzer_sound_flag =1;
 
 
                  }
@@ -297,9 +297,12 @@ static void vTaskMsgPro(void *pvParameters)
                 else{
                     gpro_t.long_key_mode_counter=0;
                    // buzzer_sound_flag = 1;
-                    buzzer_sound();
+                  
                     gpro_t.key_mode_be_pressed_flag =1;
                    // mode_key_adjust_fun();
+                   Buzzer_KeySound();
+
+                   gpro_t.key_short_mode_flag = 1;
 
 
                 }
@@ -310,19 +313,8 @@ static void vTaskMsgPro(void *pvParameters)
          }
 
            
-         if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1 && gpro_t.gPower_On==power_on){
         
-             mode_key_adjust_fun();
-             gpro_t.key_mode_be_pressed_flag++;
-          }
-         
 
-          if(buzzer_sound_flag ==1){
-              
-              buzzer_sound_flag++;
-             
-              buzzer_sound();
-          }
 		         
          if(key_dec_sound_flag ==1 || key_add_sound_flag ==1  || key_power_off_sound_flag ==1){
 
@@ -344,14 +336,14 @@ static void vTaskMsgPro(void *pvParameters)
               }
               else if(key_dec_sound_flag == 1){
                  key_dec_sound_flag++;
-                 buzzer_sound();
+                 Buzzer_KeySound();
                  
 
               }
               else if(key_add_sound_flag ==1){
                 
                   key_add_sound_flag++;
-                  buzzer_sound();
+                  Buzzer_KeySound();
                   
 
 
@@ -377,12 +369,8 @@ static void vTaskMsgPro(void *pvParameters)
           
            /**********************run power on*****************************/
            if(gpro_t.gPower_On==power_on){
-                if(buzzer_sound_flag==2){
-                    buzzer_sound_flag++;
-                   Buzzer_KeySound_Off();
-
-                }
-                if(gpro_t.key_short_mode_flag==2){
+         
+                if(gpro_t.key_short_mode_flag==1){
                
                     gpro_t.key_short_mode_flag++;
 
@@ -498,12 +486,12 @@ static void vTaskStart(void *pvParameters)
       
              gpro_t.long_key_mode_counter ++ ;
 
-          if(gpro_t.long_key_mode_counter > 60  ){
+          if(gpro_t.long_key_mode_counter > 70  ){
              gpro_t.long_key_mode_counter=0;   
                gpro_t.key_long_mode_flag =1;
                gpro_t.gTimer_pro_set_long_key_tims=0;
             
-                buzzer_sound();
+                Buzzer_KeySound();
                 
           }
              
