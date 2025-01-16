@@ -17,26 +17,6 @@ static void freertos_split_normal_run_handler(void);
 void wifi_detected_signal_handler(uint8_t blink_flag)
 {
 
-  #if 0
-   switch(blink_flag){
-
-    case 0: //don't detector wifi signal is normal run process.
-
-        freertos_split_normal_run_handler();
-
-    break;
-
-
-    case 1: //detected wifi of signal of led is fast blink.
-        
-        freertos_split_detected_wifi_handler();
-
-
-
-    break;
-    }
-   #endif
-
     if(blink_flag ==1){
 
         freertos_split_detected_wifi_handler();

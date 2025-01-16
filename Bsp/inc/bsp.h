@@ -203,7 +203,7 @@ typedef struct{
    //modke key
   
    uint8_t mode_key_run_item_step;
-  
+   uint8_t get_beijing_flag;
    
   
   //temperature 
