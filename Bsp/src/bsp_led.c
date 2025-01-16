@@ -77,23 +77,19 @@ void power_on_action_led_init(void)
      gctl_t.ultrasonic_flag = 1;
    
 
-	//PTC ICON LED
+
 	LED_PTC_ICON_ON() ;  
-    Ptc_On();
-   
+    
+    LED_KILL_ICON_ON()  ; 
+    
+     LED_RAT_ICON_ON()  ; 
+     LED_Mode_Key_On();
+     LED_Power_Key_On();
+     TFT_BACKLIGHT_ON();
 
-
-	//KILL ICON LED
-	LED_KILL_ICON_ON()  ; 
-    Plasma_On();
-   
-
-
-
-	//ULTRSONIC ICO LED
-	LED_RAT_ICON_ON()  ; 
-    Ultrasonic_Pwm_Output();
-   
+      Ptc_On();
+      Plasma_On();
+      Ultrasonic_Pwm_Output();
 
 
 }
@@ -101,25 +97,26 @@ void power_on_action_led_init(void)
 void Power_Off_Led(void)
 {
 
-//WIFI ICON LED
+
 	LED_WIFI_ICON_OFF()	;			  
 
-	//PTC ICON LED
 	LED_PTC_ICON_OFF() ; 	
-    Ptc_Off();
-    gctl_t.ptc_flag =0;
+    
+    LED_KILL_ICON_OFF()	;
+    
+   LED_RAT_ICON_OFF()  ;
+   LED_Mode_Key_Off(); 
 
 
-	//KILL ICON LED
-	LED_KILL_ICON_OFF()	;
-    Plasma_Off();
-    gctl_t.plasma_flag = 0;
+     gctl_t.plasma_flag = 0;
 
-
-	//ULTRSONIC ICO LED
-	LED_RAT_ICON_OFF()  ;	
-    Ultrasonic_Pwm_Stop();
+     gctl_t.ptc_flag =0;
+   
     gctl_t.ultrasonic_flag = 0;
+
+    Ptc_Off();
+    Plasma_Off();
+    Ultrasonic_Pwm_Stop();
 
 
 

@@ -274,39 +274,12 @@ extern PRO_T gpro_t;
 
 void bsp_Init(void);
 
-
-
-
-
-
-
-
-
 void Key_Process_Handler(uint8_t keyvalue);
 void PowerOn_Process_Handler(void);
 
-
 void PowerOnOff_Init_Ref_Fun(void);
 
-
-
-
-
-
-
-
-
-
-
-
-
 void Power_On_Special_Fun(void);
-
-
-
-
-
-
 
 void wifi_app_power_on_handler(void);
 

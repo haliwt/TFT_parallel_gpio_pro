@@ -249,6 +249,14 @@ void power_on_init_set_ref(void)
          if(wifi_t.smartphone_app_power_on_flag==0){
 		       power_on_action_led_init();
          }
+         else{
+
+         
+           LED_Mode_Key_On();
+           LED_Power_Key_On();
+           TFT_BACKLIGHT_ON();
+
+         }
 
        do{
        
@@ -262,9 +270,9 @@ void power_on_init_set_ref(void)
 
          }while(0);
        
-         LED_Mode_Key_On();
-	     LED_Power_Key_On();
-		 TFT_BACKLIGHT_ON();
+      //   LED_Mode_Key_On();
+	  ///   LED_Power_Key_On();
+		/// TFT_BACKLIGHT_ON();
 
          
         

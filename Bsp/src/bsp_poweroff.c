@@ -97,9 +97,7 @@
 void PowerOff_Ref_Fun(void)
 {
  
-	   
-       //  LCD_Clear(BLACK);
-		 //clear control falg
+	
         gctl_t.fan_continuce_flag =1;
         gpro_t.set_timer_timing_success = 0;
         
@@ -124,11 +122,6 @@ void PowerOff_Ref_Fun(void)
 	    gpro_t.disp_works_timer_timing_mode_item = works_time;
         /*********************************************/
 
-       // Power_Off_Fun();
-       
-            LED_Mode_Key_Off();
-            LED_Power_Key_Off();
-            LED_WIFI_ICON_OFF();
         
             //Power_Off_Led();
            gctl_t.mode_flag = 0;
@@ -272,7 +265,18 @@ void power_off_init_set_ref(void)
 ************************************************************************/
 void Power_Off_Fun(void)
 {
-	LED_Mode_Key_Off();
+
+    LED_WIFI_ICON_OFF()	;			  
+
+	LED_PTC_ICON_OFF() ; 	
+    
+    LED_KILL_ICON_OFF()	;
+    
+    LED_RAT_ICON_OFF()  ;
+
+
+
+    LED_Mode_Key_Off();
 	LED_Power_Key_Off();
     LED_WIFI_ICON_OFF();
 
