@@ -59,7 +59,7 @@ uint32_t add_dec_combin_counter;
 
 uint8_t key_power_sound_flag,gwifi_key_flag;
 
-uint8_t gpower_onoff_key_flag,gmode_key_flag  ;
+uint8_t gpower_onoff_key_flag,gmode_key_flag  , gkey_add_value_flag,gkey_dec_value_flag ;
 
 volatile uint8_t buzzer_sound_flag,key_power_long_sound_flag;
 
@@ -96,7 +96,7 @@ static void vTaskMsgPro(void *pvParameters)
     BaseType_t xResult;
 	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
-    static uint8_t key_add_sound_flag,key_dec_sound_flag;
+  
     static uint8_t add_dec_combin,key_power_off_sound_flag ;
 	static uint8_t power_sound_flag;
     while(1)
@@ -193,26 +193,6 @@ static void vTaskMsgPro(void *pvParameters)
                    add_dec_combin_counter=0;
                   
                     
-            }
-            else if((ulValue & DEC_KEY_2) != 0){
-
-                 if(gpro_t.gPower_On==power_on){
-                      start_counter_power_key_long_pressed=0;
-                      key_dec_sound_flag=1;
-                 }
-
-               
-            }
-            else if((ulValue & ADD_KEY_3) != 0){
-                if(gpro_t.gPower_On==power_on){
-                      start_counter_power_key_long_pressed=0;
-                   
-                    
-                       key_add_sound_flag=1;
-                     
-
-                    }           
-                
             }
            else if((ulValue & VOICE_BIT_8) != 0){
               
@@ -311,20 +291,36 @@ static void vTaskMsgPro(void *pvParameters)
              }
       
          }
+         else if(gkey_add_value_flag ==1){
+
+             if(KEY_ADD_VALUE() == KEY_UP){
+                gkey_add_value_flag++;
+
+                Buzzer_KeySound();
+                ADD_Key_Fun();
+
+
+             }
+         }
+         else if( gkey_dec_value_flag == 1){
+            
+                if(KEY_DEC_VALUE() == KEY_UP){
+                     gkey_dec_value_flag++;
+
+                      Buzzer_KeySound();
+                      DEC_Key_Fun();
+                }
+        }
 
            
         
 
-		         
-         if(key_dec_sound_flag ==1 || key_add_sound_flag ==1  || key_power_off_sound_flag ==1){
-
-
-           if(key_power_off_sound_flag ==1){
+		 if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
                   DISABLE_INT(); 
-                 
+                  Buzzer_KeySound();
                    LCD_Clear(BLACK);
-                   buzzer_sound();//WT.EDIT 2024.08.17 
+                 
                   ENABLE_INT();
               
                  // power_off_init_set_ref();
@@ -333,23 +329,9 @@ static void vTaskMsgPro(void *pvParameters)
                  
 
 
-              }
-              else if(key_dec_sound_flag == 1){
-                 key_dec_sound_flag++;
-                 Buzzer_KeySound();
-                 
-
-              }
-              else if(key_add_sound_flag ==1){
-                
-                  key_add_sound_flag++;
-                  Buzzer_KeySound();
-                  
-
-
-              }
-             }
-
+         }
+             
+         
           
           
 
@@ -377,32 +359,18 @@ static void vTaskMsgPro(void *pvParameters)
                     Mode_Key_Selection_Func() ;
 
                 }
-                else if(key_dec_sound_flag==2 || key_add_sound_flag==2){
-                     if(key_dec_sound_flag==2){
-                         key_dec_sound_flag++;
-                         DEC_Key_Fun();
+            
 
-                      }
-
-                    if(key_add_sound_flag==2){
-
-                       key_add_sound_flag++;
-
-                        ADD_Key_Fun();
-
-
-                     }
-
-                    if(gpro_t.disp_key_set_temp_value ==1){ //add and dec of key input number on TFT screen
+                if(gpro_t.disp_key_set_temp_value ==1){ //add and dec of key input number on TFT screen
                 		 gpro_t.disp_key_set_temp_value =0;
                         TFT_Disp_Temp_Value(0,gctl_t.gSet_temperature_value);
 
-                    }
-                	else if(gpro_t.disp_key_set_timer_timing  ==1){
-                		      gpro_t.disp_key_set_timer_timing =0;
-                	  TFT_Disp_Set_TimerTime(0);
-                    }
                 }
+                else if(gpro_t.disp_key_set_timer_timing  ==1){
+                      gpro_t.disp_key_set_timer_timing =0;
+                	  TFT_Disp_Set_TimerTime(0);
+                }
+               
               Mode_Key_Config_Fun_Handler();
               
               wifi_detected_signal_handler(gpro_t.wifi_led_fast_blink_flag);
@@ -512,23 +480,27 @@ static void vTaskStart(void *pvParameters)
         start_counter_power_key_long_pressed=0;
 
        
-          xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-                         ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
-                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+//          xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+//                         ADD_KEY_3,            /* 设置目标任务事件标志位bit0  */
+//                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+      if(gpro_t.gPower_On == power_on){
 
-         
-
+            gkey_add_value_flag =1;
+        }
 
      }
      else if(KEY_DEC_VALUE() == KEY_DOWN && KEY_ADD_VALUE() == KEY_UP){
             gpro_t.long_key_mode_counter=0;
             start_counter_power_key_long_pressed=0;
             
-              xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-                              DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
-                              eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+//              xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+//                              DEC_KEY_2,            /* 设置目标任务事件标志位bit0  */
+//                              eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
 
-            
+            if(gpro_t.gPower_On == power_on){
+               gkey_dec_value_flag =1;
+
+            }
 
 
      }
