@@ -787,41 +787,7 @@ void TFT_Disp_Temp_SwitchSet_Value(uint8_t bc,uint8_t temp_value)
 
 }
 
-/***********************************************************************************************
-	*
-	*Function Name:void TFT_Disp_Only_Temp_Numbers(uint8_t bc,uint8_t temp_value)
-	*Function : display dht11 of sensor temperature value 
-	*Input: bc= backgroud color,bc=0 ->display numbers ,bc= 1 ->don't display numbers 
-	*Return: NO 
-	*
-***********************************************************************************************/
-void TFT_Disp_Only_Temp_Numbers(uint8_t bc,uint8_t temp_value)
-{
 
-  static uint8_t temp_unit,temp_decade;
-
-	temp_decade = temp_value /10;
-
-   temp_unit= temp_value%10; 
-  
- 
-
-	#if NORMAL_DISPLAY
-   	TFT_Disp_Numbers_Pic_413(5,40,bc,temp_decade); //间隔58
-   	#else 
-	TFT_MainDisp_Numbers_Pic_354(5,40,bc,temp_decade);
-
-
-	#endif 
-	//__disable_irq();
-   #if NORMAL_DISPLA
-   TFT_Disp_Numbers_Pic_413(63,40,bc,temp_unit);//63 -> 60
-   #else 
-   TFT_MainDisp_Numbers_Pic_354(59,40,bc,temp_unit);  
-
-   #endif 
-
-}
 /***********************************************************************************************
 	*
 	*Function Name:void TFT_Disp_Voice_Temp_Value(uint8_t bc,uint8_t temp_value)

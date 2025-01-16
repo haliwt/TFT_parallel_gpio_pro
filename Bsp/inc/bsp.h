@@ -36,6 +36,7 @@
 #include "bsp_wifi.h"
 #include "bsp_power.h"
 #include "bsp_time.h"
+#include "bsp_disptemp.h"
 #include "bsp_i2c.h"
 //#include "bsp_image.h"
 #include "bsp_tft_font.h"

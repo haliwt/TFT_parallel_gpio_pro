@@ -224,12 +224,7 @@ void TimeTimer_Pro_Handler(void)
 
          TFT_Display_WorksTime();
 
-
-
-        
-      
-
-	break;
+    break;
 
 	case timer_time: //02 ->timer_time 
 		if(gctl_t.gTimer_ctl_set_timer_time_senconds >59  && gpro_t.set_timer_timing_success == 1){

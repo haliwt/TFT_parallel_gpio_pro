@@ -173,7 +173,6 @@ static void vTaskMsgPro(void *pvParameters)
 
                
                   key_power_off_sound_flag =1;           
-                 // start_counter_power_key_long_pressed =0;
                 
                   add_dec_combin_counter=0;
                   gpro_t.gPower_On = power_off;
@@ -202,7 +201,6 @@ static void vTaskMsgPro(void *pvParameters)
             }
             else if((ulValue & ADD_DEC_COMBIN_KEY_12) != 0){
 
-              //   buzzer_sound();
                 add_dec_combin=1;
 
                 gctl_t.disp_ntc_res_switch_normal_ptc_counter ++;
@@ -254,7 +252,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                    }
                    Buzzer_KeySound();
-                  // buzzer_sound_flag =1;
+               
 
 
                  }
@@ -298,6 +296,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                 Buzzer_KeySound();
                 ADD_Key_Fun();
+                Wifi_Fast_Led_Blink();
 
 
              }
@@ -309,27 +308,19 @@ static void vTaskMsgPro(void *pvParameters)
 
                       Buzzer_KeySound();
                       DEC_Key_Fun();
+                      Wifi_Fast_Led_Blink();
                 }
         }
-
-           
-        
-
-		 if(key_power_off_sound_flag ==1){
+        else  if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
                   DISABLE_INT(); 
                   Buzzer_KeySound();
                    LCD_Clear(BLACK);
                  
                   ENABLE_INT();
-              
-                 // power_off_init_set_ref();
                   power_off_handler();
-                 // buzzer_sound_flag = 1;//WT.EDIT 2024.08.17 
-                 
-
-
-         }
+               
+        }
              
          
           
@@ -374,7 +365,7 @@ static void vTaskMsgPro(void *pvParameters)
               Mode_Key_Config_Fun_Handler();
               
               wifi_detected_signal_handler(gpro_t.wifi_led_fast_blink_flag);
-              SetPtc_TempComare_Value();
+              SetPtc_Disp_TempComare_Value();
               disp_all_led_on_off_state();
               tft_disp_time_colon_symbol();
               Wifi_Fast_Led_Blink();

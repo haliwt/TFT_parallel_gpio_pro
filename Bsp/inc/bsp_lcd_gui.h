@@ -99,7 +99,7 @@ void TFT_Display_PowerOn_WorksTime_Init(void);
 
 void TFT_Disp_Only_Humidity_Numbers(uint8_t hum_value);
 
-void TFT_Disp_Only_Temp_Numbers(uint8_t bc,uint8_t temp_value);
+
 
 void TFT_Disp_Temp_SwitchSet_Value(uint8_t bc,uint8_t temp_value);
 
