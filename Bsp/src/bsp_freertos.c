@@ -307,15 +307,12 @@ static void vTaskMsgPro(void *pvParameters)
                    LCD_Clear(BLACK);
                  
                   ENABLE_INT();
-                  power_off_handler();
                
         }
              
          
           
-          
-
-            if(gpro_t.gTimer_exit_mode_long_key > 2 && (add_dec_combin==1)){
+        if(gpro_t.gTimer_exit_mode_long_key > 2 && (add_dec_combin==1)){
 
                  add_dec_combin =0;
                      buzzer_sound();
