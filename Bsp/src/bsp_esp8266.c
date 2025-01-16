@@ -273,7 +273,7 @@ void Wifi_SoftAP_Config_Handler(void)
           // Wifi_Fast_Led_Blink();
            //ReConnect_Wifi_Net_ATReset_Hardware();//InitWifiModule_Hardware()
         
-		
+		   #if 0
            LED_WIFI_ICON_OFF();
            osDelay(50);
            LED_WIFI_ICON_OFF();
@@ -283,18 +283,36 @@ void Wifi_SoftAP_Config_Handler(void)
            LED_WIFI_ICON_OFF();
            osDelay(50);
            LED_WIFI_ICON_ON();
+           #endif 
            
            Wifi_Fast_Led_Blink();
 	       at_send_data("AT+RST\r\n", strlen("AT+RST\r\n"));
 		//  at_send_data("AT+RESTORE\r\n", strlen("AT+RESTORE\r\n"));
-            osDelay(300);
+            osDelay(100);
             Wifi_Fast_Led_Blink();
-            osDelay(300);
+            osDelay(100);
              Wifi_Fast_Led_Blink();
-             osDelay(300);
+             osDelay(100);
              Wifi_Fast_Led_Blink();
-             osDelay(300);
-              Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+              osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+
+
+             
             wifi_t.wifi_config_net_lable= wifi_set_cwmode;
 		
 	break;
@@ -306,17 +324,19 @@ void Wifi_SoftAP_Config_Handler(void)
            wifi_t.gTimer_get_beijing_time=0;
 	
          	HAL_UART_Transmit(&huart2, "AT+CWMODE=3\r\n", strlen("AT+CWMODE=3\r\n"), 5000);
-	        HAL_Delay(300);
+             osDelay(100);
              Wifi_Fast_Led_Blink();
-            Wifi_Fast_Led_Blink();
-          
-            Wifi_Fast_Led_Blink();
+             osDelay(100);
              Wifi_Fast_Led_Blink();
-             
+             osDelay(100);
              Wifi_Fast_Led_Blink();
+              osDelay(100);
              Wifi_Fast_Led_Blink();
-
-            Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+	        
 			  ic_id = HAL_GetUIDw0();
 
              wifi_t.gTimer_login_tencent_step_3=0;
@@ -360,14 +380,28 @@ void Wifi_SoftAP_Config_Handler(void)
 			 wifi_t.linking_tencent_cloud_doing  =1;
 		     
 		     HAL_UART_Transmit(&huart2, "AT+TCDEVREG\r\n", strlen("AT+TCDEVREG\r\n"), 0xffff); //态注册 
-		     osDelay(300);
+		    osDelay(100);
             Wifi_Fast_Led_Blink();
-            osDelay(300);
+            osDelay(100);
              Wifi_Fast_Led_Blink();
-             osDelay(300);
+             osDelay(100);
              Wifi_Fast_Led_Blink();
-             osDelay(300);
-              Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+              osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
               wifi_t.wifi_config_net_lable =wifi_set_tcsap;
               wifi_t.gTimer_login_tencent_step_3=0;
 
@@ -390,14 +424,27 @@ void Wifi_SoftAP_Config_Handler(void)
 
 	        sprintf((char *)device_massage, "AT+TCSAP=\"UYIJIA01-%d\"\r\n",ic_id);
             usart2_flag = at_send_data(device_massage, strlen((const char *)device_massage));
-            osDelay(300);
+           osDelay(100);
             Wifi_Fast_Led_Blink();
-            osDelay(300);
+            osDelay(100);
              Wifi_Fast_Led_Blink();
-             osDelay(300);
+             osDelay(100);
              Wifi_Fast_Led_Blink();
-             osDelay(300);
-              Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+              osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
              Wifi_Fast_Led_Blink();
              wifi_t.gTimer_login_tencent_step_3=0;
               wifi_t.wifi_config_net_lable =0xff;
@@ -416,7 +463,28 @@ void Wifi_SoftAP_Config_Handler(void)
        Wifi_Fast_Led_Blink();
 	   
 	   HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 5000);//
-	   osDelay(1000);
+	    osDelay(100);
+            Wifi_Fast_Led_Blink();
+            osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+              osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
        wifi_t.gTimer_login_tencent_times=0;
       
        wifi_t.wifi_config_net_lable = 0xff;
@@ -462,7 +530,29 @@ void SmartPhone_LinkTencent_Cloud(void)
        Wifi_Fast_Led_Blink();
 	   
 	   HAL_UART_Transmit(&huart2, "AT+TCMQTTCONN=1,5000,240,0,1\r\n", strlen("AT+TCMQTTCONN=1,5000,240,0,1\r\n"), 5000);//
-	   HAL_Delay(1000);
+	   //HAL_Delay(1000);
+	    osDelay(100);
+            Wifi_Fast_Led_Blink();
+            osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+              osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
+             osDelay(100);
+             Wifi_Fast_Led_Blink();
        wifi_t.gTimer_login_tencent_times=0;
       }
 

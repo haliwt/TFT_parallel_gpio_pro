@@ -48,7 +48,6 @@ static void freertos_split_detected_wifi_handler(void)
     //wifi signal be detected wifi of led run faster blink. is times 120s in.
        
         RunWifi_Command_Handler();//WIFI_Process_Handler();
-        direct_wifi_led_fast_blink_handler();
         Wifi_Fast_Led_Blink();
         detection_net_link_state_handler();
     

@@ -431,12 +431,12 @@ void Wifi_Fast_Led_Blink(void)
 
   static uint8_t wifi_fast_blink;
   if(gpro_t.gPower_On == power_on){
-  if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0 ){
+  if(gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
   
 
- // if(gpro_t.gTimer_pro_wifi_fast_led  > 79 ){ //50ms
-        // gpro_t.gTimer_pro_wifi_fast_led=0;
-          osDelay(50); //WT.EDIT 2024.12.25
+       if(gpro_t.gTimer_pro_wifi_fast_led  > 99 ){ //50ms
+         gpro_t.gTimer_pro_wifi_fast_led=0;
+         // osDelay(50); //WT.EDIT 2024.12.25
           wifi_fast_blink ++ ;
           if(wifi_fast_blink ==1){
 
@@ -451,11 +451,8 @@ void Wifi_Fast_Led_Blink(void)
              
           }
             
-	// }
-     
-	
-
-  }
+	 }
+   }
 
   if(wifi_t.gTimer_linking_tencent_duration > 120 && gpro_t.wifi_led_fast_blink_flag==1 && wifi_link_net_state()==0){
       gpro_t.wifi_led_fast_blink_flag=0; 
@@ -530,7 +527,7 @@ void mode_key_adjust_fun(void)
   gpro_t.key_mode_be_pressed_flag=0;
 
   gpro_t.key_short_mode_flag = 1;
-  gpro_t.long_key_mode_counter =0;
+ // gpro_t.long_key_mode_counter =0;
             
 
 }

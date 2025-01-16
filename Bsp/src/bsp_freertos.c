@@ -59,7 +59,7 @@ uint32_t add_dec_combin_counter;
 
 uint8_t key_power_sound_flag,gwifi_key_flag;
 
-uint8_t gpower_onoff_key_flag ;
+uint8_t gpower_onoff_key_flag,gmode_key_flag  ;
 
 volatile uint8_t buzzer_sound_flag,key_power_long_sound_flag;
 
@@ -94,7 +94,7 @@ void freeRTOS_Handler(void)
 static void vTaskMsgPro(void *pvParameters)
 {
     BaseType_t xResult;
-	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(50); /* 设置最大等待时间为50ms */
+	const TickType_t xMaxBlockTime = pdMS_TO_TICKS(30); /* 设置最大等待时间为50ms */
 	uint32_t ulValue;
     static uint8_t key_add_sound_flag,key_dec_sound_flag;
     static uint8_t add_dec_combin,key_power_off_sound_flag ;
@@ -253,7 +253,7 @@ static void vTaskMsgPro(void *pvParameters)
                      PowerOn_LongKey_Fun();
                                
                      direct_wifi_led_fast_blink_handler();
-
+                     Wifi_Fast_Led_Blink();
 
                 }
                 else{
@@ -282,23 +282,40 @@ static void vTaskMsgPro(void *pvParameters)
              }
             
            }
+           else if(gmode_key_flag == 1){ //WT.EDIT 2024.08.13
 
-         if( gpro_t.key_short_mode_flag == 1){ //WT.EDIT 2024.08.13
+               if(KEY_MODE_VALUE() == KEY_UP){
+                gmode_key_flag ++ ;
 
-                gpro_t.key_short_mode_flag  ++;
-                buzzer_sound_flag = 1;
+                if( gpro_t.key_long_mode_flag ==1){
+                     gpro_t.key_short_mode_flag  ++;
+                     gpro_t.long_key_mode_counter=0;
+                   
+                     Mode_Key_Long_Fun();
+                       
+                }
+                else{
+                    gpro_t.long_key_mode_counter=0;
+                   // buzzer_sound_flag = 1;
+                    buzzer_sound();
+                    gpro_t.key_mode_be_pressed_flag =1;
+                   // mode_key_adjust_fun();
+
+
+                }
+                
+
+             }
       
          }
-         else if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1){
+
+           
+         if(gpro_t.key_mode_be_pressed_flag == 1 &&  gpro_t.key_long_mode_flag !=1 && gpro_t.gPower_On==power_on){
         
              mode_key_adjust_fun();
+             gpro_t.key_mode_be_pressed_flag++;
           }
-          else if(gpro_t.key_long_mode_flag ==1){
-
-              gpro_t.key_mode_be_pressed_flag =0;
-
-
-          }
+         
 
           if(buzzer_sound_flag ==1){
               
@@ -307,28 +324,10 @@ static void vTaskMsgPro(void *pvParameters)
               buzzer_sound();
           }
 		         
-         if(key_dec_sound_flag ==1 || key_add_sound_flag ==1 ||  gpro_t.key_short_mode_flag == 1  || gpro_t.key_long_mode_flag ==1 \
-            || key_power_long_sound_flag==1 || key_power_off_sound_flag ==1){
+         if(key_dec_sound_flag ==1 || key_add_sound_flag ==1  || key_power_off_sound_flag ==1){
 
 
-              if( gpro_t.key_short_mode_flag == 1){ //WT.EDIT 2024.08.13
-
-                gpro_t.key_short_mode_flag  ++;
-                buzzer_sound_flag = 1;
-      
-                start_counter_power_key_long_pressed =0;
-
-                 
-             }
-             else if(gpro_t.key_long_mode_flag == 1 ){
-                   gpro_t.gTimer_pro_set_long_key_tims=0;
-                    Mode_Key_Long_Fun();
-                     start_counter_power_key_long_pressed =0; //WT.EDIT 2024.08.13 
-             
-                    gpro_t.key_long_mode_flag ++;
-             
-               }
-              else if(key_power_off_sound_flag ==1){
+           if(key_power_off_sound_flag ==1){
                   key_power_off_sound_flag ++;
                   DISABLE_INT(); 
                  
@@ -422,7 +421,7 @@ static void vTaskMsgPro(void *pvParameters)
               SetPtc_TempComare_Value();
               disp_all_led_on_off_state();
               tft_disp_time_colon_symbol();
-              
+              Wifi_Fast_Led_Blink();
          
         }
         else if(gpro_t.gPower_On == power_off){
@@ -445,6 +444,7 @@ static void vTaskMsgPro(void *pvParameters)
          }
          TFT_DonnotDisp_Works_Time();
          USART_Cmd_Error_Handler();
+         Wifi_Fast_Led_Blink();
          clear_rx_copy_data();
           
         }
@@ -494,23 +494,28 @@ static void vTaskStart(void *pvParameters)
          
           start_counter_power_key_long_pressed=0;
 
+         if(gpro_t.gPower_On == power_on){
       
              gpro_t.long_key_mode_counter ++ ;
 
-          if(gpro_t.long_key_mode_counter > 70  ){
+          if(gpro_t.long_key_mode_counter > 60  ){
              gpro_t.long_key_mode_counter=0;   
                gpro_t.key_long_mode_flag =1;
                gpro_t.gTimer_pro_set_long_key_tims=0;
             
                 buzzer_sound();
+                
           }
              
     
-            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
-                         MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
-                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+//            xTaskNotify(xHandleTaskMsgPro, /* 目标任务 */
+//                         MODE_KEY_1,            /* 设置目标任务事件标志位bit0  */
+//                         eSetBits);          /* 将目标任务的事件标志位与BIT_0进行或操作，  将结果赋值给事件标志位。*/
+   
+       gmode_key_flag = 1;
 
-       
+
+      }
         
 
     }

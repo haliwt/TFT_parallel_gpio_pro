@@ -183,7 +183,7 @@ void EE_IIC_SendByte(uint8_t data)
     EE_IIC_SCL(GPIO_PIN_RESET); //拉低时钟开始数据传输
     for(t=0;t<8;t++)
     {              
-			EE_IIC_SDA((data&0x80)>>7);//发送数据
+	    EE_IIC_SDA((data&0x80)>>7);//发送数据
         EE_IIC_Delay(1);			
         EE_IIC_SCL(GPIO_PIN_SET);  //high level
         data<<=1;
