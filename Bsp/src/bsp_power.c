@@ -1,6 +1,56 @@
 #include "bsp.h"
 
 
+/******************************************************************************
+	*
+	*Function Name:void TFT_Pocess_Command_Handler(void)
+	*Funcion: display of TFT lcd 
+	*Input Ref:NO
+	*Return Ref:NO
+	*
+******************************************************************************/
+void PowerOnOff_Init_Ref_Fun(void)
+{
+   
+       
+  if(gpro_t.gPower_On == power_off){
+          
+           gpro_t.gPower_On = power_on;
+           Fan_Run(); //WT.EDIT 2024.12.024
+           power_on_init_set_ref();
+
+             
+              
+          if(wifi_t.smartphone_app_power_on_flag==2){
+                   wifi_t.smartphone_app_power_on_flag++;
+                   Device_Action_No_Wifi_Handler(); //smart phone app is power on .
+
+           }
+          gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
+          
+          gpro_t.run_process_step=0;
+
+          if(wifi_t.smartphone_app_power_on_flag==0){
+                power_on_action_led_init();
+              
+           }
+          
+	    
+   }
+   else if(gpro_t.gPower_On == power_on){//POWER OFF
+           
+            gpro_t.power_off_flag=1;
+            gpro_t.run_process_step=0;
+
+            gpro_t.gPower_On = power_off;
+         
+            Power_Off_Fun();
+           
+
+
+   }
+
+ }
 
 
 /*****************************************************************

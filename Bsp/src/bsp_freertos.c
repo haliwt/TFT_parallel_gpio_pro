@@ -221,7 +221,8 @@ static void vTaskMsgPro(void *pvParameters)
 
                 }
                 else{
-                   gpower_onoff_key_flag++;
+           
+                   Buzzer_KeySound();
                     start_counter_power_key_long_pressed=0; //WT.EIDT .2024.12.27
                    buzzer_sound_flag =1;
                    LCD_Clear(BLACK);
@@ -237,7 +238,7 @@ static void vTaskMsgPro(void *pvParameters)
                     PowerOnOff_Init_Ref_Fun();
 
                    }
-                   Buzzer_KeySound();
+                   
                
 
 
@@ -316,15 +317,14 @@ static void vTaskMsgPro(void *pvParameters)
 
             if(gpro_t.gTimer_exit_mode_long_key > 2 && (add_dec_combin==1)){
 
-                  if(add_dec_combin==1){
-                     add_dec_combin =0;
+                 add_dec_combin =0;
                      buzzer_sound();
                     add_dec_combin_counter =0;
                      if(gctl_t.disp_ntc_res_switch_normal_ptc_counter ==0){
                         donot_display_ntc_temp_value();
 
                      }
-                  }
+                  
            }
 
           

@@ -24,13 +24,13 @@ void Wifi_Fast_Led_Blink(void)
           if(wifi_fast_blink ==1){
 
 	         LED_WIFI_ICON_ON();
-             Mode_Led_InWifi_Blink_On_Fun();
+             
              
           }
           else{
              wifi_fast_blink =0 ;
              LED_WIFI_ICON_OFF();
-             Mode_Led_InWifi_Blink_Off_Fun();
+            
              
           }
             

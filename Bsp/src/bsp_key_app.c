@@ -362,7 +362,7 @@ void Mode_Key_Select_Fun(void)
 		    }
 			
 			
-  led_blik:	   if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+     if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                    //gctl_t.gTimer_ctl_select_led =0;
                    osDelay(40);
                    ptc_led ++;
@@ -374,10 +374,7 @@ void Mode_Key_Select_Fun(void)
                    else{
                        ptc_led = 0;
                        LED_PTC_ICON_OFF() ; 
-                       if(gpro_t.mode_key_run_item_step==mode_key_select){
-			          // goto led_blik;
-
-                      }
+                      
 
                    }
 
@@ -444,7 +441,7 @@ void Mode_Key_Select_Fun(void)
 
 		}
 
-   led_blik2:   if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+       if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                       // gctl_t.gTimer_ctl_select_led=0;
                        osDelay(40);
                        plasma_led ++;
@@ -455,10 +452,7 @@ void Mode_Key_Select_Fun(void)
                        else{
                         plasma_led =0;
                         LED_KILL_ICON_OFF() ;
-                       if(gpro_t.mode_key_run_item_step==mode_key_select){
-    				       // goto led_blik2;
-
-    			       }
+                
 
                        }
                    
@@ -528,103 +522,28 @@ void Mode_Key_Select_Fun(void)
 	 
 
 
-led_blink3: if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
+      if(gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                 //gctl_t.gTimer_ctl_select_led=0;
                
-                
-                 rat_led ++ ;
-                if(rat_led ==1){
-			          LED_RAT_ICON_ON(); 
-                      osDelay(40);
-                 }
-                 else{
-                  rat_led =0;
-                  LED_RAT_ICON_OFF();
-                   osDelay(40);
-                 if(gpro_t.mode_key_run_item_step==mode_key_select){
-		             //goto led_blink3;
+           rat_led ++ ;
+            if(rat_led ==1){
+		          LED_RAT_ICON_ON(); 
+                  osDelay(40);
+             }
+             else{
+              rat_led =0;
+              LED_RAT_ICON_OFF();
+               osDelay(40);
+            
 
-                    }
-
-                 }
-	           }
+             }
+	    }
               
 	
         break;
     }
 }
-/**************************************************************************
- * 
- * Function Name: void Mode_Key_Led_InWifi_Blink_Fun(void)
- * Function : In wifi fast led display key of led blink.
- * Input Ref:NO
- * Return Ref:NO
- * 
-**************************************************************************/
-void Mode_Led_InWifi_Blink_On_Fun(void)
 
-{
-  
-  if(gpro_t.mode_key_run_item_step == mode_key_select){
-  if(gpro_t.gTimer_pro_mode_key_be_select < 4){
-
-   switch(gctl_t.select_main_fun_numbers){
-
-      case ptc_fun:
-
-      LED_PTC_ICON_ON()  ;  
-        break;
-
-	  case plasma_fun:
-	    LED_KILL_ICON_ON() ;   
-      
-       break;
-
-	  case rat_fun:
-        
-        LED_RAT_ICON_ON();
-  
-                
-      break;
-    }
-   }
-  }
-}
-
-void Mode_Led_InWifi_Blink_Off_Fun(void)
-{
-
- 
- if(gpro_t.mode_key_run_item_step == mode_key_select){
- if(gpro_t.gTimer_pro_mode_key_be_select < 4){
-
-  switch(gctl_t.select_main_fun_numbers){
-
-      case ptc_fun:
-
- 
-      LED_PTC_ICON_OFF() ; 
-                    
-
-      break;
-
-	  case plasma_fun:
-	  
-        LED_KILL_ICON_OFF() ;
-
-       break;
-
-	  case rat_fun:
-       LED_RAT_ICON_OFF();
-   
-                
-	
-        break;
-    }
-
-    }
-    }
-}
 
 /**************************************************************************
  * 

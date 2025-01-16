@@ -304,7 +304,7 @@ void Power_On_Special_Fun(void);
 
 
 
-void power_on_init_set_ref(void);
+
 
 
 

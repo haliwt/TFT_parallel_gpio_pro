@@ -18,6 +18,7 @@ void Power_Off_Special_Fun(void);
 void power_off_init_set_ref(void);
 
 
+void power_on_init_set_ref(void);
 
 
 
