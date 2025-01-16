@@ -64,7 +64,7 @@ static void freertos_split_normal_run_handler(void)
 {
      //don't detected wifi signal and normal run process.
      PowerOn_Process_Handler();
-     WIFI_LED_Blink();
+     wifi_led_slowly_blink_handler();
      smart_phone_power_on_to_tencent_data();
       
      TimeTimer_Pro_Handler();

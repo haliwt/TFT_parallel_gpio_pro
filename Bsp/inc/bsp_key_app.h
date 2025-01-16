@@ -8,7 +8,7 @@
 void PowerOn_LongKey_Fun(void);
 
 
-void Mode_Key_Long_Fun(void);
+
 
 void Mode_Key_Config_Fun_Handler(void);
 void ADD_Key_Fun(void);
@@ -29,6 +29,9 @@ void Mode_Led_InWifi_Blink_On_Fun(void);
 
 
 void Mode_Led_InWifi_Blink_Off_Fun(void);
+
+void Mode_Long_Key_Fun(void);
+
 
 
 #endif 

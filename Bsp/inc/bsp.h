@@ -37,6 +37,7 @@
 #include "bsp_power.h"
 #include "bsp_time.h"
 #include "bsp_disptemp.h"
+#include "bsp_wifi_led.h"
 #include "bsp_i2c.h"
 //#include "bsp_image.h"
 #include "bsp_tft_font.h"
@@ -168,7 +169,7 @@ typedef struct{
    uint8_t run_process_step;
    uint8_t key_power_be_pressed_flag ;
    uint8_t power_off_flag;
-   uint8_t key_mode_be_pressed_flag;
+
    uint8_t key_long_mode_flag;
    uint8_t key_short_mode_flag;
 
@@ -291,21 +292,21 @@ void PowerOnOff_Init_Ref_Fun(void);
 
 
 
-void Wifi_Fast_Led_Blink(void);
 
-void Mode_Long_Key_Fun(void);;
 
-void WIFI_LED_Blink(void);
+
+
+
 
 
 
 void Power_On_Special_Fun(void);
 
-void direct_wifi_led_fast_blink_handler(void);
+
 
 void power_on_init_set_ref(void);
 
-void mode_key_adjust_fun(void);
+
 
 void wifi_app_power_on_handler(void);
 

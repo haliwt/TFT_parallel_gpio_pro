@@ -179,21 +179,7 @@ static void vTaskMsgPro(void *pvParameters)
 
 
             }
-            else if((ulValue & MODE_KEY_1) != 0){
-
-
-                 if(gpro_t.gPower_On==power_on){
-                
-                    gpro_t.key_mode_be_pressed_flag=1;
-
-                  }
-                     
-                   start_counter_power_key_long_pressed =0;
-                   add_dec_combin_counter=0;
-                  
-                    
-            }
-           else if((ulValue & VOICE_BIT_8) != 0){
+            else if((ulValue & VOICE_BIT_8) != 0){
               
 
                 v_t.sound_rx_data_success_flag = 1;
@@ -265,22 +251,24 @@ static void vTaskMsgPro(void *pvParameters)
                if(KEY_MODE_VALUE() == KEY_UP){
                 gmode_key_flag ++ ;
 
-                if( gpro_t.key_long_mode_flag ==1){
-                     gpro_t.key_short_mode_flag  ++;
+                if(gpro_t.key_long_mode_flag ==1){
+                    gpro_t.key_long_mode_flag++;
+                
                      gpro_t.long_key_mode_counter=0;
+                     gpro_t.key_short_mode_flag=0;
                    
-                     Mode_Key_Long_Fun();
+                     Mode_Long_Key_Fun();
                        
                 }
                 else{
+                    gpro_t.key_short_mode_flag =1;
+                    gpro_t.key_long_mode_flag=0;
                     gpro_t.long_key_mode_counter=0;
-                   // buzzer_sound_flag = 1;
-                  
-                    gpro_t.key_mode_be_pressed_flag =1;
-                   // mode_key_adjust_fun();
+                
+                
                    Buzzer_KeySound();
 
-                   gpro_t.key_short_mode_flag = 1;
+                 
 
 
                 }

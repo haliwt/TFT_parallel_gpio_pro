@@ -37,37 +37,6 @@ void PowerOn_LongKey_Fun(void)
 			
 }
 
-/******************************************************************************
-	*
-	*Function Name:static void Mode_Key_Long_Fun(void)
-	*Funcion: speical of mode key fun
-	*Input Ref:NO
-	*Return Ref:NO
-	*
-******************************************************************************/
-void Mode_Key_Long_Fun(void)
-{
-	Mode_Long_Key_Fun();
-}
-
-
-void Mode_Key_Selection_Func(void) 
-{
-
-    gpro_t.mode_key_run_item_step = mode_key_select;
-
-    gctl_t.select_main_fun_numbers++; // 0,1,2
-    if(gctl_t.select_main_fun_numbers > 3){
-      gctl_t.select_main_fun_numbers = 1;
-    }
-
-    gctl_t.memory_confimr_key_done = 1;
-
-
-    gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
-    gctl_t.gTimer_ctl_select_led =0;
-     
-}
 /************************************************************************
 	*
 	*Function Name: static void Mode_Long_Key_Fun(void) 
@@ -93,6 +62,35 @@ void Mode_Long_Key_Fun(void)  //MODE_KEY_LONG_TIME_KEY://case model_long_key:
 	  	 
       
 }
+
+
+/************************************************************************
+	*
+	*Function Name: void Mode_Key_Selection_Func(void) 
+	*Function : set timer timing is enable 
+	*Input Ref:NO
+	*Return Ref:No
+	*
+************************************************************************/
+void Mode_Key_Selection_Func(void) 
+{
+
+    gpro_t.mode_key_run_item_step = mode_key_select;
+
+    gctl_t.select_main_fun_numbers++; // 0,1,2
+    if(gctl_t.select_main_fun_numbers > 3){
+      gctl_t.select_main_fun_numbers = 1;
+    }
+
+    gctl_t.memory_confimr_key_done = 1;
+
+
+    gpro_t.gTimer_pro_mode_key_be_select = 0; //counter starts after 4 seconds ,cancel this function
+    gctl_t.gTimer_ctl_select_led =0;
+     
+}
+
+
 
 /******************************************************************************
 	*
@@ -366,7 +364,7 @@ void Mode_Key_Select_Fun(void)
 			
   led_blik:	   if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
                    //gctl_t.gTimer_ctl_select_led =0;
-                   osDelay(50);
+                   osDelay(40);
                    ptc_led ++;
                    if(ptc_led == 1){
                        LED_PTC_ICON_ON()  ;  
@@ -447,8 +445,8 @@ void Mode_Key_Select_Fun(void)
 		}
 
    led_blik2:   if(gpro_t.wifi_led_fast_blink_flag==0 && gpro_t.gTimer_pro_mode_key_be_select < 4){ //30x10ms=300ms
-                       gctl_t.gTimer_ctl_select_led=0;
-                       osDelay(50);
+                      // gctl_t.gTimer_ctl_select_led=0;
+                       osDelay(40);
                        plasma_led ++;
                        if(plasma_led ==1){
     		    
