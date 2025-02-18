@@ -415,7 +415,7 @@ void Device_Action_No_Wifi_Handler(void)
    }
    
 
-  if(ptc_state()== 1){
+  if(gctl_t.ptc_flag== 1){
 
      Ptc_On();
 	 LED_PTC_ICON_ON();
@@ -431,7 +431,7 @@ void Device_Action_No_Wifi_Handler(void)
   }
    
 
-   if(plasma_state() == 1){
+   if(gctl_t.plasma_flag == 1){
        Plasma_On();
 	   LED_KILL_ICON_ON();
       
@@ -443,7 +443,7 @@ void Device_Action_No_Wifi_Handler(void)
 
    }
 
-   if(ultrasonic_state()==1){
+   if(gctl_t.ultrasonic_flag==1){
 
       Ultrasonic_Pwm_Output();
 	  LED_RAT_ICON_ON();
@@ -457,7 +457,7 @@ void Device_Action_No_Wifi_Handler(void)
 
    }
 
-
+  fan_adj_speed_handler(); //WT.EDIT 2025.01.17
 
 }
 /*****************************************************************************

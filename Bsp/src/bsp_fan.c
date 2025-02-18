@@ -108,6 +108,7 @@ void Fan_Run(void)
 
   FAN_COM_SetLow(); //PA6
   FAN_CCW_SetHigh(); //brake
+  SetLevel_Fan_PwmDuty(50); //WT.EDIT 2025.01.17
  
    
 }

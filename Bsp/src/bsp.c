@@ -141,6 +141,7 @@ void PowerOn_Process_Handler(void)
 
    case 4: //02,device works two hours have a rest 10 minutes.
 	
+       #if 0
         if(gpro_t.gTimer_run_main_action > 5 && gpro_t.wifi_led_fast_blink_flag==0){
           gpro_t.gTimer_run_main_action=0;
 	      RunMain_And_Interval_Handler();
@@ -149,6 +150,7 @@ void PowerOn_Process_Handler(void)
              fan_adj_speed_handler();
           }
         }
+        #endif 
 	   gpro_t.run_process_step=5;
 	 break;
 
@@ -246,17 +248,17 @@ void power_on_init_set_ref(void)
 	 }
 
        
-         if(wifi_t.smartphone_app_power_on_flag==0){
-		       power_on_action_led_init();
-         }
-         else{
+     if(wifi_t.smartphone_app_power_on_flag==0){
+		    power_on_action_led_init();
+      }
+      else{
 
          
            LED_Mode_Key_On();
            LED_Power_Key_On();
            TFT_BACKLIGHT_ON();
 
-         }
+       }
 
        do{
        
@@ -269,10 +271,7 @@ void power_on_init_set_ref(void)
          TFT_Disp_Only_Humidity_Numbers(gctl_t.dht11_hum_value);
 
          }while(0);
-       
-      //   LED_Mode_Key_On();
-	  ///   LED_Power_Key_On();
-		/// TFT_BACKLIGHT_ON();
+
 
          
         
@@ -297,6 +296,7 @@ void power_on_init_set_ref(void)
          gctl_t.gSet_temperature_value=40;
          gpro_t.run_process_step=0;
          gctl_t.disp_ntc_res_switch_normal_ptc_counter=0;
+         gpro_t.gTimer_run_main_action=6; //at once exectue maiboard action fun. 2025.01.17
 
 
 }
@@ -379,5 +379,17 @@ static void Power_On_Init(void)
 
 
 
+void mainboard_action_fun(void)
+{
+   if(gpro_t.gTimer_run_main_action > 5 && gpro_t.wifi_led_fast_blink_flag==0){
+          gpro_t.gTimer_run_main_action=0;
+	      RunMain_And_Interval_Handler();
+         if(gpro_t.interval_stop_run_flag ==0){//WT.EDIT .2024.12.25 ENABLE FAN RUN 
+             //Fan_Run(); //WT.EDIT .2024.12.25 ENABLE FAN RUN 
+             fan_adj_speed_handler();
+        }
+     }
 
+
+}
 

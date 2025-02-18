@@ -283,5 +283,8 @@ void Power_On_Special_Fun(void);
 
 void wifi_app_power_on_handler(void);
 
+void mainboard_action_fun(void);
+
+
 
 #endif 

@@ -22,8 +22,8 @@ void PowerOnOff_Init_Ref_Fun(void)
              
               
           if(wifi_t.smartphone_app_power_on_flag==2){
-                   wifi_t.smartphone_app_power_on_flag++;
-                   Device_Action_No_Wifi_Handler(); //smart phone app is power on .
+                wifi_t.smartphone_app_power_on_flag++;
+                Device_Action_No_Wifi_Handler(); //smart phone app is power on .
 
            }
           gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
