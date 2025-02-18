@@ -1,6 +1,13 @@
 #include "bsp_fan.h"
 #include "bsp.h"
 
+
+#define FAN_PWM_100     50
+
+#define FAN_PWM_90      45
+
+#define FAN_PWM_80      40
+
 static void turn_off_fan_function(void);
 
 uint8_t adj_speed_flag;
@@ -25,7 +32,7 @@ void Fan_One_Speed(void)
    FAN_CCW_SetHigh(); //brake
    if(fan_one_default != wifi_t.adj_speed_flag){
       fan_one_default = wifi_t.adj_speed_flag;
-     SetLevel_Fan_PwmDuty(25);
+     SetLevel_Fan_PwmDuty(FAN_PWM_80);
 
    }
 
@@ -39,7 +46,7 @@ void Fan_Two_Speed(void)
     FAN_CCW_SetHigh(); //brake
    if(fan_two_default != wifi_t.adj_speed_flag){
       fan_two_default = wifi_t.adj_speed_flag;
-       SetLevel_Fan_PwmDuty(40);
+       SetLevel_Fan_PwmDuty(FAN_PWM_90);
     }
 
 
@@ -55,7 +62,7 @@ void Fan_Two_Speed(void)
 
     if(fan_full_default != wifi_t.adj_speed_flag){
       fan_full_default = wifi_t.adj_speed_flag;
-       SetLevel_Fan_PwmDuty(50);
+       SetLevel_Fan_PwmDuty(FAN_PWM_100);
     }
 
 }

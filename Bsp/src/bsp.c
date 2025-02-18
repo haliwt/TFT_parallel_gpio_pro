@@ -210,16 +210,14 @@ void wifi_app_power_on_handler(void)
     Fan_Run(); //WT.EDIT 2024.12.024
     power_on_init_set_ref();
     
-                
-                 
-             if(wifi_t.smartphone_app_power_on_flag==2){
-                      wifi_t.smartphone_app_power_on_flag++;
-                      Device_Action_No_Wifi_Handler(); //smart phone app is power on .
-    
-              }
-             gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
-             
-             gpro_t.run_process_step=0;
+    if(wifi_t.smartphone_app_power_on_flag==2){
+              wifi_t.smartphone_app_power_on_flag++;
+              Device_Action_No_Wifi_Handler(); //smart phone app is power on .
+
+    }
+    gpro_t.fan_run_the_first_flag++;//WT.EDIT .2024.12.23
+     
+    gpro_t.run_process_step=0;
     
             
 }
