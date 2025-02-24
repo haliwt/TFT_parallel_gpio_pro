@@ -429,9 +429,7 @@ void Device_Action_No_Wifi_Handler(void)
 
 
   }
-   
-
-   if(gctl_t.plasma_flag == 1){
+  if(gctl_t.plasma_flag == 1){
        Plasma_On();
 	   LED_KILL_ICON_ON();
       

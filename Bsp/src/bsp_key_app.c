@@ -130,7 +130,7 @@ void Mode_Key_Config_Fun_Handler(void)
 }
 
  static  void Add_Dec_Key_As_mode_key_confirm_handler(void)
-  {
+{
 
     Device_Action_Led_OnOff_Handler();
     Mode_Key_Confirm_Fun();
