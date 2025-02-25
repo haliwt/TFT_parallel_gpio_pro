@@ -239,10 +239,7 @@ static void vTaskMsgPro(void *pvParameters)
 
                    }
                    
-               
-
-
-                 }
+               }
 
              }
             
@@ -265,14 +262,8 @@ static void vTaskMsgPro(void *pvParameters)
                     gpro_t.key_short_mode_flag =1;
                     gpro_t.key_long_mode_flag=0;
                     gpro_t.long_key_mode_counter=0;
-                
-                
-                   Buzzer_KeySound();
-
-                 
-
-
-                }
+                    Buzzer_KeySound();
+                   }
                 
 
              }
