@@ -705,9 +705,7 @@ static void  voice_set_temperature_value(uint8_t value)
 					Ptc_On();
 					LED_PTC_ICON_ON();
                
-				
-
-                    if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
+				    if(wifi_link_net_state()==1 && wifi_t.link_net_tencent_data_flag ==3){
                         MqttData_Publish_SetPtc(1);
                         osDelay(100);//HAL_Delay(200);
                     
