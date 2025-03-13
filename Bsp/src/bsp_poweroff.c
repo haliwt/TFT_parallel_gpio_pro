@@ -255,13 +255,8 @@ void power_off_handler(void)
 ******************************************************************************/
 void power_off_init_set_ref(void)
 {
-  
-  
-      Power_Off_Fun();
-   
-       
-		 
- }
+   Power_Off_Fun();
+}
  /************************************************************************
 	*
 	*Function Name: void Power_Off_Fun(void)
