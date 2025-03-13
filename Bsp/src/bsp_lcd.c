@@ -408,7 +408,10 @@ LCD_Write_Data(0x05);
   LCD_Write_Cmd(0x35);     
   LCD_Write_Data(0x00);
 
- LCD_Write_Cmd(0x21);     
+ LCD_Write_Cmd(0x21);  
+
+ LCD_Write_Cmd(0x25);  //对比度控制
+ LCD_Write_Data(0x30); //写入对比度值
 
  LCD_Write_Cmd(0x29);    
 
