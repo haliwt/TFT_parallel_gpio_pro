@@ -295,9 +295,12 @@ static void vTaskMsgPro(void *pvParameters)
                   key_power_off_sound_flag ++;
                   DISABLE_INT(); 
                   Buzzer_KeySound();
-                   LCD_Clear(BLACK);
+                  LCD_Clear(BLACK);
                  
                   ENABLE_INT();
+				  // power_off_init_set_ref();
+                  power_off_handler();
+                 // buzzer_sound_flag = 1;//WT.EDIT 2024.08.17 
                
         }
              
